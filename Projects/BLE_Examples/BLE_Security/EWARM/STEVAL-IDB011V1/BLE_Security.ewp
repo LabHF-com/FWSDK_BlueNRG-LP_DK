@@ -366,17 +366,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -795,7 +794,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1450,17 +1449,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profile_Central\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1879,7 +1877,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -2533,17 +2531,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2962,7 +2959,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -3617,17 +3614,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profile_Central\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -4046,7 +4042,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -4700,17 +4696,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -5129,7 +5124,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -5785,17 +5780,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profile_Central\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -6214,7 +6208,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -6868,17 +6862,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -7297,7 +7290,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -7952,17 +7945,16 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profile_Central\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -8381,7 +8373,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -8675,22 +8667,22 @@
         <group>
             <name>BSP</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_button.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_button.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_com.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_com.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_i2c.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_i2c.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_io.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_io.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_led.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_led.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Src\bluenrg_lp_evb_spi.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_spi.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver\lps22hh_reg.c</name>
@@ -8704,71 +8696,74 @@
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
+            </file>
         </group>
         <group>
             <name>Peripherals_Drivers</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_hal_power_manager.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_power_manager.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_hal_vtimer.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_vtimer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_adc.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_adc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_crc.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_crc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_dma.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_dma.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_exti.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_exti.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_flash.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_flash.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_gpio.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_gpio.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_i2c.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_i2c.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_lpuart.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_lpuart.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_pka_v7b.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_pka_v7b.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_pwr.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_pwr.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_radio_2g4.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_radio_2g4.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_rcc.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_rcc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_rng.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_rng.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_rtc.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_rtc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_spi.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_spi.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_tim.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_tim.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_timer.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_timer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_usart.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_usart.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_utils.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_utils.c</name>
             </file>
         </group>
     </group>
@@ -8783,7 +8778,7 @@
                 <configuration>Slave_NumericComp</configuration>
             </excluded>
             <file>
-                <name>$PROJ_DIR$\..\..\Src\central\bluenrg_lp_it.c</name>
+                <name>$PROJ_DIR$\..\..\Src\central\rf_device_it.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Src\central\C_main.c</name>
@@ -8804,7 +8799,7 @@
                 <name>$PROJ_DIR$\..\..\Src\peripheral\BLE_Security_Peripheral.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\Src\peripheral\bluenrg_lp_it.c</name>
+                <name>$PROJ_DIR$\..\..\Src\peripheral\rf_device_it.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Src\peripheral\gatt_db.c</name>

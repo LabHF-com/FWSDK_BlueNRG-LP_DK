@@ -26,8 +26,9 @@
 #include "list.h"
 #include "hci_const.h"
 
-
-#define HCI_READ_PACKET_SIZE            256 // TODO: Increase this number in order to handle big events
+/* This is the maximum size of packets that can be received on ACI/HCI interface. 
+ * 536 bytes is the right number to receive the largest event. */
+#define HCI_READ_PACKET_SIZE            536
 
 
 /*** Data types ***/
@@ -37,7 +38,7 @@ typedef struct _tHciDataPacket
 {
   tListNode currentNode;
   uint8_t dataBuff[HCI_READ_PACKET_SIZE];
-  uint8_t data_len;
+  uint16_t data_len;
 }tHciDataPacket;
 
 struct hci_request {

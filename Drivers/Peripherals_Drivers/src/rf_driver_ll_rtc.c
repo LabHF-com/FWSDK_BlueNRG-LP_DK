@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -167,6 +167,14 @@ ErrorStatus LL_RTC_DeInit(RTC_TypeDef *RTCx)
 
     /* Reset ISR register and exit initialization mode */
     WRITE_REG(RTCx->ISR,      0x00000000U);
+
+#ifdef RTC_TAMPER1_SUPPORT
+    /* Reset Tamper and alternate functions configuration register */
+    WRITE_REG(RTCx->TAMPCR, 0x00000000U);
+
+    /* Reset Option register */
+    WRITE_REG(RTCx->OR, 0x00000000U);
+#endif
 
     /* Wait till the RTC RSF flag is set */
     status = LL_RTC_WaitForSynchro(RTCx);

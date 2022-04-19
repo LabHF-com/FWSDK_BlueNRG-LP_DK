@@ -21,8 +21,8 @@
   ******************************************************************************
   */
     
-#include "BlueNRG_LPx.h"
-#include "bluenrg_lp_it.h"
+#include "bluenrg_lpx.h"
+#include "rf_device_it.h"
 #include "bluenrg_lp_api.h"
 #include "DTM_cmd_db.h"
 #include "ble_status.h"
@@ -32,8 +32,9 @@
 #include "adv_buff_alloc.h"
 #include "adv_buff_alloc_tiny.h"
 #include "link_layer.h"
-#include "system_Bluenrg_LP.h"
+#include "system_BlueNRG_LP.h"
 #include "bluenrg_lp_stack.h"
+#include "rf_driver_ll_gpio.h"
 
 #include "DTM_burst.h"
 
@@ -48,6 +49,10 @@
   */
 #define CONTROLLER_PRIVACY_BIT                 ((uint16_t)0x0001)  /*!< Bit 0 selected */
 #define SECURE_CONNECTIONS_BIT                 ((uint16_t)0x0002)  /*!< Bit 1 selected */
+/* Observer (scanner) or Central role support:
+   -  Observer disabled (CONTROLLER_MASTER_BIT = 0) or enabled (CONTROLLER_MASTER_BIT = 1) if CONNECTION_BIT = 0;
+   -  Observer and Central disabled (CONTROLLER_MASTER_BIT = 0) or enabled (CONTROLLER_MASTER_BIT = 1) if CONNECTION_BIT = 1.
+*/
 #define CONTROLLER_MASTER_BIT                  ((uint16_t)0x0004)  /*!< Bit 2 selected */
 #define CONTROLLER_DATA_LENGTH_EXTENSION_BIT   ((uint16_t)0x0008)  /*!< Bit 3 selected */
 #define LINK_LAYER_ONLY_BIT                    ((uint16_t)0x0010)  /*!< Bit 4 selected */
@@ -57,12 +62,24 @@
 #define CONTROLLER_PERIODIC_ADV_BIT            ((uint16_t)0x0100)  /*!< Bit 8 selected */
 #define CONTROLLER_CTE_BIT                     ((uint16_t)0x0200)  /*!< Bit 9 selected */
 #define CONTROLLER_POWER_CONTROL_BIT           ((uint16_t)0x0400)  /*!< Bit 10 selected */
+/* Support to connections:
+   - If CONNECTION_BIT = 0, connections are not supported;
+     device is a broadcaster-only if CONTROLLER_MASTER_BIT = 0,
+     or a broadcaster and observer if CONTROLLER_MASTER_BIT = 1.
+   - If CONNECTION_BIT = 1, connections are supported;
+     device can only act as broadcaster or peripheral if CONTROLLER_MASTER_BIT = 0,
+     or any role (broadcaster, observer, peripheral, and central) if CONTROLLER_MASTER_BIT = 1.
+*/
+#define CONNECTION_BIT                         ((uint32_t)0x0800)  /*!< Bit 11 selected */
 /**
   * @}
   */
 
-/** @brief  Link Layer Enabled or not based on LL_ONLY preprocessor option */
-#ifdef LL_ONLY
+/** @brief Link Layer Enabled or not based on LL_ONLY and BLESTACK_CONTROLLER_ONLY preprocessor options */
+#ifndef BLESTACK_CONTROLLER_ONLY
+#define BLESTACK_CONTROLLER_ONLY (0U)
+#endif
+#if defined(LL_ONLY) || (BLESTACK_CONTROLLER_ONLY == 1U)
 #define LINK_LAYER_ONLY_ENABLED (1U)
 #else
 #define LINK_LAYER_ONLY_ENABLED (0U)
@@ -80,7 +97,8 @@
     ((uint16_t)(L2CAP_COS_ENABLED * L2CAP_COS_BIT))                                               | \
     ((uint16_t)(CONTROLLER_PERIODIC_ADV_ENABLED * CONTROLLER_PERIODIC_ADV_BIT))                   | \
     ((uint16_t)(CONTROLLER_CTE_ENABLED * CONTROLLER_CTE_BIT))                                     | \
-    ((uint16_t)(CONTROLLER_POWER_CONTROL_ENABLED * CONTROLLER_POWER_CONTROL_BIT))                   \
+    ((uint16_t)(CONTROLLER_POWER_CONTROL_ENABLED * CONTROLLER_POWER_CONTROL_BIT))                 | \
+    ((uint16_t)(CONNECTION_ENABLED * CONNECTION_BIT))                               \
 )
 
 tBleStatus aci_hal_updater_start(void)
@@ -169,6 +187,56 @@ tBleStatus aci_hal_transmitter_test_packets(uint8_t TX_Frequency,
                                    Length_Of_Test_Data /* 1 */,
                                    Packet_Payload /* 1 */);
 #endif 
+  
+  if(status == 0x00)
+  {    
+    num_packets = Number_Of_Packets;
+  }
+  
+  return status;
+}
+
+/**
+ * @brief  This API implements the hci le transmitter test v2 with 
+ *         the capability to set the number of packets to be sent. 
+ * @param  TX_Channel: TX channel 
+ * @param  Test_Data_Length: lenght of test data
+ * @param  Packet_Payload: packet payload 
+ * @param  Number_Of_Packets: number of packets to be sent on test
+ * @param  PHY: PHY to be used by the transmitter
+ * @param  CTE_Length: CTE length
+ * @param  CTE_Type: CTE type
+ * @param  Switching_Pattern_Length: switching pattern length
+ * @param  Antenna_IDs: antenna ids
+ * @param  Transmit_Power_Level: tx power level
+ * @retval status
+*/
+tBleStatus aci_hal_transmitter_test_packets_v2(uint8_t TX_Channel,
+                                               uint8_t Test_Data_Length,
+                                               uint8_t Packet_Payload,
+                                               uint16_t Number_Of_Packets,
+                                               uint8_t PHY,
+                                               uint8_t CTE_Length,
+                                               uint8_t CTE_Type,
+                                               uint8_t Switching_Pattern_Length,
+                                               uint8_t Antenna_IDs[])
+{
+  extern uint16_t num_packets;
+  tBleStatus status; 
+  
+  if(Number_Of_Packets == 0)
+  {
+    return BLE_ERROR_INVALID_HCI_CMD_PARAMS;
+  }
+
+  status =  hci_le_transmitter_test_v3(TX_Channel,
+                                       Test_Data_Length,
+                                       Packet_Payload,
+                                       PHY,
+                                       CTE_Length,
+                                       CTE_Type,
+                                       Switching_Pattern_Length,
+                                       Antenna_IDs);
   
   if(status == 0x00)
   {    

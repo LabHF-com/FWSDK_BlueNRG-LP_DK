@@ -24,7 +24,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "Beacon_config.h"
@@ -55,7 +55,12 @@ SemaphoreHandle_t BLETickSemaphoreHandle;
 /* Mutex used to access UART resource */
 SemaphoreHandle_t UARTSemaphoreHandle;
 
-#define BLE_BEACON_VERSION_STRING "1.0.0"
+#define BLE_BEACON_VERSION_STRING "1.1"
+
+/* Advertising interval for legacy advertising (0.625 ms units) 
+  For iBeacon this should be set to 100 ms. */
+#define LEGACY_ADV_INTERVAL     160  /* 100 ms */
+#define EXT_ADV_INTERVAL        160 /* 100 ms */
 
 /* Set to 1 to enable the name AD data in extended advertising events (if
   extended advertising events are used).  */
@@ -97,13 +102,14 @@ SemaphoreHandle_t UARTSemaphoreHandle;
                         
 /* Private variables ---------------------------------------------------------*/
 
+/* This is the length of advertising data to be set for legacy advertising.
+   It does not include the device name, which is sent only in extended
+  advertising events. */
+#define SHORT_ADV_DATA_LENGTH    27
 
-  /* Set AD Type Flags at beginning on Advertising packet  */
 static uint8_t adv_data[] = {
-  /* Advertising data: Flags AD Type */
-  0x02, 
-  0x01, 
-  0x06, 
+  /* Advertising data: Flags AD Type not supported if broadcaster only */
+  /* 0x02, 0x01, 0x06, */
   /* Advertising data: manufacturer specific data */
   26, //len
   AD_TYPE_MANUFACTURER_SPECIFIC_DATA,  //manufacturer type
@@ -137,20 +143,15 @@ void ModulesInit(void)
   BLE_STACK_InitTypeDef BLE_STACK_InitParams = BLE_STACK_INIT_PARAMETERS;
   
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA|LL_AHB_PERIPH_RNG);
+
   
-  /* BlueNRG-LP stack init */
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != BLE_STATUS_SUCCESS) {
-    PRINTF("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
-    while(1);
-  }
   BLECNTR_InitGlobal();
   
   HAL_VTIMER_InitType VTIMER_InitStruct = {HS_STARTUP_TIME, INITIAL_CALIBRATION, CALIBRATION_INTERVAL};
   HAL_VTIMER_Init(&VTIMER_InitStruct);
   
   BLEPLAT_Init();  
-   if (PKAMGR_Init() == PKAMGR_ERROR)
+  if (PKAMGR_Init() == PKAMGR_ERROR)
   {
       while(1);
   }
@@ -159,9 +160,16 @@ void ModulesInit(void)
       while(1);
   }
   
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
-
+  
+  /* BlueNRG-LP stack init */
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != BLE_STATUS_SUCCESS) {
+    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
+    while(1);
+  }
+  
 }
 
 void ModulesTick(void)
@@ -187,25 +195,15 @@ void Device_Init(void)
   aci_hal_write_config_data(CONFIG_DATA_PUBADDR_OFFSET, CONFIG_DATA_PUBADDR_LEN, address);
   
   /* Set the TX Power to 0 dBm */
-  ret = aci_hal_set_tx_power_level(0,25);
+  ret = aci_hal_set_tx_power_level(0, 24);
   if(ret != 0) {
     PRINTF ("Error in aci_hal_set_tx_power_level() 0x%04xr\n", ret);
     while(1);
   }
 
-  /* Init the GATT */
-  ret = aci_gatt_srv_init();
-  if (ret != 0) 
-  {
-    PRINTF ("Error in aci_gatt_srv_init() 0x%04xr\n", ret);
-  }
-  else
-  {
-    PRINTF ("aci_gatt_srv_init() --> SUCCESS\r\n");
-  }
   
-  /* Init the GAP */
-  ret = aci_gap_init(0x01, 0x00, 0x08, PUBLIC_ADDR, &service_handle, &dev_name_char_handle, &appearance_char_handle);
+  /* Init the GAP: broadcaster role */
+  ret = aci_gap_init(GAP_BROADCASTER_ROLE, 0x00, 0x08, PUBLIC_ADDR, &service_handle, &dev_name_char_handle, &appearance_char_handle);
   if (ret != 0)
   {
     PRINTF ("Error in aci_gap_init() 0x%04x\r\n", ret);
@@ -216,7 +214,6 @@ void Device_Init(void)
   }
 }
 
-
 /**
 * @brief  Start beaconing
 * @param  None 
@@ -226,11 +223,14 @@ static void Start_Beaconing(void)
 {  
   uint8_t ret;
   Advertising_Set_Parameters_t Advertising_Set_Parameters[2];
+  uint8_t adv_sets = 0;
+  
+#ifdef LEGACY_ADV
    
-  /* Set advertising configuration for legacy advertising. */  
-  ret = aci_gap_set_advertising_configuration(0, GAP_MODE_GENERAL_DISCOVERABLE,
+  /* Set advertising configuration for legacy advertising in broadcast mode */  
+  ret = aci_gap_set_advertising_configuration(0, GAP_MODE_BROADCAST,
                                               ADV_PROP_LEGACY,
-                                              160, 160,
+                                              LEGACY_ADV_INTERVAL, LEGACY_ADV_INTERVAL,
                                               ADV_CH_ALL,
                                               0,NULL, /* No peer address */
                                               ADV_NO_WHITE_LIST_USE,
@@ -242,22 +242,32 @@ static void Start_Beaconing(void)
                                               0 /* No scan request notifications */);
   if (ret != BLE_STATUS_SUCCESS)
   {
-    PRINTF ("Error in aci_gap_set_advertising_configuration() 0x%04x\r\n", ret);
+    PRINTF("Error in aci_gap_set_advertising_configuration() 0x%02x\r\n", ret);
     return;
   }
   
-  ret = aci_gap_set_advertising_data(0, ADV_COMPLETE_DATA, 30, adv_data);
+  ret = aci_gap_set_advertising_data(0, ADV_COMPLETE_DATA, SHORT_ADV_DATA_LENGTH, adv_data);
   if (ret != BLE_STATUS_SUCCESS)
   {
-    PRINTF ("Error in aci_gap_set_advertising_data() 0x%04x\r\n", ret);
+    PRINTF("Error in aci_gap_set_advertising_data() 0x%02x\r\n", ret);
     return;
   }
   
-#if EXTENDED_ADV
-  /* Set advertising configuration for extended advertising. */  
-  ret = aci_gap_set_advertising_configuration(1, GAP_MODE_GENERAL_DISCOVERABLE,
+  printf("Legacy advertising configured\n");
+  
+  Advertising_Set_Parameters[adv_sets].Advertising_Handle = 0;
+  Advertising_Set_Parameters[adv_sets].Duration = 0;
+  Advertising_Set_Parameters[adv_sets].Max_Extended_Advertising_Events = 0;
+  
+  adv_sets++;
+  
+#endif
+  
+#ifdef EXTENDED_ADV
+  /* Set advertising configuration for extended advertising in broadcast mode */  
+  ret = aci_gap_set_advertising_configuration(1, GAP_MODE_BROADCAST,
                                               ADV_PROP_NONE,
-                                              160, 160,
+                                              EXT_ADV_INTERVAL, EXT_ADV_INTERVAL,
                                               ADV_CH_ALL,
                                               0,NULL, /* No peer address */
                                               ADV_NO_WHITE_LIST_USE,
@@ -265,48 +275,42 @@ static void Start_Beaconing(void)
                                               (EXT_ADV_PHY==LE_2M_PHY)?LE_1M_PHY:EXT_ADV_PHY, /* Primary advertising PHY */
                                               0, /* 0 skips */
                                               EXT_ADV_PHY, /* Secondary advertising PHY */
-                                              1, /* SID */
+                                              0, /* SID */
                                               0 /* No scan request notifications */);
   if (ret != BLE_STATUS_SUCCESS)
   {
-    PRINTF ("Error in aci_gap_set_advertising_configuration() 0x%04x\r\n", ret);
+    PRINTF("Error in aci_gap_set_advertising_configuration() 0x%02x\r\n", ret);
     return;
   }
   
   ret = aci_gap_set_advertising_data(1, ADV_COMPLETE_DATA, sizeof(adv_data), adv_data);
   if (ret != BLE_STATUS_SUCCESS)
   {
-    PRINTF ("Error in aci_gap_set_advertising_data() 0x%04x\r\n", ret);
+    PRINTF("Error in aci_gap_set_advertising_data() 0x%02x\r\n", ret);
     return;
   }
   
-#endif
+  printf("Extended advertising configured\n");
   
-  Advertising_Set_Parameters[0].Advertising_Handle = 0;
-  Advertising_Set_Parameters[0].Duration = 0;
-  Advertising_Set_Parameters[0].Max_Extended_Advertising_Events = 0;
-  Advertising_Set_Parameters[1].Advertising_Handle = 1; // This is the handle for the set containing extended events
-  Advertising_Set_Parameters[1].Duration = 0;
-  Advertising_Set_Parameters[1].Max_Extended_Advertising_Events = 0;
+  Advertising_Set_Parameters[adv_sets].Advertising_Handle = 1;
+  Advertising_Set_Parameters[adv_sets].Duration = 0;
+  Advertising_Set_Parameters[adv_sets].Max_Extended_Advertising_Events = 0;
   
+  adv_sets++;
   
-   /* Enable advertising */
-#if EXTENDED_ADV  
-  ret = aci_gap_set_advertising_enable(ENABLE, 2, Advertising_Set_Parameters);
-#else
-  ret = aci_gap_set_advertising_enable(ENABLE, 1, Advertising_Set_Parameters);
-#endif
+#endif /* EXTENDED_ADV */
+
+  /* Enable advertising */
+  ret = aci_gap_set_advertising_enable(ENABLE, adv_sets, Advertising_Set_Parameters);
   if (ret != BLE_STATUS_SUCCESS)
   {
-    PRINTF ("Error in aci_gap_set_advertising_enable() 0x%04x\r\n", ret);
+    PRINTF ("Error in aci_gap_set_advertising_enable() 0x%02x\r\n", ret);
     return;
   }
-  else
-    PRINTF ("aci_gap_set_advertising_enable() --> SUCCESS\r\n");
+  
+  printf("Advertising started\n");
 
 }
-
-
 
 int main(void) 
 {
@@ -429,20 +433,20 @@ static void changeADVDataTask( void *pvParameters )
     
     BLE_ACI_PROTECTED(hci_le_rand(Random_Number));
     
-    adv_data[28] = Random_Number[0];
+    adv_data[25] = Random_Number[0];
     
     /* In this case there is no need to disable advertising before updating buffer
        content, since only one byte is changed (atomic operation) and there is no
        risk to have inconsistent data. */
     
-    BLE_ACI_PROTECTED(aci_gap_set_advertising_data(0, ADV_COMPLETE_DATA, 30, adv_data));
+    BLE_ACI_PROTECTED(aci_gap_set_advertising_data(0, ADV_COMPLETE_DATA, SHORT_ADV_DATA_LENGTH, adv_data));
     
     
 #if EXTENDED_ADV
     BLE_ACI_PROTECTED(aci_gap_set_advertising_data(1, ADV_COMPLETE_DATA, sizeof(adv_data), adv_data));
 #endif
     
-    PRINTF("ADV change %d\r\n", adv_data[28]);
+    PRINTF("ADV change %d\r\n", adv_data[25]);
     
   }  
 }
@@ -455,7 +459,7 @@ void createTasks( void )
   
   xTaskCreate( testTask, "Test", 80, NULL, TEST_TASK_PRIORITY, NULL );
   
-  xTaskCreate( changeADVDataTask, "ADV", 100, NULL, TEST_TASK_PRIORITY, NULL );
+  xTaskCreate( changeADVDataTask, "ADV", 150, NULL, TEST_TASK_PRIORITY, NULL );
   
   /* Start the tasks and timer running. */
   vTaskStartScheduler();
@@ -480,15 +484,8 @@ PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level)
   return POWER_SAVE_LEVEL_STOP_NOTIMER;
 }
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

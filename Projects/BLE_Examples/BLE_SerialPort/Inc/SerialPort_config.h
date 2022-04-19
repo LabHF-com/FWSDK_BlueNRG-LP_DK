@@ -74,6 +74,7 @@
                                                          NUM_SYNC_SLOTS_CONF, MAX_NUM_CTE_ANTENNA_IDS, MAX_NUM_CTE_IQ_SAMPLES, \
                                                          ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE)) 
 
+#define QUEUED_WRITE_BUFFER_SIZE    812
 
 /* Maximum duration of the connection event */
 #define MAX_CONN_EVENT_LENGTH_CONF 0xFFFFFFFF

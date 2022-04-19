@@ -42,4 +42,5 @@ uint8_t fifo_get_var_len_item(circular_fifo_t *fifo, uint16_t *size, uint8_t  *b
 uint8_t fifo_get_ptr_var_len_item(circular_fifo_t *fifo, uint16_t *size, uint8_t  **ptr);
 uint8_t fifo_discard_var_len_item(circular_fifo_t *fifo);
 void fifo_flush(circular_fifo_t *fifo);
+void fifo_roll_back(circular_fifo_t *fifo, uint16_t size);
 #endif /* __FIFO_H__ */

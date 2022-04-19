@@ -760,7 +760,10 @@ tBleStatus aci_gap_set_advertising_configuration(uint8_t Advertising_Handle,
   index_input += 1;
   cp0->Peer_Address_Type = htob(Peer_Address_Type, 1);
   index_input += 1;
-  Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  if(Peer_Address)
+  {
+    Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  }
   index_input += 6;
   cp0->Advertising_Filter_Policy = htob(Advertising_Filter_Policy, 1);
   index_input += 1;

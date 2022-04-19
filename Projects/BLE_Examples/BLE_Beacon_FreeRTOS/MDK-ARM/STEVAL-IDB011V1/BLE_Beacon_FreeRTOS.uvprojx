@@ -10,13 +10,13 @@
       <TargetName>Release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-355</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-LP_DFP.2.0.1</PackID>
+          <PackID>Keil.STBlueNRG-LP_DFP.3.0.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -185,6 +185,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -312,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -321,24 +322,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
-            <vShortEn>0</vShortEn>
-            <vShortWch>0</vShortWch>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF SAVE_CONTEXT_ON_CSTACK=0</Define>
+              <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_CUSTOM_CONF LEGACY_ADV SAVE_CONTEXT_ON_CSTACK=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB011V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\include;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\..\..\..\..\Middlewares\ST\FreeRTOS\BlueNRG;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</IncludePath>
+              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\include;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\portable\GCC\ARM_CM0;..\..\..\..\..\Middlewares\ST\FreeRTOS\BlueNRG;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,9 +352,9 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>3</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls>-x assembler-with-cpp</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
@@ -383,36 +384,6 @@
           <GroupName>Drivers/BSP</GroupName>
           <Files>
             <File>
-              <FileName>bluenrg_lp_evb_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</FilePath>
-            </File>
-            <File>
-              <FileName>bluenrg_lp_evb_com.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</FilePath>
-            </File>
-            <File>
-              <FileName>bluenrg_lp_evb_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>bluenrg_lp_evb_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>bluenrg_lp_evb_led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</FilePath>
-            </File>
-            <File>
-              <FileName>bluenrg_lp_evb_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</FilePath>
-            </File>
-            <File>
               <FileName>lps22hh_reg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/BSP/Components/lps22hh_STdC/driver/lps22hh_reg.c</FilePath>
@@ -421,6 +392,36 @@
               <FileName>lsm6dsox_reg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/BSP/Components/lsm6dsox_STdC/driver/lsm6dsox_reg.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_com.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_com.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_io.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluenrg_lp_evb_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -431,6 +432,11 @@
               <FileName>system_BlueNRG_LP.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_BlueNRG_LP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -488,7 +494,7 @@
               <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>rf_driver_ll_pka.c</FileName>
+              <FileName>rf_driver_ll_pka_v7b.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pka_v7b.c</FilePath>
             </File>
@@ -498,7 +504,7 @@
               <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pwr.c</FilePath>
             </File>
             <File>
-              <FileName>rf_driver_ll_radio.c</FileName>
+              <FileName>rf_driver_ll_radio_2g4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_radio_2g4.c</FilePath>
             </File>
@@ -553,9 +559,9 @@
               <FilePath>../../Src/BLE_Beacon_FreeRTOS_main.c</FilePath>
             </File>
             <File>
-              <FileName>bluenrg_lp_it.c</FileName>
+              <FileName>rf_device_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../Src/bluenrg_lp_it.c</FilePath>
+              <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -581,6 +587,11 @@
               <FileName>stack_user_cfg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Src/stack_user_cfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stack_cns_api_stubs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_cns_api_stubs.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -625,7 +636,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\portable\RVDS\ARM_CM0\port.c</FilePath>
+              <FilePath>..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\portable\GCC\ARM_CM0\port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -706,6 +717,75 @@
         </Group>
         <Group>
           <GroupName>Middlewares/Profiles</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>0</AlwaysBuild>
+              <GenerateAssemblyFile>0</GenerateAssemblyFile>
+              <AssembleAssemblyFile>0</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>gap_profile.c</FileName>

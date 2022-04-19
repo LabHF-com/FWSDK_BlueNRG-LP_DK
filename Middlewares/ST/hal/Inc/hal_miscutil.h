@@ -25,8 +25,11 @@
 #include "crash_handler.h"
 #include "system_util.h"
 
-#define DIE_ID_BLUENRG_LP     ((uint8_t)3)
+#define DIE_SW_ID_BLUENRG_LP  ((uint8_t)3)
+#define DIE_SW_ID_BLUENRG_LPS ((uint8_t)5)
 #define JTAG_ID_CODE_LP       ((uint32_t)0x0201E041)
+#define JTAG_ID_CODE_LPS      ((uint32_t)0x02028041)
+#define DIE_SW_ID_UNKOWN      ((uint8_t)0xFF)
 
 /**
  * @brief A structure that represents part information details
@@ -86,11 +89,20 @@ void HAL_CrashHandler(uint32_t msp, uint32_t signature);
   * @note   This function should not be called by the the application if the
   *         BLE stack is used. Instead, user must call
   *         aci_hal_set_tx_power_level() to change output power mode.
+  *         This function enables BLE_RXTX_SEQ_IRQ interrupt: HAL_RXTX_SEQ_IRQHandler()
+  *         must be called by BLE_RXTX_SEQ_IRQHandler().
   * @param  state Enable or disable the ability to reach 8 dBm. This parameter
   *               can be set either to ENABLE or DISABLE.
   * @retval None
   */
 void HAL_SetHighPower(FunctionalState state);
+
+/**
+  * @brief  Function to be called by BLE_RXTX_SEQ_IRQHandler to control high 
+   *        power mode.
+  * @retval None
+  */
+void HAL_RXTX_SEQ_IRQHandler(void);
 
 
 #endif /* __HAL_MISCUTIL_H__ */

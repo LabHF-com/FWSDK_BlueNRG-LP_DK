@@ -15,7 +15,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -264,7 +264,7 @@ uint8_t application_init(void)
   }
   
   /* Set the TX power to 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
   
   /* GATT Init */
   ret = aci_gatt_srv_init();

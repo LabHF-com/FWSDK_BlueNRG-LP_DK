@@ -1,8 +1,8 @@
-/******************** (C) COPYRIGHT 2018 STMicroelectronics ********************
-* File Name          : system_Bluenrg_LP.c
+/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+* File Name          : system_BlueNRG_LP.c
 * Author             : AMG - RF Application team
 * Version            : V1.0.0
-* Date               : 12-December-2018
+* Date               : 22-November-2021
 * Description        : BlueNRG-LP Low Level Init function
 ********************************************************************************
 * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -27,14 +27,6 @@
 #ifndef CONFIG_NUM_MAX_LINKS
 #define CONFIG_NUM_MAX_LINKS 8
 #endif 
-
-
-/* OTA tag used to  tag a  valid application on interrupt vector table*/
-#if defined (CONFIG_OTA_SERVICE_MANAGER)
-#define OTA_VALID_APP_TAG (0xAABBCCDD) /* OTA Service Manager has a special valid tag */
-#else
-#define OTA_VALID_APP_TAG (0xAA5555AA) 
-#endif
 
 #define SYSCLK_EQUAL_BLECLK          0x28
 #define SYSCLK_DOUBLE_BLECLK         0x29
@@ -94,6 +86,9 @@
 #define LR_RSSI_THR         (0x1D)
 #define LR_PD_THR           (0x59)
 #define LR_AAC_THR          (0x32)
+/* Fine tuning values for antenna switching and IQ samplig */
+#define RX_TIME_TO_SAMPLE   (0x1F)
+#define RX_TIME_TO_SWITCH   (0x09)
 
 
 /* Private types -------------------------------------------------------------*/
@@ -105,70 +100,18 @@ uint32_t SystemCoreClock  = 64000000U; /*CPU: HSI clock after startup (64MHz)*/
 static uint8_t SmpsTrimConfig(void);
 static uint8_t LSConfig(void);
 
-int __low_level_init(void);
-void RESET_HANDLER(void);
-void CS_contextRestore(void);
-
-/* Exported function prototypes ---------------------------------------------*/
-/* Weak Function declaration for all the Interrupt Handler */
-WEAK_FUNCTION(void NMI_IRQHandler(void)) {}
-WEAK_FUNCTION(void HardFault_IRQHandler(void)) {}
-WEAK_FUNCTION(void SVC_IRQHandler(void)) {}
-WEAK_FUNCTION(void PendSV_IRQHandler(void)) {}                         
-WEAK_FUNCTION(void SysTick_IRQHandler(void)) {}
-WEAK_FUNCTION(void FLASH_IRQHandler(void)) {}
-WEAK_FUNCTION(void RCC_IRQHandler(void)) {}
-WEAK_FUNCTION(void PVD_IRQHandler(void)) {}
-WEAK_FUNCTION(void I2C1_IRQHandler(void)) {}
-#if defined(I2C2) 
-WEAK_FUNCTION(void I2C2_IRQHandler(void)) {}
-#endif
-#if defined(SPI1) 
-WEAK_FUNCTION(void SPI1_IRQHandler(void)) {}
-#endif
-#if defined(SPI2) 
-WEAK_FUNCTION(void SPI2_IRQHandler(void)) {}
-#endif
-WEAK_FUNCTION(void SPI3_IRQHandler(void)) {}
-WEAK_FUNCTION(void USART1_IRQHandler(void)) {}
-WEAK_FUNCTION(void LPUART1_IRQHandler(void)) {}
-#if defined(TIM1)
-WEAK_FUNCTION(void TIM1_IRQHandler(void)) {}
-#endif
-#if defined(TIM2)
-WEAK_FUNCTION(void TIM2_IRQHandler(void)) {}
-#endif
-WEAK_FUNCTION(void RTC_IRQHandler(void)) {}
-WEAK_FUNCTION(void ADC_IRQHandler(void)) {}
-WEAK_FUNCTION(void PKA_IRQHandler(void)) {}
-WEAK_FUNCTION(void UPCONV_IRQHandler(void)) {}
-WEAK_FUNCTION(void GPIOA_IRQHandler(void)) {}
-WEAK_FUNCTION(void GPIOB_IRQHandler(void)) {}
-WEAK_FUNCTION(void DMA_IRQHandler(void)) {}
-WEAK_FUNCTION(void BLE_TX_RX_IRQHandler(void)) {}
-WEAK_FUNCTION(void BLE_AES_IRQHandler(void)) {}
-WEAK_FUNCTION(void BLE_ERROR_IRQHandler(void)) {}
-WEAK_FUNCTION(void RADIO_CTRL_IRQHandler(void)) {}
-WEAK_FUNCTION(void MR_BLE_IRQHandler(void)) {}
-WEAK_FUNCTION(void CPU_WKUP_IRQHandler(void)) {}
-WEAK_FUNCTION(void BLE_WKUP_IRQHandler(void)) {}
-WEAK_FUNCTION(void BLE_RXTX_SEQ_IRQHandler(void)) {}
-#if defined(TIM16)
-WEAK_FUNCTION(void TIM16_IRQHandler(void)) {}
-#endif
-#if defined(TIM17)
-WEAK_FUNCTION(void TIM17_IRQHandler(void)) {}
-#endif
-
-/* Weak Function declaration for the Context Restore */
-WEAK_FUNCTION(void CS_contextRestore(void)) {} 
+/* Exported function prototypes -----------------------------------------------*/
 
 /* Exported variables ---------------------------------------------------------*/
 NO_INIT_SECTION(REQUIRED(RAM_VR_TypeDef RAM_VR), ".ram_vr");
 
 /* BLUE RAM, reserved for radio communication. Not usable from the application */
 SECTION(".bss.__blue_RAM")
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+REQUIRED(uint8_t __blue_RAM[CONFIG_NUM_MAX_LINKS*92+28]) = {0,};
+#else /* BlueNRG_LP */
 REQUIRED(uint8_t __blue_RAM[CONFIG_NUM_MAX_LINKS*80+28]) = {0,};
+#endif
 
 
 /*************************************************************************************
@@ -177,240 +120,7 @@ REQUIRED(uint8_t __blue_RAM[CONFIG_NUM_MAX_LINKS*80+28]) = {0,};
  **
  **************************************************************************************/
 /* Exported function prototypes ---------------------------------------------*/
-/* Low Level Init function */
-int __low_level_init(void) 
-{
-  /* If the reset reason is a wakeup from DEEPSTOP restore the context */
-  if ((RCC->CSR == 0) && ((PWR->SR1 != 0)||(PWR->SR3 != 0))) {
-#ifndef NO_SMART_POWER_MANAGEMENT
-    RAM_VR.WakeupFromSleepFlag = 1; /* A wakeup from DEEPSTOP occurred */
-    CS_contextRestore();            /* Restore the context */
-    /* if the context restore worked properly, we should never return here */
-    while(1) { 
-      NVIC_SystemReset(); 
-    }
-#else
-    return 0;
-#endif   
-  }
-  return 1;
-}
 
-#ifdef __CC_ARM
-__attribute__((noreturn)) void RESET_HANDLER(void)
-{
-  if(__low_level_init()==1)
-    __main();
-  else {
-    __set_MSP((uint32_t)_INITIAL_SP);
-    main();
-  }
-  while(1);
-}
-#else
-#ifdef __GNUC__
-
-#include <stdint.h>
-#include <errno.h>
-
-extern unsigned long _etext;
-extern unsigned long _sidata;       /* start address for the initialization values of the .data section. Defined in linker script */
-extern unsigned long _sdata;        /* start address for the .data section. Defined in linker script */
-extern unsigned long _edata;        /* end address for the .data section. Defined in linker script */
-extern unsigned long _sbss;         /* start address for the .bss section. Defined in linker script */
-extern unsigned long _ebss;         /* end address for the .bss section. Defined in linker script */
-extern unsigned long _sbssblue;     /* start address for the section reserved for the Blue controller. Defined in linker script */
-extern unsigned long _ebssblue;     /* end address for the section reserved for the Blue controller. Defined in linker script */
-extern unsigned long _estack;       /* init value for the stack pointer. Defined in linker script */
-extern unsigned long _sidata2;      /* start address for the initialization values of the special ram_preamble */
-extern unsigned long _sdata2;       /* start address the special ram_preamble defined in linker script */
-extern unsigned long _edata2;       /* end address the special ram_preamble defined in linker script */
-extern uint8_t _sheap;              /* start address for the .heap section. Defined in linker script */
-extern uint8_t _eheap;              /* end address for the .heap section. Defined in linker script */
-
-extern int main(void);
-
-void RESET_HANDLER(void)
-{
-  if(__low_level_init()==1)	{
-    unsigned long *pulSrc, *pulDest;
-
-    // Copy the data segment initializers from flash to SRAM.
-    pulSrc = &_sidata;
-    for(pulDest = &_sdata; pulDest < &_edata; )
-    {
-      *(pulDest++) = *(pulSrc++);
-    }
-
-    // Zero fill the bss segment.
-    for(pulDest = &_sbssblue; pulDest < &_ebssblue; )
-    {
-      *(pulDest++) = 0;
-    }
-
-    for(pulDest = &_sbss; pulDest < &_ebss; )
-    {
-      *(pulDest++) = 0;
-    }
-  }
-  // Call the application's entry point.
-  __set_MSP((uint32_t)_INITIAL_SP);
-  main();
-}
-
-void * _sbrk(int32_t incr)
-{
-  static uint8_t *heap_end;
-  uint8_t *prev_heap_end;
-
-  if (heap_end == 0)
-    heap_end = &_sheap;
-
-  prev_heap_end = heap_end;
-  if ((heap_end + incr) > (&_eheap))
-  {
-//    write(1, "Heap and stack collision\n", 25);
-//    abort();
-    errno = ENOMEM;
-    return (void *) -1;
-  }
-
-  heap_end += incr;
-
-  return prev_heap_end;
-}
-
-#endif /* __GNUC__ */
-#endif /* __CC_ARM */
-
-/* Interrupt Vector Table */
-SECTION(".intvec")
-REQUIRED(const intvec_elem __vector_table[]) = {
-    {.__ptr = _INITIAL_SP},                   /* Stack address                      */
-    {RESET_HANDLER},                    /* Reset handler is C initialization. */
-    {NMI_IRQHandler},                         /* The NMI handler                    */
-    {HardFault_IRQHandler},                   /* The hard fault handler             */
-    {(intfunc) OTA_VALID_APP_TAG},            /* OTA Application                    */
-    {(intfunc) BLUE_FLAG_TAG},                /* Reserved for blue flag DTM updater */
-    {0x00000000},                             /* Reserved                           */
-    {0x00000000},                             /* Reserved                           */
-    {0x00000000},                             /* Reserved                           */
-    {0x00000000},                             /* Reserved                           */
-    {0x00000000},                             /* Reserved                           */
-    {SVC_IRQHandler},                         /* SVCall                             */
-    {0x00000000},                             /* Reserved                           */
-    {0x00000000},                             /* Reserved                           */
-    {PendSV_IRQHandler},                      /* PendSV                             */
-    {SysTick_IRQHandler},                     /* SysTick_IRQHandler                 */
-    {FLASH_IRQHandler},                       /* IRQ0:  FLASH Controller            */
-    {RCC_IRQHandler},                         /* IRQ1:  RCC                         */
-    {PVD_IRQHandler},                         /* IRQ2:  PVD                         */
-    {I2C1_IRQHandler},                        /* IRQ3:  I2C1                        */
-#if defined(I2C2)
-    {I2C2_IRQHandler},                        /* IRQ4:  I2C2                        */
-#else
-    {0x00000000},                             /* IRQ4                               */
-#endif
-#if defined(SPI1)
-    {SPI1_IRQHandler},                        /* IRQ5:  SPI1                        */
-#else
-    {0x00000000},                             /* IRQ5                               */
-#endif
-#if defined(SPI2)
-    {SPI2_IRQHandler},                        /* IRQ6:  SPI2                        */
-#else
-    {0x00000000},                             /* IRQ6                               */
-#endif
-    {SPI3_IRQHandler},                        /* IRQ7:  SPI3                        */
-    {USART1_IRQHandler},                      /* IRQ8:  USART1                      */
-    {LPUART1_IRQHandler},                     /* IRQ9:  LPUART1                     */
-#if defined(TIM1)
-    {TIM1_IRQHandler},                        /* IRQ10: TIM1                        */
-#endif
-#if defined(TIM2)
-    {TIM2_IRQHandler},                        /* IRQ10: TIM2                        */
-#endif
-    {RTC_IRQHandler},                         /* IRQ11: RTC                         */
-    {ADC_IRQHandler},                         /* IRQ12: ADC                         */
-    {PKA_IRQHandler},                         /* IRQ13: PKA                         */
-    {UPCONV_IRQHandler},                      /* IRQ14: AHB_UP_CONVERTER            */
-    {GPIOA_IRQHandler},                       /* IRQ15: GPIOA                       */
-    {GPIOB_IRQHandler},                       /* IRQ16: GPIOB                       */
-    {DMA_IRQHandler},                         /* IRQ17: DMA                         */
-    {BLE_TX_RX_IRQHandler},                   /* IRQ18: BLE TX RX                   */
-    {BLE_AES_IRQHandler},                     /* IRQ19: BLE AES                     */
-    {BLE_ERROR_IRQHandler},                   /* IRQ20: BLE Error                   */
-    {RADIO_CTRL_IRQHandler},                  /* IRQ21: Radio Control               */
-    {MR_BLE_IRQHandler},                      /* IRQ22: RRM and Radio FSM           */
-    {CPU_WKUP_IRQHandler},                    /* IRQ23: CPU Wakeup                  */
-    {BLE_WKUP_IRQHandler},                    /* IRQ24: BLE Wakeup                  */
-    {BLE_RXTX_SEQ_IRQHandler},                /* IRQ25: BLE RX/TX Sequence          */
-#if defined(TIM16)
-    {TIM16_IRQHandler},                       /* IRQ26: TIM16                       */
-#else
-    {0x00000000},                             /* IRQ26                              */
-#endif
-#if defined(TIM17)
-    {TIM17_IRQHandler},                       /* IRQ27: TIM17                       */
-#else    
-    {0x00000000},                             /* IRQ27                              */
-#endif
-    {0x00000000},                             /* IRQ28                              */
-    {0x00000000},                             /* IRQ29                              */
-    {0x00000000},                             /* IRQ30                              */
-    {0x00000000}                              /* IRQ31                              */
-};
-
-/* Configure all the interrupts priority. 
- * The application can modify the interrupts priority.
- * The BLE_TX_RX_IRQn SHALL maintain the highest priority
- */
-void setInterruptPriority(void)
-{
-  NVIC_SetPriority(FLASH_IRQn,       IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(RCC_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(PVD_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(I2C1_IRQn,        IRQ_LOW_PRIORITY);
-#if defined(I2C2) 
-  NVIC_SetPriority(I2C2_IRQn,        IRQ_LOW_PRIORITY);
-#endif
-#if defined(SPI1) 
-  NVIC_SetPriority(SPI1_IRQn,        IRQ_LOW_PRIORITY);
-#endif
-#if defined(SPI2) 
-  NVIC_SetPriority(SPI2_IRQn,        IRQ_LOW_PRIORITY);
-#endif
-  NVIC_SetPriority(SPI3_IRQn,        IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(USART1_IRQn,      IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(LPUART1_IRQn,     IRQ_LOW_PRIORITY);
-#if defined(TIM1)
-  NVIC_SetPriority(TIM1_IRQn,        IRQ_LOW_PRIORITY);
-#endif
-#if defined(TIM2)
-  NVIC_SetPriority(TIM2_IRQn,        IRQ_LOW_PRIORITY);
-#endif
-  NVIC_SetPriority(RTC_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(ADC_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(PKA_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(UPCONV_IRQn,      IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(GPIOA_IRQn,       IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(GPIOB_IRQn,       IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(DMA_IRQn,         IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(BLE_TX_RX_IRQn,   IRQ_CRITICAL_PRIORITY);
-  NVIC_SetPriority(BLE_AES_IRQn,     IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(BLE_ERROR_IRQn,   IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(RADIO_CTRL_IRQn,  IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(MR_BLE_IRQn,      IRQ_LOW_PRIORITY);
-  NVIC_SetPriority(CPU_WKUP_IRQn,    IRQ_HIGH_PRIORITY);
-  NVIC_SetPriority(BLE_WKUP_IRQn,    IRQ_CRITICAL_PRIORITY);
-  NVIC_SetPriority(BLE_SEQ_IRQn,     IRQ_LOW_PRIORITY);
-#if defined(TIM16)
-  NVIC_SetPriority(TIM16_IRQn,       IRQ_LOW_PRIORITY);
-#endif
-#if defined(TIM17)
-  NVIC_SetPriority(TIM17_IRQn,       IRQ_LOW_PRIORITY);
-#endif
-}
 
 /**
   * @brief System Timer timeout configuration
@@ -445,6 +155,40 @@ uint8_t SystemTimer_TimeoutExpired(void)
 }
 
 /**
+  * @brief Wait for a peripheral to be ready or not.
+  *
+  * This function waits until the value returned by the checking function, i.e.
+  * ready_func(), returns the specified value. The function returns also after
+  * the given timeout.
+  * @param timeout_ms Interval (in milliseconds) after which the function will
+  *        returns even if the checking function has not returned the desired
+  *        value.
+  * @param ready_func Pointer to the function checking for the readiness of a
+  *        peripheral.
+  * @param ready_val The SystemReadyWait() function returns tot he caller after
+  *        the ready_func() has returned the value specified in ready_val.
+  * @retval TRUE if the ready_func() returned the value specified in ready_val
+  *         before the given timeout. It returns FALSE if the timeout expired.
+  */ 
+uint8_t SystemReadyWait(uint32_t timeout_ms, uint32_t (*ready_func)(void), uint32_t ready_val)
+{
+  uint8_t ret_val = TRUE;
+  
+  SystemTimer_TimeoutConfig(SystemCoreClock, timeout_ms, TRUE);
+  
+  while((*ready_func)() != ready_val) 
+  {
+    if (SystemTimer_TimeoutExpired()) {
+      ret_val = FALSE;
+      break;
+    }
+  }
+  SystemTimer_TimeoutConfig(0, 0, FALSE);
+  
+  return ret_val;
+}
+
+/**
   * @brief  SMPS and Trimming value Configuration 
   */
 static uint8_t SmpsTrimConfig(void)
@@ -452,47 +196,38 @@ static uint8_t SmpsTrimConfig(void)
   uint8_t ret_val=SUCCESS;
   uint32_t main_regulator, smps_out_voltage, lsi_bw, hsi_calib;
   uint8_t eng_lsi_bw_flag;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   uint32_t lsi_lpmu;
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
 
+#ifndef CONFIG_HW_SMPS_NONE
   /* After reset wait until SMPS is ready */
-  SystemTimer_TimeoutConfig(16000000, 200, TRUE);
-  while(LL_PWR_IsSMPSReady() == 0)
+  
+  if(SystemReadyWait(200, LL_PWR_IsSMPSReady, 1) == FALSE)
   {
-    if (SystemTimer_TimeoutExpired()) 
-    {
-      ret_val = SYSTEM_CONFIG_SMPS_READY_ERROR;
-      break;
-    }
-  }
-  /* Disable the System Timer */
-  SystemTimer_TimeoutConfig(0, 0, FALSE);
-  if (ret_val != SUCCESS) 
-  {
+    ret_val = SYSTEM_CONFIG_SMPS_READY_ERROR;
     return ret_val;
   }
+#endif
   
   /* Configure SMPS BOM */
 #ifdef CONFIG_HW_SMPS_10uH
   LL_PWR_SetSMPSBOM(LL_PWR_SMPS_BOM3);
   /* SMPS clock 4 MHz configuration */
   LL_RCC_SetSMPSPrescaler(LL_RCC_SMPS_DIV_4);
-#else
-#ifdef CONFIG_HW_SMPS_2_2uH
+#elif defined(CONFIG_HW_SMPS_2_2uH)
   LL_PWR_SetSMPSBOM(LL_PWR_SMPS_BOM2);
   /* SMPS clock 8 MHz configuration  */
   LL_RCC_SetSMPSPrescaler(LL_RCC_SMPS_DIV_2);
-#else
-#ifdef CONFIG_HW_SMPS_1_5uH
+#elif defined(CONFIG_HW_SMPS_1_5uH)
   LL_PWR_SetSMPSBOM(LL_PWR_SMPS_BOM1);
     /* SMPS clock 8 MHz configuration  */
   LL_RCC_SetSMPSPrescaler(LL_RCC_SMPS_DIV_2);
-#else
-#ifdef CONFIG_HW_SMPS_NONE
+#elif defined(CONFIG_HW_SMPS_NONE)
   /* SMPS NONE configuration will be done after the trimming configuration values */
 #else
-#warning "No SMPS Configuration!!!"
-#endif
-#endif
+#ifndef SUPPRESS_CONFIG_HW_WARNINGS
+	#warning "No SMPS Configuration!!!"
 #endif
 #endif
 
@@ -500,15 +235,25 @@ static uint8_t SmpsTrimConfig(void)
   if (*(volatile uint32_t*)VALIDITY_LOCATION == VALIDITY_TAG) {
     main_regulator    = ((*(volatile uint32_t*)TRIMMING_LOCATION) & MAIN_REGULATOR_TRIM_Msk) >> MAIN_REGULATOR_TRIM_Pos;
     smps_out_voltage  = ((*(volatile uint32_t*)TRIMMING_LOCATION) & SMPS_TRIM_Msk) >> SMPS_TRIM_Pos;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     lsi_lpmu          = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_LPMU_TRIM_Msk) >> LSI_LPMU_TRIM_Pos;
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
     lsi_bw            = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_BW_TRIM_Msk) >> LSI_BW_TRIM_Pos;
     hsi_calib         = ((*(volatile uint32_t*)TRIMMING_LOCATION) & HSI_TRIM_Msk) >> HSI_TRIM_Pos;
     eng_lsi_bw_flag   = TRUE;
   } else {
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     main_regulator    = 0x08;
     lsi_lpmu          = 0x08;
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    main_regulator    = 0x0A;
+    hsi_calib         = 0x1F;
+    lsi_bw            = 8;
+    eng_lsi_bw_flag   = TRUE;
+#endif
     smps_out_voltage  = 0x03;
   }
   
@@ -519,8 +264,10 @@ static uint8_t SmpsTrimConfig(void)
   if (eng_lsi_bw_flag)
     LL_RCC_LSI_SetTrimming(lsi_bw);
   
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   /* Set LSI LPMU Trimming value */
   LL_PWR_SetLSILPMUTrim(lsi_lpmu);
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
 	
   /* Set Main Regulator voltage Trimming value */ 
   LL_PWR_SetMRTrim(main_regulator);
@@ -531,13 +278,17 @@ static uint8_t SmpsTrimConfig(void)
   /* Set SMPS in LP Open */
   LL_PWR_SetSMPSOpenMode(LL_PWR_SMPS_LPOPEN);
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  if (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) == LL_BLUENRG_LP_CUT_10)
+    LL_PWR_SetSMPSOutputLevel(LL_PWR_SMPS_OUTLVL_1V2);
+#endif
   
 #ifdef CONFIG_HW_SMPS_NONE
   /* No SMPS configuration */
   LL_PWR_SetSMPSMode(LL_PWR_NO_SMPS);
 #endif
 
-  return SUCCESS;
+  return ret_val;
 }
 
 /**
@@ -547,7 +298,6 @@ static uint8_t LSConfig(void)
 {
   uint8_t ret_val=SUCCESS;
   
-  SystemTimer_TimeoutConfig(16000000, 300, TRUE);
   /* Low speed crystal configuration */
 #ifdef CONFIG_HW_LS_XTAL
   LL_PWR_SetNoPullB(LL_PWR_PUPD_IO12|LL_PWR_PUPD_IO13);
@@ -556,33 +306,40 @@ static uint8_t LSConfig(void)
    /* Set LSE oscillator drive capability */
   LL_RCC_LSE_SetDriveCapability(LL_RCC_LSEDRIVE_HIGH);
   
+  LL_RCC_LSI_Disable();
+  
+  /* Need to explicitly disable LSE to make LSERDY flag go to 0 even without
+    POR, in case it was enabled. */
+  LL_RCC_LSE_Disable();  
+  if(SystemReadyWait(300, LL_RCC_LSE_IsReady, 0) == FALSE)
+  {
+    ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
+  }
+
   LL_RCC_LSE_Enable();
-  while (LL_RCC_LSE_IsReady() == 0U)
+  if(SystemReadyWait(300, LL_RCC_LSE_IsReady, 1) == FALSE)
   {
-    if (SystemTimer_TimeoutExpired()) 
-    {
-      ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
-      break;
-    }
-  }    
-#else
-#ifdef CONFIG_HW_LS_RO
+    ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
+  }
+#elif defined(CONFIG_HW_LS_RO)
+  LL_RCC_LSI_Disable();
+  if(SystemReadyWait(300, LL_RCC_LSI_IsReady, 0) == FALSE)
+  {
+    ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+  }  
+  LL_RCC_LSE_Disable();
   LL_RCC_LSCO_SetSource(LL_RCC_LSCO_CLKSOURCE_LSI);
+  
   LL_RCC_LSI_Enable();
-  while (LL_RCC_LSI_IsReady() == 0U)
+  if(SystemReadyWait(300, LL_RCC_LSI_IsReady, 1) == FALSE)
   {
-    if (SystemTimer_TimeoutExpired())
-    {
-      ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
-      break;
-    }
-  }        
+    ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+  } 
 #else
-#warning "No Low Speed Crystal definition!!!"
+#ifndef SUPPRESS_CONFIG_HW_WARNINGS
+  #warning "No Low Speed Crystal definition!!!"
 #endif
-#endif  
-  /* Disable the System Timer */
-  SystemTimer_TimeoutConfig(0, 0, FALSE);
+#endif
   
   return ret_val;
 }
@@ -624,6 +381,11 @@ void MrBleBiasTrimConfig(uint8_t coldStart)
     mr_ble_iptat = 0x07;
     mr_ble_vbg   = 0x08;
     mr_ble_rxadc_delay_flag = FALSE;
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    mr_ble_rxadc_delay_i    = 3;
+    mr_ble_rxadc_delay_q    = 3;
+    mr_ble_rxadc_delay_flag = TRUE;
+#endif /* CONFIG_DEVICE_BLUENRG_LPS */
   }
 
   /* Write MR_BLE Trimming values in the registers: Cbias' VBG, Cbias' IPTAT, Cbias' IBIAS, RxAnaUsr Delay Trim I & Q */
@@ -669,7 +431,45 @@ void MrBleBiasTrimConfig(uint8_t coldStart)
   
   /* Enable Viterbi */
   SET_BIT(RRM->VIT_CONF_DIG_ENG, RRM_VIT_CONF_DIG_ENG_VIT_CONF_0);
+  
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  MODIFY_REG_FIELD(RRM->ANTSW_DIG0_USR, RRM_ANTSW0_DIG_USR_RX_TIME_TO_SAMPLE, RX_TIME_TO_SAMPLE);
+  MODIFY_REG_FIELD(RRM->ANTSW_DIG1_USR, RRM_ANTSW1_DIG_USR_RX_TIME_TO_SWITCH, RX_TIME_TO_SWITCH);
+#endif  
+
 }
+
+/**
+  * @brief Function to update the variable SystemCoreClock  
+  */
+void SystemCoreClockUpdate(void)
+{  
+  switch(LL_RCC_GetRC64MPLLPrescaler())
+  {
+  case LL_RCC_RC64MPLL_DIV_1:
+    SystemCoreClock = 64000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_2:
+    SystemCoreClock = 32000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_4:
+    SystemCoreClock = 16000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_8:
+    SystemCoreClock = 8000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_16:
+    SystemCoreClock = 4000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_32:
+    SystemCoreClock = 2000000;
+    break;
+  case LL_RCC_RC64MPLL_DIV_64:
+    SystemCoreClock = 1000000;
+    break;
+  }
+}
+
 
 /**
   * @brief  System Clock Configuration for System Core, low speed
@@ -691,91 +491,76 @@ uint8_t SystemClockConfig(uint8_t SysClk)
   uint8_t ret_val=SUCCESS;
     
   /* High speed crystal configuration: BlueNRG-LP supports only HSE 32 MHz */
-  SystemTimer_TimeoutConfig(32000000, 100, TRUE);
   LL_RCC_HSE_Enable();
-  while (LL_RCC_HSE_IsReady() == 0U) 
+  
+  if(SystemReadyWait(100, LL_RCC_HSE_IsReady, 1) == FALSE)
   {
-    if (SystemTimer_TimeoutExpired()) {
-      ret_val = SYSTEM_CONFIG_HSE_READY_ERROR;
-      break;
-    }
-  }
-  /* Disable the System Timer */
-  SystemTimer_TimeoutConfig(0, 0, FALSE);
-  if (ret_val != SUCCESS)
-  {
+    ret_val = SYSTEM_CONFIG_HSE_READY_ERROR;
     return ret_val;
   }
   
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   /* BlueNRG_LP cut 1.0 not support DIRECT HSE configuration */
   if ((SysClk == SYSCLK_DIRECT_HSE) && (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) == LL_BLUENRG_LP_CUT_10)) {
     return SYSTEM_CONFIG_DIRECT_HSE_NOT_SUPPORTED;
   }
+#endif
   
   if (SysClk != SYSCLK_DIRECT_HSE) {
     /* System PLL Clock configuration */
-  switch(SysClk)
-  {
-  case SYSCLK_64M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_1);
-    SystemCoreClock = 64000000;
-    break;
-  case SYSCLK_32M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_2);
-    SystemCoreClock = 32000000;
-    break;
-  case SYSCLK_16M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_4);
-    SystemCoreClock = 16000000;
-    break;
-  case SYSCLK_8M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_8);
-    SystemCoreClock = 8000000;
-    break;
-  case SYSCLK_4M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_16);
-    SystemCoreClock = 4000000;
-    break;
-  case SYSCLK_2M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_32);
-    SystemCoreClock = 2000000;
-    break;
-  case SYSCLK_1M:
-    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_64);
-    SystemCoreClock = 1000000;
-    break;
-  default:
-    /* Error, wrong choice */
-    while(1);
-  }
-  SystemTimer_TimeoutConfig(SystemCoreClock, 200, TRUE);
-  LL_RCC_RC64MPLL_Enable();
-  while(LL_RCC_RC64MPLL_IsReady() == 0U)
-  {
-    if (SystemTimer_TimeoutExpired()) {
-      ret_val = SYSTEM_CONFIG_PLL_READY_ERROR;
+    switch(SysClk)
+    {
+    case SYSCLK_64M:
+      LL_FLASH_SetWaitStates(FLASH, LL_FLASH_WAIT_STATES_1);
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_1);
+      SystemCoreClock = 64000000;
       break;
+    case SYSCLK_32M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_2);
+      SystemCoreClock = 32000000;
+      break;
+    case SYSCLK_16M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_4);
+      SystemCoreClock = 16000000;
+      break;
+    case SYSCLK_8M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_8);
+      SystemCoreClock = 8000000;
+      break;
+    case SYSCLK_4M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_16);
+      SystemCoreClock = 4000000;
+      break;
+    case SYSCLK_2M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_32);
+      SystemCoreClock = 2000000;
+      break;
+    case SYSCLK_1M:
+      LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_64);
+      SystemCoreClock = 1000000;
+      break;
+    default:
+      /* Error, wrong choice */
+      while(1);
     }
-  }  
-  /* Disable the System Timer */
-  SystemTimer_TimeoutConfig(0, 0, FALSE);
-  if (ret_val != SUCCESS)
-  {
-    return ret_val;
+    LL_RCC_RC64MPLL_Enable();
+    
+    if(SystemReadyWait(200, LL_RCC_RC64MPLL_IsReady, 1) == FALSE)
+    {
+      ret_val = SYSTEM_CONFIG_PLL_READY_ERROR;
+      return ret_val;
+    }  
+  } else { // DIRECT HSE configuration
+    LL_RCC_SetRC64MPLLPrescaler(LL_RCC_RC64MPLL_DIV_2);
+    LL_RCC_DIRECT_HSE_Enable();
+    SystemCoreClock = 32000000;
   }
   
   /* FLASH Wait State configuration */
-  if (SystemCoreClock == 64000000) 
-  {
-    LL_FLASH_SetWaitStates(FLASH, LL_FLASH_WAIT_STATES_1);
-  } else {
+  if (SystemCoreClock != 64000000) {
     LL_FLASH_SetWaitStates(FLASH, LL_FLASH_WAIT_STATES_0);
   }
-  } else { // DIRECT HSE configuration
-    LL_RCC_DIRECT_HSE_Enable();
-  }
   
-	
   return SUCCESS;
 }
 
@@ -917,7 +702,9 @@ uint8_t SystemInit(uint8_t SysClk, uint8_t BleSysClk)
 #ifdef CONFIG_HW_HSE_TUNE
   LL_RCC_HSE_SetCapacitorTuning(CONFIG_HW_HSE_TUNE);
 #else
-#warning "No HSE Tune configuration!!!"
+#ifndef SUPPRESS_CONFIG_HW_WARNINGS
+	#warning "No HSE Tune configuration!!!"
+#endif	
 #endif
   LL_RCC_HSE_SetCurrentControl(LL_RCC_HSE_CURRENTMAX_3);
 

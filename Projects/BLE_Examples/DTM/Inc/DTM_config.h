@@ -50,6 +50,8 @@
 #define ISR1_FIFO_SIZE   (768)
 #define USER_FIFO_SIZE   (1024)
 
+/* BlueNRG-LP  */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) 
 /* MAX number of GAP and GATT attributes for DTM */
 #define DTM_NUM_GATT_ATTRIBUTES_CONF                (100)
 #define NUM_AUX_SCAN_SLOTS_CONF                     (4U)   
@@ -60,11 +62,30 @@
 #define MAX_ATT_MTU_CONF                            (247)
 #define OPT_MBLOCKS_CONF                            (30)
 #define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (512)
-#define ACI_GATT_WR_BUFFER_SIZE_CONF                (3072 + ACI_ATT_QUEUED_WRITE_SIZE_CONF)
+/* Size of buffer shared between GATT_NWK library (used for GATT database and client 
+  write procedures) and ADV_NWK library (used for advertising buffers). */
+#define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (3072 + 1660 + ACI_ATT_QUEUED_WRITE_SIZE_CONF)
 #define NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF     (DTM_NUM_LINK_CONF)
 #define MAX_NUM_CTE_ANTENNA_IDS                     (0U)
 #define MAX_NUM_CTE_IQ_SAMPLES                      (0U)
 
+#elif CONFIG_DEVICE_BLUENRG_LPS /* BlueNRG-LPS  */
+
+#define DTM_NUM_GATT_ATTRIBUTES_CONF                (60) 
+#define NUM_AUX_SCAN_SLOTS_CONF                     (1U) // 1 OK for periodic sync adv, scan
+#define WHITE_LIST_SIZE_LOG2_CONF                   (3U) 
+#define L2CAP_MPS_CONF                              (160U) 
+#define NUM_L2CAP_COCS_CONF                         (0U)
+/* Max value for ATT_MTU */
+#define MAX_ATT_MTU_CONF                            (160U) 
+#define OPT_MBLOCKS_CONF                            (0) 
+#define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (300) 
+#define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (1000 + 256 + ACI_ATT_QUEUED_WRITE_SIZE_CONF)
+#define NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF     (DTM_NUM_LINK_CONF) 
+
+#define MAX_NUM_CTE_ANTENNA_IDS                     (8U)
+#define MAX_NUM_CTE_IQ_SAMPLES                      (82U)
+#endif
 
 /* Set the number of memory block for packet allocation */
 #define MBLOCKS_COUNT           (BLE_STACK_MBLOCKS_CALC(MAX_ATT_MTU_CONF, NUM_LINKS) + OPT_MBLOCKS_CONF)

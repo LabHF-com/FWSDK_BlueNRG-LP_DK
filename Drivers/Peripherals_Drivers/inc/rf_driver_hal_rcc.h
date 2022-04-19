@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -118,13 +118,9 @@ typedef struct
   uint32_t HSIState;             /*!< The new state of the HSI.
                                       This parameter can be a value of @ref RCC_HSI_Config                        */
 
-  uint32_t HSICalibrationValue;  /*!< The calibration trimming value (default is @ref RCC_HSICALIBRATION_DEFAULT).*/
-
   uint32_t LSIState;             /*!< The new state of the LSI.
                                       This parameter can be a value of @ref RCC_LSI_Config                        */
 
-  uint32_t LSICalibrationValue;  /*!< The LSI calibration trimming value .
-                                    This parameter must be a number between Min_Data = 0x0 and Max_Data = 0xF     */
 } RCC_OscInitTypeDef;
 
 /**
@@ -220,8 +216,10 @@ typedef struct
 /** @defgroup RCC_RF_RC64MPLL_Clock_Divider  RF RC64MPLL Clock Divider
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define RCC_RF_RC64MPLL_DIV2       LL_RCC_RF_RC64MPLL_DIV2   /*!< RC64MPLL divided by 2 used as RF system clock */
 #define RCC_RF_RC64MPLL_DIV4       LL_RCC_RF_RC64MPLL_DIV4   /*!< RC64MPLL divided by 4 used as RF system clock */
+#endif
 /**
   * @}
   */
@@ -1056,6 +1054,7 @@ typedef struct
   */
 #define __HAL_RCC_RC64MPLL_PRESC_CONFIG(__PLLM__) LL_RCC_SetRC64MPLLPrescaler(__PLLM__)
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /** @brief  Macro to configure the RF clock source.
   * @param  __SOURCE__  specifies the RF BLE clock source  
   *         This parameter must be a value of RCC_RF_RC64MPLL_Clock_Divider.
@@ -1072,6 +1071,7 @@ typedef struct
   *
   */
 #define __HAL_RCC_RF_RC64MPLL_GET_CONFIG() LL_RCC_GetRFClockSource()
+#endif
   
 /**
   * @brief  Macro to configure the system clock source.

@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_vtimer.h"

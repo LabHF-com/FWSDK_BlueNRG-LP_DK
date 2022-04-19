@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -49,14 +49,24 @@ extern "C" {
   
 #define IS_RCC_LSCO(__LSCOX__) ( ((__LSCOX__) == RCC_LSCO1) || ((__LSCOX__) == RCC_LSCO2) || ((__LSCOX__) == RCC_LSCO3) )
   
+#if defined(CONFIG_DEVICE_BLUENRG_LP) 
 #define IS_RCC_PERIPHCLOCK(__SELECTION__)  \
                ((((__SELECTION__) & RCC_PERIPHCLK_RF)   == RCC_PERIPHCLK_RF)       || \
                 (((__SELECTION__) & RCC_PERIPHCLK_SPI2_I2S) == RCC_PERIPHCLK_SPI2_I2S)     || \
                 (((__SELECTION__) & RCC_PERIPHCLK_SPI3_I2S) == RCC_PERIPHCLK_SPI3_I2S))
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)            
+#define IS_RCC_PERIPHCLOCK(__SELECTION__)  \
+               ((((__SELECTION__) & RCC_PERIPHCLK_RF)   == RCC_PERIPHCLK_RF)       || \
+                (((__SELECTION__) & RCC_PERIPHCLK_SPI3_I2S) == RCC_PERIPHCLK_SPI3_I2S))
+#else
+#error "Define device type."
+#endif 
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define IS_RCC_RF_BLE_CLOCK_SOURCE(__SOURCE__) \
                 ((((__SOURCE__) & RCC_RF_RC64MPLL_DIV2) == RCC_RF_RC64MPLL_DIV2) || \
                  (((__SOURCE__) & RCC_RF_RC64MPLL_DIV4) == RCC_RF_RC64MPLL_DIV4))
+#endif
   
 #define IS_RCC_SMPS_CLOCK_SOURCE(__SOURCE__) \
                 ((((__SOURCE__) & RCC_SMPSCLKSOURCE_RC64MPLL) == RCC_SMPSCLKSOURCE_RC64MPLL))

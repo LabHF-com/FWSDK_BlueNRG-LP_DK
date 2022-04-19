@@ -31,7 +31,7 @@
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
+#define PRINT_ADDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 
 typedef struct Blacklist_Entry_t_s {
@@ -94,7 +94,7 @@ void PrintBondedDevices(void)
     
     if(num_returned_devices){
       PRINTF("Type %d, ", bonded_device.Address_Type);
-      PRINT_ADDDRESS(bonded_device.Address);
+      PRINT_ADDRESS(bonded_device.Address);
       PRINTF("\n");
     }
     else {
@@ -149,7 +149,7 @@ tBleStatus StartAutoConnection(void)
   return BLE_STATUS_SUCCESS;
 }
 
-void StartGeneralConnectionEstablishment(void)
+tBleStatus StartGeneralConnectionEstablishment(void)
 {
   tBleStatus ret;
   
@@ -163,7 +163,9 @@ void StartGeneralConnectionEstablishment(void)
   else {
     PRINTF("Scanning...\n");
     procedure = GAP_GENERAL_CONNECTION_ESTABLISHMENT_PROC;
-  }  
+  }
+  
+  return ret;
 }
 
 void StopScan(void)
@@ -288,7 +290,8 @@ void BlacklistReset(void)
   last_conn_failed_device.blacklist_hit = 0;  
 }
 
-void BlacklistHit(uint8_t address_type, uint8_t address[])
+/* It returns 1 if a device has been removed from bonding table. */
+int BlacklistHit(uint8_t address_type, uint8_t address[])
 {
   if(last_conn_failed_device.address_type == address_type && memcmp(last_conn_failed_device.address, address, 6) == 0){
     // This is the same device to which the connection has been failed.
@@ -296,6 +299,7 @@ void BlacklistHit(uint8_t address_type, uint8_t address[])
     PRINTF_DBG2("DEVICE IN BLACKLIST, COUNT: %d\n", last_conn_failed_device.blacklist_hit);
     if(last_conn_failed_device.blacklist_hit>=MAX_BLACKLIST_HIT){
       aci_gap_remove_bonded_device(address_type, address);
+      return 1;
     }
   }
   else {
@@ -305,6 +309,8 @@ void BlacklistHit(uint8_t address_type, uint8_t address[])
     Osal_MemCpy(last_conn_failed_device.address, address, 6);
     last_conn_failed_device.blacklist_hit=1;
   }
+
+  return 0;
 }
 
 /*******************************************************************************

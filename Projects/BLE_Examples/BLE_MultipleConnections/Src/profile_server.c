@@ -51,7 +51,7 @@
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
+#define PRINT_ADDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 uint8_t button_timer_expired = TRUE;
 
@@ -101,8 +101,8 @@ uint8_t DeviceInit(void)
   uint8_t addr_len;
   uint8_t address[6];
 
-  /* Set the TX power to -2 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  /* Set the TX power to 0 dBm */
+  aci_hal_set_tx_power_level(0, 24);
   
   /* Since we need to transfer notifications of 244 bytes in a single packet, the LL payload must be
    244 bytes for application data + 3 bytes for ATT header + 4 bytes for L2CAP header. */
@@ -131,7 +131,7 @@ uint8_t DeviceInit(void)
   
   aci_hal_read_config_data(0x80, &addr_len, address);
   PRINTF("Static random address: ");
-  PRINT_ADDDRESS(address);
+  PRINT_ADDRESS(address);
   PRINTF("\r\n");
 
   /* Set the device name */

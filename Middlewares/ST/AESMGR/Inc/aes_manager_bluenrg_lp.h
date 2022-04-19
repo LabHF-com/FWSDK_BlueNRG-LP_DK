@@ -44,7 +44,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_ll_bus.h"
-#include "system_bluenrg_lp.h"
+#include "system_BlueNRG_LP.h"
 #include "bluenrg_lpx.h"
   
 /** @addtogroup AES_Manager_BlueNRG_LP_Peripheral  AES MANAGER

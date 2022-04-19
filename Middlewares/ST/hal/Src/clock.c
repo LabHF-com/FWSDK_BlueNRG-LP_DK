@@ -19,7 +19,7 @@
 ******************************************************************************
 */ 
 /* Includes ------------------------------------------------------------------*/
-#include "BlueNRG_LPx.h"
+#include "bluenrg_lpx.h"
 #include "clock.h"
 #include "system_BlueNRG_LP.h"
 #include "rf_driver_ll_utils.h"

@@ -80,6 +80,8 @@
 #define INCREMENT_EXPIRE_COUNT_ISR (HAL_VTIMER_Context.expired_count = ((HAL_VTIMER_Context.expired_count + 1) == HAL_VTIMER_Context.served_count) ? HAL_VTIMER_Context.expired_count : (HAL_VTIMER_Context.expired_count + 1))
 #define INCREMENT_EXPIRE_COUNT ATOMIC_SECTION_BEGIN(); INCREMENT_EXPIRE_COUNT_ISR ; ATOMIC_SECTION_END();
 
+#define BLE_TX_RX_EXCEPTION_NUMBER 18
+
 /**
   * @}
   */
@@ -129,6 +131,8 @@ typedef struct HAL_VTIMER_ContextS {
   uint32_t hs_startup_time; /*!< HS startup time */
   uint8_t expired_count; /*!< Progressive number to indicate expired timers */
   uint8_t served_count; /*!< Progressive number to indicate served expired timers */
+  uint8_t wakeup_calibration; /*!< Flag to indicate if start a calibration after  wakeup */
+  uint8_t stop_notimer_action; /*!< Flag to indicate DEEPSTOP no timer action */
 } HAL_VTIMER_ContextType;
 
 typedef struct VTIMER_RadioHandleTypeS {
@@ -136,6 +140,7 @@ typedef struct VTIMER_RadioHandleTypeS {
     BOOL cal_req;
     BOOL active;
     BOOL pending;
+    BOOL intTxRx_to_be_served;
     BOOL event_type;
 } VTIMER_RadioHandleType;
 
@@ -199,6 +204,7 @@ static void _check_radio_activity(VTIMER_RadioHandleType * timerHandle, uint8_t 
         *expired = TIMER_SetRadioTimerValue(timerHandle->expiryTime, timerHandle->event_type,timerHandle->cal_req);
         timerHandle->pending = FALSE; /* timer has been served. No more pending */
         timerHandle->active = TRUE; /* timer has been programmed and it becomes ACTIVE */
+        timerHandle->intTxRx_to_be_served = TRUE;
         ATOMIC_SECTION_END();
       }
       else{
@@ -473,6 +479,7 @@ uint8_t HAL_VTIMER_ClearRadioTimerValue(void)
   TIMER_ClearRadioTimerValue();
   radioTimer.active = FALSE;
   radioTimer.pending = FALSE;
+  radioTimer.intTxRx_to_be_served = FALSE;
 
   /*The rfSetup is different if Timer1 or Wakeup timer is programmed*/
   ATOMIC_SECTION_BEGIN();
@@ -480,7 +487,14 @@ uint8_t HAL_VTIMER_ClearRadioTimerValue(void)
               - TIMER_GetCurrentSysTime() \
               - __TIMER_GetSysRfSetupTime();
   ATOMIC_SECTION_END();
-  
+
+#if HOST_WAKEUP_FIX_ENABLE
+  /* Check if the routine is executed in the Tx/Rx interrupt handler or not */
+  if (((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk)-16) != BLE_TX_RX_EXCEPTION_NUMBER) {
+    _check_host_activity();
+  }
+#endif
+
   if(time_diff <= 0)
     retVal = HAL_VTIMER_LATE;
   else if (time_diff < CLEAR_MIN_THR)
@@ -540,6 +554,15 @@ void HAL_VTIMER_TimeoutCallback(void)
   /* Clear the interrupt */
   WAKEUP->WAKEUP_CM0_IRQ_STATUS |= 1;
   status = WAKEUP->WAKEUP_CM0_IRQ_STATUS;
+}
+
+/**
+ * @brief  Timer State machine semaphore to signal the radio activity finished.
+ * @retval None
+ */
+void HAL_VTIMER_EndOfRadioActivityIsr(void)
+{
+  radioTimer.intTxRx_to_be_served = FALSE;
 }
 
 /**
@@ -608,29 +631,34 @@ uint8_t HAL_VTIMER_SetRadioTimerValue(uint32_t time, uint8_t event_type, uint8_t
   radioTimer.cal_req = cal_req;
   radioTimer.expiryTime = calibrationData.last_calibration_time + (uint32_t)(time - (uint32_t)calibrationData.last_calibration_time);
   radioTimer.active = FALSE;
+  radioTimer.intTxRx_to_be_served = FALSE;
   radioTimer.pending = TRUE;
 
 #if HOST_WAKEUP_FIX_ENABLE
   
   current_time = TIMER_GetCurrentSysTime();
   
-  if(HAL_VTIMER_Context.rootNode->expiryTime < current_time ||
-     ((radioTimer.expiryTime < (HAL_VTIMER_Context.rootNode->expiryTime + hostMargin)) && HAL_VTIMER_Context.rootNode->active) || !HAL_VTIMER_Context.rootNode->active)
-  {
-    /* Program the radio timer */
+  if (HAL_VTIMER_Context.rootNode == NULL) {
     _check_radio_activity(&radioTimer, &retVal);
-    if((radioTimer.expiryTime >= HAL_VTIMER_Context.rootNode->expiryTime) && HAL_VTIMER_Context.rootNode->active)
+  } else {
+    if(HAL_VTIMER_Context.rootNode->expiryTime < current_time ||
+       ((radioTimer.expiryTime < (HAL_VTIMER_Context.rootNode->expiryTime + hostMargin)) && HAL_VTIMER_Context.rootNode->active) || !HAL_VTIMER_Context.rootNode->active)
     {
-      /*The radio operation is before or too close the host timeout*/
-      hostIsRadioPending = 1;
+      /* Program the radio timer */
+      _check_radio_activity(&radioTimer, &retVal);
+      if((radioTimer.expiryTime >= HAL_VTIMER_Context.rootNode->expiryTime) && HAL_VTIMER_Context.rootNode->active)
+      {
+        /*The radio operation is before or too close the host timeout*/
+        hostIsRadioPending = 1;
+      }
     }
-  }
-  else
-  {
-    /* If radio timer is not programmed, an emulated host timer is already programmed.
-       Make sure radio errors are disabled.
+    else
+    {
+      /* If radio timer is not programmed, an emulated host timer is already programmed.
+      Make sure radio errors are disabled.
       This call is not needed if radio errors are not enabled by the BLE stack. */
-    _set_controller_as_host();
+      _set_controller_as_host();
+    }
   }
 #else
   _check_radio_activity(&radioTimer, &retVal);
@@ -740,22 +768,27 @@ void HAL_VTIMER_Init(HAL_VTIMER_InitType *HAL_TIMER_InitStruct)
 {
   TIMER_InitType TIMER_InitStruct;
   TIMER_Enable_CPU_WKUP();
-#if HOST_WAKEUP_FIX_ENABLE
-  WAKEUP->WAKEUP_BLE_IRQ_STATUS |= 1;
-  WAKEUP->WAKEUP_BLE_IRQ_ENABLE |= 1;
-  NVIC_EnableIRQ(BLE_WKUP_IRQn);
-  hostMargin = MAX(HOST_MARGIN,HAL_TIMER_InitStruct->XTAL_StartupTime);
+#if HOST_WAKEUP_FIX_ENABLE 
+    WAKEUP->WAKEUP_BLE_IRQ_STATUS |= 1;
+    WAKEUP->WAKEUP_BLE_IRQ_ENABLE |= 1;
+    NVIC_EnableIRQ(BLE_WKUP_IRQn);
+    hostMargin = MAX(HOST_MARGIN,HAL_TIMER_InitStruct->XTAL_StartupTime);
 #endif
+  
   NVIC_EnableIRQ(BLE_ERROR_IRQn);
+
   TIMER_InitStruct.TIMER_InitialCalibration = HAL_TIMER_InitStruct->EnableInitialCalibration;
-  TIMER_InitStruct.TIMER_PeriodicCalibration = HAL_TIMER_InitStruct->PeriodicCalibrationInterval;
+  TIMER_InitStruct.TIMER_PeriodicCalibration = (HAL_TIMER_InitStruct->PeriodicCalibrationInterval!=0);
   TIMER_InitStruct.XTAL_StartupTime = HAL_TIMER_InitStruct->XTAL_StartupTime;
   TIMER_Init(&TIMER_InitStruct);
   TIMER_GetCurrentCalibrationData(&calibrationData); 
   HAL_VTIMER_Context.rootNode = NULL;
   HAL_VTIMER_Context.enableTimeBase = TRUE;
+  HAL_VTIMER_Context.wakeup_calibration = (HAL_TIMER_InitStruct->PeriodicCalibrationInterval!=0);
+  HAL_VTIMER_Context.stop_notimer_action = FALSE;
   radioTimer.active = FALSE;
   radioTimer.pending = FALSE;
+  radioTimer.intTxRx_to_be_served = FALSE;
   radioTimer.expiryTime = 0;
   HAL_VTIMER_Context.hs_startup_time = HAL_TIMER_InitStruct->XTAL_StartupTime;
   HAL_VTIMER_Context.expired_count=0;
@@ -770,6 +803,7 @@ void HAL_VTIMER_Init(HAL_VTIMER_InitType *HAL_TIMER_InitStruct)
   calibrationTimer.callback = calibration_callback;
   calibrationTimer.userData = NULL;
   _start_timer(&calibrationTimer, TIMER_GetCurrentSysTime() + HAL_VTIMER_Context.PeriodicCalibrationInterval);
+  TIMER_SaveCalibrationInterval(HAL_VTIMER_Context.PeriodicCalibrationInterval);  
 }
 
 /**
@@ -822,9 +856,13 @@ void HAL_VTIMER_Tick(void)
      if (TIMER_IsCalibrationRunning() == FALSE) {
       /* Calibration is completed */
       HAL_VTIMER_Context.calibration_in_progress = FALSE;
-      /* Collect calibration data */
-      TIMER_UpdateCalibrationData();
-      TIMER_GetCurrentCalibrationData(&calibrationData);
+      if ((HAL_VTIMER_Context.wakeup_calibration == FALSE) && HAL_VTIMER_Context.stop_notimer_action) {
+        HAL_VTIMER_Context.stop_notimer_action = FALSE;
+      } else {
+        /* Collect calibration data */
+        TIMER_UpdateCalibrationData();
+        TIMER_GetCurrentCalibrationData(&calibrationData);
+      }
 #if HOST_WAKEUP_FIX_ENABLE
       if(waitCal){
         waitCal = 0;
@@ -868,7 +906,7 @@ PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level)
   timerState = TIMER_GetRadioTimerValue(&nextRadioActivity);
   /*Timer1 and wakeup timer are programmed only through 
   the timer module*/
-  if(((radioTimer.active || radioTimer.pending)  && !(timerState == TIMER1_BUSY)))
+  if(((radioTimer.active || radioTimer.pending)  && !(timerState == TIMER1_BUSY)) || radioTimer.intTxRx_to_be_served)
   {
     if(radioTimer.expiryTime < (TIMER_GetCurrentSysTime() + \
                                 __TIMER_GetSysRfSetupTime() + \
@@ -899,6 +937,7 @@ PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level)
     {
       if((HAL_VTIMER_Context.rootNode->next == NULL) && (HAL_VTIMER_Context.rootNode == &calibrationTimer))
       {
+        HAL_VTIMER_Context.stop_notimer_action = TRUE;
         _virtualTimeBaseEnable(DISABLE);
         TIMER_DISABLE_CM0_TIMER;
         return POWER_SAVE_LEVEL_STOP_NOTIMER;

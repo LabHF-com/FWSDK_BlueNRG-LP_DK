@@ -2,9 +2,10 @@
   ******************************************************************************
   * @file    OTA_btl.c
   * @author  AMS - RF Application team
-  * @version V1.0.0
-  * @date    30-April-2019
-  * @brief   Bluetooth LE Over The Air (OTA) FW upgrade implementation
+  * @version V1.1.0
+  * @date    10-December-2021
+  * @brief   Bluetooth LE Over The Air (OTA) FW upgrade implementation. This
+  *          library assumes that only one connection is present.
   ******************************************************************************
   * @attention
   *
@@ -117,7 +118,9 @@
 #define OTA_SEQUENCE_ERROR     0x00F0
 #define OTA_CHECKSUM_ERROR     0x000F
 
-   
+/* Check if application is just using the OTA service Manager and not the overall OTA framework */
+#ifndef CONFIG_OTA_USE_SERVICE_MANAGER 
+
 /* Characteristic handles */
 uint16_t btlImageCharHandle, btlNewImageCharHandle, btlNewImageTUContentCharHandle, btlExpectedImageTUSeqNumberCharHandle;
 
@@ -243,6 +246,7 @@ static uint16_t ota_att_mtu_size =  OTA_ATT_MTU_SIZE_CONF;
 /* Flag for register if OTA Client has performed DLE and ATT_MTU exchange config */
 static volatile uint8_t client_DLE_ATT_MTU = 0; 
 
+
 /**
  * @brief  It jumps to the new upgraded application
  * @param  None
@@ -254,23 +258,6 @@ void OTA_Jump_To_New_Application()
 {
   /* Reset manager will take care of running the new application */
   NVIC_SystemReset(); 
-}
-
-/**
- * @brief  It jumps to the OTA Service Manager application
- * @param  None
- * @retval None
- *
- * @note The API code could be subject to change in future releases.
- */
-void OTA_Jump_To_Service_Manager_Application()
-{
-#if defined(CONFIG_OTA_USE_SERVICE_MANAGER)
-  extern RAM_VR_TypeDef RAM_VR; 
-  RAM_VR.OTAActivation = OTA_APP_SWITCH_OP_CODE_GO_TO_OTA_SERVICE_MANAGER; 
-  
-  NVIC_SystemReset();
-#endif
 }
   
 /**
@@ -799,33 +786,31 @@ void OTA_Radio_Activity(uint32_t Next_State_SysTime)
   
 }
 
-#if defined(CONFIG_SW_OTA_DATA_LENGTH_EXT)
-void aci_att_exchange_mtu_resp_event(uint16_t Connection_Handle,
-                                     uint16_t Att_MTU)
+void OTA_att_exchange_mtu_resp_CB(uint16_t Connection_Handle,
+                                  uint16_t Att_MTU)
 {
+#if defined(CONFIG_SW_OTA_DATA_LENGTH_EXT)
   //printf("ATT mtu exchanged with value = 0x%04X\n", Att_MTU);
   
-  /* If OTA CLient performs an ATT_MTU exchange in order to increase ATT_MTU: 
+  /* If OTA Client performs an ATT_MTU exchange in order to increase ATT_MTU: 
      set actual ota_att_mtu_size used for OTA transfer and register this event */
   ota_att_mtu_size = Att_MTU -3; 
   
   client_DLE_ATT_MTU |= ATT_MTU_DONE;
+#endif
 }
 
-void hci_le_data_length_change_event(uint16_t Connection_Handle,
-                                     uint16_t MaxTxOctets,
-                                     uint16_t MaxTxTime,
-                                     uint16_t MaxRxOctets,
-                                     uint16_t MaxRxTime)
+void OTA_data_length_change_CB(uint16_t Connection_Handle)
 {
+#if defined(CONFIG_SW_OTA_DATA_LENGTH_EXT)
    /* If OTA Client supports extended data length, this event is raised: set associated flag and increase connection interval
       for allowing OTA transfer with data length extension */
    
     client_DLE_ATT_MTU |= DLE_DONE; 
     /* Increase connection interval for handling BUF_SIZE Flash write operations */
     aci_l2cap_connection_parameter_update_req(Connection_Handle, (uint16_t) OTA_EXT_LE_L2CAP_CONN_INTERVAL(ota_att_mtu_size), (uint16_t) OTA_EXT_LE_L2CAP_CONN_INTERVAL(ota_att_mtu_size), 0, 100); 
+#endif
 }
-#endif 
     
 
 void OTA_Read_Char(uint16_t Connection_Handle, uint16_t Attribute_Handle, uint16_t Data_Offset) 
@@ -853,4 +838,22 @@ void OTA_Read_Char(uint16_t Connection_Handle, uint16_t Attribute_Handle, uint16
 
 } /* OTA_Read_Char() */
 
-/******************* (C) COPYRIGHT 2015 STMicroelectronics *****END OF FILE****/
+#else /* Application is using the OTA Service manager: only OTA_Jump_To_Service_Manager_Application() is needed */
+/**
+ * @brief  It jumps to the OTA Service Manager application
+ * @param  None
+ * @retval None
+ *
+ * @note The API code could be subject to change in future releases.
+ */
+void OTA_Jump_To_Service_Manager_Application()
+{
+#if defined(CONFIG_OTA_USE_SERVICE_MANAGER)
+  extern RAM_VR_TypeDef RAM_VR; 
+  RAM_VR.OTAActivation = OTA_APP_SWITCH_OP_CODE_GO_TO_OTA_SERVICE_MANAGER; 
+  
+  NVIC_SystemReset();
+#endif
+}
+#endif //CONFIG_OTA_USE_SERVICE_MANAGER
+/******************* (C) COPYRIGHT 2021 STMicroelectronics *****END OF FILE****/

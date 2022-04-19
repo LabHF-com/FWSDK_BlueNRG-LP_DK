@@ -238,7 +238,7 @@ while off-loading the CPU (ratio adjustable from 1 to 128).
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1753,10 +1753,12 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef* hadc, ADC_ConfigChann
           LL_ADC_SetVoltageRangeDiffVinp3Vinm3(hadc->Instance, sConfigChannel->VoltRange);
           break;
     }
+#ifdef CONFIG_DEVICE_BLUENRG_LP 
     if(sConfigChannel->ChannelType == ADC_CH_TEMPERATURE_SENSOR) {
       /* Enable the internal temperature sensor */
       LL_PWR_EnableTempSens();
     }
+#endif
   }
   /* If a conversion is on going on regular group, no update on regular       */
   /* channel could be done on neither of the channel configuration structure  */
@@ -1969,8 +1971,10 @@ HAL_StatusTypeDef ADC_Disable(ADC_HandleTypeDef* hadc)
 
       /* Disable the ADC peripheral */
       LL_ADC_Disable(hadc->Instance);
+#ifdef CONFIG_DEVICE_BLUENRG_LP 
       /* Disable the internal temperature sensor */
       LL_PWR_DisableTempSens();
+#endif
   }
 
   /* Return HAL status */

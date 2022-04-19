@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "app_state.h"
@@ -581,7 +581,7 @@ uint8_t DeviceInit(void)
     }
 
 #ifndef TX_POWER
-#define TX_POWER (25) /* Set the TX power to 0 dBm */
+#define TX_POWER (24) /* Set the TX power to 0 dBm */
 #endif
     aci_hal_set_tx_power_level(0, TX_POWER);
 

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -81,7 +83,7 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_1                  (PWR_CR2_PVDLS_0)                                 /* VPVD1 around 2.2 V */
 #define LL_PWR_PVDLEVEL_2                  (PWR_CR2_PVDLS_1)                                 /* VPVD2 around 2.4 V */
 #define LL_PWR_PVDLEVEL_3                  (PWR_CR2_PVDLS_1 | PWR_CR2_PVDLS_0)               /* VPVD3 around 2.5 V */
-#define LL_PWR_PVDLEVEL_4                  (PWR_CR2_PLVDS_2)                                 /* VPVD4 around 2.6 V */
+#define LL_PWR_PVDLEVEL_4                  (PWR_CR2_PVDLS_2)                                 /* VPVD4 around 2.6 V */
 #define LL_PWR_PVDLEVEL_5                  (PWR_CR2_PVDLS_2 | PWR_CR2_PVDLS_0)               /* VPVD5 around 2.8 V */
 #define LL_PWR_PVDLEVEL_6                  (PWR_CR2_PVDLS_2 | PWR_CR2_PVDLS_1)               /* VPVD6 around 2.9 V */
 #define LL_PWR_PVDLEVEL_7                  (PWR_CR2_PVDLS)                                   /* External input analog voltage   (Compare internally to VBGP) */
@@ -101,6 +103,7 @@ extern "C" {
 /** @defgroup PWR_LL_EW_SOURCE Enable Wakeup Source
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_PWE_EWS_ALL            0xFFFFFFFF                /* Enable all the wakeup source                   */
 #define LL_PWR_EWS_INT            PWR_CR3_EIWL              /* Enable wakeup on Internal event (RTC)          */
 #if defined(PWR_CR3_EIWL2)
@@ -152,6 +155,7 @@ extern "C" {
 #define LL_PWE_EWS_EW14           (PWR_CR6_EWU14 << 16)     /* Enable wakeup on PA2 I/O event                 */
 #define LL_PWE_EWS_EW13           (PWR_CR6_EWU13 << 16)     /* Enable wakeup on PA1 I/O event                 */
 #define LL_PWE_EWS_EW12           (PWR_CR6_EWU12 << 16)     /* Enable wakeup on PA0 I/O event                 */
+#endif
 
 /**
   * @}
@@ -468,6 +472,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledTempSens(void)
   *         @arg @ref LL_PWR_RAMRET_2
   *         @arg @ref LL_PWR_RAMRET_3
   * @retval None
+  * @note   For BlueNRG-LPS  devices is valid only LL_PWR_RAMRET_1
   */
 __STATIC_INLINE void LL_PWR_EnableRAMBankRet(uint32_t banks)
 {
@@ -481,6 +486,7 @@ __STATIC_INLINE void LL_PWR_EnableRAMBankRet(uint32_t banks)
   *         @arg @ref LL_PWR_RAMRET_1
   *         @arg @ref LL_PWR_RAMRET_2
   *         @arg @ref LL_PWR_RAMRET_3
+  * @note   For BlueNRG-LPS  devices is valid only LL_PWR_RAMRET_1
   */
 __STATIC_INLINE uint32_t LL_PWR_GetRAMBankRet(void)
 {
@@ -577,6 +583,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
   return (uint32_t)(READ_BIT(PWR->CR2, PWR_CR2_PVDLS));
 }
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  Enable Wakeup Source to get out of DEEPSTOP mode.
   * @rmtoll CR3/CR6               LL_PWR_EnableWakeupSource
@@ -614,6 +621,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
   *         @arg @ref LL_PWE_EWS_EW1     
   *         @arg @ref LL_PWE_EWS_EW0
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
@@ -660,6 +668,7 @@ __STATIC_INLINE void LL_PWR_EnableWakeupSource(uint32_t wakeup_sources)
   *         @arg @ref LL_PWE_EWS_EW1     
   *         @arg @ref LL_PWE_EWS_EW0
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
@@ -707,6 +716,7 @@ __STATIC_INLINE void LL_PWR_DisableWakeupSource(uint32_t wakeup_sources)
   *         @arg @ref LL_PWE_EWS_EW1     
   *         @arg @ref LL_PWE_EWS_EW0
   * @retval State of bit (1 or 0).
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
@@ -753,6 +763,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeupSource(uint32_t wakeup_sources)
   *         @arg @ref LL_PWR_WUP_RISIEDG 
   *         @arg @ref LL_PWR_WUP_FALLEDG 
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   */
@@ -764,7 +775,7 @@ __STATIC_INLINE void LL_PWR_SetWakeupIOPolarity(uint32_t IO, uint32_t polarity)
     SET_BIT(PWR->CR7, (IO >> 16));
   } else {
     CLEAR_BIT(PWR->CR4, (IO & 0x0000FFFF));
-    CLEAR_BIT(PWR->CR7, (IO >> 16));;
+    CLEAR_BIT(PWR->CR7, (IO >> 16));
   }
 }
 
@@ -803,6 +814,7 @@ __STATIC_INLINE void LL_PWR_SetWakeupIOPolarity(uint32_t IO, uint32_t polarity)
   * @retval The IO polarity. This parameter can be one of the following values:
   *         @arg @ref LL_PWR_WUP_RISIEDG 
   *         @arg @ref LL_PWR_WUP_FALLEDG 
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   */
@@ -852,6 +864,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetWakeupIOPolarity(uint32_t IO)
   *         @arg @ref LL_PWE_EWS_EW2     
   *         @arg @ref LL_PWE_EWS_EW1     
   *         @arg @ref LL_PWE_EWS_EW0
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
@@ -903,6 +916,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetWakeupSource(void)
   *         @arg @ref LL_PWE_EWS_EW0
   *         @arg @ref LL_PWE_EWS_ALL
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
   *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
   *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
   *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
@@ -912,6 +926,7 @@ __STATIC_INLINE void LL_PWR_ClearWakeupSource(uint32_t source)
   WRITE_REG(PWR->SR1, (source & 0x0000FFFF));
   WRITE_REG(PWR->SR3, (source >> 16));
 }
+#endif
 
   
 /**
@@ -1035,6 +1050,16 @@ __STATIC_INLINE void LL_PWR_SetSMPSMode(uint32_t mode)
 __STATIC_INLINE void  LL_PWR_SetSMPSPrechargeMode(uint32_t mode)
 {
   MODIFY_REG(PWR->CR5, PWR_CR5_SMPSFBYP, mode);
+}
+
+/**
+  * @brief   Check if SMPS is configured in PRECHARGE Mode.
+  * @rmtoll CR5          PWR_CR5_SMPSFBYP      LL_PWR_IsEnabledSMPSPrechargeMode
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledSMPSPrechargeMode(void)
+{
+  return ((READ_BIT(PWR->CR5, PWR_CR5_SMPSFBYP) == (PWR_CR5_SMPSFBYP)) ? 1UL : 0UL);
 }
 
 /**
@@ -1179,6 +1204,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDCfg(void)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1209,6 +1235,7 @@ __STATIC_INLINE void LL_PWR_EnablePUA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1238,6 +1265,7 @@ __STATIC_INLINE void LL_PWR_DisablePUA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1267,6 +1295,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1297,6 +1326,7 @@ __STATIC_INLINE void LL_PWR_EnablePDA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1326,6 +1356,7 @@ __STATIC_INLINE void LL_PWR_DisablePDA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1356,6 +1387,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
   *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
   *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
   */
@@ -1386,6 +1418,7 @@ __STATIC_INLINE void LL_PWR_SetNoPullA(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE void LL_PWR_EnablePUB(uint32_t IO)
@@ -1415,6 +1448,7 @@ __STATIC_INLINE void LL_PWR_EnablePUB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE void LL_PWR_DisablePUB(uint32_t IO)
@@ -1443,6 +1477,7 @@ __STATIC_INLINE void LL_PWR_DisablePUB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUB(uint32_t IO)
@@ -1471,6 +1506,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE void LL_PWR_EnablePDB(uint32_t IO)
@@ -1500,6 +1536,7 @@ __STATIC_INLINE void LL_PWR_EnablePDB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE void LL_PWR_DisablePDB(uint32_t IO)
@@ -1528,6 +1565,7 @@ __STATIC_INLINE void LL_PWR_DisablePDB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDB(uint32_t IO)
@@ -1557,6 +1595,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDB(uint32_t IO)
   *         @arg @ref LL_PWR_PUPD_IO14
   *         @arg @ref LL_PWR_PUPD_IO15
   * @retval None
+  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
   *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
   */
 __STATIC_INLINE void LL_PWR_SetNoPullB(uint32_t IO)
@@ -2069,7 +2108,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledDBGRET(void)
   */
 __STATIC_INLINE void LL_PWR_SetSMPSPrechargeLimitCurrent(uint32_t mode)
 {
-  MODIFY_REG_FIELD(PWR->CR5, PWR_CR5_SMPS_PRECH_CUR_SEL, mode);
+  MODIFY_REG(PWR->CR5, PWR_CR5_SMPS_PRECH_CUR_SEL, mode);
 }
 
 /**
@@ -2083,7 +2122,7 @@ __STATIC_INLINE void LL_PWR_SetSMPSPrechargeLimitCurrent(uint32_t mode)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSMPSPrechargeLimitCurrent(void)
 {
-  return (uint32_t) (READ_BIT(PWR->CR5, PWR_CR5_SMPS_PRECH_CUR_SEL) >> PWR_CR5_SMPS_PRECH_CUR_SEL_Pos);
+  return (uint32_t) (READ_BIT(PWR->CR5, PWR_CR5_SMPS_PRECH_CUR_SEL));
 }
 #endif
 

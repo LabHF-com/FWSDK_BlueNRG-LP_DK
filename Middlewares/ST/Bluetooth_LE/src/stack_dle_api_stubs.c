@@ -9,25 +9,36 @@
 #define ERR_UNKNOWN_HCI_COMMAND (0x01)
 
 /* API definitions */
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_data_length(uint16_t Connection_Handle,
                                   uint16_t Tx_Octets,
                                   uint16_t Tx_Time)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_read_suggested_default_data_length(uint16_t* Suggested_Max_Tx_Octets,
                                                      uint16_t* Suggested_Max_Tx_Time)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_write_suggested_default_data_length(uint16_t Suggested_Max_Tx_Octets,
                                                       uint16_t Suggested_Max_Tx_Time)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_read_maximum_data_length(uint16_t* Supported_Max_Tx_Octets,
                                            uint16_t* Supported_Max_Tx_Time,
                                            uint16_t* Supported_Max_Rx_Octets,
@@ -35,5 +46,6 @@ tBleStatus hci_le_read_maximum_data_length(uint16_t* Supported_Max_Tx_Octets,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 #endif

@@ -236,7 +236,7 @@ uint8_t SerialPort_DeviceInit(void)
   Setup_DeviceAddress();
 
   /* Set the TX power to 0 dBm */
-  aci_hal_set_tx_power_level(1, 25);
+  aci_hal_set_tx_power_level(0, 24);
 
   /* GATT Init */
   ret = aci_gatt_srv_init();    

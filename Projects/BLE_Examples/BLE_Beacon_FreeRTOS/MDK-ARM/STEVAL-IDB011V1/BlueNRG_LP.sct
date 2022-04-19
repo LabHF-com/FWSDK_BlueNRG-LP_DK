@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m0plus -xc
 /*******************************************************************************
 * BlueNRG-LP generic linker file for KEIL
 * Main linker variables to control it are:
@@ -63,6 +63,9 @@ BlueNRG-LP memory map
 
 /* Reserved for BTLE stack non volatile memory */
 #define FLASH_NVM_DATASIZE     (4*1024)
+
+/* Workaround for a device limitation. A word is corrupted after wake-up from deepstop. */
+#define RESERVED_CSTACK_AREA     (68)
 
 
 #ifdef CONFIG_OTA_HIGHER
@@ -218,10 +221,10 @@ LR_IROM1 (_MEMORY_FLASH_BEGIN_+MEMORY_FLASH_APP_OFFSET) _MEMORY_FLASH_SIZE_  {  
   REGION_FLASH_NVM (_MEMORY_FLASH_END_- FLASH_NVM_DATASIZE + 1) UNINIT FLASH_NVM_DATASIZE  {
   }
   ram_vr_block 0x20000004 UNINIT 0x2C {
-   *.o (.ram_vr)
+   *.o (.bss.ram_vr)
   }
   crash_info_ram_vr_block 0x20000034 UNINIT 40 {  
-  *.o (.crash_info_ram_vr)
+  *.o (.bss.crash_info_ram_vr)
   }
   BLUE 0x200000C0 {
   *.o (.bss.__blue_RAM)
@@ -239,5 +242,5 @@ LR_IROM1 (_MEMORY_FLASH_BEGIN_+MEMORY_FLASH_APP_OFFSET) _MEMORY_FLASH_SIZE_  {  
   REGION_RAM2 +0 UNINIT  {  ; RW data not initialized
    *.o (.noinit.data)
   }
-  ARM_LIB_STACK (_MEMORY_RAM_END_+1) EMPTY -0x200 { }
+  ARM_LIB_STACK (_MEMORY_RAM_END_+1-RESERVED_CSTACK_AREA) EMPTY -0x200 { }
 }

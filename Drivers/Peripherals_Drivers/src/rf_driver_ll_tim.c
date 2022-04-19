@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -148,6 +148,10 @@
                                         || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N5) \
                                         || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N6) \
                                         || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N8))
+#ifdef LL_TIM_BREAK_AFMODE_INPUT
+#define IS_LL_TIM_BREAK_AFMODE(__VALUE__) (((__VALUE__) == LL_TIM_BREAK_AFMODE_INPUT)          \
+                                           || ((__VALUE__) == LL_TIM_BREAK_AFMODE_BIDIRECTIONAL))
+#endif
 
 #define IS_LL_TIM_BREAK2_STATE(__VALUE__) (((__VALUE__) == LL_TIM_BREAK2_DISABLE) \
                                         || ((__VALUE__) == LL_TIM_BREAK2_ENABLE))
@@ -603,6 +607,11 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(TIM_TypeDef *TIMx, LL_TIM_HALLSENSOR_InitType
   /* Connect TIMx_CH1, CH2 and CH3 pins to the TI1 input */
   tmpcr2 |= TIM_CR2_TI1S;
 
+#ifdef LL_TIM_TRGO_OC2REF
+  /* OC2REF signal is used as trigger output (TRGO) */
+  tmpcr2 |= LL_TIM_TRGO_OC2REF;
+#endif
+
   /* Configure the slave mode controller */
   tmpsmcr &= (uint32_t)~(TIM_SMCR_TS | TIM_SMCR_SMS);
   tmpsmcr |= LL_TIM_TS_TI1F_ED;
@@ -716,27 +725,26 @@ ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx, LL_TIM_BDTR_InitTypeDef *TIM_BDT
   MODIFY_REG(tmpbdtr, TIM_BDTR_MOE, TIM_BDTRInitStruct->AutomaticOutput);
   
 #ifdef TIM_BDTR_BKF
-  if (IS_TIM_ADVANCED_INSTANCE(TIMx))
-  {
-    assert_param(IS_LL_TIM_BREAK_FILTER(TIM_BDTRInitStruct->BreakFilter));
-    MODIFY_REG(tmpbdtr, TIM_BDTR_BKF, TIM_BDTRInitStruct->BreakFilter);
-  }
-#endif /* TIM_BDTR_BKF */
-
-#if defined(TIM_BDTR_BK2F) && defined(TIM_BDTR_BK2E) && defined(TIM_BDTR_BK2P)  
-  if (IS_TIM_BKIN2_INSTANCE(TIMx))
-  {
+  assert_param(IS_LL_TIM_BREAK_FILTER(TIM_BDTRInitStruct->BreakFilter));
+  MODIFY_REG(tmpbdtr, TIM_BDTR_BKF, TIM_BDTRInitStruct->BreakFilter);
+#endif 
+#ifdef TIM_BDTR_BKBID
+    assert_param(IS_LL_TIM_BREAK_AFMODE(TIM_BDTRInitStruct->BreakAFMode));
+    MODIFY_REG(tmpbdtr, TIM_BDTR_BKBID, TIM_BDTRInitStruct->BreakAFMode);
+#endif 
+#if defined(TIM_BDTR_BK2F)  
     assert_param(IS_LL_TIM_BREAK2_STATE(TIM_BDTRInitStruct->Break2State));
-    assert_param(IS_LL_TIM_BREAK2_POLARITY(TIM_BDTRInitStruct->Break2Polarity));
-    assert_param(IS_LL_TIM_BREAK2_FILTER(TIM_BDTRInitStruct->Break2Filter));
-    
-    /* Set the BREAK2 input related BDTR bit-fields */
     MODIFY_REG(tmpbdtr, TIM_BDTR_BK2F, (TIM_BDTRInitStruct->Break2Filter));
+#endif
+#if defined(TIM_BDTR_BK2E)  
+    assert_param(IS_LL_TIM_BREAK2_POLARITY(TIM_BDTRInitStruct->Break2Polarity));
     MODIFY_REG(tmpbdtr, TIM_BDTR_BK2E, TIM_BDTRInitStruct->Break2State);
+#endif
+#if defined(TIM_BDTR_BK2P)  
+    assert_param(IS_LL_TIM_BREAK2_FILTER(TIM_BDTRInitStruct->Break2Filter));
     MODIFY_REG(tmpbdtr, TIM_BDTR_BK2P, TIM_BDTRInitStruct->Break2Polarity);
-  }
-#endif /* TIM_BDTR_BK2F && TIM_BDTR_BK2E && TIM_BDTR_BK2P */
-  
+#endif
+    
   /* Set TIMx_BDTR */
   LL_TIM_WriteReg(TIMx, BDTR, tmpbdtr);
   

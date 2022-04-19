@@ -1,5 +1,5 @@
 
-#include "BlueNRG_LPx.h"
+#include "bluenrg_lpx.h"
 #include "cmd.h"
 #include "hci_parser.h"
 #include "hw_config.h"

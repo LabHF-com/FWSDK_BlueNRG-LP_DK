@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -165,7 +165,7 @@ typedef struct
   *             xx : Should be set to 00
   *          b5     Peripheral initialization status
   *             0  : Reset (Peripheral not initialized)
-  *             1  : Init done n(Peripheral ot initialized)
+  *             1  : Init done (Peripheral initialized)
   *          b4-b2  (not used)
   *            xxx : Should be set to 000
   *          b1     Rx state
@@ -175,6 +175,17 @@ typedef struct
   *             x  : Should be set to 0.
   */
 typedef uint32_t HAL_UART_StateTypeDef;
+
+/**
+  * @brief HAL UART Reception type definition
+  * @note  HAL UART Reception type value aims to identify which type of Reception is ongoing.
+  *        It is expected to admit following values :
+  *           HAL_UART_RECEPTION_STANDARD         = 0x00U,
+  *           HAL_UART_RECEPTION_TOIDLE           = 0x01U,
+  *           HAL_UART_RECEPTION_TORTO            = 0x02U,
+  *           HAL_UART_RECEPTION_TOCHARMATCH      = 0x03U,
+  */
+typedef uint32_t HAL_UART_RxTypeTypeDef;
 
 /**
   * @brief  UART handle Structure definition
@@ -208,9 +219,11 @@ typedef struct __UART_HandleTypeDef
 
   uint16_t                 NbTxDataToProcess;        /*!< Number of data to process during TX ISR execution */
 
-  void (*RxISR)(struct __UART_HandleTypeDef *huart); /*!< Function pointer on Rx IRQ handler   */
+  __IO HAL_UART_RxTypeTypeDef ReceptionType;         /*!< Type of ongoing reception          */
 
-  void (*TxISR)(struct __UART_HandleTypeDef *huart); /*!< Function pointer on Tx IRQ handler   */
+  void (*RxISR)(struct __UART_HandleTypeDef *huart); /*!< Function pointer on Rx IRQ handler */
+
+  void (*TxISR)(struct __UART_HandleTypeDef *huart); /*!< Function pointer on Tx IRQ handler */
 
   DMA_HandleTypeDef        *hdmatx;                  /*!< UART Tx DMA Handle parameters      */
 
@@ -239,6 +252,7 @@ typedef struct __UART_HandleTypeDef
   void (* WakeupCallback)(struct __UART_HandleTypeDef *huart);            /*!< UART Wakeup Callback                  */
   void (* RxFifoFullCallback)(struct __UART_HandleTypeDef *huart);        /*!< UART Rx Fifo Full Callback            */
   void (* TxFifoEmptyCallback)(struct __UART_HandleTypeDef *huart);       /*!< UART Tx Fifo Empty Callback           */
+  void (* RxEventCallback)(struct __UART_HandleTypeDef *huart, uint16_t Pos); /*!< UART Reception Event Callback     */
 
   void (* MspInitCallback)(struct __UART_HandleTypeDef *huart);           /*!< UART Msp Init callback                */
   void (* MspDeInitCallback)(struct __UART_HandleTypeDef *huart);         /*!< UART Msp DeInit callback              */
@@ -326,8 +340,10 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
 #define  HAL_UART_ERROR_FE               ((uint32_t)0x00000004U)    /*!< Frame error             */
 #define  HAL_UART_ERROR_ORE              ((uint32_t)0x00000008U)    /*!< Overrun error           */
 #define  HAL_UART_ERROR_DMA              ((uint32_t)0x00000010U)    /*!< DMA transfer error      */
+#define  HAL_UART_ERROR_RTO              ((uint32_t)0x00000020U)    /*!< Receiver Timeout error  */
+
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
-#define  HAL_UART_ERROR_INVALID_CALLBACK ((uint32_t)0x00000020U)    /*!< Invalid Callback error  */
+#define  HAL_UART_ERROR_INVALID_CALLBACK ((uint32_t)0x00000040U)    /*!< Invalid Callback error  */
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
 /**
   * @}
@@ -671,6 +687,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
 #define UART_FLAG_BUSY                      USART_ISR_BUSY          /*!< UART busy flag                            */
 #define UART_FLAG_ABRF                      USART_ISR_ABRF          /*!< UART auto Baud rate flag                  */
 #define UART_FLAG_ABRE                      USART_ISR_ABRE          /*!< UART auto Baud rate error                 */
+#define UART_FLAG_RTOF                      USART_ISR_RTOF          /*!< UART receiver timeout flag                */
 #define UART_FLAG_CTS                       USART_ISR_CTS           /*!< UART clear to send flag                   */
 #define UART_FLAG_CTSIF                     USART_ISR_CTSIF         /*!< UART clear to send interrupt flag         */
 #define UART_FLAG_LBDF                      USART_ISR_LBDF          /*!< UART LIN break detection flag             */
@@ -751,10 +768,25 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
 #define UART_CLEAR_LBDF                      USART_ICR_LBDCF           /*!< LIN Break Detection Clear Flag    */
 #define UART_CLEAR_CTSF                      USART_ICR_CTSCF           /*!< CTS Interrupt Clear Flag          */
 #define UART_CLEAR_CMF                       USART_ICR_CMCF            /*!< Character Match Clear Flag        */
+#define UART_CLEAR_RTOF                      USART_ICR_RTOCF           /*!< UART receiver timeout clear flag  */
 /**
   * @}
   */
 
+/** @defgroup UART_RECEPTION_TYPE_Values  UART Reception type values
+  * @{
+  */
+#define HAL_UART_RECEPTION_STANDARD          (0x00000000U)             /*!< Standard reception                       */
+#define HAL_UART_RECEPTION_TOIDLE            (0x00000001U)             /*!< Reception till completion or IDLE event  */
+#define HAL_UART_RECEPTION_TORTO             (0x00000002U)             /*!< Reception till completion or RTO event   */
+#define HAL_UART_RECEPTION_TOCHARMATCH       (0x00000003U)             /*!< Reception till completion or CM event    */
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /* Exported macros -----------------------------------------------------------*/
 /** @defgroup UART_Exported_Macros UART Exported Macros
@@ -891,6 +923,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   *            @arg @ref UART_IT_TC    Transmission complete interrupt
   *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
   *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
   *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
   *            @arg @ref UART_IT_PE    Parity Error interrupt
   *            @arg @ref UART_IT_ERR   Error interrupt (frame error, noise error, overrun error)
@@ -917,6 +950,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   *            @arg @ref UART_IT_TC    Transmission complete interrupt
   *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
   *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
   *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
   *            @arg @ref UART_IT_PE    Parity Error interrupt
   *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
@@ -942,6 +976,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   *            @arg @ref UART_IT_TC    Transmission complete interrupt
   *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
   *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
   *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
   *            @arg @ref UART_IT_PE    Parity Error interrupt
   *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
@@ -965,6 +1000,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   *            @arg @ref UART_IT_TC    Transmission complete interrupt
   *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
   *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
   *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
   *            @arg @ref UART_IT_PE    Parity Error interrupt
   *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
@@ -984,6 +1020,7 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   *            @arg @ref UART_CLEAR_NEF    Noise detected Clear Flag
   *            @arg @ref UART_CLEAR_OREF   Overrun Error Clear Flag
   *            @arg @ref UART_CLEAR_IDLEF  IDLE line detected Clear Flag
+  *            @arg @ref UART_CLEAR_RTOF   Receiver timeout clear flag
   *            @arg @ref UART_CLEAR_TXFECF TXFIFO empty Clear Flag
   *            @arg @ref UART_CLEAR_TCF    Transmission Complete Clear Flag
   *            @arg @ref UART_CLEAR_LBDF   LIN Break Detection Clear Flag
@@ -1463,6 +1500,9 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *huart);
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
 HAL_StatusTypeDef HAL_UART_RegisterCallback(UART_HandleTypeDef *huart, HAL_UART_CallbackIDTypeDef CallbackID, pUART_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_UART_UnRegisterCallback(UART_HandleTypeDef *huart, HAL_UART_CallbackIDTypeDef CallbackID);
+
+HAL_StatusTypeDef HAL_UART_RegisterRxEventCallback(UART_HandleTypeDef *huart, pUART_RxEventCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_UART_UnRegisterRxEventCallback(UART_HandleTypeDef *huart);
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
 
 /**
@@ -1500,6 +1540,8 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart);
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size);
 
 /**
   * @}
@@ -1540,7 +1582,6 @@ uint32_t              HAL_UART_GetError(UART_HandleTypeDef *huart);
 /** @addtogroup UART_Private_Functions UART Private Functions
   * @{
   */
-  
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
 void UART_InitCallbacksToDefault(UART_HandleTypeDef *huart);
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
@@ -1548,6 +1589,8 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef UART_CheckIdleState(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_t Flag, FlagStatus Status, uint32_t Tickstart, uint32_t Timeout);
 void UART_AdvFeatureConfig(UART_HandleTypeDef *huart);
+HAL_StatusTypeDef UART_Start_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef UART_Start_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
 
 /**
   * @}

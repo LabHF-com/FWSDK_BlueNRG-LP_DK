@@ -54,7 +54,11 @@
 #define INITDELAY_TIMER2_NOCAL    0x9U
 
 /*Init_radio_delay*/
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define DELAYCHK_TRANSMIT_CAL     0x5CU
+#else
 #define DELAYCHK_TRANSMIT_CAL     0x76U
+#endif    
 #define DELAYCHK_TRANSMIT_NOCAL   0x3AU
 #define DELAYCHK_RECEIVE_CAL      0x74U
 #define DELAYCHK_RECEIVE_NOCAL    0x38U
@@ -625,6 +629,10 @@ uint8_t RADIO_MakeActionPacketPending(ActionPacket *p)
     (bluedata + statemachineNo)->RCVPOINT = BLUE_STRUCT_PTR_CAST(p1);
     (bluedata + statemachineNo)->TXPOINT = BLUE_STRUCT_PTR_CAST(p1);
     (bluedata + statemachineNo)->MAXRECEIVEDLENGTH = p->MaxReceiveLength;
+    
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    (bluedata + statemachineNo)->BYTE3 |= 1<<3; 
+#endif
     
     globalParameters.current_action_packet = p;
     

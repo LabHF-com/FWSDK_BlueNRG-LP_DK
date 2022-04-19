@@ -103,15 +103,8 @@ int main(void)
 }
 
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

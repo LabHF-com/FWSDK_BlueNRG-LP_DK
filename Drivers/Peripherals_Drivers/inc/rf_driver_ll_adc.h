@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -370,17 +372,17 @@ typedef struct
 /** @defgroup ADC_LL_INPUT_VOLTAGE_RANGE ADC input voltage range definitions
   * @brief    It defines the parameters used for the functions:
   *           LL_ADC_SetVoltageRangeSingleVinm0(),    LL_ADC_GetVoltageRangeSingleVinm0(),
-  *           LL_ADC_SetVoltageRangeDiffVinp0Vinm0(), LL_ADC_GetVoltageRangeDiffVinp0Vinm0(),
   *           LL_ADC_SetVoltageRangeSingleVinm1(),    LL_ADC_GetVoltageRangeSingleVinm1(),
-  *           LL_ADC_SetVoltageRangeDiffVinp1Vinm1(), LL_ADC_GetVoltageRangeDiffVinp1Vinm1(),
   *           LL_ADC_SetVoltageRangeSingleVinm2(),    LL_ADC_GetVoltageRangeSingleVinm2(),
-  *           LL_ADC_SetVoltageRangeDiffVinp2Vinm2(), LL_ADC_GetVoltageRangeDiffVinp2Vinm2(),
   *           LL_ADC_SetVoltageRangeSingleVinm3(),    LL_ADC_GetVoltageRangeSingleVinm3(),
-  *           LL_ADC_SetVoltageRangeDiffVinp3Vinm3(), LL_ADC_GetVoltageRangeDiffVinp3Vinm3(),
   *           LL_ADC_SetVoltageRangeSingleVinp0(),    LL_ADC_GetVoltageRangeSingleVinp0(),
   *           LL_ADC_SetVoltageRangeSingleVinp1(),    LL_ADC_GetVoltageRangeSingleVinp1(),
   *           LL_ADC_SetVoltageRangeSingleVinp2(),    LL_ADC_GetVoltageRangeSingleVinp2(),
-  *           LL_ADC_SetVoltageRangeSingleVinp3() and LL_ADC_GetVoltageRangeSingleVinp3()
+  *           LL_ADC_SetVoltageRangeSingleVinp3() and LL_ADC_GetVoltageRangeSingleVinp3(),
+  *           LL_ADC_SetVoltageRangeDiffVinp0Vinm0(), LL_ADC_GetVoltageRangeDiffVinp0Vinm0(),
+  *           LL_ADC_SetVoltageRangeDiffVinp1Vinm1(), LL_ADC_GetVoltageRangeDiffVinp1Vinm1(),
+  *           LL_ADC_SetVoltageRangeDiffVinp2Vinm2(), LL_ADC_GetVoltageRangeDiffVinp2Vinm2(),
+  *           LL_ADC_SetVoltageRangeDiffVinp3Vinm3(), LL_ADC_GetVoltageRangeDiffVinp3Vinm3(),
   * @{
   */
 
@@ -590,22 +592,22 @@ typedef struct
   * @{
   */
 
-#define LL_ADC_WDG_CH_VINM0_TO_NEG     (1<<ADC_WD_CONF_AWD_CHX_0 )  /*!< ADC watchdog channel selection: VINM0 to ADC negative input  */
-#define LL_ADC_WDG_CH_VINM1_TO_NEG     (1<<ADC_WD_CONF_AWD_CHX_1 )  /*!< ADC watchdog channel selection: VINM1 to ADC negative input  */
-#define LL_ADC_WDG_CH_VINM2_TO_NEG     (1<<ADC_WD_CONF_AWD_CHX_2 )  /*!< ADC watchdog channel selection: VINM2 to ADC negative input  */
-#define LL_ADC_WDG_CH_VINM3_TO_NEG     (1<<ADC_WD_CONF_AWD_CHX_3 )  /*!< ADC watchdog channel selection: VINM3 to ADC negative input  */
-#define LL_ADC_WDG_CH_MICROM_TO_NEG    (1<<ADC_WD_CONF_AWD_CHX_4 )  /*!< ADC watchdog channel selection: MICROM to ADC negative input */
-#define LL_ADC_WDG_CH_VBAT_TO_NEG      (1<<ADC_WD_CONF_AWD_CHX_5 )  /*!< ADC watchdog channel selection: VBAT to ADC negative input   */
-#define LL_ADC_WDG_CH_GND_TO_NEG       (1<<ADC_WD_CONF_AWD_CHX_6 )  /*!< ADC watchdog channel selection: GND to ADC negative input    */
-#define LL_ADC_WDG_CH_VDDA_TO_NEG      (1<<ADC_WD_CONF_AWD_CHX_7 )  /*!< ADC watchdog channel selection: VDDA to ADC negative input   */
-#define LL_ADC_WDG_CH_VINP0_TO_POS     (1<<ADC_WD_CONF_AWD_CHX_8 )  /*!< ADC watchdog channel selection: VINP0 to ADC positive input  */
-#define LL_ADC_WDG_CH_VINP1_TO_POS     (1<<ADC_WD_CONF_AWD_CHX_9 )  /*!< ADC watchdog channel selection: VINP1 to ADC positive input  */
-#define LL_ADC_WDG_CH_VINP2_TO_POS     (1<<ADC_WD_CONF_AWD_CHX_10)  /*!< ADC watchdog channel selection: VINP2 to ADC positive input  */
-#define LL_ADC_WDG_CH_VINP3_TO_POS     (1<<ADC_WD_CONF_AWD_CHX_11)  /*!< ADC watchdog channel selection: VINP3 to ADC positive input  */
-#define LL_ADC_WDG_CH_MICROP_TO_POS    (1<<ADC_WD_CONF_AWD_CHX_12)  /*!< ADC watchdog channel selection: MICROP to ADC positive input */
-#define LL_ADC_WDG_CH_TEMP_TO_POS      (1<<ADC_WD_CONF_AWD_CHX_13)  /*!< ADC watchdog channel selection: TEMP to ADC positive input   */
-#define LL_ADC_WDG_CH_GND_TO_POS       (1<<ADC_WD_CONF_AWD_CHX_14)  /*!< ADC watchdog channel selection: GND to ADC positive input    */
-#define LL_ADC_WDG_CH_VDDA_TO_POS      (1<<ADC_WD_CONF_AWD_CHX_15)  /*!< ADC watchdog channel selection: VDDA to ADC positive input   */
+#define LL_ADC_WDG_CH_VINM0_TO_NEG     (ADC_WD_CONF_AWD_CHX_0 )  /*!< ADC watchdog channel selection: VINM0 to ADC negative input  */
+#define LL_ADC_WDG_CH_VINM1_TO_NEG     (ADC_WD_CONF_AWD_CHX_1 )  /*!< ADC watchdog channel selection: VINM1 to ADC negative input  */
+#define LL_ADC_WDG_CH_VINM2_TO_NEG     (ADC_WD_CONF_AWD_CHX_2 )  /*!< ADC watchdog channel selection: VINM2 to ADC negative input  */
+#define LL_ADC_WDG_CH_VINM3_TO_NEG     (ADC_WD_CONF_AWD_CHX_3 )  /*!< ADC watchdog channel selection: VINM3 to ADC negative input  */
+#define LL_ADC_WDG_CH_MICROM_TO_NEG    (ADC_WD_CONF_AWD_CHX_4 )  /*!< ADC watchdog channel selection: MICROM to ADC negative input */
+#define LL_ADC_WDG_CH_VBAT_TO_NEG      (ADC_WD_CONF_AWD_CHX_5 )  /*!< ADC watchdog channel selection: VBAT to ADC negative input   */
+#define LL_ADC_WDG_CH_GND_TO_NEG       (ADC_WD_CONF_AWD_CHX_6 )  /*!< ADC watchdog channel selection: GND to ADC negative input    */
+#define LL_ADC_WDG_CH_VDDA_TO_NEG      (ADC_WD_CONF_AWD_CHX_7 )  /*!< ADC watchdog channel selection: VDDA to ADC negative input   */
+#define LL_ADC_WDG_CH_VINP0_TO_POS     (ADC_WD_CONF_AWD_CHX_8 )  /*!< ADC watchdog channel selection: VINP0 to ADC positive input  */
+#define LL_ADC_WDG_CH_VINP1_TO_POS     (ADC_WD_CONF_AWD_CHX_9 )  /*!< ADC watchdog channel selection: VINP1 to ADC positive input  */
+#define LL_ADC_WDG_CH_VINP2_TO_POS     (ADC_WD_CONF_AWD_CHX_10)  /*!< ADC watchdog channel selection: VINP2 to ADC positive input  */
+#define LL_ADC_WDG_CH_VINP3_TO_POS     (ADC_WD_CONF_AWD_CHX_11)  /*!< ADC watchdog channel selection: VINP3 to ADC positive input  */
+#define LL_ADC_WDG_CH_MICROP_TO_POS    (ADC_WD_CONF_AWD_CHX_12)  /*!< ADC watchdog channel selection: MICROP to ADC positive input */
+#define LL_ADC_WDG_CH_TEMP_TO_POS      (ADC_WD_CONF_AWD_CHX_13)  /*!< ADC watchdog channel selection: TEMP to ADC positive input   */
+#define LL_ADC_WDG_CH_GND_TO_POS       (ADC_WD_CONF_AWD_CHX_14)  /*!< ADC watchdog channel selection: GND to ADC positive input    */
+#define LL_ADC_WDG_CH_VDDA_TO_POS      (ADC_WD_CONF_AWD_CHX_15)  /*!< ADC watchdog channel selection: VDDA to ADC positive input   */
 
 /**
   * @}
@@ -635,6 +637,7 @@ typedef struct
   * @{
   */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define LL_ADC_IRQ_FLAGS_MASK      (LL_ADC_IRQ_FLAG_OVRFL | \
                                  LL_ADC_IRQ_FLAG_OVRDF | \
                                  LL_ADC_IRQ_FLAG_OVRDS | \
@@ -642,7 +645,14 @@ typedef struct
                                  LL_ADC_IRQ_FLAG_EOS   | \
                                  LL_ADC_IRQ_FLAG_EODF  | \
                                  LL_ADC_IRQ_FLAG_EODS)
+#endif
 
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define LL_ADC_IRQ_FLAGS_MASK      (LL_ADC_IRQ_FLAG_OVRDS | \
+                                 LL_ADC_IRQ_FLAG_AWD   | \
+                                 LL_ADC_IRQ_FLAG_EOS   | \
+                                 LL_ADC_IRQ_FLAG_EODS)
+#endif
 
 /**
   * @}
@@ -3748,7 +3758,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos3V6(ADC_TypeDef *ADCx, 
 
 /**
   * @brief  Set the use of a specific calibration point for
-  *         ADC single negative mode with Vinput range = 3.6 V.
+  *         ADC single negative mode with Vinput range = 3.6 V
+  *         and battery level detector.
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN6       LL_ADC_SetCalibPointForSingleNeg3V6
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
@@ -3766,7 +3777,8 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg3V6(ADC_TypeDef *ADCx, uint
 
 /**
   * @brief  Get what calibration point is used for
-  *         ADC single negative mode with Vinput range = 3.6 V.
+  *         ADC single negative mode with Vinput range = 3.6 V
+  *         and battery level detector.
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN6       LL_ADC_GetCalibPointForSingleNeg3V6
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
@@ -3918,7 +3930,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff1V2(ADC_TypeDef *ADCx, uint3
 
 /**
   * @brief  Set the use of a specific calibration point for
-  *         ADC single positive mode with Vinput range = 1.2 V.
+  *         ADC single positive mode with Vinput range = 1.2 V
+  *         and temperature sensor.
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN1       LL_ADC_SetCalibPointForSinglePos1V2
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
@@ -3936,7 +3949,8 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos1V2(ADC_TypeDef *ADCx, uint
 
 /**
   * @brief  Get what calibration point is used for
-  *         ADC single positive mode with Vinput range = 1.2 V.
+  *         ADC single positive mode with Vinput range = 1.2 V
+  *         and temperature sensor.
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN1       LL_ADC_GetCalibPointForSinglePos1V2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
@@ -3994,6 +4008,37 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg1V2(ADC_TypeDef *ADCx, 
 /** @defgroup ADC_LL_EF_WDG_TH_Configuration ADC Watchdog Thresholds Configuration functions
   * @{
   */
+
+
+/**
+  * @brief  Convert the threshold value from mV to code for single conversion or battery sensor.
+  * @rmtoll LL_ADC_ConfigureWDGThresholds
+  * @param  Millivolt The voltage threshold for the ADC watchdog in mV.
+  * @param  Range This parameter can be one of the following values:
+  *         @arg @ref LL_ADC_VIN_RANGE_1V2
+  *         @arg @ref LL_ADC_VIN_RANGE_2V4
+  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @retval Returned 12-bit value to be used as ADC watchdog threshold.
+  */
+__STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdSinglOrBatt(uint32_t Millivolt, uint32_t Range)
+{
+  return (uint16_t)((Millivolt * 4095) / (1200 * Range) );
+}
+
+/**
+  * @brief  Convert the threshold value from mV to code for differential conversion.
+  * @rmtoll LL_ADC_ConfigureWDGThresholds
+  * @param  Millivolt The voltage threshold for the ADC watchdog in mV.
+  * @param  Range This parameter can be one of the following values:
+  *         @arg @ref LL_ADC_VIN_RANGE_1V2
+  *         @arg @ref LL_ADC_VIN_RANGE_2V4
+  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @retval Returned 12-bit value to be used as ADC watchdog threshold.
+  */
+__STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdDiff(uint32_t Millivolt, uint32_t Range)
+{
+  return (uint16_t)(((Millivolt + 1200 * Range) * 2048) / (1200 * Range) );
+}
 
 
 /**
@@ -4843,18 +4888,30 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINPX_3V6(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINPX_3V6(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINPX_3V6) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
+
+
 
 /**
   * @brief  Return the calibration value for the gain of
@@ -4877,16 +4934,25 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINPX_2V4(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINPX_2V4(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINPX_2V4) >> 12);
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
-}
+    }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
 
@@ -4912,16 +4978,26 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINPX_1V2(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINPX_1V2) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
 
@@ -4949,17 +5025,27 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINMX_3V6(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINMX_3V6(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINMX_3V6) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (1 - (int8_t)(calibration_offset | 0x100));
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (1 - (int8_t)(calibration_offset | 0x80));
 }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (1 - (int8_t)(calibration_offset | 0x100));
     }
   }
-  return (1 - calibration_offset);
+#endif
+
+  return (1 - calibration_offset); /* Positive number */
 }
 
 /**
@@ -4983,17 +5069,27 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINMX_2V4(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINMX_2V4(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINMX_2V4) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (1 - (int8_t)(calibration_offset | 0x100));
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (1 - (int8_t)(calibration_offset | 0x80));
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (1 - (int8_t)(calibration_offset | 0x100));
     }
   }
-  return (1 - calibration_offset);
+#endif
+
+  return (1 - calibration_offset); /* Positive number */
 }
 
 
@@ -5018,17 +5114,27 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINMX_1V2(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINMX_1V2(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINMX_1V2) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (1 - (int8_t)(calibration_offset | 0x100));
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (1 - (int8_t)(calibration_offset | 0x80));
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (1 - (int8_t)(calibration_offset | 0x100));
     }
   }
-  return (1 - calibration_offset);
+#endif
+
+  return (1 - calibration_offset); /* Positive number */
 }
 
 
@@ -5054,16 +5160,26 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINDIFF_3V6(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINDIFF_3V6(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINDIFF_3V6) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
 
@@ -5088,16 +5204,26 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINDIFF_2V4(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINDIFF_2V4(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINDIFF_2V4) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
     }
   }
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
 
@@ -5123,16 +5249,26 @@ __STATIC_INLINE uint16_t LL_ADC_GET_CALIB_GAIN_FOR_VINDIFF_1V2(void)
 __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINDIFF_1V2(void)
 {
   int8_t calibration_offset = ( (*(uint32_t*)ADC_CALIB_ADDRESS_VINDIFF_1V2) >> 12);
+
+  /* Negative number */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  if((calibration_offset & 0x80) == 0x80) {
+    return (int8_t)(calibration_offset | 0x100);
+  }
+
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   if( *(uint32_t*)ADC_LAYOUT_ID == 0) { /* Memory version 1 */
-    if((calibration_offset & 0x40) == 0x40) { /* Negative number */
+    if((calibration_offset & 0x40) == 0x40) {
       return (int8_t)(calibration_offset | 0x80);
     }
   }  
   else { /* Memory version 2 */
-    if((calibration_offset & 0x80) == 0x80) { /* Negative number */
+    if((calibration_offset & 0x80) == 0x80) {
       return (int8_t)(calibration_offset | 0x100);
     }
   }
+#endif
+
   return calibration_offset; /* Positive number */
 }
 
@@ -5261,6 +5397,7 @@ __STATIC_INLINE float LL_ADC_GetADCConvertedValueBatt(ADC_TypeDef *ADCx, uint16_
   */
 #ifndef BLE_ADC_OUTPUT_FLOAT
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 __STATIC_INLINE int32_t LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint16_t RawValue, uint32_t Width)
 {
   int32_t c30_value = *(uint32_t*)0x10001E60;
@@ -5274,10 +5411,10 @@ __STATIC_INLINE int32_t LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint1
 //  return ((((( ((1200 * (int32_t)RawValue)/(4096 * (1<<Width) - 1))- 686)* 10000) ) /256) ); /* Obsolete */
   return ((((( (  ((1200 * (int32_t)RawValue)+(4096 * (1<<Width) - 1)/2) / (4096 * (1<<Width) - 1)  )- 686)* 10000) ) /128)/256 ); /* Obsolete */
 }
-  
-
+#endif
 #else /* BLE_ADC_OUTPUT_FLOAT defined */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 __STATIC_INLINE float LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint16_t RawValue, uint32_t Width)
 {
   int32_t c30_value = *(uint32_t*)0x10001E60;
@@ -5291,7 +5428,17 @@ __STATIC_INLINE float LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint16_
   
   return ((((( ((1200 * (float)RawValue)/ (4096.0 * (1<<Width) - 1) )- 686)* 10000) ) /256) ); /* Obsolete */
 }
+#endif
+#endif
 
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+__STATIC_INLINE int32_t LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint16_t RawValue, uint32_t Width)
+{
+  int32_t c30 = *(uint32_t*)0x10001E60;
+  int32_t tck = *(uint32_t*)0x10001E5C;
+
+  return ((RawValue >> Width) + (tck - c30));
+}
 #endif
 
 /**

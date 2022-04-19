@@ -62,6 +62,11 @@
   * @brief BlueNRG-LP Family
   */
    
+#if !defined CONFIG_DEVICE_BLUENRG_LP 
+  #if !defined CONFIG_DEVICE_BLUENRG_LPS
+    #error "Define device type."
+  #endif
+#endif
 
 /*  Tip: To avoid modifying this file each time you need to switch between these
         devices, you can define the device in your toolchain compiler preprocessor.
@@ -95,6 +100,7 @@
   * @{
   */
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP 
 /**
  * @brief RAM base address
  */   
@@ -115,6 +121,24 @@
 #define _MEMORY_FLASH_END_       0x1007FFFF
 #define _MEMORY_BYTES_PER_PAGE_  (2048)
 
+#elif defined CONFIG_DEVICE_BLUENRG_LPS
+
+/**
+ * @brief RAM base address
+ */   
+#define _MEMORY_RAM_BEGIN_       0x20000000
+#define _MEMORY_RAM_SIZE_        0x6000           /* 24KB  */
+#define _MEMORY_RAM_END_         0x20005FFF
+   
+/**
+ * @brief User FLASH base address
+ */
+#define _MEMORY_FLASH_BEGIN_     0x10040000
+#define _MEMORY_FLASH_SIZE_      0x30000          /* 192KB */
+#define _MEMORY_FLASH_END_       0x1006FFFF
+#define _MEMORY_BYTES_PER_PAGE_  (2048)
+
+#endif
 
 /**
  * @brief ROM base address
@@ -131,7 +155,11 @@
   * @{
   */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define CORE_CM0PLUS
+#else
+#error "Define device type."
+#endif
 
 /**
   * @}
@@ -427,13 +455,15 @@ void TIM17_IRQHandler(void);
 #endif
 
 
-uint8_t SystemInit(uint8_t SysClk, uint8_t BleSysClk);
+extern uint8_t SystemInit(uint8_t SysClk, uint8_t BleSysClk);
 uint8_t SystemClockConfig(uint8_t SysClk);
 uint8_t RadioClockConfig(uint8_t BleSysClk, uint8_t SysClk);
 void MrBleBiasTrimConfig(uint8_t coldStart);
 void SystemTimer_TimeoutConfig(uint32_t system_clock_freq, uint32_t timeout, uint8_t enable);
+uint8_t SystemReadyWait(uint32_t timeout_ms, uint32_t (*ready_func)(void), uint32_t ready_val);
 uint8_t SystemTimer_TimeoutExpired(void);
 void setInterruptPriority(void);
+extern void SystemCoreClockUpdate(void);
 
 /**
   * @}

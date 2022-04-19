@@ -50,7 +50,7 @@
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
+#define PRINT_ADDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -138,8 +138,8 @@ uint8_t DeviceInit(void)
   uint8_t addr_len;
   uint8_t address[6];
   
-  /* Set the TX power to -2 dBm */
-  aci_hal_set_tx_power_level(0, 25);  
+  /* Set the TX power to 0 dBm */
+  aci_hal_set_tx_power_level(0, 24);  
   
   aci_hal_set_radio_activity_mask(0xFF); //(0x04|0x20|0x10); // slave, master
   
@@ -170,7 +170,7 @@ uint8_t DeviceInit(void)
 
   aci_hal_read_config_data(0x80, &addr_len, address);
   PRINTF("Static random address: ");
-  PRINT_ADDDRESS(address);
+  PRINT_ADDRESS(address);
   PRINTF("\r\n");
 
   /* Set the device name */
@@ -198,7 +198,7 @@ uint8_t DeviceInit(void)
 
 void testCB(void *param)
 {
-  LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);
+  LL_GPIO_SetOutputPin(TEST_PULSE_GPIO_PORT, TEST_PULSE_GPIO_PIN);
 
   printf("0x%08X%08X\n", (uint32_t)(next_vtime_vtimer>>32),(uint32_t)next_vtime_vtimer);
   
@@ -206,7 +206,7 @@ void testCB(void *param)
   
   NETCLOCK_StartTimer(next_vtime_vtimer, testCB);  
   
-  LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_4);
+  LL_GPIO_ResetOutputPin(TEST_PULSE_GPIO_PORT, TEST_PULSE_GPIO_PIN);
 }
 
 /*******************************************************************************
@@ -360,7 +360,7 @@ void hci_le_connection_complete_event(uint8_t Status,
        central_info.conn_handle = Connection_Handle;
        
        PRINTF("Connected with central ");
-       PRINT_ADDDRESS(Peer_Address);
+       PRINT_ADDRESS(Peer_Address);
        PRINTF("\r\n");
        
        APP_FLAG_SET(CONNECTED);
@@ -414,7 +414,7 @@ void hci_disconnection_complete_event(uint8_t Status,
   }  
     
   PRINTF("Disconnected from master ");
-  PRINT_ADDDRESS(central_info.address);
+  PRINT_ADDRESS(central_info.address);
   PRINTF(", status 0x%02X, reason 0x%02X\r\n", Status, Reason);
   
   CentralInfoInit();
@@ -459,30 +459,33 @@ void aci_att_clt_read_resp_event(uint16_t Connection_Handle,
 {
   switch(central_info.client_state){
   case READING_SYNC_CLOCK_CHAR:
-    
-    if(Event_Data_Length != 10)
-    {
-      PRINTF("Error while reading sync clock characteristic\n");
+    {    
+      if(Event_Data_Length != 10)
+      {
+        PRINTF("Error while reading sync clock characteristic\n");
+      }
+      
+      uint16_t event_counter = LE_TO_HOST_16(Attribute_Value);
+      uint64_t vtime = LE_TO_HOST_64(Attribute_Value+2);
+      
+      printf("VClock set: event counter: %u, vtime: 0x%08X%08X\n", event_counter, (uint32_t)(vtime>>32),(uint32_t)vtime);
+      
+      uint8_t ret = NETCLOCK_SetNetTimeFromMaster(event_counter, vtime);
+      
+      printf("NETCLOCK_SetNetTimeFromMaster %d\r\n", ret);
+      
+      ret = NETCLOCK_GetCurrentNetTime(&vtime);  
+      
+      next_vtime_vtimer = (vtime/NETCLOCK_SECONDS + 2)*NETCLOCK_SECONDS;
+      
+      printf("next_vtime_vtimer 0x%08X%08X\n", (uint32_t)(next_vtime_vtimer>>32),(uint32_t)next_vtime_vtimer);
+      
+      NETCLOCK_StartTimer(next_vtime_vtimer, testCB);
     }
     
-    uint16_t event_counter = LE_TO_HOST_16(Attribute_Value);
-    uint64_t vtime = LE_TO_HOST_64(Attribute_Value+2);
-    
-    printf("VClock set: event counter: %u, vtime: 0x%08X%08X\n", event_counter, (uint32_t)(vtime>>32),(uint32_t)vtime);
-    
-    uint8_t ret = NETCLOCK_SetNetTimeFromMaster(event_counter, vtime);
-    
-    printf("NETCLOCK_SetNetTimeFromMaster %d\r\n", ret);
-    
-    ret = NETCLOCK_GetCurrentNetTime(&vtime);  
-    
-    next_vtime_vtimer = (vtime/NETCLOCK_SECONDS + 2)*NETCLOCK_SECONDS;
-    
-    printf("next_vtime_vtimer 0x%08X%08X\n", (uint32_t)(next_vtime_vtimer>>32),(uint32_t)next_vtime_vtimer);
-    
-    NETCLOCK_StartTimer(next_vtime_vtimer, testCB);
-    
     break;    
+	default:
+		break;
   }  
 }
 
@@ -543,7 +546,9 @@ void aci_att_clt_read_by_type_resp_event(uint16_t Connection_Handle,
         }
       }
     }
-    break;    
+    break;
+	default:
+		break;
   }
 }
 

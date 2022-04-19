@@ -32,7 +32,7 @@ tBleStatus aci_gap_set_periodic_advertising_enable(uint8_t Enable,
 #if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus aci_gap_set_periodic_advertising_data(uint8_t Advertising_Handle,
-                                                 uint8_t Advertising_Data_Length,
+                                                 uint16_t Advertising_Data_Length,
                                                  uint8_t* Advertising_Data)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
@@ -114,7 +114,9 @@ tBleStatus aci_gap_read_periodic_advertiser_list_size(uint8_t* Periodic_Advertis
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus aci_gap_periodic_advertising_sync_transfer(uint16_t Connection_Handle,
                                                       uint16_t Service_Data,
@@ -124,7 +126,9 @@ tBleStatus aci_gap_periodic_advertising_sync_transfer(uint16_t Connection_Handle
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus aci_gap_periodic_advertising_set_info_transfer(uint16_t Connection_Handle,
                                                           uint16_t Service_Data,
@@ -134,7 +138,9 @@ tBleStatus aci_gap_periodic_advertising_set_info_transfer(uint16_t Connection_Ha
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus aci_gap_set_periodic_advertising_sync_transfer_parameters(uint16_t Connection_Handle,
                                                                      uint8_t Mode,
@@ -146,7 +152,9 @@ tBleStatus aci_gap_set_periodic_advertising_sync_transfer_parameters(uint16_t Co
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus aci_gap_set_default_periodic_advertising_sync_transfer_parameters(uint8_t Mode,
                                                                              uint16_t Skip,
@@ -170,6 +178,19 @@ tBleStatus aci_gap_clear_advertising_sets(void)
 #if (defined(CONTROLLER_MASTER_ENABLED) &&\
             (CONTROLLER_MASTER_ENABLED == 0))
 tBleStatus hci_le_set_host_channel_classification(uint8_t LE_Channel_Map[5])
+{
+    return ERR_UNKNOWN_HCI_COMMAND;
+}
+#endif
+
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
+tBleStatus hci_le_extended_create_connection(uint8_t Initiating_Filter_Policy,
+                                             uint8_t Own_Address_Type,
+                                             uint8_t Peer_Address_Type,
+                                             uint8_t Peer_Address[6],
+                                             uint8_t Initiating_PHYs,
+                                             Extended_Create_Connection_Parameters_t* Extended_Create_Connection_Parameters)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
@@ -297,16 +318,6 @@ tBleStatus hci_le_set_extended_scan_enable(uint8_t Enable,
     return ERR_UNKNOWN_HCI_COMMAND;
 }
 
-tBleStatus hci_le_extended_create_connection(uint8_t Initiating_Filter_Policy,
-                                             uint8_t Own_Address_Type,
-                                             uint8_t Peer_Address_Type,
-                                             uint8_t Peer_Address[6],
-                                             uint8_t Initiating_PHYs,
-                                             Extended_Create_Connection_Parameters_t* Extended_Create_Connection_Parameters)
-{
-    return ERR_UNKNOWN_HCI_COMMAND;
-}
-
 #if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus hci_le_periodic_advertising_create_sync(uint8_t Options,
@@ -382,7 +393,9 @@ tBleStatus hci_le_set_periodic_advertising_receive_enable(uint16_t Sync_Handle,
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus hci_le_set_default_periodic_advertising_sync_transfer_parameters(uint8_t Mode,
                                                                             uint16_t Skip,
@@ -393,7 +406,9 @@ tBleStatus hci_le_set_default_periodic_advertising_sync_transfer_parameters(uint
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus hci_le_set_periodic_advertising_sync_transfer_parameters(uint16_t Connection_Handle,
                                                                     uint8_t Mode,
@@ -405,7 +420,9 @@ tBleStatus hci_le_set_periodic_advertising_sync_transfer_parameters(uint16_t Con
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus hci_le_periodic_advertising_set_info_transfer(uint16_t Connection_Handle,
                                                          uint16_t Service_Data,
@@ -415,7 +432,9 @@ tBleStatus hci_le_periodic_advertising_set_info_transfer(uint16_t Connection_Han
 }
 #endif
 
-#if (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1)) &&\
+    (defined(CONTROLLER_PERIODIC_ADV_ENABLED) &&\
             (CONTROLLER_PERIODIC_ADV_ENABLED == 1))
 tBleStatus hci_le_periodic_advertising_sync_transfer(uint16_t Connection_Handle,
                                                      uint16_t Service_Data,

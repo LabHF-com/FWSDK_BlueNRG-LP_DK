@@ -122,7 +122,7 @@ typedef uint8_t tBleStatus;
 #define BLE_STATUS_FAILED                   ((tBleStatus)(0x81))
 
 /**
- * @brief Invalid parameters passsed at Host layer.
+ * @brief Invalid parameters passed at Host layer.
  */
 #define BLE_STATUS_INVALID_PARAMS           ((tBleStatus)(0x82))
 

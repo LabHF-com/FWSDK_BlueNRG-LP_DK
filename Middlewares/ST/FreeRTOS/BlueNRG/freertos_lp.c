@@ -39,7 +39,7 @@ static WakeupSourceConfig_TypeDef wakeupConfig = {0,0,0};
 void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime )
 {
   eSleepModeStatus eSleepStatus;
-  uint32_t timeBeforeSleep, timeAfterSleep;
+  uint64_t timeBeforeSleep, timeAfterSleep;
   PowerSaveLevels stopLevel;
   
   timeBeforeSleep = HAL_VTIMER_GetCurrentSysTime();

@@ -24,6 +24,7 @@
 #include "system_BlueNRG_LP.h"
 #include "hal_miscutil.h"
 #include "rf_driver_ll_pwr.h"
+#include "rf_driver_ll_bus.h"
 
 NO_INIT_SECTION(crash_info_t CrashInfoRam, ".crash_info_ram_vr");
 
@@ -35,15 +36,29 @@ NO_INIT_SECTION(crash_info_t CrashInfoRam, ".crash_info_ram_vr");
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+uint8_t high_power = FALSE;
 
 /*---------------------------------------------------------------------------*/
 
 void HAL_GetPartInfo(PartInfoType *partInfo)
 { 
-  partInfo->die_id        =  DIE_ID_BLUENRG_LP;
+  uint32_t jtag_id;
+  
+  partInfo->die_id = DIE_SW_ID_UNKOWN;
+  
+  jtag_id = LL_SYSCFG_GetDeviceJTAG_ID();
+  if(jtag_id == JTAG_ID_CODE_LP)
+  {
+    partInfo->die_id = DIE_SW_ID_BLUENRG_LP;
+  }
+  else if(jtag_id == JTAG_ID_CODE_LPS)
+  {
+    partInfo->die_id = DIE_SW_ID_BLUENRG_LPS;
+  }  
+  
   partInfo->die_major     =  LL_SYSCFG_GetDeviceVersion(); 
   partInfo->die_cut       =  LL_SYSCFG_GetDeviceRevision(); 
-  partInfo->jtag_id_code  =  LL_SYSCFG_GetDeviceJTAG_ID();
+  partInfo->jtag_id_code  =  LL_SYSCFG_GetDeviceJTAG_ID(); // Duplicated
   partInfo->flash_size    =  (LL_GetFlashSize() + 1) * 4;
 
   if (LL_GetRAMSize() != LL_UTILS_RAMSIZE_24K) {
@@ -85,19 +100,36 @@ void HAL_CrashHandler(uint32_t msp, uint32_t signature)
 }
 
 void HAL_SetHighPower(FunctionalState state)
-{    
-#ifdef CONFIG_HW_SMPS_NONE
-  return;
-#endif
-  
+{      
   if(state != DISABLE)
   {
-    MODIFY_REG(RRM->LDO_ANA_ENG, 0, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS_Msk);
+    if(high_power == FALSE)
+    {
+      high_power = TRUE;    
+      
+      LL_APB0_EnableClock(LL_APB0_PERIPH_SYSCFG);
+      LL_SYSCFG_BLERXTX_SetTrigger(LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE, LL_SYSCFG_BLE_TX_EVENT);
+      LL_SYSCFG_BLERXTX_SetType(LL_SYSCFG_BLERXTX_DET_TYPE_EDGE, LL_SYSCFG_BLE_TX_EVENT);
+      LL_SYSCFG_BLERXTX_EnableIT(LL_SYSCFG_BLE_TX_EVENT);
+      LL_SYSCFG_BLERXTX_ClearInterrupt(LL_SYSCFG_BLE_TX_EVENT);
+      NVIC_EnableIRQ(BLE_SEQ_IRQn);
+    }
   }
   else
   {
-    MODIFY_REG(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS_Msk, 0);
+    if(high_power == TRUE)
+    {
+      high_power = FALSE;
+      
+      LL_SYSCFG_BLERXTX_DisableIT(LL_SYSCFG_BLE_TX_EVENT);
+      NVIC_DisableIRQ(BLE_SEQ_IRQn);
+      LL_SYSCFG_BLERXTX_ClearInterrupt(LL_SYSCFG_BLE_TX_EVENT);
+    }
   }
+  
+  if (LL_PWR_IsEnabledSMPSPrechargeMode() || (LL_PWR_GetSMPSMode() == LL_PWR_NO_SMPS))
+    return;
+
   /* Bypass SMPS */  
   LL_PWR_SetSMPSPrechargeMode(LL_PWR_SMPS_PRECHARGE);
   while(LL_PWR_IsSMPSReady());
@@ -109,10 +141,34 @@ void HAL_SetHighPower(FunctionalState state)
   else
   {
     LL_PWR_SetSMPSOutputLevel(LL_PWR_SMPS_OUTLVL_1V4);
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  if (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) == LL_BLUENRG_LP_CUT_10)
+    LL_PWR_SetSMPSOutputLevel(LL_PWR_SMPS_OUTLVL_1V2);
+#endif 
   }
   /* Disable bypass*/
   LL_PWR_SetSMPSPrechargeMode(LL_PWR_NO_SMPS_PRECHARGE);
   while(!LL_PWR_IsSMPSReady());  
+}
+
+void HAL_RXTX_SEQ_IRQHandler(void)
+{
+  if(high_power == FALSE)
+    return;
+  
+  if(LL_SYSCFG_BLERXTX_IsInterruptPending(LL_SYSCFG_BLE_TX_EVENT)){
+    if(RRM->FSM_STATUS_DIG_OUT & RRM_FSM_STATUS_DIG_OUT_STATUS_4)
+    {
+      // Rising edge
+      MODIFY_REG_FIELD(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS, 1);
+    }
+    else
+    {
+      // Falling edge
+      MODIFY_REG_FIELD(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS, 0);
+    }
+    LL_SYSCFG_BLERXTX_ClearInterrupt(LL_SYSCFG_BLE_TX_EVENT);
+  }
 }
 
 

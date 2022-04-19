@@ -323,7 +323,7 @@ SECTIONS
     . = ALIGN(4);
     . = . + _Min_Stack_Size;
     . = ALIGN(4);
-    _estack = .;         /* define a global symbol at bss end */
+    _estack = .;         /* define a global symbol at stack end */
     . = ALIGN(4);
   } > REGION_RAM
 

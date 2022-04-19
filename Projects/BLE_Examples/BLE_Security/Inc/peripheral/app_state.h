@@ -48,7 +48,7 @@ extern volatile int app_flags;
 #define DO_NOTIFICATIONS_FLAG               0x4000
 
 /* BLE Security v4.2 is supported: BLE stack FW version >= 2.x */
-#define START_CONFIRM_NUMERIC_VALUE         0x4000
+#define START_CONFIRM_NUMERIC_VALUE         0x8000
 
 /**
  * @}

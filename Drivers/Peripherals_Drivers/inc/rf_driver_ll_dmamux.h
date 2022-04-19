@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -60,6 +62,7 @@ extern "C" {
 /** @defgroup DMAMUX_LL_EC_REQUEST Transfer request
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_DMAMUX_REQ_MEM2MEM            0x00000000U  /*!< Memory to Memory transfer    */
 #ifdef SPI3 
 #define LL_DMAMUX_REQ_SPI3_RX            0x00000002U  /*!< DMAMUX SPI3 RX request       */
@@ -104,6 +107,7 @@ extern "C" {
 #define LL_DMAMUX_REQ_TIM17_CH1          0x00000019U  /*!< DMAMUX TIM17 CH1 request */     
 #define LL_DMAMUX_REQ_TIM17_UP           0x0000001AU  /*!< DMAMUX TIM17 UP request */                    
 #endif /* TIM17 */
+#endif
 /**
   * @}
   */

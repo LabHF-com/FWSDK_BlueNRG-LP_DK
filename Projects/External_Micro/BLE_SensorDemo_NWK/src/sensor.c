@@ -83,7 +83,7 @@ uint8_t Sensor_DeviceInit(void)
     PRINTF("aci_hal_write_config_data() --> SUCCESS\r\n");
   
   /* Set the TX power 0 dBm */
-  ret = aci_hal_set_tx_power_level(0, 25);
+  ret = aci_hal_set_tx_power_level(0, 24);
   if (ret != BLE_STATUS_SUCCESS) {
     PRINTF("Error in aci_hal_set_tx_power_level() 0x%04x\r\n", ret);
     return ret;

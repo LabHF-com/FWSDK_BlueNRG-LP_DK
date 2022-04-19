@@ -89,26 +89,6 @@
 #define DISC_ADV_HIGH_LATENCY_DURATION 30000 // 30 sec.
 
 /**
- * @brief Manufacturer name string length
- */
-#define MANUFAC_NAME_LEN 9
-
-/**
- * @brief Model number string length
- */
-#define MODEL_NUMB_LEN 4
-
-/**
- * @brief Firmware revision string length
- */
-#define FW_REV_LEN 4
-
-/**
- * @brief Software revision string length
- */
-#define SW_REV_LEN 4
-
-/**
  * @brief PNP ID string length
  */
 #define PNP_ID_LEN 7

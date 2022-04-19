@@ -58,8 +58,14 @@ uint8_t BlueNRG_Stack_Initialization(void)
     list_insert_tail(&hciReadPktPool, (tListNode *)&hciReadPacketBuffer[index]);
   }
   
-  /* Reset BlueNRG-1 */
-  BlueNRG_RST(); 
+  /* Reset BlueNRG-LP */
+#ifdef SPI_INTERFACE
+  Disable_IRQ();
+  BlueNRG_RST();
+  Enable_IRQ();
+#else  
+  BlueNRG_RST();
+#endif
   
   return ret;
 }
@@ -194,7 +200,7 @@ void HCI_Isr(void)
 {
 #ifdef SPI_INTERFACE
   tHciDataPacket * hciReadPacket = NULL;
-  uint8_t data_len;
+  uint16_t data_len;
   
   LL_EXTI_ClearFlag_0_31(DTM_SPI_IRQ_EXTI_LINE);
   if(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN)){

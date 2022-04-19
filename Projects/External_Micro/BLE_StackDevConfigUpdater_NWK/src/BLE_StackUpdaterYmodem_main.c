@@ -28,9 +28,6 @@
 #define BLUE_FLAG_OFFSET 0x8C0
 #define MIN_WRITE_BLOCK_SIZE 4
 
-#define BASE_ADDRESS    (0x10040000)
-#define FW_OFFSET       (8*1024)    // 2 KB
-#define SECTOR_SIZE     (2*1024)    // 2 KB
 #define DATA_SIZE       (64)        // 64 bytes
 
 /* Private macros ------------------------------------------------------------*/
@@ -169,7 +166,19 @@ void processInputData(uint8_t* data_buffer, uint16_t Nb_bytes)
   rx_buffer_size += Nb_bytes;
 }
 
-
+/*
+ ******************************************************************************
+ ******************************************************************************
+ * 
+ * The project requires that the target device is specified.
+ * This is done using the preprocessor symbol:
+ *  - BlueNRG-LP is CONFIG_DEVICE_BLUENRG_LP
+ *  - BlueNRG-LPS is CONFIG_DEVICE_BLUENRG_LPS
+ * The default is BlueNRG-LP.
+ *
+ ****************************************************************************
+ ****************************************************************************
+*/
 void main(void)
 {
   uint8_t ret;
@@ -187,7 +196,7 @@ void main(void)
  
  SdkEvalLedInit();
  
- /* Update the BlueNRG-2 image using the fw_image through UART */
+ /* Update the target device image using the fw_image */
  program_device_UART();
  
  while(1) {

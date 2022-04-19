@@ -1,6 +1,6 @@
 
 #ifndef _DEVICE_INIT_H_
-#define _DEVICE_INIT_
+#define _DEVICE_INIT_H_
 
 /** 
   * @brief Peripheral security key (default value)

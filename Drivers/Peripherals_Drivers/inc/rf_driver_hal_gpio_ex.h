@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -47,6 +47,7 @@
   * @{
   */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 
 /**
   * @brief   AF 0 selection
@@ -131,6 +132,7 @@
 #endif /* SPI2 */
 #ifdef SPI3 
 #define GPIO_AF3_SPI3           ((uint8_t)0x03)  /*!< SPI3 Alternate Function mapping               */
+#define GPIO_AF4_SPI3           ((uint8_t)0x04)  /*!< SPI3 Alternate Function mapping               */
 #endif /* SPI3 */  
 #ifdef TIM1 
 #define GPIO_AF3_TIM1           ((uint8_t)0x03)  /*!< TIM1 Alternate Function mapping               */
@@ -183,43 +185,8 @@
 #define IS_GPIO_AF(AF)         ((AF) <= (uint8_t)0x07)
 
    
+#endif /* CONFIG_DEVICE_BLUENRG_LP || CONFIG_DEVICE_BLUENRG_LPS */
    
-#ifdef STEVAL_S38681V1
-
-#define GPIO_AF0_I2C1          ((uint8_t)0x00)  /*!< I2C1 Alternate Function mapping        */
-#define GPIO_AF0_I2C2          ((uint8_t)0x00)  /*!< I2C2 Alternate Function mapping        */
-#define GPIO_AF0_LCO           ((uint8_t)0x00)  /*!< LCO Alternate Function mapping         */
-#define GPIO_AF0_MCO           ((uint8_t)0x00)  /*!< MCO Alternate Function mapping         */
-#define GPIO_AF0_RTC           ((uint8_t)0x00)  /*!< RTC Alternate Function mapping         */
-#define GPIO_AF0_USART1        ((uint8_t)0x00)  /*!< USART Alternate Function mapping       */
-#define GPIO_AF1_LPUART        ((uint8_t)0x01)  /*!< LPUART Alternate Function mapping      */
-#define GPIO_AF1_LPUART1       ((uint8_t)0x01)  /*!< LPUART1 Alternate Function mapping     */
-#define GPIO_AF1_USART         ((uint8_t)0x01)  /*!< USART Alternate Function mapping       */
-#define GPIO_AF1_USART1        ((uint8_t)0x01)  /*!< USART1 Alternate Function mapping      */
-#define GPIO_AF2_USART1        ((uint8_t)0x02)  /*!< USART1 Alternate Function mapping      */
-#define GPIO_AF2_COMP1         ((uint8_t)0x02)  /*!< COMP1 Alternate Function mapping       */
-#define GPIO_AF2_RF            ((uint8_t)0x02)  /*!< RF Alternate Function mapping          */
-#define GPIO_AF2_RTC           ((uint8_t)0x02)  /*!< RTC Alternate Function mapping         */
-#define GPIO_AF2_RX            ((uint8_t)0x02)  /*!< RX Alternate Function mapping          */
-#define GPIO_AF2_TIM16         ((uint8_t)0x02)  /*!< TIM16 Alternate Function mapping       */
-#define GPIO_AF2_LCO           ((uint8_t)0x02)  /*!< LCO Alternate Function mapping         */
-#define GPIO_AF2_TX            ((uint8_t)0x02)  /*!< TX Alternate Function mapping          */
-#define GPIO_AF3_MCO           ((uint8_t)0x03)  /*!< MCO Alternate Function mapping         */
-#define GPIO_AF3_SPI1          ((uint8_t)0x03)  /*!< SPI1 Alternate Function mapping        */
-#define GPIO_AF3_SPI3          ((uint8_t)0x03)  /*!< SPI3 Alternate Function mapping        */
-#define GPIO_AF4_ADC           ((uint8_t)0x04)  /*!< ADC Alternate Function mapping         */
-#define GPIO_AF4_ANTENNA       ((uint8_t)0x04)  /*!< ANTENNA Alternate Function mapping     */
-#define GPIO_AF4_SUBG          ((uint8_t)0x04)  /*!< SUBG Alternate Function mapping        */
-#define GPIO_AF4_TIM2          ((uint8_t)0x04)  /*!< TIM2 Alternate Function mapping        */
-#define GPIO_AF5_ADC           ((uint8_t)0x05)  /*!< ADC Alternate Function mapping         */
-#define GPIO_AF5_LCD           ((uint8_t)0x05)  /*!< LCD Alternate Function mapping         */
-#define GPIO_AF6_LCD           ((uint8_t)0x06)  /*!< LCD Alternate Function mapping         */
-#define GPIO_AF6_RF            ((uint8_t)0x06)  /*!< RF Alternate Function mapping          */
-#define GPIO_AF7_RF            ((uint8_t)0x07)  /*!< RF Alternate Function mapping          */
-
-#define IS_GPIO_AF(AF)         ((AF) <= (uint8_t)0x07)
-
-#endif /* STEVAL_S38681V1 */
    
 
 /**

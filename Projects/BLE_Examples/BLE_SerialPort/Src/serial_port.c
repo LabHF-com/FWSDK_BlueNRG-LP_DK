@@ -28,6 +28,9 @@
 #include "OTA_btl.h" 
 #endif
 #include "bluenrg_lp_evb_com.h"
+#if SERVER
+#include "att_pwrq.h"
+#endif
 
 /* External variables --------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
@@ -56,17 +59,16 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-uint8_t connInfo[20];
 volatile int app_flags = SET_CONNECTABLE;
-volatile uint16_t connection_handle = 0;
-#ifndef CLIENT
-static Advertising_Set_Parameters_t Advertising_Set_Parameters[1];
+static  uint16_t connection_handle = 0;
+#if SERVER && USE_LONG_WRITE
+static uint8_t rx_char_val_buff[RX_CHR_BUFFER_SIZE];
 #endif
 
 /** 
   * @brief  Handle of TX,RX  Characteristics.
   */ 
-#ifdef CLIENT
+#if CLIENT
 uint16_t tx_handle;
 uint16_t rx_handle;
 #endif 
@@ -76,7 +78,11 @@ UUID_t UUID_Tx;
 UUID_t UUID_Rx;
 
 static char cmd[CMD_BUFF_SIZE];
-static uint16_t cmd_buff_end = 0, cmd_buff_start = 0;
+static uint16_t cmd_buff_end = 0;
+static uint8_t att_mtu = BLE_STACK_DEFAULT_ATT_MTU;
+#if !(USE_LONG_WRITE && CLIENT)
+static uint16_t cmd_buff_start = 0;
+#endif
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -111,7 +117,7 @@ uint8_t Serial_port_DeviceInit(void)
   }
 
   /* Set the TX power to 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
 
   /* GATT Init */
   ret = aci_gatt_srv_init();
@@ -142,7 +148,7 @@ uint8_t Serial_port_DeviceInit(void)
     printf ("Gap_profile_set_dev_name() --> SUCCESS\r\n");
   }
   
-#if  SERVER
+#if SERVER
   ret = Add_Serial_port_Service();
   if (ret != BLE_STATUS_SUCCESS) {
     printf("Error in Add_Serial_port_Service 0x%02x\r\n", ret);
@@ -158,10 +164,6 @@ uint8_t Serial_port_DeviceInit(void)
   else
     printf("Error while adding OTA service.\n");
 #endif /* ST_OTA_FIRMWARE_UPGRADE_SUPPORT */ 
-  
-#endif
-  
-#if SERVER
   
   ret = aci_gap_set_advertising_configuration(0, GAP_MODE_GENERAL_DISCOVERABLE,
                                               ADV_PROP_CONNECTABLE|ADV_PROP_SCANNABLE|ADV_PROP_LEGACY,
@@ -208,7 +210,9 @@ uint8_t Serial_port_DeviceInit(void)
   
   printf("Set advertising data %02X\n", ret);  
   
-#else
+#endif /* SERVER */
+  
+#if CLIENT
   
   ret = aci_gap_set_scan_configuration(DUPLICATE_FILTER_ENABLED,SCAN_ACCEPT_ALL, LE_1M_PHY_BIT, PASSIVE_SCAN, SCAN_INTERVAL, SCAN_WINDOW);
   
@@ -218,10 +222,50 @@ uint8_t Serial_port_DeviceInit(void)
   
   printf("Connection configuration %02X\n", ret);
   
-#endif
+#endif /* CLIENT */
   
   return BLE_STATUS_SUCCESS;
 }
+
+#if (USE_LONG_WRITE && CLIENT)
+
+void Send_Data_Over_BLE(void)
+{
+  uint8_t ret;
+  static ble_gatt_clt_write_ops_t write_op;
+      
+  if(!APP_FLAG(SEND_DATA) || APP_FLAG(SENDING_DATA))
+    return;
+  
+  if(cmd_buff_end <= att_mtu - 3)
+  {
+    ret = aci_gatt_clt_write(connection_handle, rx_handle + 1, cmd_buff_end, (uint8_t *)cmd);
+  }
+  else
+  {
+    write_op.attr_h = rx_handle + 1;
+    write_op.attr_offset = 0;
+    write_op.data_len = cmd_buff_end;
+    write_op.data_p = (uint8_t *)cmd;
+    ret = aci_gatt_clt_write_long(connection_handle, &write_op);
+  }
+  
+  if (ret != BLE_STATUS_SUCCESS)
+  {
+    printf("Error to send data (0x%2x\n)", ret);
+    NVIC_EnableIRQ(BSP_UART_IRQn); 
+  }
+  else 
+  {
+    /* Wait for procedure to end */
+    APP_FLAG_SET(SENDING_DATA);
+  }
+  
+  APP_FLAG_CLEAR(SEND_DATA);
+  cmd_buff_end = 0;
+}
+
+#else /* !(USE_LONG_WRITE && CLIENT) */
 
 void Send_Data_Over_BLE(void)
 {
@@ -267,6 +311,8 @@ void Send_Data_Over_BLE(void)
   NVIC_EnableIRQ(BSP_UART_IRQn);
 }
 
+#endif /* end of #if USE_LONG_WRITE && CLIENT */
+
 /*******************************************************************************
 * Function Name  : Process_InputData.
 * Description    : Process a command. It should be called when data are received.
@@ -296,9 +342,9 @@ void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
         // Set flag to send data. Disable UART IRQ to avoid overwriting buffer with new incoming data
         APP_FLAG_SET(SEND_DATA);
         NVIC_DisableIRQ(BSP_UART_IRQn);
-        
+#if !(USE_LONG_WRITE && CLIENT)
         cmd_buff_start = 0;        
-        
+#endif        
       }
       else {
         cmd_buff_end = 0; // Discard
@@ -333,6 +379,8 @@ void Make_Connection(void)
   }
   
 #else
+  
+  static Advertising_Set_Parameters_t Advertising_Set_Parameters[1];
   
 #if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
   ret = aci_gap_set_scan_response_data(0,18,BTLServiceUUID4Scan);
@@ -450,7 +498,16 @@ void APP_Tick(void)
 }/* end APP_Tick() */
 
 
-/* ***************** BlueNRG-1 Stack Callbacks ********************************/
+void Data_Received(uint16_t length, uint8_t *data)
+{
+  for(uint16_t i = 0U; i < length; i++)
+  {
+    printf("%c", data[i]);
+  }  
+}
+
+
+/* ***************** BlueNRG-LP Stack Callbacks ********************************/
 
 /*******************************************************************************
  * Function Name  : hci_le_connection_complete_event.
@@ -576,6 +633,27 @@ void aci_gatt_srv_attribute_modified_event(uint16_t Connection_Handle,
     }
 }
 
+void aci_att_exchange_mtu_resp_event(uint16_t Connection_Handle,
+                                     uint16_t Server_RX_MTU)
+{
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+  OTA_att_exchange_mtu_resp_CB(Connection_Handle, Server_RX_MTU);
+#endif
+  att_mtu = Server_RX_MTU;
+  printf("ATT MTU = %d\n", att_mtu);
+}
+
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+void hci_le_data_length_change_event(uint16_t Connection_Handle,
+                                     uint16_t MaxTxOctets,
+                                     uint16_t MaxTxTime,
+                                     uint16_t MaxRxOctets,
+                                     uint16_t MaxRxTime)
+{
+  OTA_data_length_change_CB(Connection_Handle);  
+}
+#endif
+
 #if CLIENT
 
 /*******************************************************************************
@@ -590,7 +668,6 @@ void aci_gatt_clt_notification_event(uint16_t Connection_Handle,
                                      uint16_t Attribute_Value_Length,
                                      uint8_t Attribute_Value[])
 { 
-#if CLIENT
   uint16_t attr_handle;
  
   attr_handle = Attribute_Handle;
@@ -603,7 +680,6 @@ void aci_gatt_clt_notification_event(uint16_t Connection_Handle,
     {
         printf("Received data from not recognized attribute handle 0x%4X\n", Attribute_Handle);
     }
-#endif
 }
 
 /*******************************************************************************
@@ -651,6 +727,11 @@ void aci_gatt_clt_proc_complete_event(uint16_t Connection_Handle,
     printf("aci_GATT_PROCEDURE_COMPLETE_Event for START_READ_RX_CHAR_HANDLE \r\n");
     APP_FLAG_SET(END_READ_RX_CHAR_HANDLE);
   }
+  else if (APP_FLAG(SENDING_DATA))
+  {
+    APP_FLAG_CLEAR(SENDING_DATA);
+    NVIC_EnableIRQ(BSP_UART_IRQn);
+  }
 }
 
 #endif /* CLIENT */
@@ -689,14 +770,10 @@ void aci_gatt_srv_write_event(uint16_t Connection_Handle,
                                  uint8_t Data[])
 {
     uint8_t att_error = BLE_ATT_ERR_NONE;
-    uint16_t i;
 
     if(Attribute_Handle == RXCharHandle + 1)
     {
-        for(i = 0U; i < Data_Length; i++)
-        {
-            printf("%c", Data[i]);
-        }
+        Data_Received(Data_Length, Data);
         att_error = BLE_ATT_ERR_NONE;
     }
 #if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
@@ -716,4 +793,190 @@ void aci_gatt_srv_read_event(uint16_t Connection_Handle, uint16_t Attribute_Hand
 #endif 
 }
 
-#endif
+#if USE_LONG_WRITE
+void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
+                                         uint16_t Attribute_Handle,
+                                         uint16_t Data_Offset,
+                                         uint16_t Data_Length,
+                                         uint8_t Data[])
+{
+    uint8_t att_err = BLE_ATT_ERR_INVALID_HANDLE;
+    tBleStatus ret;
+    
+    if(Attribute_Handle == RXCharHandle + 1)
+    {
+      /**
+       * Push the received prepare write in the queue.
+       */
+      ret = ATT_pwrq_push(Connection_Handle, Attribute_Handle,
+                          Data_Offset, Data_Length, Data);
+      if (ret != BLE_STATUS_SUCCESS)
+      {
+        att_err = BLE_ATT_ERR_PREP_QUEUE_FULL;
+      }
+      else
+      {
+        att_err = BLE_ATT_ERR_NONE;
+      }
+    }
+    
+    /**
+     * Send response.
+     */
+    aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err,
+                      Data_Length, Data);
+}
+
+struct attribute{
+  uint16_t handle;
+  BOOL is_variable; /**< Indicate if the value has or not a variable length. */
+  uint16_t length; /**< Current attribute length. */
+  uint16_t value_buff_length;
+  uint8_t  *value_buff;
+};
+
+static struct attribute * find_attribute(uint16_t attr_handle, uint8_t num_attr, struct attribute * attr)
+{
+  for(uint8_t i = 0; i < num_attr; i++)
+  {
+    if(attr[i].handle == attr_handle)
+    {
+      return &attr[i];
+    }      
+  }
+  
+  return NULL;  
+}
+
+static uint8_t write_queue(uint16_t conn_handle, uint8_t num_attr, struct attribute * attr)
+{
+  tBleStatus ret;
+  uint16_t attr_h;
+  ble_gatt_clt_write_ops_t wr_ops;
+  struct attribute *attr_p;
+  
+  /**
+  * Set attribute handle to 0x0000 to extract the first found entry.
+  */
+  attr_h = 0x0000U;
+  attr_p = NULL;
+  while (TRUE)
+  {
+    /**
+    * Extract queued write.
+    */
+    ret = ATT_pwrq_pop(conn_handle, attr_h, &wr_ops);
+    if (ret == BLE_STATUS_SUCCESS)
+    {
+      if (attr_h == 0x0000U)
+      {
+        /**
+        * Select the first extracted attribute handle for the next
+        * search.
+        */
+        attr_h = wr_ops.attr_h;
+        
+        /**
+        * Search for attribute definition node.
+        */
+        
+        attr_p = find_attribute(wr_ops.attr_h, num_attr, attr);
+        if (attr_p == NULL)
+        {
+          /**
+          * Invalid attribute handle.
+          */
+          return BLE_ATT_ERR_UNLIKELY;
+        }
+      }
+      
+      if (attr_p == NULL)
+      {
+        return BLE_ATT_ERR_ATTR_NOT_FOUND;
+      }
+      
+      /**
+      * Check write offset.
+      */
+      if (wr_ops.attr_offset > attr_p->value_buff_length)
+      {
+        return BLE_ATT_ERR_INVALID_OFFSET;
+      }
+      
+      /**
+      * Check write length.
+      */
+      if ((wr_ops.attr_offset + wr_ops.data_len) > attr_p->value_buff_length)
+      {
+        return BLE_ATT_ERR_INVAL_ATTR_VALUE_LEN;
+      }
+      
+      /**
+      * Write dato into attribute value buffer.
+      */
+      (void)Osal_MemCpy(&(attr_p->value_buff[wr_ops.attr_offset]),
+                        wr_ops.data_p,
+                        wr_ops.data_len);
+      
+      if (attr_p->is_variable == TRUE)
+      {
+        /**
+        * Update attribute value length.
+        */
+        attr_p->length =  wr_ops.attr_offset + wr_ops.data_len;
+      }
+    }
+    else
+    {
+      if (attr_h != 0x0000U)
+      {
+        /**
+        * Reset attribute handle to extract the next first found entry.
+        */
+        attr_h = 0x0000U;
+      }
+      else
+      {
+        /**
+        * No more entries are present for the selected connection handle.
+        */
+        break;
+      }
+    }
+  }
+  
+  return BLE_ATT_ERR_NONE;
+}
+  
+void aci_att_srv_exec_write_req_event(uint16_t Connection_Handle,
+                                      uint8_t Flags)
+{
+  uint8_t att_error = BLE_ATT_ERR_NONE;
+  
+  struct attribute attr = {
+    .handle = RXCharHandle + 1,
+    .is_variable = TRUE,
+    .length = 0,
+    .value_buff_length = RX_CHR_BUFFER_SIZE,
+    .value_buff = rx_char_val_buff,
+  };
+  
+  if(Flags == 1)
+  {
+    att_error = write_queue(Connection_Handle, 1, &attr);
+    Data_Received(attr.length, attr.value_buff);
+  }
+  
+  /**
+  * Flush the queue from all prepared write received by this connection handle.
+  */
+  ATT_pwrq_flush(Connection_Handle);
+  
+  /**
+  * Return to the stack to send the Execute Write Response or in case the
+  * error response if the att_error is not zero.
+  */
+  aci_gatt_srv_resp(Connection_Handle, 0U, att_error, 0U, NULL);  
+}
+#endif /* USE_LONG_WRITE */
+#endif /* SERVER */

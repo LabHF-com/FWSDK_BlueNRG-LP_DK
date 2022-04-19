@@ -3,7 +3,13 @@
 #ifndef _SENSOR_H_
 #define _SENSOR_H_
 
+#if defined (CONFIG_DEVICE_BLUENRG_LP)
 #define ENABLE_BLUEVOICE (1)
+#elif defined (CONFIG_DEVICE_BLUENRG_LPS)
+#define ENABLE_BLUEVOICE (0)
+#else
+#error "Please define ENABLE_BLUEVOICE according to selected device" 
+#endif
 
 
 #if ENABLE_BLUEVOICE

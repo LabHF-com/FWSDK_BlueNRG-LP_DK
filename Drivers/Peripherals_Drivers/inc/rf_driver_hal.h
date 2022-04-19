@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -28,9 +28,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_ll_system.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "system_BlueNRG_LP.h"
-#include "bluenrg_lp_hal_conf.h"
-   
+#endif
+
+#include "rf_device_hal_conf.h"
+
 /** @addtogroup RF_DRIVER_HAL_Driver
   * @{
   */

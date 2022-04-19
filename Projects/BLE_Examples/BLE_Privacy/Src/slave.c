@@ -25,7 +25,7 @@
 /* Includes-----------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -148,7 +148,7 @@ void device_initialization(void)
 
   //aci_hal_set_tx_power_level
   //status = aci_hal_set_tx_power_level(en_high_power,pa_level);
-  status = aci_hal_set_tx_power_level(0,25);
+  status = aci_hal_set_tx_power_level(0, 24);
   if (status != BLE_STATUS_SUCCESS) {
     PRINTF("aci_hal_set_tx_power_level() failed:0x%02x\r\n", status);
   }else{

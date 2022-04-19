@@ -245,7 +245,6 @@ do not initialize { section CSTACK };
 initialize by copy { readwrite };
 do not initialize  {section .noinit};
 
-define block HEAP       with alignment = 8, size = 0x700  { };
 
 /* RAM VR Block */             
 define block ram_vr_block with alignment = 4 { section .ram_vr};
@@ -264,7 +263,7 @@ place at address mem: 0x20000034 { block crash_info_ram_vr_block, };
 *******************************************************************************/
 place in REGION_FLASH { readonly };
 place in REGION_RAM { readwrite };
-place at end of REGION_RAM {block HEAP, block CSTACK };
+place at end of REGION_RAM {block CSTACK };
 
 /*******************************************************************************
 * End of File

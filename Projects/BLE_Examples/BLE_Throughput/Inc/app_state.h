@@ -14,7 +14,7 @@
 *******************************************************************************/
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __APP_STATE__H
-#define __APP_STATE_H
+#define __APP_STATE__H
 
 #ifdef __cplusplus
  extern "C" {

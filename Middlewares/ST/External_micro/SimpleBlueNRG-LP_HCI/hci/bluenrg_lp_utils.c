@@ -7,13 +7,6 @@
 #include "osal.h"
 
 
-#define BASE_ADDRESS    (0x10040000)
-
-#define FLASH_END       0x1007FFFF
-
-#define FW_OFFSET       (8*1024)  // 8 KB
-#define SECTOR_SIZE     (2*1024)  // 2 KB
-
 // x**32 + x**26 + x**23 + x ** 22 + x**16 + x**12 + x**11 +
 // x**10 + x**8 + x**7 + x**5 + x**4 + x**2 + x**1 + x**0
 #define CRC_POLY        0x04C11DB7      // the poly without the x**32

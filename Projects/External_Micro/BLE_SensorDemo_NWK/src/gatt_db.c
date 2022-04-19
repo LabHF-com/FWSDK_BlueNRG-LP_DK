@@ -307,7 +307,7 @@ tBleStatus Press_Update(int32_t press)
  * Description    : This event is given when an authorization for a read or write
  *                  request is received
  *******************************************************************************/
-void aci_gatt_srv_authorize_event(uint16_t Conn_Handle,
+void aci_gatt_srv_authorize_nwk_event(uint16_t Conn_Handle,
                                   uint16_t Attr_Handle,
                                   uint8_t Operation_Type,
                                   uint16_t Attr_Val_Offset,
@@ -354,13 +354,19 @@ void aci_gatt_srv_authorize_event(uint16_t Conn_Handle,
       /* Unknown handle. */
       return;      
     }
+    
+    ret = aci_gatt_srv_write_handle_value_nwk(Attr_Handle, 0, data_length, buff);
+    if (ret != BLE_STATUS_SUCCESS){
+      PRINTF("Error updating characteristic value: 0x%02X\n",ret);
+    }
 
-    ret = aci_gatt_srv_authorize_resp_nwk(Conn_Handle, Attr_Handle, Operation_Type, 0, Attr_Val_Offset, data_length, buff + Attr_Val_Offset);
+    ret = aci_gatt_srv_authorize_resp_nwk(Conn_Handle, Attr_Handle, Operation_Type, 0, Attr_Val_Offset, Data_Length, Data);
     
     if (ret != BLE_STATUS_SUCCESS)
     {
       SdkEvalLedOn();
     }
+    PRINTF("--- Updated characterisic value, data_length: %d, ret: 0x%02X\n", data_length, ret);
     
   }
   

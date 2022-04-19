@@ -61,6 +61,21 @@ typedef enum
 extern void BLEPLAT_Init( void );
 
 
+/**
+ * @brief Get Device ID, Version and Revision numbers
+ * 
+ * This function returns the device ID, version and revision numbers.
+ * To be called by the BLE Stack for ensuring platform independence.
+ * 
+ * @param[out] device_id Device ID (3 = BlueNRG-LP)
+ * @param[out] major_cut Device cut version/major number
+ * @param[out] minor_cut Device cut revision/minor number
+ *
+ * @retval None
+ */
+extern void BLEPLAT_get_part_info(uint8_t *device_id, uint8_t *major_cut, uint8_t *minor_cut);
+
+
 /* Non Volatile Memory (NVM) interface:
  *
  * This interface is only called from BLE stack Tick/Commands context
@@ -218,5 +233,14 @@ int8_t BLEPLAT_CalculateRSSI(void);
   * @retval Next RSSI average value
   */
 int8_t BLEPLAT_UpdateAvgRSSI(int8_t avg_rssi, int8_t rssi, uint8_t rssi_filter_coeff);
+
+void BLEPLAT_InitCTE(void);
+
+void BLEPLAT_DeinitCTE(void);
+
+void BLEPLAT_CalibrateCTE(void);
+
+void BLEPLAT_AntIdxRemap(uint8_t antPattLen, uint8_t *antRamTableP, uint8_t* antPattP);
+
 
 #endif /* ! BLEPLAT_H__ */

@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -232,6 +234,7 @@ typedef struct
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval None
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE void LL_EXTI_EnableIT(uint32_t ExtiLine)
 {
@@ -277,6 +280,7 @@ __STATIC_INLINE void LL_EXTI_EnableIT(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval None
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE void LL_EXTI_DisableIT(uint32_t ExtiLine)
 {
@@ -322,6 +326,7 @@ __STATIC_INLINE void LL_EXTI_DisableIT(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval State of bit (1 or 0).
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT(uint32_t ExtiLine)
 {
@@ -378,6 +383,7 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval None
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE void LL_EXTI_SetType(uint8_t Type, uint32_t ExtiLine)
 {
@@ -429,6 +435,7 @@ __STATIC_INLINE void LL_EXTI_SetType(uint8_t Type, uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_TYPE_EDGE
   *         @arg @ref LL_EXTI_TYPE_LEVEL
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE uint8_t LL_EXTI_GetType(uint32_t ExtiLine)
 {
@@ -491,6 +498,7 @@ __STATIC_INLINE uint8_t LL_EXTI_GetType(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval None
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE void LL_EXTI_SetTrigger(uint8_t Trigger, uint32_t ExtiLine)
 {  
@@ -564,6 +572,7 @@ __STATIC_INLINE void LL_EXTI_SetTrigger(uint8_t Trigger, uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_TRIGGER_LOW_LEVEL
   *         @arg @ref LL_EXTI_TRIGGER_HIGH_LEVEL
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE uint8_t LL_EXTI_GetTrigger(uint32_t ExtiLine)
 {
@@ -638,6 +647,7 @@ __STATIC_INLINE uint8_t LL_EXTI_GetTrigger(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval State of bit (1 or 0).
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE uint32_t LL_EXTI_IsInterruptPending(uint32_t ExtiLine)
 {
@@ -684,6 +694,7 @@ __STATIC_INLINE uint32_t LL_EXTI_IsInterruptPending(uint32_t ExtiLine)
   *         @arg @ref LL_EXTI_LINE_ALL
   * @retval None
   * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE void LL_EXTI_ClearInterrupt(uint32_t ExtiLine)
 {

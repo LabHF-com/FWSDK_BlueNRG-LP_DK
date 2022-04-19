@@ -193,6 +193,7 @@ uint8_t HAL_RADIO_SendPacketWithAck(uint8_t channel,
   return returnValue; 
 }
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP
 
 static uint8_t CarrierSenseCallback(ActionPacket* p, ActionPacket* next)
 {  
@@ -220,11 +221,11 @@ uint8_t HAL_RADIO_CarrierSense(uint8_t channel, int8_t *rssi)
   
   *rssi = 127;
     
-  uint8_t networkID_tmp = networkID;
+  uint32_t networkID_tmp = networkID;
   
   networkID = FAKE_NETWORK_ID;
   
-  ret = HAL_RADIO_ReceivePacket(channel, 240, buffer, 1000, sizeof(buffer), CarrierSenseCallback);
+  ret = HAL_RADIO_ReceivePacket(channel, 300, buffer, 1000, sizeof(buffer), CarrierSenseCallback);
   
   networkID = networkID_tmp;
   
@@ -247,6 +248,65 @@ uint8_t HAL_RADIO_CarrierSense(uint8_t channel, int8_t *rssi)
   return 0;
 }
 
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)
+
+static volatile int8_t _rssi;
+static volatile uint8_t _timeout;
+
+static uint8_t CarrierSenseCallback(ActionPacket* p, ActionPacket* next)
+{
+  _rssi = 127;
+  
+  if( (p->status & BLUE_INTERRUPT1REG_DONE) && (p->status & BLUE_STATUSREG_PREVTRANSMIT) == 0 &&
+      ((p->status & BLUE_INTERRUPT1REG_RCVOK) || (p->status & BLUE_INTERRUPT1REG_RCVTIMEOUT) || (p->status & BLUE_INTERRUPT1REG_RCVCRCERR)))
+  {
+    _rssi = p->rssi;
+  }  
+  _timeout = TRUE;
+  
+  return TRUE;  
+}
+
+/**
+* @brief  This funtion puts the radio in RX state to read the RSSI.
+* @note   The function uses a busy loop to wait for the RSSI value and then exits
+*         from RX state.
+* @param      channel: Frequency channel between 0 to 39.
+* @param[out] rssi: the measured RSSI value on the channel
+* @retval uint8_t return value
+*           - 0x00 : Success.
+*           - 0xC0 : Invalid parameter.
+*           - 0xC4 : Radio is busy, receiving has not been triggered.
+*/
+uint8_t HAL_RADIO_CarrierSense(uint8_t channel, int8_t *rssi)
+{
+  uint8_t ret;
+  uint16_t loop = 0;
+  static uint8_t buffer[1];
+  
+  *rssi = 127;
+    
+  uint8_t networkID_tmp = networkID;
+  
+  networkID = FAKE_NETWORK_ID;
+  
+  _timeout = FALSE;
+  
+  ret = HAL_RADIO_ReceivePacket(channel, 240, buffer, 5, sizeof(buffer), CarrierSenseCallback);
+  
+  networkID = networkID_tmp;
+  
+  if(ret)
+    return ret;
+  
+  /* loop variable just to protect from inifinite loop */
+  while(_timeout == FALSE && loop++ < 60000);  
+  *rssi = _rssi;
+  
+  return 0;
+}
+
+#endif
 
 /**
 * @brief  This routine receives a packet on a specific channel and at a certain time.

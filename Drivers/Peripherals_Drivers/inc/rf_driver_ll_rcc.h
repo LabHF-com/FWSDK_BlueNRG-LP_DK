@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -98,7 +100,9 @@ typedef struct
   * @{
   */
 #if !defined  (HSE_VALUE)
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define HSE_VALUE    32000000U  /*!< Value of the HSE oscillator in Hz */
+#endif
 #endif /* HSE_VALUE */
 
 #if !defined  (HSI_VALUE)
@@ -183,6 +187,7 @@ typedef struct
   * @}
   */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /** @defgroup RCC_LL_EC_HSE_CURRENT_CONTROL  HSE current control max limits
   * @{
   */
@@ -197,6 +202,7 @@ typedef struct
 /**
   * @}
   */
+#endif
 
 #if defined(RCC_RFSWHSECR_SATRG)
 /** @defgroup RCC_LL_EC_HSE_SENSE_AMPLIFIER  HSE sense amplifier threshold
@@ -489,6 +495,7 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetCapacitorTuning(void)
   return (uint32_t)(READ_BIT(RCC->RFSWHSECR, RCC_RFSWHSECR_SWXOTUNE) >> RCC_RFSWHSECR_SWXOTUNE_Pos);
 }
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  Set HSE current control
   * @rmtoll RFSWHSECR        GMC       LL_RCC_HSE_SetCurrentControl
@@ -524,6 +531,7 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetCurrentControl(void)
 {
   return (uint32_t)(READ_BIT(RCC->RFSWHSECR, RCC_RFSWHSECR_GMC));
 }
+#endif
 
 
 #if defined(RCC_RFSWHSECR_SATRG)
@@ -651,6 +659,7 @@ __STATIC_INLINE uint32_t LL_RCC_HSI_GetCalibTrimming(void)
   */
 __STATIC_INLINE void LL_RCC_DIRECT_HSE_Enable(void)
 {
+  while(READ_BIT(RCC->CR, RCC_CR_HSERDY) == 0);
   SET_BIT(RCC->CFGR, RCC_CFGR_HSESEL);
   for (volatile int i=0; i<6; i++)
     __asm("NOP");
@@ -1197,6 +1206,7 @@ __STATIC_INLINE void LL_RCC_SetSPI2I2SClockSource(uint32_t Source)
   *         @arg @ref LL_RCC_SPI3_I2S_CLK32M
   *         @arg @ref LL_RCC_SPI3_I2S_CLK64M
   * @retval None
+  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BLueNRG-LPS family
   */
 __STATIC_INLINE void LL_RCC_SetSPI3I2SClockSource(uint32_t Source)
 {
@@ -1224,6 +1234,7 @@ __STATIC_INLINE void LL_RCC_SetSPI3I2SClockSource(uint32_t Source)
   *         @arg @ref LL_RCC_SPI3_I2S_CLK16M
   *         @arg @ref LL_RCC_SPI3_I2S_CLK32M
   *         @arg @ref LL_RCC_SPI3_I2S_CLK64M
+  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BLueNRG-LPS family
   */
   __STATIC_INLINE uint32_t LL_RCC_GetSPI3I2SClockSource(void)
 {
@@ -1320,7 +1331,7 @@ __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLPrescaler(void)
   */
 __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLPrescalerStatus(void)
 {
-  return (uint32_t)(READ_BIT(RCC->CFGR, RCC_CFGR_CLKSYSDIV_STATUS));
+  return (uint32_t)((READ_BIT(RCC->CFGR, RCC_CFGR_CLKSYSDIV_STATUS)>>RCC_CFGR_CLKSYSDIV_STATUS_Pos)<<RCC_CFGR_CLKSYSDIV_Pos);
 }
 #endif
   

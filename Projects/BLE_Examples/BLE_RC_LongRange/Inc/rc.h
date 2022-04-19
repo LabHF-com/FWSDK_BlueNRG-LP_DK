@@ -2,7 +2,7 @@
 #ifndef _RC_H_
 #define _RC_H_
 
-#define OUTPUT_POWER_LEVEL  27  // 0 dBm
+#define OUTPUT_POWER_LEVEL  24  // 0 dBm
 
 #define BD_ADDR_MASTER      0xe0, 0x00, 0x00, 0xE1, 0x80, 0x02
 #define BD_ADDR_SLAVE       0xe1, 0x00, 0x00, 0xE1, 0x80, 0x02

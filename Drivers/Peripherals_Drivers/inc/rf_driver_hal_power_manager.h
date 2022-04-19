@@ -32,7 +32,10 @@
  *     normally.  The chip will wake from any interrupt.
  * - POWER_SAVE_LEVEL_STOP_WITH_TIMER
  *     The device is in deep sleep and the timer clock sources (LSI or LSE) remain running. 
- *     Wakeup is possible from all IOs enabled for this scope, RTC, IWDG, 
+ *     Wakeup is possible from all IOs enabled for this scope,
+ *     RTC, 
+ *     IWDG, 
+ *     LPUART (BlueNRG-LPS),
  *     radio IP and the Hal Virtual Timers.
  * - POWER_SAVE_LEVEL_STOP_NOTIMER
  *     The device is in deep sleep. All the peripherals and clock sources are turned off.
@@ -45,6 +48,7 @@ typedef enum {
   POWER_SAVE_LEVEL_STOP_NOTIMER     = 3
 } PowerSaveLevels; 
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /** @brief Wakeup source RTC Mask */
 #define WAKEUP_RTC LL_PWR_EWS_INT
 
@@ -53,10 +57,10 @@ typedef enum {
 #define WAKEUP_LPU LL_PWR_EWS_INT2
 #endif
 
-/** @brief Wakeup source BLE Host Timer Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source BLE Host Timer Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_BLE_HOST_TIMER LL_PWR_EWS_BLEHOST
 
-/** @brief Wakeup source BLE Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source BLE Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_BLE LL_PWR_EWS_BLE
 
 /** @brief Wakeup source PA15 Mask (only valid for BlueNRG-LP) */
@@ -79,16 +83,16 @@ typedef enum {
 #define WAKEUP_PA12 LL_PWE_EWS_EW24
 #endif
 
-/** @brief Wakeup source PA11 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA11 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA11 LL_PWE_EWS_EW11
 
-/** @brief Wakeup source PA10 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA10 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA10 LL_PWE_EWS_EW10
 
-/** @brief Wakeup source PA9 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA9 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA9  LL_PWE_EWS_EW9
 
-/** @brief Wakeup source PA8 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA8 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA8  LL_PWE_EWS_EW8
 
 /** @brief Wakeup source PA7 Mask (only valid for BlueNRG-LP) */
@@ -103,24 +107,28 @@ typedef enum {
 /** @brief Wakeup source PA4 Mask (only valid for BlueNRG-LP) */
 #define WAKEUP_PA4 LL_PWE_EWS_EW16
 
-/** @brief Wakeup source PA3 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA3 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA3 LL_PWE_EWS_EW15
 
-/** @brief Wakeup source PA2 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA2 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA2 LL_PWE_EWS_EW14
 
-/** @brief Wakeup source PA1 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA1 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA1 LL_PWE_EWS_EW13
 
-/** @brief Wakeup source PA0 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PA0 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PA0 LL_PWE_EWS_EW12
 
+/** @brief Wakeup source PB15 Mask (only valid for BlueNRG-LPS) */
 #define WAKEUP_PB15 LL_PWE_EWS_EW19
 
+/** @brief Wakeup source PB14 Mask (only valid for BlueNRG-LPS) */
 #define WAKEUP_PB14 LL_PWE_EWS_EW18
 
+/** @brief Wakeup source PB13 Mask (only valid for BlueNRG-LPS) */
 #define WAKEUP_PB13 LL_PWE_EWS_EW17
 
+/** @brief Wakeup source PB12 Mask (only valid for BlueNRG-LPS) */
 #define WAKEUP_PB12 LL_PWE_EWS_EW16
 
 /** @brief Wakeup source PB11 Mask (only valid for BlueNRG-LP) */
@@ -143,29 +151,30 @@ typedef enum {
 #define WAKEUP_PB8 LL_PWE_EWS_EW20
 #endif
 
-/** @brief Wakeup source PB7 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB7 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB7  LL_PWE_EWS_EW7
 
-/** @brief Wakeup source PB6 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB6 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB6  LL_PWE_EWS_EW6
 
-/** @brief Wakeup source PB5 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB5 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB5  LL_PWE_EWS_EW5
 
-/** @brief Wakeup source PB4 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB4 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB4  LL_PWE_EWS_EW4
 
-/** @brief Wakeup source PB3 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB3 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB3  LL_PWE_EWS_EW3
 
-/** @brief Wakeup source PB2 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB2 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB2  LL_PWE_EWS_EW2
 
-/** @brief Wakeup source PB1 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB1 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB1  LL_PWE_EWS_EW1
 
-/** @brief Wakeup source PB0 Mask (valid for both BlueNRG-LP ) */
+/** @brief Wakeup source PB0 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
 #define WAKEUP_PB0  LL_PWE_EWS_EW0
+#endif
 
 
 /** @brief No Wakeup source Mask */
@@ -232,6 +241,7 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
  */
 uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled);
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
  * @brief Return the wakeup source from power save.
  * @retval The return value can be a combination of the following values:
@@ -320,6 +330,7 @@ uint32_t HAL_PWR_MNGR_WakeupSource(void);
  * @note   Refer the wakeup source declaration to see if are supported from the device
  */ 
 void HAL_PWR_MNGR_ClearWakeupSource(uint32_t source);
+#endif
 
 /**
  * @brief Sets an user callback that will be executed at the end of the wakeup context restore. 
@@ -384,5 +395,21 @@ void HAL_PWR_MNGR_WakeupIOCallback(uint32_t source);
  * when no application specifc behaviour is required.
  */
 PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level);
+
+/** 
+ * @brief This function configures the watchdog peripheral state during the DEEPSTOP period.
+ *        The state allowed for the watchodg during DEEPSTOP can be enabled or disabled.
+ * 
+ * @param state ENABLE/DISABLE
+ * 
+ * @retval None 
+ *
+ * @note This API does not configure the watchdog peripehral. It sets the WDG state 
+ *       during the deepstop period according the application request.
+ *       If the WDG is running and this API is not called, the power manager 
+ *       library takes the decision to leave the WDG enabled during DEEPSTOP period.
+ */
+void HAL_PWR_MNGR_DeepstopWdgState(FunctionalState state);
+
 
 #endif /* __HAL_POWER_MANAGER_H__ */

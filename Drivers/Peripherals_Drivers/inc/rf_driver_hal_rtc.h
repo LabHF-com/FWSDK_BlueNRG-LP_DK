@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -44,6 +44,13 @@
   * @{
   */
 
+#ifdef RTC_TAMPCR_TAMP1IE
+#define RTC_TAMPER1_SUPPORT
+#endif
+#if defined(RTC_ISR_ITSF)
+#define RTC_INTERNALTS_SUPPORT
+#endif
+
 /** 
   * @brief  HAL State structures definition  
   */
@@ -77,6 +84,10 @@ typedef struct
   uint32_t OutPutPolarity;  /*!< Specifies the polarity of the output signal.  
                                  This parameter can be a value of @ref RTC_Output_Polarity_Definitions */
 
+#ifdef RTC_OR_ALARMOUTTYPE
+  uint32_t OutPutType;      /*!< Specifies the RTC Output Pin mode.
+                                 This parameter can be a value of @ref RTC_Output_Type_ALARM_OUT */
+#endif
 }RTC_InitTypeDef;
 
 /** 
@@ -181,6 +192,9 @@ typedef struct
   void  (* TimeStampEventCallback)   ( struct __RTC_HandleTypeDef * hrtc);  /*!< RTC TimeStamp Event callback       */
 
   void  (* WakeUpTimerEventCallback) ( struct __RTC_HandleTypeDef * hrtc);  /*!< RTC WakeUpTimer Event callback     */
+#ifdef RTC_TAMPER1_SUPPORT
+  void  (* Tamper1EventCallback)     ( struct __RTC_HandleTypeDef * hrtc);  /*!< RTC Tamper 1 Event callback        */
+#endif
 
   void  (* MspInitCallback)         ( struct __RTC_HandleTypeDef * hrtc);   /*!< RTC Msp Init callback              */
 
@@ -197,8 +211,13 @@ typedef struct
 typedef enum
 {
   HAL_RTC_ALARM_A_EVENT_CB_ID           = 0x00U,    /*!< RTC Alarm A Event Callback ID      */
+#ifdef RTC_CR_TSIE
   HAL_RTC_TIMESTAMP_EVENT_CB_ID         = 0x01U,    /*!< RTC TimeStamp Event Callback ID    */
+#endif
   HAL_RTC_WAKEUPTIMER_EVENT_CB_ID       = 0x02U,    /*!< RTC WakeUp Timer Event Callback ID */
+#if defined(RTC_TAMPER1_SUPPORT)
+  HAL_RTC_TAMPER1_EVENT_CB_ID           = 0x04U,    /*!< RTC Tamper 1 Callback ID           */
+#endif
   HAL_RTC_MSPINIT_CB_ID                 = 0x0EU,    /*!< RTC Msp Init callback ID           */
   HAL_RTC_MSPDEINIT_CB_ID               = 0x0FU     /*!< RTC Msp DeInit callback ID         */
 }HAL_RTC_CallbackIDTypeDef;
@@ -238,6 +257,18 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef * hrtc); /*!< pointer to
 /**
   * @}
   */
+
+#ifdef RTC_OR_ALARMOUTTYPE
+/** @defgroup RTC_Output_Type_ALARM_OUT RTC Output Type ALARM OUT
+  * @{
+  */
+#define RTC_OUTPUT_TYPE_OPENDRAIN      ((uint32_t)0x00000000U)
+#define RTC_OUTPUT_TYPE_PUSHPULL       ((uint32_t)RTC_OR_ALARMOUTTYPE)
+
+/**
+  * @}
+  */
+#endif
 
 /** @defgroup RTC_AM_PM_Definitions RTC AM PM Definitions
   * @{
@@ -351,7 +382,6 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef * hrtc); /*!< pointer to
 #define RTC_ALARM_A                       RTC_CR_ALRAE
 
 /**
-
   * @}
   */
 
@@ -399,8 +429,17 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef * hrtc); /*!< pointer to
 /** @defgroup RTC_Interrupts_Definitions RTC Interrupts Definitions
   * @{
   */
+#ifdef RTC_CR_TSIE
+#define RTC_IT_TS                         ((uint32_t)RTC_CR_TSIE)        /*!< Enable Timestamp Interrupt    */
+#endif
 #define RTC_IT_WUT                        ((uint32_t)RTC_CR_WUTIE)       /*!< Enable Wakeup timer Interrupt */
 #define RTC_IT_ALRA                       ((uint32_t)RTC_CR_ALRAIE)      /*!< Enable Alarm A Interrupt      */
+#ifdef RTC_TAMPCR_TAMPIE
+#define RTC_IT_TAMP                       ((uint32_t)RTC_TAMPCR_TAMPIE)  /*!< Enable all Tamper Interrupt   */
+#endif
+#if defined(RTC_TAMPCR_TAMP1IE)
+#define RTC_IT_TAMP1                      ((uint32_t)RTC_TAMPCR_TAMP1IE) /*!< Enable Tamper 1 Interrupt     */
+#endif
 
 /**
   * @}
@@ -410,6 +449,18 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef * hrtc); /*!< pointer to
   * @{
   */
 #define RTC_FLAG_RECALPF                  ((uint32_t)RTC_ISR_RECALPF)
+#if defined(RTC_ISR_TAMP1F)
+#define RTC_FLAG_TAMP1F                   ((uint32_t)RTC_ISR_TAMP1F)
+#endif
+#ifdef RTC_ISR_TSOVF
+#define RTC_FLAG_TSOVF                    ((uint32_t)RTC_ISR_TSOVF)
+#endif
+#ifdef RTC_ISR_TSF
+#define RTC_FLAG_TSF                      ((uint32_t)RTC_ISR_TSF)
+#endif
+#if defined(RTC_ISR_ITSF)
+#define RTC_FLAG_ITSF                     ((uint32_t)RTC_ISR_ITSF)
+#endif
 #define RTC_FLAG_WUTF                     ((uint32_t)RTC_ISR_WUTF)
 #define RTC_FLAG_ALRAF                    ((uint32_t)RTC_ISR_ALRAF)
 #define RTC_FLAG_INITF                    ((uint32_t)RTC_ISR_INITF)

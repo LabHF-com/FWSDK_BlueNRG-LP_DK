@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include "system_util.h"
 #include "adv_buff_alloc.h"
+#include "dm_alloc.h"
 
 #define NUM_ADV_BUFF_TYPES  3
 
@@ -129,10 +130,10 @@ uint8_t *adv_buff_alloc(uint8_t handle, uint16_t buffer_len, uint8_t extend, uin
       return NULL;
     
     if(info->next_buff_data) // A buffer has been previously allocated
-      free(info->next_buff_data);
+      dm_free(info->next_buff_data);
     
     if(buffer_len)
-      info->next_buff_data = malloc(buffer_len);
+      info->next_buff_data = dm_alloc(buffer_len);
     else
       info->next_buff_data = NULL;
     if(info->next_buff_data)
@@ -144,14 +145,14 @@ uint8_t *adv_buff_alloc(uint8_t handle, uint16_t buffer_len, uint8_t extend, uin
     uint8_t *buffer;
     if(!info->next_buff_data) // No buffer previously allocated
       return NULL;
-    buffer = realloc(info->next_buff_data, info->next_buff_len + buffer_len);
+    buffer = dm_realloc(info->next_buff_data, info->next_buff_len + buffer_len);
     if(buffer){
       info->next_buff_data = buffer;
       *old_buff_len = info->next_buff_len;
       info->next_buff_len += buffer_len;
     }
     else {
-      free(info->next_buff_data);
+      dm_free(info->next_buff_data);
       info->next_buff_data = 0;
       info->next_buff_len = 0;
     }
@@ -173,7 +174,7 @@ void adv_buff_free_current(uint8_t handle, uint8_t data_type)
   if(info == NULL)
     return;
   
-  free(info->curr_buff_data);
+  dm_free(info->curr_buff_data);
   info->curr_buff_data = NULL;  
 }
 
@@ -191,7 +192,7 @@ void adv_buff_free_next(uint8_t handle, uint8_t data_type)
   if(info == NULL)
     return;
   
-  free(info->next_buff_data);
+  dm_free(info->next_buff_data);
   info->next_buff_data = NULL;  
   info->next_buff_len = 0;
 }
@@ -212,7 +213,7 @@ void adv_buff_free_old(uint8_t *buff)
     
     for(i = 0; i < NUM_ADV_SETS_CONF; i++){
       if(adv_buf_info[j][i].old_buff_data == buff){
-        free(buff);
+        dm_free(buff);
         adv_buf_info[j][i].old_buff_data = NULL;
         return;
       }
@@ -221,9 +222,9 @@ void adv_buff_free_old(uint8_t *buff)
       if(adv_buf_info[j][i].curr_buff_data == buff){
         /* Free buffers and remove info about this handle, since advertising set
            has been removed */
-        free(adv_buf_info[j][i].curr_buff_data);
+        dm_free(adv_buf_info[j][i].curr_buff_data);
         adv_buf_info[j][i].curr_buff_data = NULL;
-        //free(adv_buf_info[i].old_buff_data); This line should not be needed.
+        //dm_free(adv_buf_info[i].old_buff_data); This line should not be needed.
         adv_buf_info[j][i].handle = 0xFF;
         return;
       }    

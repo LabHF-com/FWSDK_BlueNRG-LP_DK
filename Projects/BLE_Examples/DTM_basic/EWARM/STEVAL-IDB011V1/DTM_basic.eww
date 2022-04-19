@@ -22,6 +22,14 @@
                 <project>DTM_basic</project>
                 <configuration>UART_WITH_UPDATER</configuration>
             </member>
+            <member>
+                <project>DTM_basic</project>
+                <configuration>SPI_FOR_UPDATER</configuration>
+            </member>
+            <member>
+                <project>DTM_basic</project>
+                <configuration>SPI_WITH_UPDATER</configuration>
+            </member>
         </batchDefinition>
     </batchBuild>
 </workspace>

@@ -60,7 +60,7 @@ extern uint8_t button1_pressed, button2_pressed;
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
+#define PRINT_ADDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 uint8_t button_timer_expired = TRUE;
 
@@ -210,8 +210,8 @@ uint8_t DeviceInit(void)
   uint8_t addr_len;
   uint8_t address[6];
 
-  /* Set the TX power to -2 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  /* Set the TX power to 0 dBm */
+  aci_hal_set_tx_power_level(0, 24);
   
   /* Since we need to transfer notifications of 244 bytes in a single packet, the LL payload must be
    244 bytes for application data + 3 bytes for ATT header + 4 bytes for L2CAP header. */
@@ -240,7 +240,7 @@ uint8_t DeviceInit(void)
   
   aci_hal_read_config_data(0x80, &addr_len, address);
   PRINTF("Static random address: ");
-  PRINT_ADDDRESS(address);
+  PRINT_ADDRESS(address);
   PRINTF("\r\n");
 
  /* Set the device name */
@@ -524,15 +524,19 @@ static void DeviceStateMachine(void)
     
   case STATE_NORMAL:
       
-    if(APP_FLAG(BUTTON1_PRESSED)){
+    if(APP_FLAG(BUTTON1_PRESSED) && num_connected_slaves < MAX_NUM_SLAVES){
       if(APP_FLAG(SCANNING)){
         StopScan();
       }
       STATE_TRANSITION(STATE_PAIRING_SLAVE, SUBSTATE_INIT);
+      BSP_LED_On(BSP_LED3);
     }
-    else if(APP_FLAG(BUTTON2_PRESSED)){
+#if MAX_NUM_MASTERS
+    else if(APP_FLAG(BUTTON2_PRESSED) && (num_connected_masters < MAX_NUM_MASTERS)){
       STATE_TRANSITION(STATE_PAIRING_MASTER, SUBSTATE_INIT);
+      BSP_LED_On(BSP_LED3);
     }
+#endif
     else {
       num_of_bonded_devices = GetNumBondedDevices();
       if(num_connected_slaves < MAX_NUM_SLAVES && !APP_FLAG(SCANNING) && num_of_bonded_devices > 0){
@@ -559,10 +563,18 @@ static void DeviceStateMachine(void)
     switch(device.substate){
       
     case SUBSTATE_INIT:
-      StartGeneralConnectionEstablishment();
-      STATE_TRANSITION(STATE_PAIRING_SLAVE, SUBSTATE_WAITING_PAIRING);
-      APP_FLAG_SET(SCANNING);
+      if(StartGeneralConnectionEstablishment() == BLE_STATUS_SUCCESS)
+      {
+        STATE_TRANSITION(STATE_PAIRING_SLAVE, SUBSTATE_WAITING_PAIRING);
+        APP_FLAG_SET(SCANNING);
+      }
+      else
+      {
+        STATE_TRANSITION(STATE_NORMAL, SUBSTATE_INIT);
+      }      
+      break;
       
+    default:
       break;
     }
     
@@ -585,11 +597,19 @@ static void DeviceStateMachine(void)
         STATE_TRANSITION(STATE_PAIRING_MASTER, SUBSTATE_WAITING_PAIRING);
         APP_FLAG_SET(ADVERTISING);
       }
+      else {
+        STATE_TRANSITION(STATE_NORMAL, SUBSTATE_INIT);
+      }
       
+      break;
+    default:
       break;
     }    
     break;
 #endif
+    
+  default:
+    break;
     
   }
   
@@ -616,8 +636,6 @@ void APP_Tick(void)
       APP_FLAG_SET(BUTTON2_PRESSED);
       button2_pressed = FALSE;
     }
-    
-    BSP_LED_On(BSP_LED3);
     
     debounce_timeout_occurred = FALSE;
     HAL_VTIMER_StartTimerMs(&debounce_timer, DEBOUNCE_TIMEOUT_MS);        
@@ -710,7 +728,7 @@ void hci_le_connection_complete_event(uint8_t Status,
            slaves[slave_index].conn_handle = Connection_Handle;
            
            PRINTF("Connected with slave ");
-           PRINT_ADDDRESS(Peer_Address);
+           PRINT_ADDRESS(Peer_Address);
            PRINTF(" (slave %d)\r\n", slave_index);
            
            if(device.state == STATE_PAIRING_SLAVE){
@@ -756,7 +774,7 @@ void hci_le_connection_complete_event(uint8_t Status,
            masters[master_index].conn_handle = Connection_Handle;
            
            PRINTF("Connected with master ");
-           PRINT_ADDDRESS(Peer_Address);
+           PRINT_ADDRESS(Peer_Address);
            PRINTF("\r\n");
            
            break;
@@ -833,7 +851,7 @@ void hci_disconnection_complete_event(uint8_t Status,
   if(i >= 0){
     
     PRINTF("Disconnected from slave ");
-    PRINT_ADDDRESS(slaves[i].address);
+    PRINT_ADDRESS(slaves[i].address);
     PRINTF("\n");
     
     if(device.state == STATE_PAIRING_SLAVE && slaves[i].is_in_pairing_mode){
@@ -846,7 +864,24 @@ void hci_disconnection_complete_event(uint8_t Status,
     
     if(Reason == BLE_ERROR_CONNECTION_FAILED_TO_ESTABLISH){
       
-      BlacklistHit(slaves[i].address_type, slaves[i].address);
+      if(BlacklistHit(slaves[i].address_type, slaves[i].address))
+      {
+#if MAX_NUM_SLAVES
+        if(APP_FLAG(SCANNING)){
+          // Stop advertising to update white list
+          StopScan();
+        }
+#endif
+#if MAX_NUM_MASTERS
+        if(APP_FLAG(ADVERTISING)){
+          // Stop advertising to update white list
+          StopAdvertising();
+          APP_FLAG_CLEAR(ADVERTISING);
+        }
+#endif
+        PRINTF("Update White List\n");
+        aci_gap_configure_white_and_resolving_list(0x01);
+      }
     }
     else {
       // Reset blacklist status
@@ -870,7 +905,7 @@ void hci_disconnection_complete_event(uint8_t Status,
     tBleStatus ret;    
     
     PRINTF("Disconnected from master ");
-    PRINT_ADDDRESS(masters[i].address);
+    PRINT_ADDRESS(masters[i].address);
     PRINTF(", status 0x%02X, reason 0x%02X\r\n", Status, Reason);
     
     MasterInit(i);
@@ -1093,7 +1128,9 @@ void aci_att_clt_read_by_type_resp_event(uint16_t Connection_Handle,
         }
       }
     }
-    break;    
+    break;
+  default:
+    break;
   }
 }
 

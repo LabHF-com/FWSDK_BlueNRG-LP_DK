@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS) 
 #include "bluenrg_lpx.h"
+#endif
 
 #include "rf_driver_ll_bus.h"
 #include "rf_driver_ll_rcc.h"  
@@ -461,7 +463,16 @@ typedef struct
                                       This feature can be modified afterwards using unitary function @ref LL_TIM_ConfigBRK()
 
                                       @note This bit-field can not be modified as long as LOCK level 1 has been programmed. */
+#ifdef TIM_BDTR_BKBID
+  uint32_t BreakAFMode;           /*!< Specifies the alternate function mode of the break input.
+                                      This parameter can be a value of @ref TIM_LL_EC_BREAK_AFMODE
 
+                                      This feature can be modified afterwards using unitary functions @ref LL_TIM_ConfigBRK()
+
+                                      @note Bidirectional break input is only supported by advanced timers instances.
+
+                                      @note This bit-field can not be modified as long as LOCK level 1 has been programmed. */
+#endif
   uint32_t Break2State;          /*!< Specifies whether the TIM Break2 input is enabled or not.
                                       This parameter can be a value of @ref TIM_LL_EC_BREAK2_ENABLE
 
@@ -627,6 +638,17 @@ typedef struct
   * @}
   */
 
+#ifdef TIM_CR2_CCDS
+/** @defgroup TIM_LL_EC_CCDMAREQUEST Capture Compare DMA Request
+  * @{
+  */
+#define LL_TIM_CCDMAREQUEST_CC                 0x00000000U          /*!< CCx DMA request sent when CCx event occurs */
+#define LL_TIM_CCDMAREQUEST_UPDATE             TIM_CR2_CCDS         /*!< CCx DMA requests sent when update event occurs */
+/**
+  * @}
+  */
+#endif
+
 /** @defgroup TIM_LL_EC_LOCKLEVEL Lock Level
   * @{
   */
@@ -642,8 +664,12 @@ typedef struct
   * @{
   */
 #define LL_TIM_CHANNEL_CH1                     TIM_CCER_CC1E     /*!< Timer input/output channel 1 */
+#ifdef TIM_CCER_CC1NE
 #define LL_TIM_CHANNEL_CH1N                    TIM_CCER_CC1NE    /*!< Timer complementary output channel 1 */
+#endif
+#ifdef TIM_CCER_CC2E
 #define LL_TIM_CHANNEL_CH2                     TIM_CCER_CC2E     /*!< Timer input/output channel 2 */
+#endif
 #ifdef TIM_CCER_CC2NE
 #define LL_TIM_CHANNEL_CH2N                    TIM_CCER_CC2NE    /*!< Timer complementary output channel 2 */
 #endif /* TIM_CCER_CC2NE */
@@ -800,6 +826,22 @@ typedef struct
   * @}
   */
 
+#ifdef TIM_CR2_MMS
+/** @defgroup TIM_LL_EC_TRGO Trigger Output
+  * @{
+  */
+#define LL_TIM_TRGO_RESET                      0x00000000U                                     /*!< UG bit from the TIMx_EGR register is used as trigger output */
+#define LL_TIM_TRGO_ENABLE                     TIM_CR2_MMS_0                                   /*!< Counter Enable signal (CNT_EN) is used as trigger output */
+#define LL_TIM_TRGO_UPDATE                     TIM_CR2_MMS_1                                   /*!< Update event is used as trigger output */
+#define LL_TIM_TRGO_CC1IF                      (TIM_CR2_MMS_1 | TIM_CR2_MMS_0)                 /*!< CC1 capture or a compare match is used as trigger output */
+#define LL_TIM_TRGO_OC1REF                     TIM_CR2_MMS_2                                   /*!< OC1REF signal is used as trigger output */
+#define LL_TIM_TRGO_OC2REF                     (TIM_CR2_MMS_2 | TIM_CR2_MMS_0)                 /*!< OC2REF signal is used as trigger output */
+#define LL_TIM_TRGO_OC3REF                     (TIM_CR2_MMS_2 | TIM_CR2_MMS_1)                 /*!< OC3REF signal is used as trigger output */
+#define LL_TIM_TRGO_OC4REF                     (TIM_CR2_MMS_2 | TIM_CR2_MMS_1 | TIM_CR2_MMS_0) /*!< OC4REF signal is used as trigger output */
+/**
+  * @}
+  */
+#endif
 /** @defgroup TIM_LL_EC_SLAVEMODE Slave Mode
   * @{
   */
@@ -870,6 +912,17 @@ typedef struct
   * @}
   */
 
+
+/** @defgroup TIM_LL_EC_ETRSOURCE External Trigger Source
+  * @{
+  */
+#define LL_TIM_ETRSOURCE_LEGACY                0x00000000U                                       /*!< ETR legacy mode */
+#if defined(COMP1) && defined(TIM_AF1_ETRSEL)
+#define LL_TIM_ETRSOURCE_COMP1                 TIM_AF1_ETRSEL_0                                 /*!< ETR input is connected to COMP1_OUT */
+#endif /* COMP1 */
+/**
+  * @}
+  */
 /** @defgroup TIM_LL_EC_BREAK_POLARITY break polarity
   * @{
   */
@@ -969,11 +1022,70 @@ typedef struct
 /** @defgroup TIM_LL_EC_BKIN_SOURCE BKIN SOURCE
   * @{
   */
-#define LL_TIM_BKIN_SOURCE_BKIN                TIM1_AF1_BKINE      /*!< BKIN input from AF controller */
-#if defined(COMP1) && defined(COMP2)
-#define LL_TIM_BKIN_SOURCE_BKCOMP1             TIM1_AF1_BKCMP1E    /*!< internal signal: COMP1 output */
-#define LL_TIM_BKIN_SOURCE_BKCOMP2             TIM1_AF1_BKCMP2E    /*!< internal signal: COMP2 output */
-#endif /* COMP1 && COMP2 */
+#define LL_TIM_BKIN_SOURCE_BKIN                TIM_AF1_BKINE      /*!< BKIN input from AF controller */
+#if defined(COMP1)
+#define LL_TIM_BKIN_SOURCE_BKCOMP1             TIM_AF1_BKCMP1E    /*!< internal signal: COMP1 output */
+#endif /* COMP1 */
+#ifdef TIM_DCR_DBA
+/** @defgroup TIM_LL_EC_DMABURST_BASEADDR DMA Burst Base Address
+  * @{
+  */
+#define LL_TIM_DMABURST_BASEADDR_CR1           0x00000000U                                                      /*!< TIMx_CR1 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CR2           TIM_DCR_DBA_0                                                    /*!< TIMx_CR2 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_SMCR          TIM_DCR_DBA_1                                                    /*!< TIMx_SMCR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_DIER          (TIM_DCR_DBA_1 |  TIM_DCR_DBA_0)                                 /*!< TIMx_DIER register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_SR            TIM_DCR_DBA_2                                                    /*!< TIMx_SR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_EGR           (TIM_DCR_DBA_2 | TIM_DCR_DBA_0)                                  /*!< TIMx_EGR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCMR1         (TIM_DCR_DBA_2 | TIM_DCR_DBA_1)                                  /*!< TIMx_CCMR1 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCMR2         (TIM_DCR_DBA_2 | TIM_DCR_DBA_1 | TIM_DCR_DBA_0)                  /*!< TIMx_CCMR2 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCER          TIM_DCR_DBA_3                                                    /*!< TIMx_CCER register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CNT           (TIM_DCR_DBA_3 | TIM_DCR_DBA_0)                                  /*!< TIMx_CNT register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_PSC           (TIM_DCR_DBA_3 | TIM_DCR_DBA_1)                                  /*!< TIMx_PSC register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_ARR           (TIM_DCR_DBA_3 | TIM_DCR_DBA_1 | TIM_DCR_DBA_0)                  /*!< TIMx_ARR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_RCR           (TIM_DCR_DBA_3 | TIM_DCR_DBA_2)                                  /*!< TIMx_RCR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR1          (TIM_DCR_DBA_3 | TIM_DCR_DBA_2 | TIM_DCR_DBA_0)                  /*!< TIMx_CCR1 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR2          (TIM_DCR_DBA_3 | TIM_DCR_DBA_2 | TIM_DCR_DBA_1)                  /*!< TIMx_CCR2 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR3          (TIM_DCR_DBA_3 | TIM_DCR_DBA_2 | TIM_DCR_DBA_1 | TIM_DCR_DBA_0)  /*!< TIMx_CCR3 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR4          TIM_DCR_DBA_4                                                    /*!< TIMx_CCR4 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_BDTR          (TIM_DCR_DBA_4 | TIM_DCR_DBA_0)                                  /*!< TIMx_BDTR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_OR            (TIM_DCR_DBA_4 | TIM_DCR_DBA_2)                                  /*!< TIMx_OR register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCMR3         (TIM_DCR_DBA_4 | TIM_DCR_DBA_2 | TIM_DCR_DBA_0)                  /*!< TIMx_CCMR3 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR5          (TIM_DCR_DBA_4 | TIM_DCR_DBA_2 | TIM_DCR_DBA_1)                  /*!< TIMx_CCR5 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_CCR6          (TIM_DCR_DBA_4 | TIM_DCR_DBA_2 | TIM_DCR_DBA_1 | TIM_DCR_DBA_0)  /*!< TIMx_CCR6 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_AF1           (TIM_DCR_DBA_4 | TIM_DCR_DBA_3)                                  /*!< TIMx_AF1 register is the DMA base address for DMA burst */
+#define LL_TIM_DMABURST_BASEADDR_AF2           (TIM_DCR_DBA_4 | TIM_DCR_DBA_3 | TIM_DCR_DBA_0)                  /*!< TIMx_AF2 register is the DMA base address for DMA burst */
+/**
+  * @}
+  */
+#endif
+
+#ifdef TIM_DCR_DBL
+/** @defgroup TIM_LL_EC_DMABURST_LENGTH DMA Burst Length
+  * @{
+  */
+#define LL_TIM_DMABURST_LENGTH_1TRANSFER       0x00000000U                                                     /*!< Transfer is done to 1 register starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_2TRANSFERS      TIM_DCR_DBL_0                                                   /*!< Transfer is done to 2 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_3TRANSFERS      TIM_DCR_DBL_1                                                   /*!< Transfer is done to 3 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_4TRANSFERS      (TIM_DCR_DBL_1 |  TIM_DCR_DBL_0)                                /*!< Transfer is done to 4 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_5TRANSFERS      TIM_DCR_DBL_2                                                   /*!< Transfer is done to 5 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_6TRANSFERS      (TIM_DCR_DBL_2 | TIM_DCR_DBL_0)                                 /*!< Transfer is done to 6 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_7TRANSFERS      (TIM_DCR_DBL_2 | TIM_DCR_DBL_1)                                 /*!< Transfer is done to 7 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_8TRANSFERS      (TIM_DCR_DBL_2 | TIM_DCR_DBL_1 | TIM_DCR_DBL_0)                 /*!< Transfer is done to 1 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_9TRANSFERS      TIM_DCR_DBL_3                                                   /*!< Transfer is done to 9 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_10TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_0)                                 /*!< Transfer is done to 10 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_11TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_1)                                 /*!< Transfer is done to 11 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_12TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_1 | TIM_DCR_DBL_0)                 /*!< Transfer is done to 12 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_13TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_2)                                 /*!< Transfer is done to 13 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_14TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_2 | TIM_DCR_DBL_0)                 /*!< Transfer is done to 14 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_15TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_2 | TIM_DCR_DBL_1)                 /*!< Transfer is done to 15 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_16TRANSFERS     (TIM_DCR_DBL_3 | TIM_DCR_DBL_2 | TIM_DCR_DBL_1 | TIM_DCR_DBL_0) /*!< Transfer is done to 16 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_17TRANSFERS     TIM_DCR_DBL_4                                                   /*!< Transfer is done to 17 registers starting from the DMA burst base address */
+#define LL_TIM_DMABURST_LENGTH_18TRANSFERS     (TIM_DCR_DBL_4 |  TIM_DCR_DBL_0)                                /*!< Transfer is done to 18 registers starting from the DMA burst base address */
+/**
+  * @}
+  */
+#endif
+
 /**
   * @}
   */
@@ -982,11 +1094,22 @@ typedef struct
   * @{
   */
 #define LL_TIM_BKIN_POLARITY_LOW               0x00000000U             /*!< BRK BKIN input is active low */
-#define LL_TIM_BKIN_POLARITY_HIGH              TIM1_AF1_BKINP          /*!< BRK BKIN input is active high */
+#define LL_TIM_BKIN_POLARITY_HIGH              TIM_AF1_BKINP          /*!< BRK BKIN input is active high */
 /**
   * @}
   */
 
+
+/** @defgroup TIM_LL_EC_BREAK_AFMODE BREAK AF MODE
+  * @{
+  */
+#define LL_TIM_BREAK_AFMODE_INPUT              0x00000000U              /*!< Break input BRK in input mode */
+#define LL_TIM_BREAK_AFMODE_BIDIRECTIONAL      TIM_BDTR_BKBID           /*!< Break input BRK in bidirectional mode */
+/**
+  * @}
+  */
+
+#ifdef TIM_SMCR_OCCS
 /** @defgroup TIM_LL_EC_OCREF_CLR_INT OCREF clear input selection
   * @{
   */
@@ -995,7 +1118,7 @@ typedef struct
 /**
   * @}
   */
-
+#endif
 /**
   * @}
   */
@@ -1596,6 +1719,21 @@ __STATIC_INLINE void LL_TIM_DisableUIFRemap(TIM_TypeDef *TIMx)
   CLEAR_BIT(TIMx->CR1, TIM_CR1_UIFREMAP);
 }
 
+#ifdef TIM_CNT_UIFCPY
+/**
+  * @brief  Indicate whether update interrupt flag (UIF) copy is set.
+  * @param  Counter Counter value
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsActiveUIFCPY(uint32_t Counter)
+{
+  return (((Counter & TIM_CNT_UIFCPY) == (TIM_CNT_UIFCPY)) ? 1UL : 0UL);
+}
+/**
+  * @}
+  */
+#endif
+
 /**
   * @}
   */
@@ -1647,6 +1785,35 @@ __STATIC_INLINE void LL_TIM_CC_SetUpdate(TIM_TypeDef *TIMx, uint32_t CCUpdateSou
 {
   MODIFY_REG(TIMx->CR2, TIM_CR2_CCUS, CCUpdateSource);
 }
+
+#ifdef TIM_CR2_CCDS
+/**
+  * @brief  Set the trigger of the capture/compare DMA request.
+  * @rmtoll CR2          CCDS          LL_TIM_CC_SetDMAReqTrigger
+  * @param  TIMx Timer instance
+  * @param  DMAReqTrigger This parameter can be one of the following values:
+  *         @arg @ref LL_TIM_CCDMAREQUEST_CC
+  *         @arg @ref LL_TIM_CCDMAREQUEST_UPDATE
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_CC_SetDMAReqTrigger(TIM_TypeDef *TIMx, uint32_t DMAReqTrigger)
+{
+  MODIFY_REG(TIMx->CR2, TIM_CR2_CCDS, DMAReqTrigger);
+}
+
+/**
+  * @brief  Get actual trigger of the capture/compare DMA request.
+  * @rmtoll CR2          CCDS          LL_TIM_CC_GetDMAReqTrigger
+  * @param  TIMx Timer instance
+  * @retval Returned value can be one of the following values:
+  *         @arg @ref LL_TIM_CCDMAREQUEST_CC
+  *         @arg @ref LL_TIM_CCDMAREQUEST_UPDATE
+  */
+__STATIC_INLINE uint32_t LL_TIM_CC_GetDMAReqTrigger(TIM_TypeDef *TIMx)
+{
+  return (uint32_t)(READ_BIT(TIMx->CR2, TIM_CR2_CCDS));
+}
+#endif
 
 /**
   * @brief  Set the lock level to freeze the
@@ -2981,6 +3148,32 @@ __STATIC_INLINE void LL_TIM_SetEncoderMode(TIM_TypeDef *TIMx, uint32_t EncoderMo
 /** @defgroup TIM_LL_EF_Timer_Synchronization Timer synchronisation configuration
   * @{
   */
+
+#ifdef TIM_CR2_MMS
+/**
+  * @brief  Set the trigger output (TRGO) used for timer synchronization .
+  * @note Macro IS_TIM_MASTER_INSTANCE(TIMx) can be used to check
+  *       whether or not a timer instance can operate as a master timer.
+  * @rmtoll CR2          MMS           LL_TIM_SetTriggerOutput
+  * @param  TIMx Timer instance
+  * @param  TimerSynchronization This parameter can be one of the following values:
+  *         @arg @ref LL_TIM_TRGO_RESET
+  *         @arg @ref LL_TIM_TRGO_ENABLE
+  *         @arg @ref LL_TIM_TRGO_UPDATE
+  *         @arg @ref LL_TIM_TRGO_CC1IF
+  *         @arg @ref LL_TIM_TRGO_OC1REF
+  *         @arg @ref LL_TIM_TRGO_OC2REF
+  *         @arg @ref LL_TIM_TRGO_OC3REF
+  *         @arg @ref LL_TIM_TRGO_OC4REF
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_SetTriggerOutput(TIM_TypeDef *TIMx, uint32_t TimerSynchronization)
+{
+  MODIFY_REG(TIMx->CR2, TIM_CR2_MMS, TimerSynchronization);
+}
+
+#endif
+
 /**
   * @brief  Set the synchronization mode of a slave timer.
   * @note Macro @ref IS_TIM_SLAVE_INSTANCE(TIMx) can be used to check whether or not
@@ -3021,6 +3214,48 @@ __STATIC_INLINE void LL_TIM_SetTriggerInput(TIM_TypeDef *TIMx, uint32_t TriggerI
 {
   MODIFY_REG(TIMx->SMCR, TIM_SMCR_TS, TriggerInput);
 }
+
+#ifdef TIM_SMCR_MSM
+/**
+  * @brief  Enable the Master/Slave mode.
+  * @note Macro IS_TIM_SLAVE_INSTANCE(TIMx) can be used to check whether or not
+  *       a timer instance can operate as a slave timer.
+  * @rmtoll SMCR         MSM           LL_TIM_EnableMasterSlaveMode
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableMasterSlaveMode(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->SMCR, TIM_SMCR_MSM);
+}
+
+/**
+  * @brief  Disable the Master/Slave mode.
+  * @note Macro IS_TIM_SLAVE_INSTANCE(TIMx) can be used to check whether or not
+  *       a timer instance can operate as a slave timer.
+  * @rmtoll SMCR         MSM           LL_TIM_DisableMasterSlaveMode
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableMasterSlaveMode(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->SMCR, TIM_SMCR_MSM);
+}
+
+/**
+  * @brief Indicates whether the Master/Slave mode is enabled.
+  * @note Macro IS_TIM_SLAVE_INSTANCE(TIMx) can be used to check whether or not
+  * a timer instance can operate as a slave timer.
+  * @rmtoll SMCR         MSM           LL_TIM_IsEnabledMasterSlaveMode
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledMasterSlaveMode(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->SMCR, TIM_SMCR_MSM) == (TIM_SMCR_MSM)) ? 1UL : 0UL);
+}
+
+#endif
 
 /**
   * @brief  Configure the external trigger (ETR) input.
@@ -3125,6 +3360,21 @@ __STATIC_INLINE void LL_TIM_DisableBRK(TIM_TypeDef *TIMx)
   *         @arg @ref LL_TIM_BREAK_FILTER_FDIV32_N8
   * @retval None
   */
+#ifdef TIM_BDTR_BKBID
+__STATIC_INLINE void LL_TIM_ConfigBRK(TIM_TypeDef *TIMx, uint32_t BreakPolarity, uint32_t BreakFilter, uint32_t BreakAFMode)
+{
+#ifdef TIM_BDTR_BKP
+  MODIFY_REG(TIMx->BDTR, TIM_BDTR_BKP , BreakPolarity);
+#endif /* TIM_BDTR_BKP */
+  
+#ifdef TIM_BDTR_BKF
+  MODIFY_REG(TIMx->BDTR, TIM_BDTR_BKF,  BreakFilter);
+#endif /* TIM_BDTR_BKF */
+
+MODIFY_REG(TIMx->BDTR, TIM_BDTR_BKBID,  BreakAFMode);
+}
+
+#else
 __STATIC_INLINE void LL_TIM_ConfigBRK(TIM_TypeDef *TIMx, uint32_t BreakPolarity, uint32_t BreakFilter)
 {
 #ifdef TIM_BDTR_BKP
@@ -3135,6 +3385,7 @@ __STATIC_INLINE void LL_TIM_ConfigBRK(TIM_TypeDef *TIMx, uint32_t BreakPolarity,
   MODIFY_REG(TIMx->BDTR, TIM_BDTR_BKF,  BreakFilter);
 #endif /* TIM_BDTR_BKF */
 }
+#endif
 
 #ifdef TIM_BDTR_BK2E
 /**
@@ -3388,6 +3639,74 @@ __STATIC_INLINE void LL_TIM_SetBreakInputSourcePolarity(TIM_TypeDef *TIMx, uint3
   * @}
   */
 
+#if defined(TIM_DCR_DBL) && defined(TIM_DCR_DBA)
+/** @defgroup TIM_LL_EF_DMA_Burst_Mode DMA burst mode configuration
+  * @{
+  */
+/**
+  * @brief  Configures the timer DMA burst feature.
+  * @note Macro IS_TIM_DMABURST_INSTANCE(TIMx) can be used to check whether or
+  *       not a timer instance supports the DMA burst mode.
+  * @rmtoll DCR          DBL           LL_TIM_ConfigDMABurst\n
+  *         DCR          DBA           LL_TIM_ConfigDMABurst
+  * @param  TIMx Timer instance
+  * @param  DMABurstBaseAddress This parameter can be one of the following values:
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CR1
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CR2
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_SMCR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_DIER
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_SR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_EGR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCMR1
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCMR2
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCER
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CNT
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_PSC
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_ARR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_RCR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR1
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR2
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR3
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR4
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_BDTR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_OR
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCMR3 
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR5  
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_CCR6  
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_AF1  
+  *         @arg @ref LL_TIM_DMABURST_BASEADDR_AF2  
+  * @param  DMABurstLength This parameter can be one of the following values:
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_1TRANSFER
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_2TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_3TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_4TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_5TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_6TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_7TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_8TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_9TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_10TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_11TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_12TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_13TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_14TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_15TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_16TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_17TRANSFERS
+  *         @arg @ref LL_TIM_DMABURST_LENGTH_18TRANSFERS
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_ConfigDMABurst(TIM_TypeDef *TIMx, uint32_t DMABurstBaseAddress, uint32_t DMABurstLength)
+{
+  MODIFY_REG(TIMx->DCR, (TIM_DCR_DBL | TIM_DCR_DBA), (DMABurstBaseAddress | DMABurstLength));
+}
+
+/**
+  * @}
+  */
+
+
+#endif
 /** @defgroup TIM_LL_EF_OCREF_Clear OCREF_Clear_Management
   * @{
   */
@@ -4024,6 +4343,230 @@ __STATIC_INLINE uint32_t LL_TIM_IsEnabledIT_BRK(TIM_TypeDef *TIMx)
 /**
   * @}
   */
+
+#ifdef TIM_DIER_UDE
+/** @defgroup TIM_LL_EF_DMA_Management DMA-Management
+  * @{
+  */
+/**
+  * @brief  Enable update DMA request (UDE).
+  * @rmtoll DIER         UDE           LL_TIM_EnableDMAReq_UPDATE
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_UPDATE(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_UDE);
+}
+
+/**
+  * @brief  Disable update DMA request (UDE).
+  * @rmtoll DIER         UDE           LL_TIM_DisableDMAReq_UPDATE
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_UPDATE(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_UDE);
+}
+
+/**
+  * @brief  Indicates whether the update DMA request  (UDE) is enabled.
+  * @rmtoll DIER         UDE           LL_TIM_IsEnabledDMAReq_UPDATE
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_UPDATE(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_UDE) == (TIM_DIER_UDE)) ? 1UL : 0UL);
+}
+
+#endif
+
+#ifdef TIM_DIER_CC1DE
+/**
+  * @brief  Enable capture/compare 1 DMA request (CC1DE).
+  * @rmtoll DIER         CC1DE         LL_TIM_EnableDMAReq_CC1
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_CC1(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_CC1DE);
+}
+
+/**
+  * @brief  Disable capture/compare 1  DMA request (CC1DE).
+  * @rmtoll DIER         CC1DE         LL_TIM_DisableDMAReq_CC1
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_CC1(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_CC1DE);
+}
+
+/**
+  * @brief  Indicates whether the capture/compare 1 DMA request (CC1DE) is enabled.
+  * @rmtoll DIER         CC1DE         LL_TIM_IsEnabledDMAReq_CC1
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_CC1(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_CC1DE) == (TIM_DIER_CC1DE)) ? 1UL : 0UL);
+}
+
+#endif
+
+#ifdef TIM_DIER_CC2DE
+/**
+  * @brief  Enable capture/compare 2 DMA request (CC2DE).
+  * @rmtoll DIER         CC2DE         LL_TIM_EnableDMAReq_CC2
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_CC2(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_CC2DE);
+}
+
+/**
+  * @brief  Disable capture/compare 2  DMA request (CC2DE).
+  * @rmtoll DIER         CC2DE         LL_TIM_DisableDMAReq_CC2
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_CC2(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_CC2DE);
+}
+
+/**
+  * @brief  Indicates whether the capture/compare 2 DMA request (CC2DE) is enabled.
+  * @rmtoll DIER         CC2DE         LL_TIM_IsEnabledDMAReq_CC2
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_CC2(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_CC2DE) == (TIM_DIER_CC2DE)) ? 1UL : 0UL);
+}
+
+#endif
+
+#ifdef TIM_DIER_CC3DE
+/**
+  * @brief  Enable capture/compare 3 DMA request (CC3DE).
+  * @rmtoll DIER         CC3DE         LL_TIM_EnableDMAReq_CC3
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_CC3(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_CC3DE);
+}
+
+/**
+  * @brief  Disable capture/compare 3  DMA request (CC3DE).
+  * @rmtoll DIER         CC3DE         LL_TIM_DisableDMAReq_CC3
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_CC3(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_CC3DE);
+}
+
+/**
+  * @brief  Indicates whether the capture/compare 3 DMA request (CC3DE) is enabled.
+  * @rmtoll DIER         CC3DE         LL_TIM_IsEnabledDMAReq_CC3
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_CC3(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_CC3DE) == (TIM_DIER_CC3DE)) ? 1UL : 0UL);
+}
+#endif 
+
+#ifdef TIM_DIER_CC4DE
+/**
+  * @brief  Enable capture/compare 4 DMA request (CC4DE).
+  * @rmtoll DIER         CC4DE         LL_TIM_EnableDMAReq_CC4
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_CC4(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_CC4DE);
+}
+
+/**
+  * @brief  Disable capture/compare 4  DMA request (CC4DE).
+  * @rmtoll DIER         CC4DE         LL_TIM_DisableDMAReq_CC4
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_CC4(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_CC4DE);
+}
+
+/**
+  * @brief  Indicates whether the capture/compare 4 DMA request (CC4DE) is enabled.
+  * @rmtoll DIER         CC4DE         LL_TIM_IsEnabledDMAReq_CC4
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_CC4(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_CC4DE) == (TIM_DIER_CC4DE)) ? 1UL : 0UL);
+}
+
+
+#endif
+
+#ifdef TIM_DIER_TDE
+/**
+  * @brief  Enable trigger interrupt (TDE).
+  * @rmtoll DIER         TDE           LL_TIM_EnableDMAReq_TRIG
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_EnableDMAReq_TRIG(TIM_TypeDef *TIMx)
+{
+  SET_BIT(TIMx->DIER, TIM_DIER_TDE);
+}
+
+/**
+  * @brief  Disable trigger interrupt (TDE).
+  * @rmtoll DIER         TDE           LL_TIM_DisableDMAReq_TRIG
+  * @param  TIMx Timer instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_TIM_DisableDMAReq_TRIG(TIM_TypeDef *TIMx)
+{
+  CLEAR_BIT(TIMx->DIER, TIM_DIER_TDE);
+}
+
+/**
+  * @brief  Indicates whether the trigger interrupt (TDE) is enabled.
+  * @rmtoll DIER         TDE           LL_TIM_IsEnabledDMAReq_TRIG
+  * @param  TIMx Timer instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_TIM_IsEnabledDMAReq_TRIG(TIM_TypeDef *TIMx)
+{
+  return ((READ_BIT(TIMx->DIER, TIM_DIER_TDE) == (TIM_DIER_TDE)) ? 1UL : 0UL);
+}
+
+/**
+  * @}
+  */
+
+#endif
+
 
 /** @defgroup TIM_LL_EF_EVENT_Management EVENT-Management
   * @{

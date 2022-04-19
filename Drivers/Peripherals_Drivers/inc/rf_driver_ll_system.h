@@ -37,7 +37,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -143,8 +145,10 @@ extern "C" {
 /** @defgroup SYSTEM_LL_DEVICE_INFORMATION Device Version Information
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_BLUENRG_LP_CUT_10               0x10
 #define LL_BLUENRG_LP_CUT_20               0x20
+#endif
 /**
   * @}
   */
@@ -162,8 +166,10 @@ extern "C" {
 /** @defgroup SYSCFG_LL_RXTX_DET_TYPE Tx/Rx sequence information detection type
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_SYSCFG_BLERXTX_DET_TYPE_EDGE           ((uint8_t)0x00U) /*!<  Tx/Rx detection type EDGE  */
 #define LL_SYSCFG_BLERXTX_DET_TYPE_LEVEL          ((uint8_t)0x01U) /*!<  Tx/Rx detection type LEVEL */
+#endif
 /**
   * @}
   */
@@ -171,11 +177,13 @@ extern "C" {
 /** @defgroup SYSCFG_LL_RXTX_EDGE_TRIGGER Tx/Rx detection trigger
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_SYSCFG_BLERXTX_TRIGGER_RISING_EDGE     ((uint8_t)0x00U) /*!< Trigger on Rising Edge  */
 #define LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE    ((uint8_t)0x01U) /*!< Trigger on Falling Edge */
 #define LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE       ((uint8_t)0x02U) /*!< Trigger on Both Edge    */
 #define LL_SYSCFG_BLERXTX_TRIGGER_LOW_LEVEL       ((uint8_t)0x03U) /*!< Trigger on Low Level    */
 #define LL_SYSCFG_BLERXTX_TRIGGER_HIGH_LEVEL      ((uint8_t)0x04U) /*!< Trigger on High Level   */
+#endif
 
 /**
   * @}
@@ -184,6 +192,7 @@ extern "C" {
 /** @defgroup SYSCFG_LL_TX_RX_EVENT_ENABLE Tx/Rx event 
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_SYSCFG_BLE_TX_EVENT    SYSCFG_BLERXTX_IER_TX_IE /*!< Tx Event Enable */
 #define LL_SYSCFG_BLE_RX_EVENT    SYSCFG_BLERXTX_IER_RX_IE /*!< Rx Event Enable */
 #if defined(SYSCFG_BLERXTX_ISCR_RX_ISEDGE)
@@ -193,6 +202,7 @@ extern "C" {
 #if defined(SYSCFG_BLERXTX_ISCR_TX_ISEDGE)
 #define LL_SYSCFG_BLE_TX_FALLING_EDGE_EVENT    (0x00000000U)                     /*!< Falling edge on TX sequence detected */
 #define LL_SYSCFG_BLE_TX_RISING_EDGE_EVENT     (SYSCFG_BLERXTX_ISCR_TX_ISEDGE)   /*!< Rising edge on TX sequence detected  */
+#endif
 #endif
 /**
   * @}
@@ -277,7 +287,7 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
 __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
 {
   uint32_t remap, premap;
-  uint32_t memory_map;
+  uint32_t memory_map = LL_SYSCFG_REMAP_FLASH;
   
   remap = READ_BIT(FLASH->CONFIG, FLASH_CONFIG_REMAP) >> FLASH_CONFIG_REMAP_Pos;
   premap = READ_BIT(FLASH->CONFIG, FLASH_CONFIG_PREMAP) >> FLASH_CONFIG_PREMAP_Pos;
@@ -545,7 +555,7 @@ __STATIC_INLINE void LL_IO_SetAnalogSwitchControl_PB14(uint32_t feature)
   *         @arg @ref LL_SYSCFG_PB14_PVD
   *         @arg @ref LL_SYSCFG_PB14_ATB1
   */
-__STATIC_INLINE uint32_t LL_IO_GetAnalogSwitchControl_PB14(uint32_t feature)
+__STATIC_INLINE uint32_t LL_IO_GetAnalogSwitchControl_PB14(void)
 {
   return (uint32_t)(READ_BIT(SYSCFG->GPIO_SWA_CTRL, SYSCFG_GPIO_SWA_CTRL_ATB1_nPVD));
 }
@@ -557,6 +567,7 @@ __STATIC_INLINE uint32_t LL_IO_GetAnalogSwitchControl_PB14(uint32_t feature)
 /** @defgroup SYSCFG_LL_RADIO_RXTX_IT_Management RX TX IT_Management
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  Enable Tx Rx Interrupt
   * @rmtoll BLERXTX_IER        LL_SYSCFG_BLERXTX_EnableIT
@@ -595,6 +606,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsEnabledIT(uint32_t Signal)
 {
   return ((READ_BIT(SYSCFG->BLERXTX_IER, Signal) == (Signal)) ? 1UL : 0UL);
 }
+#endif
 
 /**
   * @}
@@ -603,6 +615,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsEnabledIT(uint32_t Signal)
 /** @defgroup SYSCFG_LL_RADIO_EVENT_TYPE_Management Level/Edge Management
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  Set Tx/Rx Interrupt Detection Type
   * @rmtoll BLERXTX_DTR        LL_SYSCFG_BLERXTX_SetType
@@ -640,6 +653,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_GetType(uint32_t Signal)
 
   return LL_SYSCFG_BLERXTX_DET_TYPE_EDGE;
 }
+#endif
 
 /**
   * @} 
@@ -648,6 +662,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_GetType(uint32_t Signal)
 /** @defgroup LL_SYSCFG_BLERXTX_SetTrigger Trigger_Management
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  Set Tx Rx Interrupt Trigger 
   * @rmtoll BLERXTX_IBER/BLERXTX__IEVR/BLERXTX__DTR        LL_SYSCFG_BLERXTX_SetTrigger
@@ -727,6 +742,7 @@ __STATIC_INLINE uint8_t LL_SYSCFG_BLERXTX_GetTrigger(uint32_t Signal)
   }
   return LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE;
 }
+#endif
 
 /**
   * @}
@@ -735,6 +751,7 @@ __STATIC_INLINE uint8_t LL_SYSCFG_BLERXTX_GetTrigger(uint32_t Signal)
 /** @defgroup SYSCFG_LL_EVENT_Flag_Management Flag_Management
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief Check if the Tx Rx Interrupt is set or not
   * @note  This bit is cleared by writing a 1 to the bit.
@@ -793,6 +810,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERX_EdgeSequence(void)
 }
 #endif
 
+#endif
 
 
 /**

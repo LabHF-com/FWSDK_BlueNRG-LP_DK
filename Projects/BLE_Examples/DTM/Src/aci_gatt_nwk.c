@@ -71,6 +71,9 @@ struct {
 /*******************************************************************************
  * PRIVATE PROTOTYPES
  ******************************************************************************/
+
+#if (CONNECTION_ENABLED == 1)
+
 /**
  * @brief Write all queued write for the given connection handle.
  *
@@ -186,13 +189,11 @@ void ACI_gatt_nwk_reset(void)
     ATT_pwrq_reset();
 }
 
-void ACI_gatt_nwk_init(uint16_t buffer_size, uint16_t pwrq_size,
-                       uint8_t *buffer)
+void ACI_gatt_nwk_init(uint16_t pwrq_size)
 {
     uint8_t *q_wr_p;
 
     ACI_gatt_nwk_reset();
-    dm_init(buffer_size, buffer);
 
     if (pwrq_size > 0U)
     {
@@ -2012,5 +2013,182 @@ int aci_gatt_clt_proc_complete_event_preprocess(uint16_t Connection_Handle,
   
   return 0;
 }
+
+#else
+
+void ACI_gatt_nwk_init(uint16_t buffer_size)
+{
+}
+
+void ACI_gatt_nwk_reset(void)
+{
+}
+
+void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle, uint8_t Error_Code)
+{
+}
+
+void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle)
+{
+}
+
+tBleStatus aci_gatt_srv_add_service_nwk(uint8_t Service_UUID_Type,
+                                        Service_UUID_t *Service_UUID,
+                                        uint8_t Service_Type,
+                                        uint8_t Max_Attribute_Records,
+                                        uint16_t *Service_Handle)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_include_service_nwk(uint16_t Service_Handle,
+                                            uint16_t Included_Service_Handle,
+                                            uint16_t *Include_Handle)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+
+tBleStatus aci_gatt_srv_add_char_nwk(uint16_t Service_Handle,
+                                     uint8_t Char_UUID_Type,
+                                     Char_UUID_t *Char_UUID,
+                                     uint16_t Char_Value_Length,
+                                     uint8_t Char_Properties,
+                                     uint8_t Security_Permissions,
+                                     uint8_t GATT_Evt_Mask,
+                                     uint8_t Enc_Key_Size,
+                                     uint8_t Is_Variable,
+                                     uint16_t *Char_Handle)
+
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+
+tBleStatus aci_gatt_srv_add_char_desc_nwk(uint16_t Char_Handle,
+                                          uint8_t Char_Desc_Uuid_Type,
+                                          Char_Desc_Uuid_t *Char_Desc_Uuid,
+                                          uint16_t Char_Desc_Value_Max_Len,
+                                          uint16_t Char_Desc_Value_Length,
+                                          uint8_t Char_Desc_Value[],
+                                          uint8_t Security_Permissions,
+                                          uint8_t Access_Permissions,
+                                          uint8_t GATT_Evt_Mask,
+                                          uint8_t Enc_Key_Size,
+                                          uint8_t Is_Variable,
+                                          uint16_t *Char_Desc_Handle)
+
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_write_handle_value_nwk(uint16_t Attr_Handle,
+                                               uint16_t Val_Offset,
+                                               uint16_t Value_Length,
+                                               uint8_t Value[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_rm_char_nwk(uint16_t Char_Handle)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_rm_service_nwk(uint16_t Serv_Handle)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_rm_include_service_nwk(uint16_t Include_Handle)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_clt_write_nwk(uint16_t Connection_Handle,
+                                  uint16_t Attr_Handle,
+                                  uint16_t Attribute_Val_Length,
+                                  uint8_t Attribute_Val[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_clt_write_long_nwk(uint16_t Connection_Handle,
+                                       uint16_t Attr_Handle,
+                                       uint16_t Val_Offset,
+                                       uint16_t Attribute_Val_Length,
+                                       uint8_t Attribute_Val[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
+                                                uint16_t Attr_Handle,
+                                                uint16_t Val_Offset,
+                                                uint16_t Attribute_Val_Length,
+                                                uint8_t Attribute_Val[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_set_security_permission_nwk(uint16_t Attr_Handle,
+                                                    uint8_t Security_Permissions)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_read_handle_value_nwk(uint16_t Attr_Handle,
+                                              uint16_t Offset,
+                                              uint16_t Value_Length_Requested,
+                                              uint16_t *Length,
+                                              uint16_t *Value_Length,
+                                              uint8_t Value[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_read_multiple_instance_handle_value_nwk(uint16_t Connection_Handle,
+                                                            uint16_t Attr_Handle,
+                                                            uint16_t *Value_Length,
+                                                            uint8_t Value[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_set_access_permission_nwk(uint16_t Attr_Handle,
+                                                  uint8_t Access_Permissions)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
+                                           uint16_t Attr_Handle,
+                                           uint8_t Operation_Type,
+                                           uint8_t Error_Code,
+                                           uint16_t Data_Offset,
+                                           uint16_t Data_Length,
+                                           uint8_t Data[])
+{
+  return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+tBleStatus aci_gatt_srv_read_prepare_queue_nwk(uint16_t Conn_Handle,
+                                               uint8_t Item_Index,
+                                               uint16_t *Attr_Handle,
+                                               uint16_t *Value_Offset,
+                                               uint16_t *Value_Length,
+                                               uint8_t Value[])
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+
+tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
+                                        uint8_t Exec)
+{
+    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+}
+
+#endif
 
 /******************* (C) COPYRIGHT 2020 STMicroelectronics *****END OF FILE****/

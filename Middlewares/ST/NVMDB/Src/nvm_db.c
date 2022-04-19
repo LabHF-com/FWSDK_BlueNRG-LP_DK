@@ -37,7 +37,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include <string.h>
-#include "system_bluenrg_lp.h"
+#include "system_BlueNRG_LP.h"
 #include "nvm_db.h"
 #include "nvm_db_conf.h"
 

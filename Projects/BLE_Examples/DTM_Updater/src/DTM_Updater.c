@@ -66,67 +66,9 @@ typedef  PACKED(struct) devConfigS  {
 #define EVT_BUFF_OFFSET 5
 #endif
 
-//#define FLASH_PREMAP_MAIN    0x08
-
-//#define DMA_DIR_PeripheralDST              ((uint32_t)0x00000010)
-//#define DMA_Priority_Medium                ((uint32_t)0x00001000)
-//#define DMA_Mode_Circular                  ((uint32_t)0x00000020)
-//#define DMA_Priority_High                  ((uint32_t)0x00002000)
-//#define DMA_MemoryInc_Enable               ((uint32_t)0x00000080)
-
-//#define Serial1_Mode                ((uint8_t)1)  /*!< Serial1 mode selected */
-//#define Serial0_Mode                ((uint8_t)4)  /*!< Serial0 mode selected */
 
 #define DMA_CH_SPI_TX           (LL_DMA_CHANNEL_1)       /* SPI TX DMA channels */
 #define DMA_CH_SPI_RX           (LL_DMA_CHANNEL_3)       /* SPI RX DMA channels */
-
-//#define SPI_DMAReq_Tx           ((uint8_t)0x04)  /*!< DMA SPI TX request */
-//#define SPI_DMAReq_Rx           ((uint8_t)0x01)  /*!< DMA SPI RX request */
-
-//#define SPI_Mode_Slave          ((uint8_t)0x01)  /*!< Slave mode */
-//#define SPI_CPOL_Low            ((uint8_t)0)  /*!< Clock polarity low */
-//#define SPI_CPHA_2Edge          ((uint8_t)1)  /*!< Clock phase 2nd edge */
-//#define SPI_DataSize_8b         ((uint8_t)0x07)  /*!< 8-bit data size */
-//#define SPI_FLAG_RNE            ((uint8_t)0x04)  /*!< Rx FIFO not empty flag */
-//#define CCR_CLEAR_MASK           ((uint32_t)0xFFFF800F)  
-
-
-//#define GPIO_Pin_0               ((uint16_t)0x0001)  /*!< Pin 0 selected */
-//#define GPIO_Pin_2               ((uint16_t)0x0004)  /*!< Pin 2 selected */
-//#define GPIO_Pin_3               ((uint16_t)0x0008)  /*!< Pin 3 selected */
-//#define GPIO_Pin_7               ((uint16_t)0x0080)  /*!< Pin 7 selected */
-//#define GPIO_Pin_8               ((uint16_t)0x0100)  /*!< Pin 8 selected */
-//#define GPIO_Pin_11              ((uint16_t)0x0800)  /*!< Pin 11 selected */
-
-//#define SPI_CS_PIN              (GPIO_Pin_11)
-//#define SPI_MOSI_PIN            (GPIO_Pin_2)
-//#define SPI_MISO_PIN            (GPIO_Pin_3)
-//#define SPI_CLCK_PIN            (GPIO_Pin_0)
-//#define GPIO_MODE_SPI           (Serial0_Mode)
-//#define SPI_IRQ_PIN             (GPIO_Pin_7)
-
-//#define GPIO_Input               ((uint8_t)0)  /*!< GPIO input selected */
-
-//#define UART_RX_PIN             (GPIO_Pin_11)
-//#define UART_TX_PIN             (GPIO_Pin_8)
-//#define GPIO_MODE_UART          (Serial1_Mode)
-
-//#define UART_FLAG_TXFE           ((uint16_t)0x0080)  /*!< Transmit FIFO empty flag */
-//#define UART_FLAG_BUSY           ((uint16_t)0x0008)  /*!< Busy flag */
-//#define UART_IT_RX               ((uint16_t)0x0010)  /*!< Receive interrupt */
-
-//#define UART_WORDLENGTH_8B      ((uint8_t)3)
-
-//#define UART_DR_ADDRESS        (UART_BASE)
-
-//#define LL_DMA_CHANNEL_1           (DMA_CH1)       /* UART TX DMA channels */
-
-//#define UART_DMAReq_Tx           ((uint8_t)0x02)  /*!< DMA UART TX request */
-
-//#define DMA_FLAG_TC_UART_TX      ((uint32_t)0x00000020)
-
-//#define ROM_flashWrite           ((uint32_t)0x100000FD)  /* Bootloader function prototype */
-//#define ROM_flashErase           ((uint32_t)0x10000193)  /* Bootloader function prototype */
 
 
 /* SPI protocol variables & definitions */
@@ -136,7 +78,7 @@ typedef  PACKED(struct) devConfigS  {
 
 
 #define UPDATER_BUF_SIZE        ((uint16_t)64)
-#define UPDATER_VERSION         ((uint8_t)9)
+#define UPDATER_VERSION         ((uint8_t)10)
 #define BLUEFLAG_FAILED_OP      ((uint8_t)0x4A)
 
 #define CMD_UPDATER_REBOOT              ((uint8_t)0x21)
@@ -177,14 +119,6 @@ typedef  PACKED(struct) devConfigS  {
 #define SPI_READ_CS()           LL_GPIO_IsInputPinSet(BSP_SPI_CS_GPIO_PORT, BSP_SPI_CS_PIN)
 #define SPI_LOW_IRQ()           LL_GPIO_ResetOutputPin(BSP_SPI_IRQ_GPIO_PORT, BSP_SPI_IRQ_PIN)
 #define SPI_HIGH_IRQ()          LL_GPIO_SetOutputPin(BSP_SPI_IRQ_GPIO_PORT, BSP_SPI_IRQ_PIN)
-
-//#define SPI_SENDATA(VAL)        LL_SPI_TransmitData8(BSP_SPI, VAL)
-
-//#define SPI_CLEAR_TXFIFO()      { uint32_t tmp; \
-//SET_BIT(SPI->ITCR, SET<<1); \
-//  while(0 == SPI->SR_b.TFE) tmp |= SPI->TDR; \
-//    CLEAR_BIT(SPI->ITCR, SET<<1);}
-
 
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -842,7 +776,7 @@ void updater(uint8_t reset_event)
               event_buffer[EVT_BUFF_OFFSET+6] = BLE_STATUS_SUCCESS;
             }
             else {
-              event_buffer[4+6] = BLUEFLAG_FAILED_OP;
+              event_buffer[EVT_BUFF_OFFSET+6] = BLUEFLAG_FAILED_OP;
             }
             break;
           case CMD_UPDATER_RESET_BLUEFLAG:
@@ -857,8 +791,8 @@ void updater(uint8_t reset_event)
             break;
             
           case CMD_UPDATER_READ_HW_VERS:
-            event_buffer[EVT_BUFF_OFFSET+2] = 0x05;               // overwrite return data length
-            event_buffer[EVT_BUFF_OFFSET+7] = 0xFF; // TOFIX ((CKGEN_SOC->DIE_ID)>>4)&0x0000000F;
+            event_buffer[EVT_BUFF_OFFSET+2] = 0x05;
+            event_buffer[EVT_BUFF_OFFSET+7] = (uint8_t)(SYSCFG->DIE_ID);
             break;
             
           case CMD_UPDATER_ERASE_SECTOR:

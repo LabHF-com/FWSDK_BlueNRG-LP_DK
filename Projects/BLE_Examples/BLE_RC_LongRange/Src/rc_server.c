@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_vtimer.h"
@@ -144,8 +144,6 @@ void Update_Temperature(void)
     if (status) {
       lps22hh_temperature_raw_get(&pressureHandle, data_raw_temperature.u8bit);
       temperature_degC = lps22hh_from_lsb_to_celsius(data_raw_temperature.i16bit);
-      
-      //printf("temperature [degC]:%6.2f\r\n", temperature_degC);
     }
 #endif 
    if (status)
@@ -178,7 +176,7 @@ uint8_t RC_DeviceInit(void)
     return ret;
   }
   
-  /* Set the TX power to 0 dBm */
+  /* Set the TX power */
   aci_hal_set_tx_power_level(0, OUTPUT_POWER_LEVEL);
   
   /* GATT Init */

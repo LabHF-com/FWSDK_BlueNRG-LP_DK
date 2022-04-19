@@ -95,7 +95,7 @@ void SystemClock_Config(void)
   
   /* Main PLL configuration and activation */
 #ifdef STM32L476xx
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_1, 10, LL_RCC_PLLR_DIV_2);
+  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_2, 16, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
 #endif
 #ifdef STM32L152xE
@@ -119,8 +119,8 @@ void SystemClock_Config(void)
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   
 #ifdef STM32L476xx
-  SysTick_Config(80000000/1000);
-  LL_SetSystemCoreClock(80000000);
+  SysTick_Config(64000000/1000);
+  LL_SetSystemCoreClock(64000000);
 #endif
 #ifdef STM32L152xE
   SysTick_Config(48000000/1000);   // 32000000/1000

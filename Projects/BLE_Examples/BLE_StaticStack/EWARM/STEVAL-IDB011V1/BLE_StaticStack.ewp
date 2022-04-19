@@ -226,8 +226,9 @@
                     <name>CCDefines</name>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
+                    <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
-                    <state>RESET_MANAGER_SIZE=0x27000</state>
+                    <state>RESET_MANAGER_SIZE=0x27800</state>
                     <state>BLE_STACK_FULL_CONF</state>
                 </option>
                 <option>
@@ -362,18 +363,17 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
                 </option>
                 <option>
@@ -761,7 +761,7 @@
                 </option>
                 <option>
                     <name>IlinkConfigDefines</name>
-                    <state>MEMORY_FLASH_APP_SIZE=0x27000</state>
+                    <state>MEMORY_FLASH_APP_SIZE=0x27800</state>
                 </option>
                 <option>
                     <name>IlinkMapFile</name>
@@ -793,7 +793,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1307,6 +1307,7 @@
                     <name>CCDefines</name>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
+                    <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
                     <state>RESET_MANAGER_SIZE=0x18000</state>
                     <state>BLE_STACK_BASIC_CONF</state>
@@ -1444,18 +1445,17 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
                 </option>
                 <option>
@@ -1875,7 +1875,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -2389,6 +2389,7 @@
                     <name>CCDefines</name>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
+                    <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
                     <state>RESET_MANAGER_SIZE=0x27800</state>
                     <state>BLE_STACK_FULL_CONF</state>
@@ -2525,18 +2526,17 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
                 </option>
                 <option>
@@ -2956,7 +2956,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -3470,6 +3470,7 @@
                     <name>CCDefines</name>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
+                    <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
                     <state>RESET_MANAGER_SIZE=0x18000</state>
                     <state>BLE_STACK_BASIC_CONF</state>
@@ -3607,18 +3608,17 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\AESMGR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLECNTR\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers/BSP/STEVAL-IDB011V1/Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\NVMDB\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
                 </option>
                 <option>
@@ -4038,7 +4038,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -4332,22 +4332,25 @@
         <group>
             <name>CMSIS</name>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
             </file>
         </group>
         <group>
             <name>Peripherals_Drivers</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_hal_vtimer.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_vtimer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_flash.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_flash.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_pka_v7b.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_pka_v7b.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\src\rf_driver_ll_timer.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_timer.c</name>
             </file>
         </group>
     </group>
@@ -4362,9 +4365,6 @@
                 <name>$PROJ_DIR$\..\..\src\bluenrg_lp_ev_if.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\src\bluenrg_lp_it.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\BLE_OTA_ResetManager\Src\OTA_ResetManager_main.c</name>
                 <excluded>
                     <configuration>Release</configuration>
@@ -4377,6 +4377,9 @@
                     <configuration>OTA_BTL_ResetManager</configuration>
                     <configuration>OTA_BTL_ResetManager_Basic</configuration>
                 </excluded>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\src\rf_device_it.c</name>
             </file>
         </group>
     </group>

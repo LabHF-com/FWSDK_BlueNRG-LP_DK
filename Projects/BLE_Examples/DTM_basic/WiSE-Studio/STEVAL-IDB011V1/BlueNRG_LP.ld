@@ -196,7 +196,7 @@ ENTRY(RESET_HANDLER)
 
 
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size  = 0x700; /* required amount of heap  */
+_Min_Heap_Size  = 0x0; /* required amount of heap  */
 _Min_Stack_Size = 0xC00; /* required amount of stack */
 
 /* Specify the memory areas */
@@ -323,7 +323,7 @@ SECTIONS
     . = ALIGN(4);
     . = . + _Min_Stack_Size;
     . = ALIGN(4);
-    _estack = .;         /* define a global symbol at bss end */
+    _estack = .;         /* define a global symbol at stack end */
     . = ALIGN(4);
   } > REGION_RAM
 

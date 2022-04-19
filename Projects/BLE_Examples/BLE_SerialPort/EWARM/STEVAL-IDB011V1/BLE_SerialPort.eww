@@ -26,6 +26,14 @@
                 <project>BLE_SerialPort</project>
                 <configuration>Server_Use_OTA_ServiceManager</configuration>
             </member>
+            <member>
+                <project>BLE_SerialPort</project>
+                <configuration>Client_LongWrites</configuration>
+            </member>
+            <member>
+                <project>BLE_SerialPort</project>
+                <configuration>Server_LongWrites</configuration>
+            </member>
         </batchDefinition>
     </batchBuild>
 </workspace>

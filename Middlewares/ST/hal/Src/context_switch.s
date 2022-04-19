@@ -1,4 +1,4 @@
-#include "../inc/asm.h"
+#include "../Inc/asm.h"
 
 		
 //------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ EXPORT_FUNC(CS_contextRestore)
                 POP    { R2 }                   /* load LR from the stack */
                 
                 MSR   PSP, R0                   /* restore PSP from R0 */
-                MSR   CONTROL , R1              /* restpre CONTROL register from R1 */
+                MSR   CONTROL , R1              /* restore CONTROL register from R1 */
                 ISB
  
                 BX  R2                          /*load PC (1 words) from the stack */

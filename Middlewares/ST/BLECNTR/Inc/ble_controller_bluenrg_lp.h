@@ -46,7 +46,7 @@ extern "C" {
 #include "rf_driver_ll_radio_2g4.h"
 #include "rf_driver_ll_bus.h"
 #include "rf_driver_ll_system.h"  
-#include "system_bluenrg_lp.h"
+#include "system_BlueNRG_LP.h"
 #include "bluenrg_lpx.h"
 #include "osal.h"
   
@@ -66,10 +66,11 @@ extern "C" {
  */
   
 
-#if defined(__ARMCC_VERSION)
+#ifdef __CC_ARM
 #pragma anon_unions
 #endif
  
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define ANY_HW_ERROR_INTERRUPT_Msk ( \
         BLUE_STATUSREG_ADDPOINTERROR_Msk      |  \
         BLUE_STATUSREG_RXOVERFLOWERROR_Msk    |  \
@@ -86,6 +87,23 @@ extern "C" {
         BLUE_STATUSREG_ACTIVE2ERROR_Msk       | \
         BLUE_STATUSREG_CONFIGERROR_Msk          \
         )
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define ANY_HW_ERROR_INTERRUPT_Msk ( \
+        BLUE_STATUSREG_ADDPOINTERROR_Msk      |  \
+        BLUE_STATUSREG_RXOVERFLOWERROR_Msk    |  \
+        BLUE_STATUSREG_TXERROR_0_Msk          |  \
+        BLUE_STATUSREG_TXERROR_1_Msk          |  \
+        BLUE_STATUSREG_TXERROR_2_Msk          |  \
+        BLUE_STATUSREG_TXERROR_3_Msk          |  \
+        BLUE_STATUSREG_TXERROR_4_Msk          |  \
+        BLUE_STATUSREG_ALLTABLEREADYERROR_Msk | \
+        BLUE_STATUSREG_TXDATAREADYERROR_Msk   | \
+        BLUE_STATUSREG_NOACTIVELERROR_Msk     | \
+        BLUE_STATUSREG_SEMATIMEOUTERROR_Msk   | \
+        BLUE_STATUSREG_ACTIVE2ERROR_Msk       | \
+        BLUE_STATUSREG_CONFIGERROR_Msk          \
+        )
+#endif
 /**
  * @}
  */
@@ -96,6 +114,7 @@ extern "C" {
  * @{
  */
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP
 
 #   define WAKEUPINITDELAY_MT                   (64U)
 #   define TIMER12_INIT_DELAY_CAL               (63U)
@@ -117,8 +136,32 @@ extern "C" {
 
 #   define CONFIG_END_DURATION                  (20U)
 #   define TX_DATA_READY_CHECK                   (5U)
-#   define TX_READY_TIMEOUT                      (2U)
+#   define TX_READY_TIMEOUT                      (5U)
 
+#else
+
+#   define WAKEUPINITDELAY_MT                   (64U)
+#   define TIMER12_INIT_DELAY_CAL               (63U)
+#   define TIMER2_INIT_DELAY_NO_CAL              (9U)
+#   define RCV_LEN_MARGIN_US                    (16U)
+#   define TX_DELAY_START                       (16U) 
+#   define TX_DELAY_END                         (16U)
+
+#   define RADIO_FSM_RX_DELAY_CAL               (90U)
+#   define RADIO_FSM_RX_DELAY_NO_CAL            (50U)
+#   define RADIO_FSM_TX_DELAY_CAL               (92U)
+#   define RADIO_FSM_TX_DELAY_NO_CAL            (52U)
+
+#   define RECEIVE_CAL_DELAY_CHECK              (RADIO_FSM_RX_DELAY_CAL)
+#   define RECEIVE_NO_CAL_DELAY_CHECK           (RADIO_FSM_RX_DELAY_NO_CAL)
+#   define TRANSMIT_CAL_DELAY_CHECK             (RADIO_FSM_TX_DELAY_CAL - 2U)
+#   define TRANSMIT_NO_CAL_DELAY_CHECK          (RADIO_FSM_TX_DELAY_NO_CAL - 2U)
+
+#   define CONFIG_END_DURATION                  (20U)
+#   define TX_DATA_READY_CHECK                   (5U) 
+#   define TX_READY_TIMEOUT                      (4U)
+
+#endif
 /**
  * @}
  */

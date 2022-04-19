@@ -14,12 +14,15 @@
 *******************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "system_BlueNRG_LP.h"
+#endif
 #include "rf_driver_ll_bus.h"
 #include "rf_driver_ll_rcc.h"
 #include "rf_driver_ll_system.h"
 #include "rf_driver_hal_power_manager.h"
 #include "osal.h"
+#include "rf_driver_ll_lpuart.h"
 
 /**** Private function prototype ***********************************************/
 static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_TypeDef wsConfig);
@@ -125,8 +128,10 @@ static void AHBUPCONV_WaitConfigrurationEnd(void);
 #ifndef POWER_SAVE_N_RESTORE_ADC
 #define POWER_SAVE_N_RESTORE_ADC 1
 #endif
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #ifndef POWER_SAVE_N_RESTORE_LPUART
 #define POWER_SAVE_N_RESTORE_LPUART 1
+#endif
 #endif
 #ifndef POWER_SAVE_N_RESTORE_USART
 #define POWER_SAVE_N_RESTORE_USART 1
@@ -149,13 +154,23 @@ static void AHBUPCONV_WaitConfigrurationEnd(void);
 #define AHB_STALLED   0x08
 
 /* Io wakeup sources mask */
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define WAKEUP_IOA_MASK(source) (((source&0xF0FF0000)>>16)|(source & 0xF00))
 #define WAKEUP_IOB_MASK(source) (((source&0x0F000000)>>16)|(source & 0xFF))
 #define IOA_SOURCE_MASK 0xF0FF0F00
 #define IOB_SOURCE_MASK 0x0F0000FF
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define WAKEUP_IOA_MASK(source) (((source&0x000F0000)>>16)|(source & 0xF00))
+#define WAKEUP_IOB_MASK(source) (((source&0x00F00000)>>8)|(source & 0xFF))
+#define IOA_SOURCE_MASK 0x000F0F00
+#define IOB_SOURCE_MASK 0x00F000FF
+#endif
 
 /**** Weak function definition ************************************************/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define RADIO_STACK_SleepCheck(void) BLE_STACK_SleepCheck(void)
+#endif
 
 WEAK_FUNCTION(PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level))
 {
@@ -187,6 +202,7 @@ uint32_t PowerSaveLevel_selected[4]={0,};
 
 static volatile uint32_t IOwakeupSources_VR;
 static volatile uint32_t InternalWakeupSources_VR;
+static volatile uint8_t deepstop_wdg_state=ENABLE;
 
 /**** Private function definition **********************************************/
 static uint8_t IO_IRQ_Enabled(uint32_t wkSource, uint8_t *IRQA_enabled, uint8_t *IRQB_enabled)
@@ -204,13 +220,13 @@ static uint8_t IO_IRQ_Enabled(uint32_t wkSource, uint8_t *IRQA_enabled, uint8_t 
   /* Select GPIOB wakeup sources */
   IO_B = WAKEUP_IOB_MASK(wkSource);
   
-  /* Check if the GPIOB interurpt is enabled */
+  /* Check if the GPIOB interrupt is enabled */
   if (IO_B && (SYSCFG->IO_IER & (IO_B << 16))) {
     *IRQB_enabled = 1;
     ret = 1;
   }
   
-  /* Check if the GPIOA interurpt is enabled */
+  /* Check if the GPIOA interrupt is enabled */
   if (IO_A && (SYSCFG->IO_IER & IO_A)) {
     *IRQA_enabled = 1;
     ret = 1;
@@ -270,7 +286,7 @@ static void SystemDeepSleepCmd(uint8_t NewState)
 
 static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_TypeDef wsConfig)
 {
-  uint8_t i, ret_val=SUCCESS, max_timeout, timeout, direct_hse_enabled;
+  uint8_t i, ret_val=SUCCESS, max_timeout, timeout, direct_hse_enabled, wdg_to_be_enabled;
   
   /* Variables used to store system peripheral registers in order to restore the state after
    exit from DeepStop mode */
@@ -362,7 +378,12 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 
   /* RCC Config virtual register */
   CTXT uint32_t RCC_AHBRSTR_vr, RCC_APB1RSTR_vr, RCC_AHBENR_vr, RCC_APB1ENR_vr, RCC_CR_vr;
-    
+
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+  /* MR_BLE RRM LDO TRANSFO */
+  CTXT uint32_t LDO_TRANSFO_vr;
+#endif
+  
   /* Save the peripherals configuration */
 
   /* AHB0 Peripherals Config RAM virutal register */
@@ -384,7 +405,12 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 #endif
 #ifdef POWER_SAVE_N_RESTORE_PKA   
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_PKA)) {
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     Osal_MemCpy((uint32_t *)&PKA_vr, (uint32_t *)PKA, sizeof(PKA_TypeDef));
+#endif
+#if defined CONFIG_DEVICE_BLUENRG_LPS
+    PKA_vr.CR = PKA->CR;
+#endif
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_CRC
@@ -435,7 +461,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_COMP
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP)) {
+  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP) && !wsConfig.COMP_enable) {
     Osal_MemCpy((uint32_t *)&COMP_vr, (uint32_t *)COMP, sizeof(COMP_TypeDef));
   }
 #endif
@@ -505,9 +531,12 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   RCC_AHBENR_vr   = RCC->AHBENR;
   RCC_APB1ENR_vr  = RCC->APB1ENR;
     
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* Enable Power Save In the MR_BLE if the radio peripheral is disabled */
   if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
     LL_APB2_EnableClock(LL_APB2_PERIPH_MRBLE);
+  } else {
+    LDO_TRANSFO_vr = READ_BIT(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS);
   }
   if ((WAKEUP->BLUE_SLEEP_REQUEST_MODE & WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_EN) == 0) {
     WAKEUP->BLUE_SLEEP_REQUEST_MODE |= WAKEUP_BLUE_SLEEP_REQUEST_MODE_FORCE_SLEEPING;
@@ -517,12 +546,16 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
     LL_APB2_DisableClock(LL_APB2_PERIPH_MRBLE);
   }
+#endif
   
   /* Disable the Low Speed oscillator if the request is STOP_NOTIMER */
   if (ps_level == POWER_SAVE_LEVEL_STOP_NOTIMER) {
     RCC_CR_vr = RCC->CR;
     if (LL_RCC_LSE_IsEnabled()) {
       LL_RCC_LSE_Disable();
+#if defined CONFIG_DEVICE_BLUENRG_LPS
+      LL_PWR_EnablePDB(LL_PWR_PUPD_IO12|LL_PWR_PUPD_IO13);
+#endif
     } else {
       LL_RCC_LSI_Disable();
     }
@@ -539,9 +572,11 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   } while (i < CSTACK_PREAMBLE_NUMBER); 
   
   /* If a wakeup source is already active, no need to enable the power save */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   if (LL_PWR_GetWakeupSource() & (wsConfig.IO_Mask_High_polarity|wsConfig.IO_Mask_Low_polarity)) {
     return ret_val;
   }
+#endif
   
 #if defined(PWR_CR2_GPIORET)
   /* Enable the GPIO retention in DEEPSTOP configuration */
@@ -563,6 +598,39 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   } else {
     direct_hse_enabled = FALSE;
   }
+
+  /* Wait until the LSI/LSE is switched off */
+  if (ps_level == POWER_SAVE_LEVEL_STOP_NOTIMER) {
+    SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
+    if ((RCC_CR_vr & LL_RCC_LSCO_LSE) == LL_RCC_LSCO_LSE)  {
+      while(LL_RCC_LSE_IsReady()) 
+      {
+        if (SystemTimer_TimeoutExpired()) {
+          ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
+          break;
+        }
+      }
+    } else {
+      while(LL_RCC_LSI_IsReady()) 
+      {
+        if (SystemTimer_TimeoutExpired()) {
+          ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+          break;
+        }
+      }
+    }
+    SystemTimer_TimeoutConfig(0, 0, FALSE);
+  }
+  
+  /* Disable Watchdog IP if required from application */
+  wdg_to_be_enabled = FALSE;
+  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_WDG)) {
+    if (deepstop_wdg_state == DISABLE) {
+      wdg_to_be_enabled = TRUE;
+      LL_APB0_DisableClock(LL_APB0_PERIPH_WDG);
+    }
+  }
+  
 
   /* The __disable_irq() used at the beginning of the HAL_PWR_MNGR_Request() function
      masks all the interrupts. The interrupts will be enabled at the end of the 
@@ -587,6 +655,12 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     }
   }
   
+  /* Enable Watchdog IP if previous disabled */
+  if (wdg_to_be_enabled) {
+    wdg_to_be_enabled = FALSE;
+    LL_APB0_EnableClock(LL_APB0_PERIPH_WDG);
+  }
+
   if (RAM_VR.WakeupFromSleepFlag) {
     /* Restore the CSTACK number of words that will be saved before the sleep */
     i = 0;
@@ -610,7 +684,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     /* NVIC Peripheral Config */
     NVIC->ISER[0] = NVIC_ISER_vr;
     for (i=0; i<8; i++) {
-    	NVIC->IP[i] = NVIC_IPR_vr[i];
+      NVIC->IP[i] = NVIC_IPR_vr[i];
     }
 
     /* RCC Peripheral Config */
@@ -646,7 +720,13 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 #endif
 #ifdef POWER_SAVE_N_RESTORE_PKA   
     if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_PKA)) {
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     Osal_MemCpy((uint32_t *)PKA, (uint32_t *)&PKA_vr, sizeof(PKA_TypeDef));
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+      PKA->CLRFR = 0x1A0000;
+      PKA->CR = PKA_vr.CR;
+#endif
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_CRC
@@ -723,7 +803,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_COMP
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP)) {
+  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP) && !wsConfig.COMP_enable) {
     Osal_MemCpy((uint32_t *)COMP, (uint32_t *)&COMP_vr, sizeof(COMP_TypeDef));
   }
 #endif
@@ -803,12 +883,17 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     }
 #endif
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
       /* Disable Power Save In the MR_BLE if the radio peripheral is disabled */
       LL_APB2_EnableClock(LL_APB2_PERIPH_MRBLE);
       WAKEUP->BLUE_SLEEP_REQUEST_MODE &= ~WAKEUP_BLUE_SLEEP_REQUEST_MODE_FORCE_SLEEPING;
       LL_APB2_DisableClock(LL_APB2_PERIPH_MRBLE);
+    }  else {
+      if (LDO_TRANSFO_vr)
+        SET_BIT(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS);
     }
+#endif
     
     /* Wait until the HSE is ready */
     SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
@@ -848,62 +933,64 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     }
 #endif
     
-    /* Wait until the Low Speed clock is ready */
-    if (ps_level == POWER_SAVE_LEVEL_STOP_NOTIMER) {
-      SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
-      if (SystemCoreClock == 64000000)
-        max_timeout = 4;
-      else
-        max_timeout = 1;
-      timeout = 0;
-      if (LL_RCC_LSE_IsEnabled())
-      {
-        while (LL_RCC_LSE_IsReady() == 0U)
-        {
-          if (SystemTimer_TimeoutExpired()) {
-            SystemTimer_TimeoutConfig(0, 0, FALSE);
-            if (timeout++ >= max_timeout) {
-              ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
-              break;
-            } else {
-              SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
-            }
-          } 
-        }
-      }
-      else 
-      {
-        while (LL_RCC_LSI_IsReady() == 0U)
-        {
-          if (SystemTimer_TimeoutExpired()) {
-            ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
-            break;
-          }
-        }
-        if (LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE) && (ret_val != SYSTEM_CONFIG_LSI_READY_ERROR)) {
-          while(WAKEUP->ABSOLUTE_TIME == 0xF);
-        }
-      }
-      /* Disable the System Timer */
-      SystemTimer_TimeoutConfig(0, 0, FALSE);
-    }
-        
     /* Systick Peripheral Config */
     *(volatile uint32_t *)SHPR3_REG = SYSTICK_IPR_vr;
     SysTick->LOAD = SYST_RVR_vr;
     SysTick->VAL = 0;
     SysTick->CTRL = SYST_CSR_vr;
 
-  } else {  /* Skip DEEPSTOP */    
+  } else {  /* Skip DEEPSTOP */
     /* Restore DIRECT_HSE configuration */
     if (direct_hse_enabled) {
       LL_RCC_DIRECT_HSE_Enable();
       LL_RCC_RC64MPLL_Disable();
-    }   
+    } 
 #if defined(PWR_CR2_GPIORET)
     /* Disable the GPIO retention in DEEPSTOP configuration */
     LL_PWR_DisableGPIORET();
 #endif
+  }
+  
+  /* Wait until the Low Speed clock is ready */
+  if (ps_level == POWER_SAVE_LEVEL_STOP_NOTIMER) {
+    SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
+    if (SystemCoreClock == 64000000)
+      max_timeout = 4;
+    else
+      max_timeout = 1;
+    timeout = 0;
+    if (LL_RCC_LSE_IsEnabled())
+    {
+      while (LL_RCC_LSE_IsReady() == 0U)
+      {
+        if (SystemTimer_TimeoutExpired()) {
+          SystemTimer_TimeoutConfig(0, 0, FALSE);
+          if (timeout++ >= max_timeout) {
+            ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
+            break;
+          } else {
+            SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
+          }
+        } 
+      }
+    }
+    else 
+    {
+      while (LL_RCC_LSI_IsReady() == 0U)
+      {
+        if (SystemTimer_TimeoutExpired()) {
+          ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+          break;
+        }
+      }
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+      if (LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE) && (ret_val != SYSTEM_CONFIG_LSI_READY_ERROR)) {
+        while(WAKEUP->ABSOLUTE_TIME == 0xF);
+      }
+#endif
+    }
+    /* Disable the System Timer */
+    SystemTimer_TimeoutConfig(0, 0, FALSE);
   }
   
   return ret_val;
@@ -938,7 +1025,9 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
 #endif
 
     /* Clear previous wakeup sources */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     LL_PWR_ClearWakeupSource(LL_PWE_EWS_ALL);
+#endif
     
     if (final_level == POWER_SAVE_LEVEL_RUNNING) {
       *negotiatedLevel = POWER_SAVE_LEVEL_RUNNING;
@@ -956,7 +1045,9 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
 
     /* Enable wakeup on RTC */
     if (wsConfig.RTC_enable) {
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
       LL_PWR_EnableWakeupSource(LL_PWR_EWS_INT);
+#endif
     }
     
     /* Enable wakeup on LPUART */
@@ -965,30 +1056,44 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
       if (LL_RCC_GetLPUARTClockSource() == LL_RCC_LPUCLKSEL_16M)
         return ERROR;
       LL_PWR_EnableWakeupSource(LL_PWR_EWS_INT2);
+      LL_LPUART_EnableInStopMode(LPUART1);
 #endif
     }
     
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     /* Enable wakeup on BLE Host CPU event or BLE event */
     if (final_level == POWER_SAVE_LEVEL_STOP_WITH_TIMER)
       LL_PWR_EnableWakeupSource(LL_PWR_EWS_BLEHOST | LL_PWR_EWS_BLE);
+#endif
 
 
     /* Enable wakeup sources and polarity on IO events */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     LL_PWR_EnableWakeupSource(wsConfig.IO_Mask_Low_polarity | wsConfig.IO_Mask_High_polarity);
     LL_PWR_SetWakeupIOPolarity(wsConfig.IO_Mask_High_polarity, LL_PWR_WUP_RISIEDG);
     LL_PWR_SetWakeupIOPolarity(wsConfig.IO_Mask_Low_polarity, LL_PWR_WUP_FALLEDG);
+#endif
     
     /* Save all the peripherals register configuration and enable the power save level */
     ret_val = PowerSave_Setup(final_level, wsConfig);
     
     /* Wakeup Sources Virtual Register */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     IOwakeupSources_VR = LL_PWR_GetWakeupSource();
+#endif
     
     /* Disable all the wakeup sources */
-#if defined(COSNFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_LPS)
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     LL_PWR_DisableWakeupSource(LL_PWE_EWS_ALL);
 #endif
+    
+    /* Disable LPUART wakeup from STOP mode */
+    if (wsConfig.LPU_enable) {
+#if defined(LL_PWR_EWS_INT2)
+      LL_LPUART_DisableInStopMode(LPUART1);
+#endif
+    }    
   }
   
   ATOMIC_SECTION_END();
@@ -1025,8 +1130,11 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
 uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled)
 {
   /* Clear previous wakeup sources */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   LL_PWR_ClearWakeupSource(LL_PWE_EWS_ALL);
+#endif
   
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* Enable Power Save In the MR_BLE if the radio peripheral is disabled */
   if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
     LL_APB2_EnableClock(LL_APB2_PERIPH_MRBLE);
@@ -1035,6 +1143,7 @@ uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled)
   if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
     LL_APB2_DisableClock(LL_APB2_PERIPH_MRBLE);
   }
+#endif
   
   /* BOR configuration during Shutdown mode */
   if (BOR_enabled) {
@@ -1065,6 +1174,7 @@ uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled)
   return ERROR;
 }
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 uint32_t HAL_PWR_MNGR_WakeupSource(void)
 {
   return IOwakeupSources_VR; //LL_PWR_GetWakeupSource();
@@ -1073,8 +1183,18 @@ void HAL_PWR_MNGR_ClearWakeupSource(uint32_t source)
 {
   IOwakeupSources_VR &= ~source;
 }
+#endif
 
 WEAK_FUNCTION(void HAL_PWR_MNGR_WakeupIOCallback(uint32_t source))
 {
   return;
+}
+
+void HAL_PWR_MNGR_DeepstopWdgState(FunctionalState state)
+{ 
+  if (state == DISABLE) {
+    deepstop_wdg_state = DISABLE;
+  } else {
+    deepstop_wdg_state = ENABLE;
+  }
 }

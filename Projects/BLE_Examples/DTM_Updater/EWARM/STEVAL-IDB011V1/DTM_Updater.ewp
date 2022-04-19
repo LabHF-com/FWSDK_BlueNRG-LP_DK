@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>BlueNRG-355	ST BlueNRG-355</state>
+                    <state>BlueNRG-345	ST BlueNRG-345</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>BlueNRG-355	ST BlueNRG-355</state>
+                    <state>BlueNRG-345	ST BlueNRG-345</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -231,6 +231,7 @@
                     <state>UART_INTERFACE</state>
                     <state>NO_DMA</state>
                     <state>UART_BAUDRATE=921600</state>
+                    <state>CONFIG_DEVICE_BLUENRG_345</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -361,8 +362,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
@@ -697,7 +697,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\convert_bin2c.exe" -i "$PROJ_DIR$\UART\Exe\DTM_Updater_UART.bin" -o "$PROJ_DIR$\DTM_Updater_UART.c"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\src\convert_bin2c.exe" -i "$PROJ_DIR$/UART\Exe\DTM_Updater_UART.bin" -o "$PROJ_DIR$/DTM_Updater_UART.c"</postbuild>
             </data>
         </settings>
         <settings>
@@ -754,6 +754,7 @@
                 <option>
                     <name>IlinkConfigDefines</name>
                     <state>MEMORY_FLASH_APP_SIZE=8192</state>
+                    <state>CONFIG_DEVICE_BLUENRG_345=1</state>
                 </option>
                 <option>
                     <name>IlinkMapFile</name>
@@ -785,7 +786,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1151,7 +1152,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>BlueNRG-355	ST BlueNRG-355</state>
+                    <state>BlueNRG-345	ST BlueNRG-345</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1211,7 +1212,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>BlueNRG-355	ST BlueNRG-355</state>
+                    <state>BlueNRG-345	ST BlueNRG-345</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1302,7 +1303,7 @@
                     <state>CONFIG_HW_SMPS_10uH</state>
                     <state>CONFIG_HW_LS_RO</state>
                     <state>SPI_INTERFACE</state>
-                    <state>__DMA_16</state>
+                    <state>CONFIG_DEVICE_BLUENRG_345</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1433,8 +1434,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STEVAL-IDB011V1\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Common\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
@@ -1769,7 +1769,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\convert_bin2c.exe" -i "$PROJ_DIR$\SPI\Exe\DTM_Updater_SPI.bin" -o "$PROJ_DIR$\DTM_Updater_SPI.c"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\src\convert_bin2c.exe" -i "$PROJ_DIR$/SPI\Exe\DTM_Updater_SPI.bin" -o "$PROJ_DIR$/DTM_Updater_SPI.c"</postbuild>
             </data>
         </settings>
         <settings>
@@ -1826,6 +1826,7 @@
                 <option>
                     <name>IlinkConfigDefines</name>
                     <state>MEMORY_FLASH_APP_SIZE=8192</state>
+                    <state>CONFIG_DEVICE_BLUENRG_345=1</state>
                 </option>
                 <option>
                     <name>IlinkMapFile</name>
@@ -1857,7 +1858,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\BlueNRG_LP.icf</state>
+                    <state>$PROJ_DIR$/BlueNRG_LP.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>

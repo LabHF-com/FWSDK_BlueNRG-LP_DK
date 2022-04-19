@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "app_state.h"
@@ -42,6 +42,9 @@
 #include "rng_manager.h"
 #include "aes_manager.h"
 #include "ble_controller.h"
+#if SERVER
+#include "att_pwrq.h"
+#endif
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -51,6 +54,10 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 NO_INIT(uint32_t dyn_alloc_a[DYNAMIC_MEMORY_SIZE>>2]);
+
+#if USE_LONG_WRITE
+uint32_t queued_write_buffer[QUEUED_WRITE_BUFFER_SIZE>>2];
+#endif
    
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -62,13 +69,7 @@ void ModulesInit(void)
   
   
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA|LL_AHB_PERIPH_RNG);
-  
-  /* BlueNRG-LP stack init */
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != BLE_STATUS_SUCCESS) {
-    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
-    while(1);
-  }
+
   
   BLECNTR_InitGlobal();
   
@@ -86,8 +87,19 @@ void ModulesInit(void)
       while(1);
   }
   
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
+  
+#if SERVER && USE_LONG_WRITE
+  ATT_pwrq_init(sizeof(queued_write_buffer), (uint8_t *)queued_write_buffer);
+#endif
+  
+  /* BlueNRG-LP stack init */
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != BLE_STATUS_SUCCESS) {
+    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
+    while(1);
+  }
 }
 
 void ModulesTick(void)
@@ -170,15 +182,8 @@ int main(void)
 } /* end main() */
 
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

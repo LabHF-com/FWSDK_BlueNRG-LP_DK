@@ -8,7 +8,8 @@
       <TargetName>Release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
-    <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+    <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+    <uAC6>1</uAC6>
     <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-355</Device>
@@ -18,7 +19,7 @@
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
         <StartupFile></StartupFile>
-        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$Flash\STBlueNRGLP.FLM))</FlashDriverDll>
+        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$CMSIS\Flash\STBlueNRGLP.FLM))</FlashDriverDll>
         <DeviceId>0</DeviceId>
         <RegisterFile></RegisterFile>
         <MemoryEnv></MemoryEnv>
@@ -135,7 +136,7 @@
           </Flash1>
         <bUseTDR>1</bUseTDR>
         <Flash2>BIN\UL2CM3.DLL</Flash2>
-        <Flash3></Flash3>
+        <Flash3>"" ()</Flash3>
         <Flash4></Flash4>
         <pFcarmOut></pFcarmOut>
         <pFcarmGrp></pFcarmGrp>
@@ -181,6 +182,8 @@
           <hadXRAM>0</hadXRAM>
           <uocXRam>0</uocXRam>
           <RvdsVP>0</RvdsVP>
+          <RvdsMve>0</RvdsMve>
+          <RvdsCdeCp>0</RvdsCdeCp>
           <hadIRAM2>0</hadIRAM2>
           <hadIROM2>0</hadIROM2>
           <StupSel>8</StupSel>
@@ -308,7 +311,7 @@
           </ArmAdsMisc>
         <Cads>
             <interw>1</interw>
-          <Optim>3</Optim>
+          <Optim>7</Optim>
           <oTime>0</oTime>
           <SplitLS>0</SplitLS>
           <OneElfS>1</OneElfS>
@@ -317,16 +320,16 @@
           <PlainCh>0</PlainCh>
           <Ropi>0</Ropi>
           <Rwpi>0</Rwpi>
-          <wLevel>2</wLevel>
+          <wLevel>3</wLevel>
           <uThumb>0</uThumb>
           <uSurpInc>0</uSurpInc>
           <uC99>1</uC99>
           <uGnu>0</uGnu>
           <useXO>0</useXO>
-          <v6Lang>0</v6Lang>
-          <v6LangP>0</v6LangP>
-          <vShortEn>0</vShortEn>
-          <vShortWch>0</vShortWch>
+          <v6Lang>3</v6Lang>
+          <v6LangP>3</v6LangP>
+          <vShortEn>1</vShortEn>
+          <vShortWch>1</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
@@ -334,7 +337,7 @@
               <MiscControls></MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF</Define>
             <Undefine></Undefine>
-            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB011V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</IncludePath>
+            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
           </Cads>
         <Aads>
@@ -347,9 +350,9 @@
           <NoWarn>0</NoWarn>
           <uSurpInc>0</uSurpInc>
           <useXO>0</useXO>
-          <uClangAs>0</uClangAs>
+          <ClangAsOpt>3</ClangAsOpt>
           <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls>-x assembler-with-cpp</MiscControls>
             <Define></Define>
             <Undefine></Undefine>
             <IncludePath></IncludePath>
@@ -381,32 +384,32 @@
             <File>
               <FileName>bluenrg_lp_evb_button.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_button.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_com.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_i2c.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_io.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_led.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_led.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_spi.c</FilePath>
             </File>
           <File>
               <FileName>lps22hh_reg.c</FileName>
@@ -428,6 +431,11 @@
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
+          <File>
+              <FileName>startup_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
           </Files>
         </Group>
       <Group>
@@ -436,107 +444,107 @@
             <File>
               <FileName>rf_driver_hal_power_manager.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_power_manager.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_power_manager.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_hal_vtimer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_vtimer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_vtimer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_adc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_adc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_adc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_crc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_crc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_crc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_dma.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_dma.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_dma.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_exti.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_exti.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_exti.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_flash.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_flash.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_flash.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_gpio.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_gpio.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_gpio.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_i2c.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_lpuart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_lpuart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_lpuart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pka_v7b.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pka_v7b.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pka_v7b.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pwr.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pwr.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pwr.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_radio_2g4.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_radio_2g4.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_radio_2g4.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rcc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rcc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rcc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rng.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rng.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rng.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rtc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rtc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rtc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_spi.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_tim.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_tim.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_tim.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_timer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_timer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_timer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_usart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_usart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_usart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_utils.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_utils.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -544,14 +552,14 @@
           <GroupName>Example/User</GroupName>
         <Files>
             <File>
-              <FileName>bluenrg_lp_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/bluenrg_lp_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           <File>
               <FileName>sensor.c</FileName>
@@ -751,7 +759,8 @@
       <TargetName>LowerApp_OTA</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
-    <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+    <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+    <uAC6>1</uAC6>
     <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-355</Device>
@@ -761,7 +770,7 @@
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
         <StartupFile></StartupFile>
-        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$Flash\STBlueNRGLP.FLM))</FlashDriverDll>
+        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$CMSIS\Flash\STBlueNRGLP.FLM))</FlashDriverDll>
         <DeviceId>0</DeviceId>
         <RegisterFile></RegisterFile>
         <MemoryEnv></MemoryEnv>
@@ -878,7 +887,7 @@
           </Flash1>
         <bUseTDR>1</bUseTDR>
         <Flash2>BIN\UL2CM3.DLL</Flash2>
-        <Flash3></Flash3>
+        <Flash3>"" ()</Flash3>
         <Flash4></Flash4>
         <pFcarmOut></pFcarmOut>
         <pFcarmGrp></pFcarmGrp>
@@ -924,6 +933,8 @@
           <hadXRAM>0</hadXRAM>
           <uocXRam>0</uocXRam>
           <RvdsVP>0</RvdsVP>
+          <RvdsMve>0</RvdsMve>
+          <RvdsCdeCp>0</RvdsCdeCp>
           <hadIRAM2>0</hadIRAM2>
           <hadIROM2>0</hadIROM2>
           <StupSel>8</StupSel>
@@ -1051,7 +1062,7 @@
           </ArmAdsMisc>
         <Cads>
             <interw>1</interw>
-          <Optim>3</Optim>
+          <Optim>7</Optim>
           <oTime>0</oTime>
           <SplitLS>0</SplitLS>
           <OneElfS>1</OneElfS>
@@ -1060,16 +1071,16 @@
           <PlainCh>0</PlainCh>
           <Ropi>0</Ropi>
           <Rwpi>0</Rwpi>
-          <wLevel>2</wLevel>
+          <wLevel>3</wLevel>
           <uThumb>0</uThumb>
           <uSurpInc>0</uSurpInc>
           <uC99>1</uC99>
           <uGnu>0</uGnu>
           <useXO>0</useXO>
-          <v6Lang>0</v6Lang>
-          <v6LangP>0</v6LangP>
-          <vShortEn>0</vShortEn>
-          <vShortWch>0</vShortWch>
+          <v6Lang>3</v6Lang>
+          <v6LangP>3</v6LangP>
+          <vShortEn>1</vShortEn>
+          <vShortWch>1</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
@@ -1077,7 +1088,7 @@
               <MiscControls></MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_SLAVE_DLE_CONF CONFIG_SW_OTA_DATA_LENGTH_EXT CONFIG_OTA_LOWER</Define>
             <Undefine></Undefine>
-            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB011V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</IncludePath>
+            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
           </Cads>
         <Aads>
@@ -1090,9 +1101,9 @@
           <NoWarn>0</NoWarn>
           <uSurpInc>0</uSurpInc>
           <useXO>0</useXO>
-          <uClangAs>0</uClangAs>
+          <ClangAsOpt>3</ClangAsOpt>
           <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls>-x assembler-with-cpp</MiscControls>
             <Define></Define>
             <Undefine></Undefine>
             <IncludePath></IncludePath>
@@ -1124,32 +1135,32 @@
             <File>
               <FileName>bluenrg_lp_evb_button.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_button.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_com.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_i2c.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_io.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_led.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_led.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_spi.c</FilePath>
             </File>
           <File>
               <FileName>lps22hh_reg.c</FileName>
@@ -1171,6 +1182,11 @@
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
+          <File>
+              <FileName>startup_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
           </Files>
         </Group>
       <Group>
@@ -1179,107 +1195,107 @@
             <File>
               <FileName>rf_driver_hal_power_manager.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_power_manager.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_power_manager.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_hal_vtimer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_vtimer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_vtimer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_adc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_adc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_adc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_crc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_crc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_crc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_dma.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_dma.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_dma.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_exti.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_exti.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_exti.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_flash.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_flash.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_flash.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_gpio.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_gpio.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_gpio.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_i2c.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_lpuart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_lpuart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_lpuart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pka_v7b.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pka_v7b.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pka_v7b.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pwr.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pwr.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pwr.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_radio_2g4.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_radio_2g4.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_radio_2g4.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rcc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rcc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rcc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rng.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rng.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rng.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rtc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rtc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rtc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_spi.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_tim.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_tim.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_tim.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_timer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_timer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_timer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_usart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_usart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_usart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_utils.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_utils.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1287,14 +1303,14 @@
           <GroupName>Example/User</GroupName>
         <Files>
             <File>
-              <FileName>bluenrg_lp_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/bluenrg_lp_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           <File>
               <FileName>sensor.c</FileName>
@@ -1489,7 +1505,8 @@
       <TargetName>HigherApp_OTA</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
-    <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+    <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+    <uAC6>1</uAC6>
     <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-355</Device>
@@ -1499,7 +1516,7 @@
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
         <StartupFile></StartupFile>
-        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$Flash\STBlueNRGLP.FLM))</FlashDriverDll>
+        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$CMSIS\Flash\STBlueNRGLP.FLM))</FlashDriverDll>
         <DeviceId>0</DeviceId>
         <RegisterFile></RegisterFile>
         <MemoryEnv></MemoryEnv>
@@ -1616,7 +1633,7 @@
           </Flash1>
         <bUseTDR>1</bUseTDR>
         <Flash2>BIN\UL2CM3.DLL</Flash2>
-        <Flash3></Flash3>
+        <Flash3>"" ()</Flash3>
         <Flash4></Flash4>
         <pFcarmOut></pFcarmOut>
         <pFcarmGrp></pFcarmGrp>
@@ -1662,6 +1679,8 @@
           <hadXRAM>0</hadXRAM>
           <uocXRam>0</uocXRam>
           <RvdsVP>0</RvdsVP>
+          <RvdsMve>0</RvdsMve>
+          <RvdsCdeCp>0</RvdsCdeCp>
           <hadIRAM2>0</hadIRAM2>
           <hadIROM2>0</hadIROM2>
           <StupSel>8</StupSel>
@@ -1789,7 +1808,7 @@
           </ArmAdsMisc>
         <Cads>
             <interw>1</interw>
-          <Optim>3</Optim>
+          <Optim>7</Optim>
           <oTime>0</oTime>
           <SplitLS>0</SplitLS>
           <OneElfS>1</OneElfS>
@@ -1798,16 +1817,16 @@
           <PlainCh>0</PlainCh>
           <Ropi>0</Ropi>
           <Rwpi>0</Rwpi>
-          <wLevel>2</wLevel>
+          <wLevel>3</wLevel>
           <uThumb>0</uThumb>
           <uSurpInc>0</uSurpInc>
           <uC99>1</uC99>
           <uGnu>0</uGnu>
           <useXO>0</useXO>
-          <v6Lang>0</v6Lang>
-          <v6LangP>0</v6LangP>
-          <vShortEn>0</vShortEn>
-          <vShortWch>0</vShortWch>
+          <v6Lang>3</v6Lang>
+          <v6LangP>3</v6LangP>
+          <vShortEn>1</vShortEn>
+          <vShortWch>1</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
@@ -1815,7 +1834,7 @@
               <MiscControls></MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_SLAVE_DLE_CONF CONFIG_SW_OTA_DATA_LENGTH_EXT CONFIG_OTA_HIGHER</Define>
             <Undefine></Undefine>
-            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB011V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</IncludePath>
+            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
           </Cads>
         <Aads>
@@ -1828,9 +1847,9 @@
           <NoWarn>0</NoWarn>
           <uSurpInc>0</uSurpInc>
           <useXO>0</useXO>
-          <uClangAs>0</uClangAs>
+          <ClangAsOpt>3</ClangAsOpt>
           <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls>-x assembler-with-cpp</MiscControls>
             <Define></Define>
             <Undefine></Undefine>
             <IncludePath></IncludePath>
@@ -1862,32 +1881,32 @@
             <File>
               <FileName>bluenrg_lp_evb_button.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_button.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_com.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_i2c.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_io.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_led.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_led.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_spi.c</FilePath>
             </File>
           <File>
               <FileName>lps22hh_reg.c</FileName>
@@ -1909,6 +1928,11 @@
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
+          <File>
+              <FileName>startup_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
           </Files>
         </Group>
       <Group>
@@ -1917,107 +1941,107 @@
             <File>
               <FileName>rf_driver_hal_power_manager.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_power_manager.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_power_manager.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_hal_vtimer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_vtimer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_vtimer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_adc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_adc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_adc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_crc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_crc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_crc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_dma.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_dma.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_dma.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_exti.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_exti.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_exti.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_flash.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_flash.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_flash.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_gpio.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_gpio.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_gpio.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_i2c.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_lpuart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_lpuart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_lpuart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pka_v7b.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pka_v7b.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pka_v7b.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pwr.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pwr.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pwr.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_radio_2g4.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_radio_2g4.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_radio_2g4.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rcc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rcc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rcc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rng.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rng.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rng.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rtc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rtc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rtc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_spi.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_tim.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_tim.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_tim.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_timer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_timer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_timer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_usart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_usart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_usart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_utils.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_utils.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2025,14 +2049,14 @@
           <GroupName>Example/User</GroupName>
         <Files>
             <File>
-              <FileName>bluenrg_lp_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/bluenrg_lp_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           <File>
               <FileName>sensor.c</FileName>
@@ -2227,7 +2251,8 @@
       <TargetName>Use_OTA_ServiceManager</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
-    <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+    <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+    <uAC6>1</uAC6>
     <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-355</Device>
@@ -2237,7 +2262,7 @@
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
         <StartupFile></StartupFile>
-        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$Flash\STBlueNRGLP.FLM))</FlashDriverDll>
+        <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20001000 -FC2000 -FN1 -FF0STBlueNRGLP -FS010040000 -FL040000 -FP0($$Device:BlueNRG-355$CMSIS\Flash\STBlueNRGLP.FLM))</FlashDriverDll>
         <DeviceId>0</DeviceId>
         <RegisterFile></RegisterFile>
         <MemoryEnv></MemoryEnv>
@@ -2354,7 +2379,7 @@
           </Flash1>
         <bUseTDR>1</bUseTDR>
         <Flash2>BIN\UL2CM3.DLL</Flash2>
-        <Flash3></Flash3>
+        <Flash3>"" ()</Flash3>
         <Flash4></Flash4>
         <pFcarmOut></pFcarmOut>
         <pFcarmGrp></pFcarmGrp>
@@ -2400,6 +2425,8 @@
           <hadXRAM>0</hadXRAM>
           <uocXRam>0</uocXRam>
           <RvdsVP>0</RvdsVP>
+          <RvdsMve>0</RvdsMve>
+          <RvdsCdeCp>0</RvdsCdeCp>
           <hadIRAM2>0</hadIRAM2>
           <hadIROM2>0</hadIROM2>
           <StupSel>8</StupSel>
@@ -2527,7 +2554,7 @@
           </ArmAdsMisc>
         <Cads>
             <interw>1</interw>
-          <Optim>3</Optim>
+          <Optim>7</Optim>
           <oTime>0</oTime>
           <SplitLS>0</SplitLS>
           <OneElfS>1</OneElfS>
@@ -2536,16 +2563,16 @@
           <PlainCh>0</PlainCh>
           <Ropi>0</Ropi>
           <Rwpi>0</Rwpi>
-          <wLevel>2</wLevel>
+          <wLevel>3</wLevel>
           <uThumb>0</uThumb>
           <uSurpInc>0</uSurpInc>
           <uC99>1</uC99>
           <uGnu>0</uGnu>
           <useXO>0</useXO>
-          <v6Lang>0</v6Lang>
-          <v6LangP>0</v6LangP>
-          <vShortEn>0</vShortEn>
-          <vShortWch>0</vShortWch>
+          <v6Lang>3</v6Lang>
+          <v6LangP>3</v6LangP>
+          <vShortEn>1</vShortEn>
+          <vShortWch>1</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
@@ -2553,7 +2580,7 @@
               <MiscControls></MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB011V1 CONFIG_DEVICE_BLUENRG_LP CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF CONFIG_OTA_USE_SERVICE_MANAGER</Define>
             <Undefine></Undefine>
-            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB011V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc;..\..\..\..\..\Middlewares\ST\cryptolib\inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\inc\AES</IncludePath>
+            <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
           </Cads>
         <Aads>
@@ -2566,9 +2593,9 @@
           <NoWarn>0</NoWarn>
           <uSurpInc>0</uSurpInc>
           <useXO>0</useXO>
-          <uClangAs>0</uClangAs>
+          <ClangAsOpt>3</ClangAsOpt>
           <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls>-x assembler-with-cpp</MiscControls>
             <Define></Define>
             <Undefine></Undefine>
             <IncludePath></IncludePath>
@@ -2600,32 +2627,32 @@
             <File>
               <FileName>bluenrg_lp_evb_button.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_button.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_com.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_i2c.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_io.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_led.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_led.c</FilePath>
             </File>
           <File>
               <FileName>bluenrg_lp_evb_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/BSP/Src/bluenrg_lp_evb_spi.c</FilePath>
             </File>
           <File>
               <FileName>lps22hh_reg.c</FileName>
@@ -2647,6 +2674,11 @@
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
+          <File>
+              <FileName>startup_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
           </Files>
         </Group>
       <Group>
@@ -2655,107 +2687,107 @@
             <File>
               <FileName>rf_driver_hal_power_manager.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_power_manager.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_power_manager.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_hal_vtimer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_hal_vtimer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_hal_vtimer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_adc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_adc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_adc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_crc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_crc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_crc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_dma.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_dma.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_dma.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_exti.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_exti.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_exti.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_flash.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_flash.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_flash.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_gpio.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_gpio.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_gpio.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_i2c.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_i2c.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_i2c.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_lpuart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_lpuart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_lpuart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pka_v7b.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pka_v7b.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pka_v7b.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_pwr.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_pwr.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_pwr.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_radio_2g4.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_radio_2g4.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_radio_2g4.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rcc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rcc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rcc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rng.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rng.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rng.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_rtc.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_rtc.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_rtc.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_spi.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_spi.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_spi.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_tim.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_tim.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_tim.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_timer.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_timer.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_timer.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_usart.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_usart.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_usart.c</FilePath>
             </File>
           <File>
               <FileName>rf_driver_ll_utils.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/Peripherals_Drivers/src/rf_driver_ll_utils.c</FilePath>
+            <FilePath>../../../../../Drivers/Peripherals_Drivers/Src/rf_driver_ll_utils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2763,14 +2795,14 @@
           <GroupName>Example/User</GroupName>
         <Files>
             <File>
-              <FileName>bluenrg_lp_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/bluenrg_lp_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           <File>
               <FileName>sensor.c</FileName>

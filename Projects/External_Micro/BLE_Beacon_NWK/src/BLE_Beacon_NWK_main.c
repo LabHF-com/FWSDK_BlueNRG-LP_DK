@@ -223,8 +223,8 @@ static void Device_Init(void)
   uint16_t appearance_char_handle;
   uint8_t bdaddr[] = {0xf5, 0x00, 0x00, 0xE1, 0x80, 0x02};
   
-  /* Set the TX Power to -2 dBm */
-  ret = aci_hal_set_tx_power_level(0,25);
+  /* Set the TX Power to 0 dBm */
+  ret = aci_hal_set_tx_power_level(0, 24);
   if(ret != 0) {
     PRINTF ("Error in aci_hal_set_tx_power_level() 0x%04x\r\n", ret);
     while(1);
@@ -261,15 +261,8 @@ static void Device_Init(void)
 }
 
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

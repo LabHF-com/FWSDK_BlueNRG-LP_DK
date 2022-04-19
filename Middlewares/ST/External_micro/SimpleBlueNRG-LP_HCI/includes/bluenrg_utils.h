@@ -43,6 +43,21 @@ typedef  PACKED(struct) devConfigS  {
 } devConfig_t;
 
 /* Exported constants --------------------------------------------------------*/
+#ifdef CONFIG_DEVICE_BLUENRG_LP
+//#warning "BlueNRG-LP selected as target."
+#define FLASH_END       (0x1007FFFF) // 256 LB
+#define FW_OFFSET       (8*1024)     // 8 KB
+#elif defined CONFIG_DEVICE_BLUENRG_LPS
+#warning "BlueNRG-LPS selected as target."
+#define FLASH_END       (0x1006FFFF) // 192 KB
+#define FW_OFFSET       (4*1024)     // 4 KB
+#else
+#error "No device selected"
+#endif
+   
+#define BASE_ADDRESS    (0x10040000)
+#define SECTOR_SIZE     (2*1024)  // 2 KB
+
 /* Exported macros -----------------------------------------------------------*/
 #define FROM_US_TO_SYS_TIME(us)      ((uint32_t)(us/2.4414)+1)
 #define FROM_SYS_TIME_TO_US(sys)     ((uint32_t)(sys*2.4414))

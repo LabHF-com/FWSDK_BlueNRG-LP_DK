@@ -9,6 +9,8 @@
 #define ERR_UNKNOWN_HCI_COMMAND (0x01)
 
 /* API definitions */
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_hal_set_le_power_control(uint8_t Enable,
                                         uint8_t PHY,
                                         int8_t RSSI_Target,
@@ -18,7 +20,10 @@ tBleStatus aci_hal_set_le_power_control(uint8_t Enable,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_enhanced_read_transmit_power_level(uint16_t Connection_Handle,
                                                      uint8_t PHY,
                                                      int8_t* Current_TX_Power_Level,
@@ -26,13 +31,19 @@ tBleStatus hci_le_enhanced_read_transmit_power_level(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_read_remote_transmit_power_level(uint16_t Connection_Handle,
                                                    uint8_t PHY)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_path_loss_reporting_parameters(uint16_t Connection_Handle,
                                                      uint8_t High_Threshold,
                                                      uint8_t High_Hysteresis,
@@ -42,19 +53,26 @@ tBleStatus hci_le_set_path_loss_reporting_parameters(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_path_loss_reporting_enable(uint16_t Connection_Handle,
                                                  uint8_t Enable)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_transmit_power_reporting_enable(uint16_t Connection_Handle,
                                                       uint8_t Local_Enable,
                                                       uint8_t Remote_Enable)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 #if (defined(CONTROLLER_CTE_ENABLED) &&\
             (CONTROLLER_CTE_ENABLED == 0))

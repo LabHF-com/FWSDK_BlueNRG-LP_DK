@@ -29,9 +29,7 @@
 //#define PTS_AUTOMATING   1    //PTS Automating for Time Client
 #ifdef PTS_AUTOMATING      
 #define PTS_CODE        '@'  //to identy a message to parse for PTS automating tests
-#define HIDS_PTS_CODE   'n'  //concatenated to PTS_CODE, this identifies an HIDS message to parse for PTS automating tests       
-#else
-#define PTS_CODE        ''     
+#define HIDS_PTS_CODE   'n'  //concatenated to PTS_CODE, this identifies an HIDS message to parse for PTS automating tests           
 #endif
 
 /* Exported types ------------------------------------------------------------*/

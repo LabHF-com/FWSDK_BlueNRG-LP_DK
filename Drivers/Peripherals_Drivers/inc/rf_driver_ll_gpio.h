@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 #include "rf_driver_ll_pwr.h"
   
 /** @addtogroup RF_DRIVER_LL_Driver
@@ -180,6 +182,16 @@ typedef struct
 /**
   * @}
   */
+
+/** @defgroup GPIO_LL_OUTPUT_LVL Output Level
+  * @{
+  */
+#define LL_GPIO_OUTPUT_LOW                    (0xFFU) /*!< Select output low level */
+#define LL_GPIO_OUTPUT_HIGH                   (0x00U) /*!< Select output high level */
+/**
+  * @}
+  */
+
 
 /** @defgroup GPIO_LL_EC_AF Alternate Function
   * @{
@@ -941,6 +953,38 @@ __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
 __STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
 {
   WRITE_REG(GPIOx->BRR, PinMask);
+}
+
+/**
+  * @brief  Set the pin high or low level.
+  * @rmtoll BSRR         BSy           LL_GPIO_WriteOutputPin
+  * @param  GPIOx GPIO Port
+  * @param  PinMask This parameter can be a combination of the following values:
+  *         @arg @ref LL_GPIO_PIN_0
+  *         @arg @ref LL_GPIO_PIN_1
+  *         @arg @ref LL_GPIO_PIN_2
+  *         @arg @ref LL_GPIO_PIN_3
+  *         @arg @ref LL_GPIO_PIN_4
+  *         @arg @ref LL_GPIO_PIN_5
+  *         @arg @ref LL_GPIO_PIN_6
+  *         @arg @ref LL_GPIO_PIN_7
+  *         @arg @ref LL_GPIO_PIN_8
+  *         @arg @ref LL_GPIO_PIN_9
+  *         @arg @ref LL_GPIO_PIN_10
+  *         @arg @ref LL_GPIO_PIN_11
+  *         @arg @ref LL_GPIO_PIN_12
+  *         @arg @ref LL_GPIO_PIN_13
+  *         @arg @ref LL_GPIO_PIN_14
+  *         @arg @ref LL_GPIO_PIN_15
+  *         @arg @ref LL_GPIO_PIN_ALL
+  * @param  Pin This parameter can be one of the following values:
+  *         @arg @ref LL_GPIO_OUTPUT_HIGH
+  *         @arg @ref LL_GPIO_OUTPUT_LOW
+  * @retval None
+  */
+__STATIC_INLINE void LL_GPIO_WriteOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint8_t Level)
+{
+  WRITE_REG(GPIOx->BSRR, PinMask<<(0x10 & Level));
 }
 
 /**

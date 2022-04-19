@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -142,9 +142,16 @@ TIMEx_BreakInputConfigTypeDef;
   * @{
   */  
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP
 #define IS_TIM_REMAP(__INSTANCE__, __REMAP__)                                             \
           (((__INSTANCE__) == TIM1) && ((((__REMAP__) & 0xFFFE3FECU) == 0x00000000U)))
 
+#elif defined CONFIG_DEVICE_BLUENRG_LPS
+#define IS_TIM_REMAP(__INSTANCE__, __REMAP__)                                             \
+          ((((__INSTANCE__) == TIM1)  && ((((__REMAP__) & 0xFFFE3FF0U) == 0x00000000U)))  \
+        || (((__INSTANCE__) == TIM16) && ((((__REMAP__) & 0xFFFFFFFCU) == 0x00000000U)))  \
+        || (((__INSTANCE__) == TIM17) && ((((__REMAP__) & 0xFFFFFFFCU) == 0x00000000U))))
+#endif
 #define IS_TIM_BREAKINPUT(__BREAKINPUT__)               \
           (((__BREAKINPUT__) == TIM_BREAKINPUT_BRK)  || \
            ((__BREAKINPUT__) == TIM_BREAKINPUT_BRK2))
@@ -249,9 +256,7 @@ HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t 
 /* Extended Control functions  ************************************************/
 HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t  InputTrigger, uint32_t  CommutationSource);
 HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32_t  InputTrigger, uint32_t  CommutationSource);
-#if defined(TIM_BDTR_BK2F) && defined(TIM_BDTR_BK2E) && defined(TIM_BDTR_BK2P)
 HAL_StatusTypeDef HAL_TIMEx_ConfigBreakDeadTime(TIM_HandleTypeDef *htim, TIM_BreakDeadTimeConfigTypeDef *sBreakDeadTimeConfig);
-#endif
 HAL_StatusTypeDef HAL_TIMEx_ConfigBreakInput(TIM_HandleTypeDef *htim, uint32_t BreakInput, TIMEx_BreakInputConfigTypeDef *sBreakInputConfig);
 #if defined(TIM_CCR5_GC5C3) && defined(TIM_CCR5_GC5C2) && defined(TIM_CCR5_GC5C1)
 HAL_StatusTypeDef HAL_TIMEx_GroupChannel5(TIM_HandleTypeDef *htim, uint32_t Channels);

@@ -35,6 +35,7 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdlib.h>
 #include "ble_controller.h"
 #include "rf_driver_ll_rng.h"
 #include "rf_driver_ll_bus.h"
@@ -139,7 +140,7 @@ WEAK_FUNCTION(void BLECNTR_ClearSemareq())
 
 WEAK_FUNCTION(uint32_t* BLECNTR_GetCipherTextPtr())
 {
-  return BLECNTR_SUCCESS;
+  return (uint32_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -147,7 +148,7 @@ WEAK_FUNCTION(uint32_t* BLECNTR_GetCipherTextPtr())
 
 WEAK_FUNCTION(uint32_t* BLECNTR_GetClrTextPtr())
 {
-  return BLECNTR_SUCCESS;
+  return (uint32_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -155,7 +156,7 @@ WEAK_FUNCTION(uint32_t* BLECNTR_GetClrTextPtr())
 
 WEAK_FUNCTION(uint32_t* BLECNTR_GetEncKeyPtr())
 {
-  return BLECNTR_SUCCESS;
+  return (uint32_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -565,7 +566,7 @@ WEAK_FUNCTION(uint8_t BLECNTR_PacketGetCteSamplingEn(BLECNTR_TXRXPACK_TypeDef* p
 
 WEAK_FUNCTION(uint8_t* BLECNTR_PacketGetDataPtr(BLECNTR_TXRXPACK_TypeDef* packetP))
 {
-  return BLECNTR_SUCCESS;
+  return (uint8_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -893,7 +894,7 @@ WEAK_FUNCTION(uint8_t BLECNTR_SmGetCteTime(uint8_t smNo))
 
 WEAK_FUNCTION(uint32_t* BLECNTR_SmGetEncIvPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (uint32_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -901,7 +902,7 @@ WEAK_FUNCTION(uint32_t* BLECNTR_SmGetEncIvPtr(uint8_t smNo))
 
 WEAK_FUNCTION(uint32_t* BLECNTR_SmGetEncKeyPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (uint32_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -933,7 +934,7 @@ WEAK_FUNCTION(uint8_t BLECNTR_SmGetMode(uint8_t smNo))
 
 WEAK_FUNCTION(uint8_t* BLECNTR_SmGetPrevRxPacketDataPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (uint8_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -941,7 +942,7 @@ WEAK_FUNCTION(uint8_t* BLECNTR_SmGetPrevRxPacketDataPtr(uint8_t smNo))
 
 WEAK_FUNCTION(BLECNTR_TXRXPACK_TypeDef* BLECNTR_SmGetPrevRxPacketPtr(uint8_t smNo) )
 {
-  return BLECNTR_SUCCESS;
+  return (BLECNTR_TXRXPACK_TypeDef*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -949,7 +950,7 @@ WEAK_FUNCTION(BLECNTR_TXRXPACK_TypeDef* BLECNTR_SmGetPrevRxPacketPtr(uint8_t smN
 
 WEAK_FUNCTION(uint8_t* BLECNTR_SmGetPrevTxPacketDataPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (uint8_t*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -957,7 +958,7 @@ WEAK_FUNCTION(uint8_t* BLECNTR_SmGetPrevTxPacketDataPtr(uint8_t smNo))
 
 WEAK_FUNCTION(BLECNTR_TXRXPACK_TypeDef* BLECNTR_SmGetPrevTxPacketPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (BLECNTR_TXRXPACK_TypeDef*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
@@ -989,7 +990,7 @@ WEAK_FUNCTION(uint8_t BLECNTR_SmGetRxPhy(uint8_t smNo))
 
 WEAK_FUNCTION(BLECNTR_TXRXPACK_TypeDef* BLECNTR_SmGetTxPacketPtr(uint8_t smNo))
 {
-  return BLECNTR_SUCCESS;
+  return (BLECNTR_TXRXPACK_TypeDef*)NULL;
   
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */

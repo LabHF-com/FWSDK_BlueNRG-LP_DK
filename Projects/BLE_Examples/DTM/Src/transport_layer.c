@@ -21,7 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "system_BlueNRG_LP.h"
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "bluenrg_lp_api.h"
 #include "transport_layer.h"
 #include "rf_driver_hal_power_manager.h"
@@ -35,9 +35,16 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define EVENT_BUFFER_SIZE    2300
-#define COMMAND_BUFFER_SIZE  532
+#define MAX_EVENT_SIZE  (536)
+
+#ifdef CONFIG_DEVICE_BLUENRG_LP //TBR
+#define COMMAND_BUFFER_SIZE  (536 + 4)
+#else
+#define COMMAND_BUFFER_SIZE  265        /* Decrease buffer size for reducing RAM footprint */
+#endif 
+
 #define FIFO_ALIGNMENT       4
-#define FIFO_VAR_LEN_ITEM_MAX_SIZE 532
+#define FIFO_VAR_LEN_ITEM_MAX_SIZE (MAX_EVENT_SIZE)
 
 #define LEGACY_ADV_OPCODE_LOW  0x2006 // Lowest opcode for legacy advertising commands
 #define LEGACY_ADV_OPCODE_HIGH 0x200D // Highest opcode for legacy advertising commands
@@ -52,7 +59,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-uint8_t event_buffer[EVENT_BUFFER_SIZE + FIFO_VAR_LEN_ITEM_MAX_SIZE];
+ALIGN(2) uint8_t event_buffer[EVENT_BUFFER_SIZE + FIFO_VAR_LEN_ITEM_MAX_SIZE];
 uint8_t command_buffer[COMMAND_BUFFER_SIZE];
 ALIGN(2) uint8_t command_fifo_buffer_tmp[COMMAND_BUFFER_SIZE];
 circular_fifo_t event_fifo, command_fifo;
@@ -88,7 +95,7 @@ uint8_t restore_flag = 0;
 /* Flag to signal if a timoeout HEADER_NOT_RECEIVED happens */
 static uint8_t header_timeout = 0;
 
-ALIGN(2) uint8_t buff_dma[EVENT_BUFFER_SIZE];
+ALIGN(2) uint8_t buff_dma[MAX_EVENT_SIZE + SPI_HEADER_LEN + 1]; //[EVENT_BUFFER_SIZE];
 
 #endif
 

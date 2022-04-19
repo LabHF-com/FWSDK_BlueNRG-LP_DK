@@ -122,8 +122,10 @@ void DTM_SPI_EXTI_IRQHandler(void)
   if(LL_EXTI_IsActiveFlag_0_31(DTM_SPI_IRQ_EXTI_LINE) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(DTM_SPI_IRQ_EXTI_LINE);
-    
+  
+    if(LL_GPIO_IsInputPinSet(BNRG_RESET_PORT, BNRG_RESET_PIN) == 1) {
     spi_irq_flag = TRUE;
+    }
   }
   
 }

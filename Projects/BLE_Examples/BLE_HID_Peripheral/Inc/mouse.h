@@ -31,8 +31,6 @@
 #ifdef PTS_AUTOMATING      
 #define PTS_CODE        '@'  //to identy a message to parse for PTS automating tests
 #define HIDS_PTS_CODE   'n'  //concatenated to PTS_CODE, this identifies an HIDS message to parse for PTS automating tests       
-#else
-#define PTS_CODE        ''     
 #endif
 
 /* Exported types ------------------------------------------------------------*/

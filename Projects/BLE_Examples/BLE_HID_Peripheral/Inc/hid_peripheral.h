@@ -222,14 +222,14 @@ typedef struct batteryServiceS {
  * @brief Device Information Service Specification
  */
 typedef struct devInfServiceS {
-  /** Manufacter Name */
-  uint8_t manufacName[MANUFAC_NAME_LEN];
-  /** Model Number */
-  uint8_t modelNumber[MODEL_NUMB_LEN];
-  /** FW Revision */
-  uint8_t fwRevision[FW_REV_LEN];
-  /** SW Revision */
-  uint8_t swRevision[SW_REV_LEN];
+  /** Manufacter Name (pointer to null-terminated string). Statically allocated. */
+  const char *manufacName;
+  /** Model Number (pointer to null-terminated string). Statically allocated. */
+  const char *modelNumber;
+  /** FW Revision (pointer to null-terminated string). Statically allocated. */
+  const char *fwRevision;
+  /** SW Revision (pointer to null-terminated string). Statically allocated. */
+  const char *swRevision;
   /** PNP ID */
   uint8_t pnpID[PNP_ID_LEN];
 } devInfService_Type;

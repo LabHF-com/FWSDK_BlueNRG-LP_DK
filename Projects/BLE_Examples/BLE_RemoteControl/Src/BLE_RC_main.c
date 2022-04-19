@@ -23,7 +23,7 @@
   To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
   -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
   -# Open the KEIL project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\MDK-ARM\\{STEVAL-IDB011V1}\\BLE_RemoteControl.uvprojx</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\BLE_RemoteControl.uvprojx</tt> 
   -# Select desired configuration to build
   -# Select Project->Rebuild all target files. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\EWARM\\{STEVAL-IDB011V1}\\BLE_RemoteControl.eww</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\BLE_RemoteControl.eww</tt> 
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -45,7 +45,7 @@
   To use the project with WiSE-Studio IDE (GCC toolchain), please follow the instructions below:
   -# Open the WiSE-Studio IDE
   -# Select File, Import, Existing Projects into Workspace
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\WiSE-Studio\\{STEVAL-IDB011V1}</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RemoteControl\\WiSE-Studio\\{STEVAL-IDB011V1|STEVAL-IDB012V1}</tt> 
   -# Select desired configuration to build
   -# Select Project->Build Project. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -58,6 +58,8 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB011V1
+- \c STEVAL-IDB011V2
+- \c STEVAL-IDB012V1
 
 
 * \section Power_settings Power configuration settings
@@ -94,32 +96,40 @@
                         
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |   STEVAL-IDB011V1  |
------------------------------------
-|     A1     |      Not Used      |
-|     A11    |      Not Used      |
-|     A12    |      Not Used      |
-|     A13    |      Not Used      |
-|     A14    |      Not Used      |
-|     A15    |      Not Used      |
-|     A4     |      Not Used      |
-|     A5     |      Not Used      |
-|     A6     |      Not Used      |
-|     A7     |      Not Used      |
-|     A8     |      Not Used      |
-|     A9     |      Not Used      |
-|     B0     |      Not Used      |
-|     B14    |      Not Used      |
-|     B2     |      Not Used      |
-|     B3     |      Not Used      |
-|     B4     |      Not Used      |
-|     B5     |      Not Used      |
-|     B7     |      Not Used      |
-|     B8     |      Not Used      |
-|     B9     |      Not Used      |
-|     GND    |      Not Used      |
-|     RST    |      Not Used      |
-|    VBAT    |      Not Used      |
+|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
+--------------------------------------------------------------------------------
+|     A0     |        N.A.        |        N.A.        |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |      Not Used      |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |
+|     A12    |      Not Used      |      Not Used      |        N.A.        |
+|     A13    |      Not Used      |      Not Used      |        N.A.        |
+|     A14    |      Not Used      |      Not Used      |        N.A.        |
+|     A15    |      Not Used      |      Not Used      |        N.A.        |
+|     A3     |        N.A.        |        N.A.        |      Not Used      |
+|     A4     |      Not Used      |      Not Used      |        N.A.        |
+|     A5     |      Not Used      |      Not Used      |        N.A.        |
+|     A6     |      Not Used      |      Not Used      |        N.A.        |
+|     A7     |      Not Used      |      Not Used      |        N.A.        |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |
+|     A9     |      Not Used      |      Not Used      |        N.A.        |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |        N.A.        |        N.A.        |      Not Used      |
+|     B12    |        N.A.        |        N.A.        |      Not Used      |
+|     B13    |        N.A.        |        N.A.        |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |        N.A.        |
+|     B9     |      Not Used      |      Not Used      |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -137,24 +147,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |       STEVAL-IDB011V1      |
--------------------------------------------
-|     DL1    |          Not Used          |
-|     DL2    |  Led under remote control  |
-|     DL3    |  Led under remote control  |
-|     DL4    |          Not Used          |
-|     U5     |  Led under remote control  |
+|  LED name  |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |
+--------------------------------------------------------------------------------------------------------
+|     DL1    |          Not Used          |          Not Used          |          Not Used          |
+|     DL2    |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL3    |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL4    |          Not Used          |          Not Used          |          Not Used          |
+|     U5     |  Led under remote control  |  Led under remote control  |  Led under remote control  |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |
+--------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -202,7 +212,7 @@ The characteristic UUID is ed0efb1a-9b0d-11e4-89d3-123b93f75cba.
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -248,13 +258,7 @@ void ModulesInit(void)
   BLE_STACK_InitTypeDef BLE_STACK_InitParams = BLE_STACK_INIT_PARAMETERS;
   
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA|LL_AHB_PERIPH_RNG);
-  
-  /* BlueNRG-LP stack init */
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != BLE_STATUS_SUCCESS) {
-    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
-    while(1);
-  }
+
   
   BLECNTR_InitGlobal();
   
@@ -270,8 +274,15 @@ void ModulesInit(void)
   {
       while(1);
   }
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
+  
+  /* BlueNRG-LP stack init */
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != BLE_STATUS_SUCCESS) {
+    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
+    while(1);
+  }
 }
 
 void ModulesTick(void)
@@ -357,15 +368,8 @@ PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level)
   return POWER_SAVE_LEVEL_STOP_NOTIMER;
 }
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

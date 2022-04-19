@@ -83,15 +83,12 @@ typedef union Char_Desc_Uuid_t_s
 /**
  * @brief Initialize ACI GATT nwk component
  *
- * @param buffer_size[in] The size of provided buffer.
  * @param pwrq_size[in] The size of the buffer assigned to PWRQ module.
- * @param buffer[in] Pointer to provided buffer
  *
  * @return void
  *
  */
-void ACI_gatt_nwk_init(uint16_t buffer_size, uint16_t pwrq_size,
-                       uint8_t *buffer);
+void ACI_gatt_nwk_init(uint16_t pwrq_size);
 
 /**
  * @brief Reset ACI GATT nwk component, erasing any allocated attributes and values.

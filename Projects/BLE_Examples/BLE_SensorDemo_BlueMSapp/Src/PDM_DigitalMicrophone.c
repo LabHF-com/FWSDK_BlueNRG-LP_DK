@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    PDM_DigitalMicrophone.c
+  * @file    PDM_DiglMic.c
   * @author  RF Application Team
   * @brief   Digital Microphone
   ******************************************************************************
@@ -60,7 +60,7 @@
   * @{
   */
 
-/** @addtogroup PDM_DigitalMicrophone
+/** @addtogroup PDM_DiglMic
   * @{
   */
 

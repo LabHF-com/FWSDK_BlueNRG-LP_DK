@@ -204,7 +204,7 @@ uint8_t  Sensor_DeviceInit()
                               8, AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','N','R','G'};
 
   /* Set the TX power 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
   
   /* GATT Init */
   ret = aci_gatt_srv_init();
@@ -248,11 +248,11 @@ uint8_t  Sensor_DeviceInit()
                                               LE_1M_PHY, /* Secondary advertising PHY. Not used with legacy advertising. */
                                               0, /* SID */
                                               0 /* No scan request notifications */);
-  printf("Advertising configuration 0x%02X\n", ret);
+  PRINTF("Advertising configuration 0x%02X\n", ret);
   
   ret = aci_gap_set_advertising_data( 0, ADV_COMPLETE_DATA, sizeof(adv_data), adv_data);
   
-  printf("Set advertising data 0x%02X\n", ret);  
+  PRINTF("Set advertising data 0x%02X\n", ret);  
   
   PRINTF("BLE Stack Initialized with SUCCESS\n");
 
@@ -561,3 +561,20 @@ void hci_le_connection_update_complete_event(uint8_t Status,
 {
   PRINTF("hci_le_connection_update_complete_event; %d\r\n", Conn_Interval);
 }
+
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
+void aci_att_exchange_mtu_resp_event(uint16_t Connection_Handle,
+                                     uint16_t Server_RX_MTU)
+{
+  OTA_att_exchange_mtu_resp_CB(Connection_Handle, Server_RX_MTU);
+}
+
+void hci_le_data_length_change_event(uint16_t Connection_Handle,
+                                     uint16_t MaxTxOctets,
+                                     uint16_t MaxTxTime,
+                                     uint16_t MaxRxOctets,
+                                     uint16_t MaxRxTime)
+{
+  OTA_data_length_change_CB(Connection_Handle);  
+}
+#endif

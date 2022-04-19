@@ -234,7 +234,7 @@ uint8_t Sensor_DeviceInit()
   uint8_t Data[6];
   
   /* Set the TX power 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
   
   /* GATT Init */
   ret = aci_gatt_srv_init();
@@ -771,17 +771,32 @@ void bluevoiceTickUpdateTimeoutCB(void *param)
 }
 #endif 
 
+#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
 void aci_hal_end_of_radio_activity_event(uint8_t Last_State,
                                          uint8_t Next_State,
                                          uint32_t Next_State_SysTime)
 {
-#if ST_OTA_FIRMWARE_UPGRADE_SUPPORT
   if (Next_State == 0x02) /* 0x02: Connection event slave */
   {
     OTA_Radio_Activity(Next_State_SysTime);  
   }
-#endif 
 }
+
+void aci_att_exchange_mtu_resp_event(uint16_t Connection_Handle,
+                                     uint16_t Server_RX_MTU)
+{
+  OTA_att_exchange_mtu_resp_CB(Connection_Handle, Server_RX_MTU);
+}
+
+void hci_le_data_length_change_event(uint16_t Connection_Handle,
+                                     uint16_t MaxTxOctets,
+                                     uint16_t MaxTxTime,
+                                     uint16_t MaxRxOctets,
+                                     uint16_t MaxRxTime)
+{
+  OTA_data_length_change_CB(Connection_Handle);  
+}
+#endif
 
 
 #if ENABLE_BLUEVOICE

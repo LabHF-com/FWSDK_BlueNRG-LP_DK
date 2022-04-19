@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m0plus -xc
 /*******************************************************************************
 * BlueNRG-LP generic linker file for KEIL
 * Main linker variables to control it are:
@@ -151,7 +151,7 @@ BlueNRG-LP memory map
      |  NVM(4K)              |
      +-----------------------+ 0x1007F000
      |                       |
-     |  User app (158)      |
+     |  User app (158K)      |
      +-----------------------+ 0x10057800
      |  OTA Service          |
      |  Manager (94K)        |
@@ -218,10 +218,10 @@ LR_IROM1 (_MEMORY_FLASH_BEGIN_+MEMORY_FLASH_APP_OFFSET) _MEMORY_FLASH_SIZE_  {  
   REGION_FLASH_NVM (_MEMORY_FLASH_END_- FLASH_NVM_DATASIZE + 1) UNINIT FLASH_NVM_DATASIZE  {
   }
   ram_vr_block 0x20000004 UNINIT 0x2C {
-   *.o (.ram_vr)
+   *.o (.bss.ram_vr)
   }
   crash_info_ram_vr_block 0x20000034 UNINIT 40 {  
-  *.o (.crash_info_ram_vr)
+  *.o (.bss.crash_info_ram_vr)
   }
   BLUE 0x200000C0 {
   *.o (.bss.__blue_RAM)

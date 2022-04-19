@@ -16,7 +16,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -69,6 +69,8 @@ typedef struct {
 
 #define NUM_REPORTS 1
 
+#define NEW_MOUSE_VALUE_TIMEOUT 600 // Max time to have a new mouse data value, time expressed in MTU
+
 /* Private macro -------------------------------------------------------------*/
 #define DEBUG 1
 #ifdef DEBUG
@@ -86,6 +88,10 @@ static VTIMER_HandleType mouseTimerHandle;
 
 hidService_Type hid_param;
 report_Type reportReferenceDesc[NUM_REPORTS];
+const char *manufacName = "ST";
+const char *modelNumber = "0001";
+const char *fwRevision = "0630";
+const char *swRevision = "0001";
 
 uint8_t dev_name[]={'S', 'T', 'M', 'o', 'u', 's', 'e'}; 
 
@@ -388,7 +394,11 @@ static void newMouseValue(int16_t *x, int16_t *y)
   if (new_data) {
     gain = 0.3;
     Z_correct = (pGyrData.AXIS_Z - offset_z);
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1_ALPHA)
     Y_correct = (pGyrData.AXIS_Y - offset_y);
+#else
+    Y_correct = -(pGyrData.AXIS_Y - offset_y);
+#endif
     
     *x = (int16_t)(-Z_correct*gain/100);
     *y = (int16_t)(Y_correct*gain/100);
@@ -518,10 +528,10 @@ uint8_t Configure_HidPeripheral(void)
   /* Battery Service */
   battery.inReportMap = FALSE;
   /* Device Information Service */
-  memcpy(devInf.manufacName, "ST Micro", 8);
-  memcpy(devInf.modelNumber, "0001", 4);
-  memcpy(devInf.fwRevision, "0630", 4);
-  memcpy(devInf.swRevision, "0001", 4);
+  devInf.manufacName = manufacName;
+  devInf.modelNumber = modelNumber;
+  devInf.fwRevision = fwRevision;
+  devInf.swRevision = swRevision;
   devInf.pnpID[0] = 0x01;
   devInf.pnpID[1] = 0x30;
   devInf.pnpID[2] = 0x00;
@@ -598,6 +608,7 @@ void DeviceInputData(void)
   int16_t x, y;
   uint8_t ret, buff[5], buttonMask;
   static uint8_t connBlinkLed = 0;
+  static uint32_t newMouseValueTime=0;
 
   if (hidDeviceStatus() & HID_DEVICE_READY_TO_NOTIFY) {
 
@@ -617,8 +628,12 @@ void DeviceInputData(void)
     /* Read the button Status */
     getButtonStatus(&buttonMask);
     /* Read the Acc + Gyro status */
-    if (!(buttonMask & BUTTON_STATUS_CHANGED_MASK))
-      newMouseValue(&x, &y);
+    if (!(buttonMask & BUTTON_STATUS_CHANGED_MASK)) {
+      if ((WAKEUP->ABSOLUTE_TIME - newMouseValueTime) > NEW_MOUSE_VALUE_TIMEOUT) {
+        newMouseValue(&x, &y);
+        newMouseValueTime = WAKEUP->ABSOLUTE_TIME;
+      }
+    }
 
     if ((x != 0) || (y != 0) || (buttonMask != 0)) {
       buttonMask &= ~(uint8_t)(BUTTON_STATUS_CHANGED_MASK); // Flag to be cleared before to send the packet

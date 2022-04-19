@@ -66,16 +66,22 @@ uint8_t sdk_buffer[SDK_BUFFER_SIZE];
 */
 
 volatile uint32_t clock_time = 0;
+volatile uint32_t irq_line = 0;
 /* timeout is defined in unit of 100 ms */
-#define WAIT_IRQ_LOW(func, timeout)                     \
-{                                                       \
-  clock_time = 0;                                       \
-  LL_TIM_GenerateEvent_UPDATE(TIM2);                    \
-  LL_TIM_EnableCounter(TIM2);                           \
-    while( clock_time < timeout)                        \
-        if(func == 0)                                   \
-          break;                                        \
-  LL_TIM_DisableCounter(TIM2);                          \
+#define WAIT_IRQ_LOW(timeout) { \
+  clock_time = 0;               \
+  LL_TIM_GenerateEvent_UPDATE(TIM2); \
+  LL_TIM_EnableCounter(TIM2);      \
+  do {          \
+    irq_line = LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN);   \
+    if(clock_time > timeout) {      \
+      LL_TIM_DisableCounter(TIM2);  \
+      Enable_IRQ();                 \
+      LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);  \
+      return 0;                     \
+    }                               \
+  } while(irq_line == 1);           \
+  LL_TIM_DisableCounter(TIM2);      \
 }
 
 
@@ -87,19 +93,19 @@ void  Configure_TIMTimeBase(void)
   /* Set counter mode */
   /* Reset value is LL_TIM_COUNTERMODE_UP */
   //LL_TIM_SetCounterMode(TIM2, LL_TIM_COUNTERMODE_UP);
-
+  
   /* Set the pre-scaler value to have TIM2 counter clock equal to 10 kHz      */
   /*
-   In this example TIM2 input clock TIM2CLK is set to APB2 clock (PCLK2),   
-   since APB2 pre-scaler is equal to 1.                                     
-      TIM2CLK = PCLK2                                                       
-      PCLK2 = HCLK                                                          
-      => TIM2CLK = SystemCoreClock (80 MHz)                                 
+  In this example TIM2 input clock TIM2CLK is set to APB2 clock (PCLK2),   
+  since APB2 pre-scaler is equal to 1.                                     
+  TIM2CLK = PCLK2                                                       
+  PCLK2 = HCLK                                                          
+  => TIM2CLK = SystemCoreClock (80 MHz)                                 
   */
   LL_TIM_SetPrescaler(TIM2, __LL_TIM_CALC_PSC(SystemCoreClock, 10000));
   
   /* Set the auto-reload value to have an initial update event frequency of 10 Hz */
-//  InitialAutoreload = __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_GetPrescaler(TIM2), 10);
+  //  InitialAutoreload = __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_GetPrescaler(TIM2), 10);
   LL_TIM_SetAutoReload(TIM2, __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_GetPrescaler(TIM2), 10));
   
   /* Enable the update interrupt */
@@ -108,7 +114,7 @@ void  Configure_TIMTimeBase(void)
   /* Configure the NVIC to handle TIM2 update interrupt */
   NVIC_SetPriority(TIM2_IRQn, 0);
   NVIC_EnableIRQ(TIM2_IRQn);
-
+  
 }
 
 
@@ -130,19 +136,19 @@ void SdkEvalSpiInit(void)
   LL_GPIO_SetPinMode(DTM_SPI_SCLK_PORT, DTM_SPI_SCLK_PIN, LL_GPIO_MODE_ALTERNATE);
   LL_GPIO_SetAFPin_0_7(DTM_SPI_SCLK_PORT, DTM_SPI_SCLK_PIN, LL_GPIO_AF_5);
   LL_GPIO_SetPinSpeed(DTM_SPI_SCLK_PORT, DTM_SPI_SCLK_PIN, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinPull(DTM_SPI_SCLK_PORT, DTM_SPI_SCLK_PIN, LL_GPIO_PULL_DOWN);
+  //  LL_GPIO_SetPinPull(DTM_SPI_SCLK_PORT, DTM_SPI_SCLK_PIN, LL_GPIO_PULL_DOWN);
   
   /* Configure MISO Pin connected to pin xx of CNxx connector */
   LL_GPIO_SetPinMode(DTM_SPI_MISO_PORT, DTM_SPI_MISO_PIN, LL_GPIO_MODE_ALTERNATE);
   LL_GPIO_SetAFPin_0_7(DTM_SPI_MISO_PORT, DTM_SPI_MISO_PIN, LL_GPIO_AF_5);
   LL_GPIO_SetPinSpeed(DTM_SPI_MISO_PORT, DTM_SPI_MISO_PIN, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinPull(DTM_SPI_MISO_PORT, DTM_SPI_MISO_PIN, LL_GPIO_PULL_DOWN);
+  //  LL_GPIO_SetPinPull(DTM_SPI_MISO_PORT, DTM_SPI_MISO_PIN, LL_GPIO_PULL_DOWN);
   
   /* Configure MOSI Pin connected to pin 29 of CN10 connector */
   LL_GPIO_SetPinMode(DTM_SPI_MOSI_PORT, DTM_SPI_MOSI_PIN, LL_GPIO_MODE_ALTERNATE);
   LL_GPIO_SetAFPin_0_7(DTM_SPI_MOSI_PORT, DTM_SPI_MOSI_PIN, LL_GPIO_AF_5);
   LL_GPIO_SetPinSpeed(DTM_SPI_MOSI_PORT, DTM_SPI_MOSI_PIN, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinPull(DTM_SPI_MOSI_PORT, DTM_SPI_MOSI_PIN, LL_GPIO_PULL_DOWN);
+  //  LL_GPIO_SetPinPull(DTM_SPI_MOSI_PORT, DTM_SPI_MOSI_PIN, LL_GPIO_PULL_DOWN);
   
   /* NSS/CSN/CS */
   LL_GPIO_SetPinMode(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN, LL_GPIO_MODE_OUTPUT);
@@ -150,9 +156,10 @@ void SdkEvalSpiInit(void)
   
   /* IRQ -- INPUT */
   LL_GPIO_SetPinMode(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN, LL_GPIO_MODE_INPUT);
-  LL_GPIO_SetPinPull(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN, LL_GPIO_PULL_DOWN); 
+  //  LL_GPIO_SetPinPull(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN, LL_GPIO_PULL_DOWN); 
   
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
+  LL_EXTI_ClearFlag_0_31(DTM_SPI_IRQ_EXTI_LINE);
   LL_SYSCFG_SetEXTISource(DTM_SPI_IRQ_SYSCFG_PORT, DTM_SPI_IRQ_SYSCFG_LINE);
   
   DTM_SPI_IRQ_EXTI_LINE_ENABLE();
@@ -183,6 +190,7 @@ void SdkEvalSpiInit(void)
 }
 
 
+#ifndef DMA_16
 /**
 * @brief  Read from BlueNRG SPI buffer and store data into local buffer 
 * @param  buffer:    buffer where data from SPI are stored
@@ -192,96 +200,55 @@ void SdkEvalSpiInit(void)
 uint8_t BlueNRG_SPI_Read(uint8_t *buffer, uint16_t buff_size)
 {
   uint16_t byte_count;
-#ifndef DMA_16
   const uint8_t header_master[5] = {0x0b, 0x00, 0x00, 0x00, 0x00};
   uint8_t header_slave[5];
-#else
-  uint8_t tmp_even = 0, tmp_swap = 0;
-  const uint8_t header_master[6] = {0x00, 0x0b, 0x00, 0x00, 0x00, 0x00};
-  uint8_t header_slave[6];
-#endif
-  
+
   if(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN) != 1) {
     return 0;
   }
-
-  Disable_IRQ();
   
+  Disable_IRQ();
   LL_GPIO_ResetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
   
   /* Read the header */
-#ifndef DMA_16
   for (uint8_t i = 0; i < HEADER_SIZE; i++) {
-#else
-  for (uint8_t i = 0; i < (HEADER_SIZE+1); i++) {
-#endif
     while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
     LL_SPI_TransmitData8(DTM_SPI_INSTANCE, header_master[i]);    
     while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
     header_slave[i] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
   }
-    
-#ifndef DMA_16
+  
   byte_count = ((uint16_t)header_slave[4])<<8 | (uint16_t)header_slave[3];
-#else
-  byte_count = ((uint16_t)header_slave[5])<<8 | (uint16_t)header_slave[2];
-  buffer[0] = header_slave[4];
-#endif
-    
+  
   if (byte_count > 0) {
     if (byte_count > buff_size)
       byte_count = buff_size;
     
-#ifdef DMA_16
-    if(byte_count&1)
-      tmp_even = 1;
-    else
-      tmp_even = 0;
-#endif
-      
-#ifndef DMA_16
+    WAIT_IRQ_LOW(4);  // Added to wait for IRQ line to be low - Header received by BLE
+    
     for (uint16_t i = 0; i < byte_count; i++) {
-#else
-    for (uint16_t i = 0; i < (byte_count + tmp_even); i++) {
-#endif
       while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
       LL_SPI_TransmitData8(DTM_SPI_INSTANCE, 0x00); 
       while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
-#ifndef DMA_16
       buffer[i] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
-#else
-      buffer[i+1] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
-#endif
     }
   }
-    
-#ifdef DMA_16
-  for(uint16_t i=1;i<(byte_count + tmp_even);i++) {
-    tmp_swap = buffer[i+1];
-    buffer[i+1] = buffer[i];
-    buffer[i] = tmp_swap;
-    i++;
-  }
-#endif
-    
+
+  WAIT_IRQ_LOW(4);
+  Enable_IRQ();
+  LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
   
 #ifndef BTLE_NWK_COPROC
   for(uint16_t i = 0; i< byte_count;i++)
     putchar(buffer[i]);
+  while(LL_USART_IsActiveFlag_TXE(UART_PORT) == 0);
 #endif
-  
-  /* To be aligned to the SPI protocol. Can bring to a delay inside the frame, due to the BlueNRG-1 that needs to check if the header is received or not */
-  for(volatile int a =0; a<0xF;a++);
-  WAIT_IRQ_LOW(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN), 10);
-  Enable_IRQ();
-  
-  LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
   
   return byte_count;
   
 }
 
-    
+
 /**
 * @brief  Write data from local buffer to SPI
 * @param  data1:    first data buffer to be written, used to send header of higher
@@ -298,20 +265,12 @@ uint8_t BlueNRG_SPI_Write(uint8_t* data, uint16_t Nb_bytes)
   uint16_t rx_bytes;
   struct timer t;
   
-#ifndef DMA_16
   const uint8_t header_master[5] = {0x0A, 0x00, 0x00, 0x00, 0x00};
   uint8_t header_slave[5]  = {0x00};
-#else
-  uint8_t tmp_swap = 0, tmp_even = 0;
-  uint8_t header_master[6] = {0x00, 0x0A, 0x00, 0x00, 0x00, 0x00};
-  header_master[4] = data[0];
-  uint8_t header_slave[6]  = {0x00,};
-#endif
-  
-  Disable_IRQ();
   
   Timer_Set(&t, CLOCK_SECOND/10);
   
+  Disable_IRQ();
   LL_GPIO_ResetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
   
   while(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN) != 1) {
@@ -322,29 +281,161 @@ uint8_t BlueNRG_SPI_Write(uint8_t* data, uint16_t Nb_bytes)
     }
   }
   
-#ifndef DMA_16
   for (uint8_t i = 0; i < HEADER_SIZE; i++) {
-#else
-  for (uint8_t i = 0; i < (HEADER_SIZE+1); i++) {
-#endif
     while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
     LL_SPI_TransmitData8(DTM_SPI_INSTANCE, header_master[i]);
     while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
     header_slave[i] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
   }
   
-#ifndef DMA_16
   rx_bytes = (((uint16_t)header_slave[2])<<8) | ((uint16_t)header_slave[1]);
-#else
-  rx_bytes = (((uint16_t)header_slave[3])<<8) | ((uint16_t)header_slave[0]);
-#endif
   
   if((Nb_bytes-1) > rx_bytes){
     LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
     Enable_IRQ();
     return 1;
   }
-#ifdef DMA_16
+  
+  WAIT_IRQ_LOW(4);  // Added to wait for IRQ line to be low - Header received by BLE
+  
+  for (uint16_t i = 0; i < Nb_bytes; i++) {
+    while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
+    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, data[i]);
+    while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
+    LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
+  }
+  
+  WAIT_IRQ_LOW(4);
+  LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+  Enable_IRQ();
+  
+  return 0;
+}
+
+
+
+#else
+
+/**
+* @brief  Read from BlueNRG SPI buffer and store data into local buffer 
+* @param  buffer:    buffer where data from SPI are stored
+*         buff_size: buffer size
+* @retval number of read bytes
+*/
+uint8_t BlueNRG_SPI_Read(uint8_t *buffer, uint16_t buff_size)
+{
+  uint16_t byte_count;
+  uint8_t tmp_even = 0, tmp_swap = 0;
+  const uint8_t header_master[6] = {0x00, 0x0b, 0x00, 0x00, 0x00, 0x00};
+  uint8_t header_slave[6];
+  
+  if(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN) != 1) {
+    return 0;
+  }
+  
+  Disable_IRQ();
+  LL_GPIO_ResetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+  
+  /* Read the header */
+  for (uint8_t i = 0; i < (HEADER_SIZE+1); i++) {
+    while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
+    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, header_master[i]);    
+    while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
+    header_slave[i] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
+  }
+  
+  byte_count = ((uint16_t)header_slave[5])<<8 | (uint16_t)header_slave[2];
+  buffer[0] = header_slave[4];
+  
+  if (byte_count > 0) {
+    if (byte_count > buff_size)
+      byte_count = buff_size;
+    
+    if(byte_count&1)
+      tmp_even = 1;
+    else
+      tmp_even = 0;
+    
+    WAIT_IRQ_LOW(2);
+    
+    for (uint16_t i = 0; i < (byte_count + tmp_even); i++) {
+      while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
+      LL_SPI_TransmitData8(DTM_SPI_INSTANCE, 0x00); 
+      while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
+      buffer[i+1] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
+    }
+  }
+  
+  for(uint16_t i=1;i<(byte_count + tmp_even);i++) {
+    tmp_swap = buffer[i+1];
+    buffer[i+1] = buffer[i];
+    buffer[i] = tmp_swap;
+    i++;
+  }
+  
+#ifndef BTLE_NWK_COPROC
+  for(uint16_t i = 0; i< byte_count;i++)
+    putchar(buffer[i]);
+#endif
+  
+  WAIT_IRQ_LOW(2);
+  LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+  Enable_IRQ();
+  
+  return byte_count;
+  
+}
+
+
+/**
+* @brief  Write data from local buffer to SPI
+* @param  data1:    first data buffer to be written, used to send header of higher
+*                   level protocol
+*         data2:    second data buffer to be written, used to send payload of higher
+*                   level protocol
+*         Nb_bytes1: size of header to be written
+*         Nb_bytes2: size of payload to be written
+* @retval Number of payload bytes that has been sent. If 0, all bytes in the header has been
+*         written.
+*/
+uint8_t BlueNRG_SPI_Write(uint8_t* data, uint16_t Nb_bytes)
+{  
+  uint16_t rx_bytes;
+  struct timer t;
+  
+  uint8_t tmp_swap = 0, tmp_even = 0;
+  uint8_t header_master[6] = {0x00, 0x0A, 0x00, 0x00, 0x00, 0x00};
+  header_master[4] = data[0];
+  uint8_t header_slave[6]  = {0x00,};
+  
+  Timer_Set(&t, CLOCK_SECOND/10);
+  
+  Disable_IRQ();
+  LL_GPIO_ResetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+  
+  while(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN) != 1) {
+    if(Timer_Expired(&t)){
+      LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+      Enable_IRQ();
+      return 1;
+    }
+  }
+  
+  for (uint8_t i = 0; i < (HEADER_SIZE+1); i++) {
+    while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
+    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, header_master[i]);
+    while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
+    header_slave[i] = LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
+  }
+  
+  rx_bytes = (((uint16_t)header_slave[3])<<8) | ((uint16_t)header_slave[0]);
+  
+  if((Nb_bytes-1) > rx_bytes){
+    LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+    Enable_IRQ();
+    return 1;
+  }
+  
   if( (Nb_bytes-1) & 1)
     tmp_even = 1;
   else
@@ -356,33 +447,23 @@ uint8_t BlueNRG_SPI_Write(uint8_t* data, uint16_t Nb_bytes)
     data[i] = tmp_swap;
     i++;
   }
-#endif
-
-#ifndef DMA_16
-  for (uint16_t i = 0; i < Nb_bytes; i++) {
-#else
+  
+  WAIT_IRQ_LOW(2);
+  
   for (uint16_t i = 0; i < (Nb_bytes-1+tmp_even); i++) {
-#endif
     while(LL_SPI_IsActiveFlag_TXE(DTM_SPI_INSTANCE) == RESET);
-#ifndef DMA_16
-    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, data[i]);
-#else
-    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, data[i+1]); 
-#endif
+    LL_SPI_TransmitData8(DTM_SPI_INSTANCE, data[i+1]);
     while(LL_SPI_IsActiveFlag_RXNE(DTM_SPI_INSTANCE) == RESET);
     LL_SPI_ReceiveData8(DTM_SPI_INSTANCE);
   }
   
-  /* To be aligned to the SPI protocol. Can bring to a delay inside the frame, due to the BlueNRG-1 that needs to check if the header is received or not */
-  for(volatile int a =0; a<0xF;a++);
-  WAIT_IRQ_LOW(LL_GPIO_IsInputPinSet(DTM_SPI_IRQ_PORT, DTM_SPI_IRQ_PIN), 10);
-
-  Enable_IRQ();
-  
+  WAIT_IRQ_LOW(2);
   LL_GPIO_SetOutputPin(DTM_SPI_CS_PORT, DTM_SPI_CS_PIN);
+  Enable_IRQ();
   
   return 0;
 }
+#endif
 
 
 void Hal_Write_Serial(const void* data1, const void* data2, uint16_t n_bytes1, uint16_t n_bytes2)
@@ -414,4 +495,4 @@ void Hal_Write_Serial(const void* data1, const void* data2, uint16_t n_bytes1, u
 
 
 /******************* (C) COPYRIGHT 2014 STMicroelectronics *****END OF FILE****/
-        
+

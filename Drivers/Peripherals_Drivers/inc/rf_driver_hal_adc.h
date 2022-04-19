@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -702,6 +702,7 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
 /** @defgroup ADC_HAL_IRQ_STATUS_MASK ADC IRQ_STATUS register mask definitions
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define ADC_IRQ_FLAGS_MASK      (ADC_IRQ_FLAG_OVRFL | \
                                  ADC_IRQ_FLAG_OVRDF | \
                                  ADC_IRQ_FLAG_OVRDS | \
@@ -709,7 +710,14 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
                                  ADC_IRQ_FLAG_EOS   | \
                                  ADC_IRQ_FLAG_EODF  | \
                                  ADC_IRQ_FLAG_EODS)
+#endif
 
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define ADC_IRQ_FLAGS_MASK      (ADC_IRQ_FLAG_OVRDS | \
+                                 ADC_IRQ_FLAG_AWD   | \
+                                 ADC_IRQ_FLAG_EOS   | \
+                                 ADC_IRQ_FLAG_EODS)
+#endif
 
 /**
   * @}
@@ -736,6 +744,7 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
 /** @defgroup ADC_HAL_IRQ_ENABLE_MASK ADC IRQ_ENABLE register mask definitions
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define ADC_IRQ_EN_MASK      (ADC_IRQ_EN_OVRFL | \
                               ADC_IRQ_EN_OVRDF | \
                               ADC_IRQ_EN_OVRDS | \
@@ -743,7 +752,14 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
                               ADC_IRQ_EN_EOS   | \
                               ADC_IRQ_EN_EODF  | \
                               ADC_IRQ_EN_EODS)
+#endif
 
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define ADC_IRQ_EN_MASK      (ADC_IRQ_EN_OVRDS | \
+                              ADC_IRQ_EN_AWD   | \
+                              ADC_IRQ_EN_EOS   | \
+                              ADC_IRQ_EN_EODS)
+#endif
 /**
   * @}
   */

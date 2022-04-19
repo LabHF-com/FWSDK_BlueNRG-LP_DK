@@ -38,8 +38,10 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
-#include "system_bluenrg_lp.h"
+#include "system_BlueNRG_LP.h"
+#endif
 
 
 /** @addtogroup RF_DRIVER_LL_Driver
@@ -197,7 +199,7 @@ extern "C" {
   {
     __IOM uint32_t tmpreg;
 #if defined(FLASH_FLASH_SIZE_RAM_SIZE)
-    tmpreg = (READ_REG(*((uint32_t *)RAMSIZE_BASE_ADDRESS)) && FLASH_FLASH_SIZE_RAM_SIZE) >> FLASH_FLASH_SIZE_RAM_SIZE_Pos;
+    tmpreg = (READ_REG(*((uint32_t *)RAMSIZE_BASE_ADDRESS)) & FLASH_FLASH_SIZE_RAM_SIZE) >> FLASH_FLASH_SIZE_RAM_SIZE_Pos;
 
     if (tmpreg == 0) {
       tmpreg = LL_UTILS_RAMSIZE_32K;

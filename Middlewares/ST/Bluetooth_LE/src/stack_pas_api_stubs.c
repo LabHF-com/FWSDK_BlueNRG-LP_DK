@@ -24,7 +24,7 @@ tBleStatus aci_gap_set_periodic_advertising_enable(uint8_t Enable,
 }
 
 tBleStatus aci_gap_set_periodic_advertising_data(uint8_t Advertising_Handle,
-                                                 uint8_t Advertising_Data_Length,
+                                                 uint16_t Advertising_Data_Length,
                                                  uint8_t* Advertising_Data)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
@@ -81,20 +81,28 @@ tBleStatus aci_gap_read_periodic_advertiser_list_size(uint8_t* Periodic_Advertis
     return ERR_UNKNOWN_HCI_COMMAND;
 }
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_gap_periodic_advertising_sync_transfer(uint16_t Connection_Handle,
                                                       uint16_t Service_Data,
                                                       uint16_t Sync_Handle)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_gap_periodic_advertising_set_info_transfer(uint16_t Connection_Handle,
                                                           uint16_t Service_Data,
                                                           uint8_t Advertising_Handle)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_gap_set_periodic_advertising_sync_transfer_parameters(uint16_t Connection_Handle,
                                                                      uint8_t Mode,
                                                                      uint16_t Skip,
@@ -103,7 +111,10 @@ tBleStatus aci_gap_set_periodic_advertising_sync_transfer_parameters(uint16_t Co
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_gap_set_default_periodic_advertising_sync_transfer_parameters(uint8_t Mode,
                                                                              uint16_t Skip,
                                                                              uint16_t Sync_Timeout,
@@ -111,6 +122,7 @@ tBleStatus aci_gap_set_default_periodic_advertising_sync_transfer_parameters(uin
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 #if (defined(CONTROLLER_CTE_ENABLED) &&\
             (CONTROLLER_CTE_ENABLED == 1))
@@ -204,6 +216,8 @@ tBleStatus hci_le_set_periodic_advertising_receive_enable(uint16_t Sync_Handle,
     return ERR_UNKNOWN_HCI_COMMAND;
 }
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_default_periodic_advertising_sync_transfer_parameters(uint8_t Mode,
                                                                             uint16_t Skip,
                                                                             uint16_t Sync_Timeout,
@@ -211,7 +225,10 @@ tBleStatus hci_le_set_default_periodic_advertising_sync_transfer_parameters(uint
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_periodic_advertising_sync_transfer_parameters(uint16_t Connection_Handle,
                                                                     uint8_t Mode,
                                                                     uint16_t Skip,
@@ -220,19 +237,26 @@ tBleStatus hci_le_set_periodic_advertising_sync_transfer_parameters(uint16_t Con
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_periodic_advertising_set_info_transfer(uint16_t Connection_Handle,
                                                          uint16_t Service_Data,
                                                          uint8_t Advertising_Handle)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_periodic_advertising_sync_transfer(uint16_t Connection_Handle,
                                                      uint16_t Service_Data,
                                                      uint16_t Sync_Handle)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 #endif

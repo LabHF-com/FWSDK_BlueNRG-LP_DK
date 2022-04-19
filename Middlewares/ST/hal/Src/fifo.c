@@ -25,6 +25,7 @@
 #define MAX(a, b) ((a < b) ? (b) : (a))
 #define FIFO_ALIGN(value, alignment) ((value + alignment - 1) & ~(alignment - 1))
 #define ADVANCE_QUEUE(index, size, max_size) ((index + size) % max_size) /* (((index + size) >= max_size) ? 0 : (index + size))*/
+#define ROLLBACK_QUEUE(index, size, max_size) ((index)>=(size)?((index) - (size)):((max_size)+(index)-(size)))
 #define FIFO_ALIGNMENT fifo->alignment
 #define FIFO_GET_SIZE(fifo) ((fifo->tail>=fifo->head) ? (fifo->tail - fifo->head) : (fifo->max_size - (fifo->head - fifo->tail)))
 #define VAR_LEN_ITEM_SIZE_LENGTH 2
@@ -106,6 +107,13 @@ static uint8_t fifo_get_no_wrap(circular_fifo_t *fifo, uint16_t size, uint8_t  *
 uint8_t fifo_get(circular_fifo_t *fifo, uint16_t size, uint8_t  *buffer)
 {
   return (_fifo_get(fifo, size, buffer, fifo->head));
+}
+
+void fifo_roll_back(circular_fifo_t *fifo, uint16_t size)
+{
+      uint16_t size_aligned = FIFO_ALIGN(size, FIFO_ALIGNMENT);
+      uint16_t var_le_item_size_aligned = FIFO_ALIGN(VAR_LEN_ITEM_SIZE_LENGTH, FIFO_ALIGNMENT);
+      fifo->head = ROLLBACK_QUEUE(fifo->head, size_aligned+var_le_item_size_aligned, fifo->max_size);
 }
 
 uint8_t fifo_put_var_len_item(circular_fifo_t *fifo, uint16_t size1, uint8_t  *buffer1, uint16_t size2, uint8_t  *buffer2)

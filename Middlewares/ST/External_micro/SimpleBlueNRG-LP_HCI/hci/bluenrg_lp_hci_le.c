@@ -431,7 +431,10 @@ tBleStatus hci_le_set_advertising_parameters(uint16_t Advertising_Interval_Min,
   index_input += 1;
   cp0->Peer_Address_Type = htob(Peer_Address_Type, 1);
   index_input += 1;
-  Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  if(Peer_Address)
+  {
+    Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  }
   index_input += 6;
   cp0->Advertising_Channel_Map = htob(Advertising_Channel_Map, 1);
   index_input += 1;
@@ -1652,7 +1655,10 @@ tBleStatus hci_le_set_extended_advertising_parameters(uint8_t Advertising_Handle
   index_input += 1;
   cp0->Peer_Address_Type = htob(Peer_Address_Type, 1);
   index_input += 1;
-  Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  if(Peer_Address)
+  {
+    Osal_MemCpy((void *) &cp0->Peer_Address, (const void *) Peer_Address, 6);
+  }
   index_input += 6;
   cp0->Advertising_Filter_Policy = htob(Advertising_Filter_Policy, 1);
   index_input += 1;

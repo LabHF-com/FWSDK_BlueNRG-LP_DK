@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -178,7 +178,7 @@ uint8_t RC_DeviceInit(void)
   }
   
   /* Set the TX power to 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
   
   /* GATT Init */
   ret = aci_gatt_srv_init();    
@@ -197,7 +197,7 @@ uint8_t RC_DeviceInit(void)
   /* Update device name */
   Gap_profile_set_dev_name(0, sizeof(device_name), device_name);
  
- #if ENABLE_SECURITY
+#if ENABLE_SECURITY
   /* Set the IO capability */
   ret = aci_gap_set_io_capability(IO_CAP_DISPLAY_ONLY);
   if(ret){

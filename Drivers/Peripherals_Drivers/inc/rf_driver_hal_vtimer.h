@@ -100,7 +100,7 @@ typedef struct HAL_VTIMER_InitS {
 
 /**
  * @brief Starts a one-shot virtual timer for the given relative timeout value expressed in ms
- * @param  timerHandle: The virtual timer
+ * @param timerHandle: The virtual timer
  * @param msRelTimeout: The relative time, from current time, expressed in ms
  * @retval 0 if the timerHandle is valid.
  * @retval 1 if the timerHandle is not valid. It is already started.
@@ -197,6 +197,12 @@ void HAL_VTIMER_WakeUpCallback(void);
  * @retval None
  */
 void HAL_VTIMER_RadioTimerIsr(void);
+
+/**
+ * @brief  Timer State machine semaphore to signal the radio activity finished.
+ * @retval None
+ */
+void HAL_VTIMER_EndOfRadioActivityIsr(void);
 
 /**
  * @brief  Returns the number of timers in the queue.

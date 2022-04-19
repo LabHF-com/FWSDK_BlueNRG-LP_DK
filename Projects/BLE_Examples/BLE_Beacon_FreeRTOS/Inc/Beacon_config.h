@@ -22,15 +22,24 @@
 
 /* Number of links needed for the demo
  */
-#if EXTENDED_ADV
-#define NUM_LINKS               (3)
-#else
-#define NUM_LINKS               (1)
+
+#ifdef LEGACY_ADV
+#define NUM_LINKS_FOR_LEGACY_ADV  1
+#else 
+#define NUM_LINKS_FOR_LEGACY_ADV  0
 #endif
 
-#define NUM_ADV_SETS_CONF                            (2U)
+#ifdef EXTENDED_ADV
+#define NUM_LINKS_FOR_EXT_ADV  2
+#else 
+#define NUM_LINKS_FOR_EXT_ADV  0
+#endif
+
+#define NUM_LINKS               (NUM_LINKS_FOR_LEGACY_ADV + NUM_LINKS_FOR_EXT_ADV)
+
+#define NUM_ADV_SETS_CONF                            (2U) 
 #define NUM_AUX_SCAN_SLOTS_CONF                      (0U)
-#define NUM_SYNC_SLOTS_CONF                           (2U)
+#define NUM_SYNC_SLOTS_CONF                          (2U)
 #define WHITE_LIST_SIZE_LOG2_CONF                    (0U)
 #define L2CAP_MPS_CONF                               (247U)
 #define NUM_L2CAP_COCS_CONF                          (0U)
@@ -62,7 +71,7 @@
 #define DYNAMIC_MEMORY_SIZE (BLE_STACK_TOTAL_BUFFER_SIZE(NUM_LINKS,NUM_GATT_ATTRIBUTES,NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,MBLOCKS_COUNT,\
                                                          NUM_ADV_SETS_CONF,NUM_AUX_SCAN_SLOTS_CONF,WHITE_LIST_SIZE_LOG2_CONF,NUM_L2CAP_COCS_CONF,\
                                                          NUM_SYNC_SLOTS_CONF, MAX_NUM_CTE_ANTENNA_IDS, MAX_NUM_CTE_IQ_SAMPLES, \
-                                                         ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE)) 
+                                                         ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE))
 
 /* Maximum duration of the connection event */
 #define MAX_CONN_EVENT_LENGTH_CONF 0xFFFFFFFF
@@ -114,7 +123,7 @@ extern uint8_t hot_table_radio_config[];
     .L2CAP_NumChannels = NUM_L2CAP_COCS_CONF,                                   \
     .NumOfSyncSlots = NUM_SYNC_SLOTS_CONF,                                      \
     .CTE_MaxNumAntennaIDs = MAX_NUM_CTE_ANTENNA_IDS,                            \
-    .CTE_MaxNumIQSamples = MAX_NUM_CTE_IQ_SAMPLES , 		         	\
+    .CTE_MaxNumIQSamples = MAX_NUM_CTE_IQ_SAMPLES, 	                            \
     .isr0_fifo_size = ISR0_FIFO_SIZE,                                           \
     .isr1_fifo_size = ISR1_FIFO_SIZE,                                           \
     .user_fifo_size = USER_FIFO_SIZE                                            \

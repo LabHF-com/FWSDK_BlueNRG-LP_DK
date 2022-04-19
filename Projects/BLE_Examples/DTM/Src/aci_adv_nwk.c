@@ -1,7 +1,7 @@
  /******************** (C) COPYRIGHT 2020 STMicroelectronics ********************
 * File Name          : aci_adv_nwk.c
 * Author             : AMS - RF Application team
-* Description        : Adaptation layer from stack native advertsing interface
+* Description        : Adaptation layer from stack native advertising interface
 *                      to network interface.
 ********************************************************************************
 * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -20,6 +20,7 @@
 #include "bluenrg_lp_api.h"
 #include "link_layer.h"
 #include "stack_user_cfg.h"
+#include "DTM_config.h"
 
 #define LEGACY_ADV_HANDLE   0xFE
 
@@ -169,48 +170,14 @@ tBleStatus aci_gap_set_advertising_enable_preprocess(uint8_t Enable,
 
 #else /* CONTROLLER_EXT_ADV_SCAN_ENABLED == 1 */
 
-#define MIN(a,b) ((a) < (b) )? (a) : (b)
-
-#if defined(__ICCARM__)
-#pragma section = "HEAP"
-
-#define HEAP_OVERHEAD   52
+#define MEM_ALLOC_OVERHEAD   8
 
 tBleStatus hci_le_read_maximum_advertising_data_length(uint16_t *Maximum_Advertising_Data_Length)
 {
-  *Maximum_Advertising_Data_Length = MIN(__section_size("HEAP") - HEAP_OVERHEAD, 1650);
+  *Maximum_Advertising_Data_Length = MIN(ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF - ACI_ATT_QUEUED_WRITE_SIZE_CONF - MEM_ALLOC_OVERHEAD,1650);
   
   return BLE_STATUS_SUCCESS;
 }
-#elif defined(__CC_ARM)
-
-#define HEAP_OVERHEAD   28
-
-extern unsigned int Image$$ARM_LIB_HEAP$$ZI$$Length;
-
-tBleStatus hci_le_read_maximum_advertising_data_length(uint16_t *Maximum_Advertising_Data_Length)
-{
-  *Maximum_Advertising_Data_Length = MIN((uint32_t)&Image$$ARM_LIB_HEAP$$ZI$$Length - HEAP_OVERHEAD, 1650);
-  
-  return BLE_STATUS_SUCCESS;
-}
-
-#elif defined(__GNUC__)
-
-#define HEAP_OVERHEAD   8
-
-extern uint8_t _sheap;  		/* start address for the .heap section. Defined in linker script */
-extern uint8_t _eheap;    	    /* end address for the .heap section. Defined in linker script */
-
-tBleStatus hci_le_read_maximum_advertising_data_length(uint16_t *Maximum_Advertising_Data_Length)
-{
-  *Maximum_Advertising_Data_Length = MIN(&_eheap - &_sheap - HEAP_OVERHEAD, 1650);
-
-  return BLE_STATUS_SUCCESS;
-}
-
-#endif
-
 
 static tBleStatus allocate_and_set_data_ext(uint8_t Advertising_Handle,
                                             uint8_t Operation, uint8_t Data_Length, uint8_t *Data, uint8_t data_type, uint8_t layer);
@@ -270,6 +237,7 @@ static uint8_t adv_data_check_param(uint8_t Advertising_Handle, uint8_t Operatio
   uint16_t adv_event_prop;
   uint8_t ret;
   BOOL periodic_adv_configured;
+  BOOL periodic_adv_enabled;
   
   if(Advertising_Handle == LEGACY_ADV_HANDLE){
     
@@ -284,7 +252,7 @@ static uint8_t adv_data_check_param(uint8_t Advertising_Handle, uint8_t Operatio
   if(Advertising_Handle > 0xEF || Operation > UNCHANGED_DATA)
     return BLE_ERROR_INVALID_HCI_CMD_PARAMS;
   
-  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &adv_event_prop);
+  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &periodic_adv_enabled, &adv_event_prop);
   
   /* "If the advertising set corresponding to the Advertising_Handle parameter does
   not exist, then the Controller shall return the error code Unknown Advertising
@@ -324,6 +292,7 @@ static uint8_t scan_resp_data_check_param(uint8_t Advertising_Handle, uint8_t Op
   uint16_t adv_event_prop;
   uint8_t ret;
   BOOL periodic_adv_configured;
+  BOOL periodic_adv_enabled;
   
   if(Advertising_Handle == LEGACY_ADV_HANDLE){
     
@@ -340,7 +309,7 @@ static uint8_t scan_resp_data_check_param(uint8_t Advertising_Handle, uint8_t Op
   if(Operation > COMPLETE_DATA)
     return BLE_ERROR_INVALID_HCI_CMD_PARAMS;
   
-  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &adv_event_prop);
+  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &periodic_adv_enabled, &adv_event_prop);
   
   /* "If the advertising set corresponding to the Advertising_Handle parameter does
   not exist, then the Controller shall return the error code Unknown Advertising
@@ -381,12 +350,13 @@ static uint8_t periodic_adv_data_check_param(uint8_t Advertising_Handle, uint8_t
 {
   uint16_t adv_event_prop;
   BOOL periodic_adv_configured;
+  BOOL periodic_adv_enabled;
   uint8_t ret;
   
-  if(Operation > COMPLETE_DATA)
+  if(Operation > UNCHANGED_DATA)
     return BLE_ERROR_INVALID_HCI_CMD_PARAMS;
   
-  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &adv_event_prop);
+  ret = ll_get_advertising_info(Advertising_Handle, adv_enabled, &periodic_adv_configured, &periodic_adv_enabled, &adv_event_prop);
   
     /* "If the advertising set corresponding to the Advertising_Handle parameter does
        not exist, then the Controller shall return the error code Unknown Advertising
@@ -400,9 +370,9 @@ static uint8_t periodic_adv_data_check_param(uint8_t Advertising_Handle, uint8_t
     return BLE_ERROR_COMMAND_DISALLOWED;
   
   /* "If periodic advertising is currently enabled for the specified advertising set and
-      Operation does not have the value 0x03, the Controller shall return the error
-      code Command Disallowed (0x0C)." */
-  if(*adv_enabled && Operation != COMPLETE_DATA)
+      Operation does not have the value 0x03 or 0x04, then the Controller shall
+      return the error code Command Disallowed (0x0C)." */
+  if(periodic_adv_enabled && (Operation != COMPLETE_DATA) && (Operation != UNCHANGED_DATA))
     return BLE_ERROR_COMMAND_DISALLOWED;
   
   return  BLE_STATUS_SUCCESS;
@@ -411,39 +381,53 @@ static uint8_t periodic_adv_data_check_param(uint8_t Advertising_Handle, uint8_t
 static tBleStatus set_data_ptr(uint8_t Advertising_Handle,
                                     uint8_t Operation, uint16_t Data_Length, uint8_t *Data, uint8_t data_type, uint8_t gap)
 {    
-  if(data_type == ADV_DATA){
+  if(data_type == ADV_DATA)
+  {
     // Advertising Data
     if(gap)
+    {
       return aci_gap_set_advertising_data(Advertising_Handle, Operation,
                                           Data_Length, Data);
-    else {
-      if(Advertising_Handle == LEGACY_ADV_HANDLE){
+	}
+    else
+    {
+      if(Advertising_Handle == LEGACY_ADV_HANDLE)
+      {
         return ll_set_legacy_advertising_data_ptr(Data_Length, Data);
       }
-      else {
+      else 
+      {
         return ll_set_advertising_data_ptr(Advertising_Handle, Operation, Data_Length, Data);
       }
     }
   }
-  else if (data_type == SCAN_RESP_DATA){
+  else if (data_type == SCAN_RESP_DATA)
+  {
     // Scan Response
     if(gap)
+    {
       return aci_gap_set_scan_response_data(Advertising_Handle,
                                             Data_Length, Data);
-    else {
-      if(Advertising_Handle == LEGACY_ADV_HANDLE){
+	}
+    else 
+    {
+      if(Advertising_Handle == LEGACY_ADV_HANDLE)
+      {
         return ll_set_legacy_scan_reponse_data_ptr(Data_Length, Data);
       }
-      else {
+      else 
+      {
         return ll_set_scan_reponse_data_ptr(Advertising_Handle, Data_Length, Data);
       }
     }
   }
   else { /* data_type == PERIODIC_ADV_DATA */
-    if(gap){
+    if(gap)
+    {
       return aci_gap_set_periodic_advertising_data(Advertising_Handle, Data_Length, Data);
     }
-    else {
+    else 
+    {
       return ll_set_periodic_advertising_data_ptr(Advertising_Handle, Data_Length, Data);
     }
   }

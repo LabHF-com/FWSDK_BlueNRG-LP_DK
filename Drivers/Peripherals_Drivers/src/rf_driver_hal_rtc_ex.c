@@ -5,9 +5,13 @@
   * @brief   Extended RTC HAL module driver.
   *          This file provides firmware functions to manage the following 
   *          functionalities of the Real Time Clock (RTC) Extended peripheral:
+  *           + RTC Time Stamp functions (*)
+  *           + RTC Tamper functions (*)
   *           + RTC Wake-up functions
   *           + Extended Control functions
-  *           + Extended RTC features functions    
+  *           + Extended RTC features functions  
+  *  
+  *         (*)  Function not defined in all devices. 
   *
   @verbatim
   ==============================================================================
@@ -26,6 +30,24 @@
         using the HAL_RTCEx_SetWakeUpTimer_IT() function.
     (+) To read the RTC WakeUp Counter register, use the HAL_RTCEx_GetWakeUpTimer()
         function.
+  *** TimeStamp configuration ***
+  ===============================
+  [..]
+    (+) Enable the RTC TimeStamp using the HAL_RTCEx_SetTimeStamp() function.
+        You can also configure the RTC TimeStamp with interrupt mode using the
+        HAL_RTCEx_SetTimeStamp_IT() function.
+    (+) To read the RTC TimeStamp Time and Date register, use the HAL_RTCEx_GetTimeStamp()
+        function.
+  *** Tamper configuration ***
+  ============================
+  [..]
+    (+) Enable the RTC Tamper and configure the Tamper filter count, trigger Edge 
+        or Level according to the Tamper filter (if equal to 0 Edge else Level) 
+        value, sampling frequency, NoErase, MaskFlag,  precharge or discharge and
+        Pull-UP using the HAL_RTCEx_SetTamper() function. You can configure RTC Tamper
+        with interrupt mode using HAL_RTCEx_SetTamper_IT() function.
+    (+) The default configuration of the Tamper erases the backup registers. To avoid
+        erase, enable the NoErase field on the RTC_TAMPCR register.
         
   *** Outputs configuration ***
   =============================
@@ -58,7 +80,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -85,6 +107,18 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+/** @defgroup RTCEx_Private_Constants RTCEx Private Constants
+  * @{
+  */
+#if defined(RTC_TAMPER1_SUPPORT)
+#define RTC_TAMPCR_MASK               ((uint32_t)RTC_TAMPCR_TAMPTS    |\
+                                       (uint32_t)RTC_TAMPCR_TAMPFREQ  | (uint32_t)RTC_TAMPCR_TAMPFLT      | (uint32_t)RTC_TAMPCR_TAMPPRCH |\
+                                       (uint32_t)RTC_TAMPCR_TAMPPUDIS | (uint32_t)RTC_TAMPCR_TAMPIE                                       |\
+                                       (uint32_t)RTC_TAMPCR_TAMP1IE   | (uint32_t)RTC_TAMPCR_TAMP1NOERASE | (uint32_t)RTC_TAMPCR_TAMP1MF)
+#endif /* RTC_TAMPER1_SUPPORT */
+/**
+  * @}
+  */
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -94,7 +128,665 @@
   * @{
   */
 
+
 /** @addtogroup RTCEx_Exported_Functions_Group1
+ *  @brief   RTC TimeStamp and Tamper functions
+  *
+@verbatim
+ ===============================================================================
+                 ##### RTC TimeStamp and Tamper functions #####
+ ===============================================================================
+ 
+ This section provides functions allowing to configure TimeStamp feature
+
+@endverbatim
+  * @{
+  */
+
+#ifdef RTC_TAMPER1_SUPPORT
+/**
+  * @brief  Set TimeStamp.
+  * @note   This API must be called before enabling the TimeStamp feature.
+  * @param hrtc RTC handle
+  * @param TimeStampEdge Specifies the pin edge on which the TimeStamp is
+  *         activated.
+  *          This parameter can be one of the following values:
+  *             @arg RTC_TIMESTAMPEDGE_RISING: the Time stamp event occurs on the  
+  *                                        rising edge of the related pin.
+  *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on the 
+  *                                         falling edge of the related pin.
+  * @param RTC_TimeStampPin specifies the RTC TimeStamp Pin.
+  *          This parameter can be one of the following values:
+  *             @arg RTC_TIMESTAMPPIN_DEFAULT: for reasons of
+  *               compatibility, this parameter is required.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin)
+{
+  uint32_t tmpreg;
+
+  /* Check the parameters */
+  assert_param(IS_TIMESTAMP_EDGE(TimeStampEdge));
+  assert_param(IS_RTC_TIMESTAMP_PIN(RTC_TimeStampPin));
+
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Get the RTC_CR register and clear the bits to be configured */
+  tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
+
+  tmpreg|= TimeStampEdge;
+
+  /* Disable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+  
+  /* Clear the Timestamp Flag */
+  __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSF);
+  
+  /* Clear the Timestamp overrun Flag */
+   __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSOVF); 
+
+  /* Configure the Time Stamp TSEDGE and Enable bits */
+  hrtc->Instance->CR = (uint32_t)tmpreg;
+
+  __HAL_RTC_TIMESTAMP_ENABLE(hrtc);
+
+  /* Enable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+
+  /* Change RTC state */
+  hrtc->State = HAL_RTC_STATE_READY; 
+
+  /* Process Unlocked */ 
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Set TimeStamp with Interrupt.
+  * @param hrtc RTC handle
+  * @note   This API must be called before enabling the TimeStamp feature.
+  * @param TimeStampEdge Specifies the pin edge on which the TimeStamp is
+  *         activated.
+  *          This parameter can be one of the following values:
+  *             @arg RTC_TIMESTAMPEDGE_RISING: the Time stamp event occurs on the  
+  *                                        rising edge of the related pin.
+  *             @arg RTC_TIMESTAMPEDGE_FALLING: the Time stamp event occurs on the 
+  *                                         falling edge of the related pin.
+  * @param RTC_TimeStampPin Specifies the RTC TimeStamp Pin.
+  *          This parameter can be one of the following values:
+  *             @arg RTC_TIMESTAMPPIN_DEFAULT: for reasons of
+  *               compatibility, this parameter is required.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin)
+{
+  uint32_t tmpreg;
+
+  /* Check the parameters */
+  assert_param(IS_TIMESTAMP_EDGE(TimeStampEdge));
+  assert_param(IS_RTC_TIMESTAMP_PIN(RTC_TimeStampPin));
+
+  /* Process Locked */ 
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Get the RTC_CR register and clear the bits to be configured */
+  tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
+
+  tmpreg |= TimeStampEdge;
+
+  /* Disable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+  
+  /* Clear the Timestamp Flag */
+  __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSF);
+  
+  /* Clear the Timestamp overrun Flag */
+   __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSOVF); 
+  
+  /* Configure the Time Stamp TSEDGE and Enable bits */
+  hrtc->Instance->CR = (uint32_t)tmpreg;
+
+  __HAL_RTC_TIMESTAMP_ENABLE(hrtc);
+
+  /* Enable IT timestamp */
+  __HAL_RTC_TIMESTAMP_ENABLE_IT(hrtc,RTC_IT_TS);
+
+  /* RTC timestamp Interrupt Configuration: EXTI configuration */
+  //__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_IT();   todo mm1mm check and test Interrupt enable with timestap tamper
+
+  //__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE();  todo mm1mm check and test Interrupt enable with timestap tamper
+
+  /* Enable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Deactivate TimeStamp.
+  * @param hrtc RTC handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc)
+{
+  uint32_t tmpreg;
+
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Disable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+
+  /* In case of interrupt mode is used, the interrupt source must disabled */
+  __HAL_RTC_TIMESTAMP_DISABLE_IT(hrtc, RTC_IT_TS);
+
+  /* Get the RTC_CR register and clear the bits to be configured */
+  tmpreg = (uint32_t)(hrtc->Instance->CR & (uint32_t)~(RTC_CR_TSEDGE | RTC_CR_TSE));
+
+  /* Configure the Time Stamp TSEDGE and Enable bits */
+  hrtc->Instance->CR = (uint32_t)tmpreg;
+
+  /* Enable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+#endif
+
+#if defined(RTC_INTERNALTS_SUPPORT)
+/**
+  * @brief  Set Internal TimeStamp.
+  * @note   This API must be called before enabling the internal TimeStamp feature.
+  * @param hrtc pointer to a RTC_HandleTypeDef structure that contains
+  *                the configuration information for RTC.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTimeStamp(RTC_HandleTypeDef *hrtc)
+{
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Disable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+
+  /* Clear the TIMESTAMP Flags */
+  __HAL_RTC_INTERNAL_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_ITSF);
+  
+  /* Configure the internal Time Stamp Enable bits */
+  __HAL_RTC_INTERNAL_TIMESTAMP_ENABLE(hrtc);
+
+  /* Enable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+
+  /* Change RTC state */
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */ 
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Deactivate Internal TimeStamp.
+  * @param hrtc pointer to a RTC_HandleTypeDef structure that contains
+  *                the configuration information for RTC.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc)
+{
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Disable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+
+  /* Configure the internal Time Stamp Enable bits */
+  __HAL_RTC_INTERNAL_TIMESTAMP_DISABLE(hrtc);
+
+  /* Enable the write protection for RTC registers */
+  __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Get the RTC TimeStamp value.
+  * @param hrtc RTC handle
+  * @param sTimeStamp Pointer to Time structure
+  * @param sTimeStampDate Pointer to Date structure  
+  * @param Format specifies the format of the entered parameters.
+  *          This parameter can be one of the following values:
+  *             @arg RTC_FORMAT_BIN: Binary data format 
+  *             @arg RTC_FORMAT_BCD: BCD data format
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef* sTimeStamp, RTC_DateTypeDef* sTimeStampDate, uint32_t Format)
+{
+  uint32_t tmptime, tmpdate;
+
+  /* Check the parameters */
+  assert_param(IS_RTC_FORMAT(Format));
+
+  /* Get the TimeStamp time and date registers values */
+  tmptime = (uint32_t)(hrtc->Instance->TSTR & RTC_TR_RESERVED_MASK);
+  tmpdate = (uint32_t)(hrtc->Instance->TSDR & RTC_DR_RESERVED_MASK);
+
+  /* Fill the Time structure fields with the read parameters */
+  sTimeStamp->Hours = (uint8_t)((tmptime & (RTC_TR_HT | RTC_TR_HU)) >> 16U);
+  sTimeStamp->Minutes = (uint8_t)((tmptime & (RTC_TR_MNT | RTC_TR_MNU)) >> 8U);
+  sTimeStamp->Seconds = (uint8_t)(tmptime & (RTC_TR_ST | RTC_TR_SU));
+  sTimeStamp->TimeFormat = (uint8_t)((tmptime & (RTC_TR_PM)) >> 16U);
+  sTimeStamp->SubSeconds = (uint32_t) hrtc->Instance->TSSSR;
+
+  /* Fill the Date structure fields with the read parameters */
+  sTimeStampDate->Year = 0U;
+  sTimeStampDate->Month = (uint8_t)((tmpdate & (RTC_DR_MT | RTC_DR_MU)) >> 8U);
+  sTimeStampDate->Date = (uint8_t)(tmpdate & (RTC_DR_DT | RTC_DR_DU));
+  sTimeStampDate->WeekDay = (uint8_t)((tmpdate & (RTC_DR_WDU)) >> 13U);
+
+  /* Check the input parameters format */
+  if(Format == RTC_FORMAT_BIN)
+  {
+    /* Convert the TimeStamp structure parameters to Binary format */
+    sTimeStamp->Hours = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Hours);
+    sTimeStamp->Minutes = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Minutes);
+    sTimeStamp->Seconds = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Seconds);
+
+    /* Convert the DateTimeStamp structure parameters to Binary format */
+    sTimeStampDate->Month = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Month);
+    sTimeStampDate->Date = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Date);
+    sTimeStampDate->WeekDay = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->WeekDay);
+  }
+
+  /* Clear the TIMESTAMP Flags */
+  #if defined(RTC_FLAG_ITSF)
+  __HAL_RTC_INTERNAL_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_ITSF);
+  #endif
+  
+  __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSF);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Set Tamper
+  * @note   By calling this API we disable the tamper interrupt for all tampers.
+  * @param hrtc RTC handle
+  * @param sTamper Pointer to Tamper Structure.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef* sTamper)
+{
+  uint32_t tmpreg;
+
+  /* Check the parameters */
+  assert_param(IS_RTC_TAMPER(sTamper->Tamper));
+  assert_param(IS_RTC_TAMPER_TRIGGER(sTamper->Trigger));
+  assert_param(IS_RTC_TAMPER_ERASE_MODE(sTamper->NoErase));
+  assert_param(IS_RTC_TAMPER_MASKFLAG_STATE(sTamper->MaskFlag));
+  assert_param(IS_RTC_TAMPER_FILTER(sTamper->Filter));
+  assert_param(IS_RTC_TAMPER_SAMPLING_FREQ(sTamper->SamplingFrequency));
+  assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
+  assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
+  assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sTamper->TimeStampOnTamperDetection));
+
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Configure the tamper trigger */
+  if(sTamper->Trigger != RTC_TAMPERTRIGGER_RISINGEDGE)
+  { 
+    sTamper->Trigger = (uint32_t)(sTamper->Tamper << 1U); 
+  }
+
+  if(sTamper->NoErase != RTC_TAMPER_ERASE_BACKUP_ENABLE)
+  { 
+    sTamper->NoErase = 0U;
+#if defined(RTC_TAMPER1_SUPPORT)
+    if((sTamper->Tamper & RTC_TAMPER_1) != 0U)
+    {
+      sTamper->NoErase |= RTC_TAMPCR_TAMP1NOERASE;
+    }
+#endif /* RTC_TAMPER1_SUPPORT */
+  }
+
+  if(sTamper->MaskFlag != RTC_TAMPERMASK_FLAG_DISABLE)
+  {
+    sTamper->MaskFlag = 0U;
+#if defined(RTC_TAMPER1_SUPPORT)
+    if((sTamper->Tamper & RTC_TAMPER_1) != 0U)
+    {
+      sTamper->MaskFlag |= RTC_TAMPCR_TAMP1MF;
+    }
+#endif /* RTC_TAMPER1_SUPPORT */
+  }
+
+  /* Configure the RTC_TAMPCR register */
+  tmpreg = (uint32_t)((uint32_t)sTamper->Tamper | (uint32_t)sTamper->Trigger  | (uint32_t)sTamper->NoErase |\
+            (uint32_t)sTamper->MaskFlag | (uint32_t)sTamper->Filter | (uint32_t)sTamper->SamplingFrequency |\
+            (uint32_t)sTamper->PrechargeDuration | (uint32_t)sTamper->TamperPullUp | (uint32_t)sTamper->TimeStampOnTamperDetection);
+
+  hrtc->Instance->TAMPCR &= (uint32_t)~((uint32_t)sTamper->Tamper | (uint32_t)(sTamper->Tamper << 1) | RTC_TAMPCR_MASK);
+
+  hrtc->Instance->TAMPCR |= tmpreg;
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Set Tamper with interrupt.
+  * @note   By calling this API we force the tamper interrupt for all tampers.
+  * @param hrtc RTC handle
+  * @param sTamper Pointer to RTC Tamper.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef* sTamper)
+{
+  uint32_t tmpreg;
+
+  /* Check the parameters */
+  assert_param( IS_RTC_TAMPER(sTamper->Tamper));
+  assert_param(IS_RTC_TAMPER_INTERRUPT(sTamper->Interrupt));
+  assert_param( IS_RTC_TAMPER_TRIGGER(sTamper->Trigger));
+  assert_param(IS_RTC_TAMPER_ERASE_MODE(sTamper->NoErase));
+  assert_param(IS_RTC_TAMPER_MASKFLAG_STATE(sTamper->MaskFlag));
+  assert_param(IS_RTC_TAMPER_FILTER(sTamper->Filter));
+  assert_param(IS_RTC_TAMPER_SAMPLING_FREQ(sTamper->SamplingFrequency));
+  assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
+  assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
+  assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sTamper->TimeStampOnTamperDetection));
+
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Configure the tamper trigger */
+  if(sTamper->Trigger != RTC_TAMPERTRIGGER_RISINGEDGE)
+  {
+    sTamper->Trigger = (uint32_t)(sTamper->Tamper << 1U);
+  }
+
+  if(sTamper->NoErase != RTC_TAMPER_ERASE_BACKUP_ENABLE)
+  { 
+    sTamper->NoErase = 0U;
+#if defined(RTC_TAMPER1_SUPPORT)
+    if((sTamper->Tamper & RTC_TAMPER_1) != 0U)
+    {
+      sTamper->NoErase |= RTC_TAMPCR_TAMP1NOERASE;
+    }
+#endif /* RTC_TAMPER1_SUPPORT */
+
+  }
+
+  if(sTamper->MaskFlag != RTC_TAMPERMASK_FLAG_DISABLE)
+  {
+    sTamper->MaskFlag = 0U;
+#if defined(RTC_TAMPER1_SUPPORT)
+    if((sTamper->Tamper & RTC_TAMPER_1) != 0U)
+    {
+      sTamper->MaskFlag |= RTC_TAMPCR_TAMP1MF;
+    }
+#endif /* RTC_TAMPER1_SUPPORT */
+  }
+
+  /* Configure the RTC_TAMPCR register */    
+  tmpreg = (uint32_t)((uint32_t)sTamper->Tamper | (uint32_t)sTamper->Interrupt | (uint32_t)sTamper->Trigger  | (uint32_t)sTamper->NoErase |\
+            (uint32_t)sTamper->MaskFlag | (uint32_t)sTamper->Filter | (uint32_t)sTamper->SamplingFrequency                                |\
+            (uint32_t)sTamper->PrechargeDuration | (uint32_t)sTamper->TamperPullUp | (uint32_t)sTamper->TimeStampOnTamperDetection);
+
+  hrtc->Instance->TAMPCR &= (uint32_t)~((uint32_t)sTamper->Tamper | (uint32_t)(sTamper->Tamper << 1) | RTC_TAMPCR_MASK);
+  
+  hrtc->Instance->TAMPCR |= tmpreg;
+
+  /* RTC Tamper Interrupt Configuration: EXTI configuration */
+  //__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_IT();   todo mm1mm check the IT enable from cut 2.0 of Spirit3 device
+  
+  //__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE();
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Deactivate Tamper.
+  * @param hrtc RTC handle
+  * @param Tamper Selected tamper pin.
+  *          This parameter can be any combination of RTC_TAMPER_1, RTC_TAMPER_2 and RTC_TAMPER_3.
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper)
+{
+  assert_param( IS_RTC_TAMPER(Tamper));
+
+  /* Process Locked */
+  __HAL_LOCK(hrtc);
+
+  hrtc->State = HAL_RTC_STATE_BUSY;
+
+  /* Disable the selected Tamper pin */
+  hrtc->Instance->TAMPCR &= ((uint32_t)~Tamper);
+  
+#if defined(RTC_TAMPER1_SUPPORT)
+  if ((Tamper & RTC_TAMPER_1) != 0U)
+  {
+    /* Disable the Tamper1 interrupt */
+    hrtc->Instance->TAMPCR &= ((uint32_t)~(RTC_IT_TAMP | RTC_IT_TAMP1));
+  }
+#endif /* RTC_TAMPER1_SUPPORT */
+
+  hrtc->State = HAL_RTC_STATE_READY;
+
+  /* Process Unlocked */
+  __HAL_UNLOCK(hrtc);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Handle TimeStamp interrupt request.
+  * @param hrtc RTC handle
+  * @retval None
+  */
+void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
+{ 
+  /* Get the TimeStamp interrupt source enable status */
+  if(__HAL_RTC_TIMESTAMP_GET_IT_SOURCE(hrtc, RTC_IT_TS) != 0U)
+  {
+    /* Get the pending status of the TIMESTAMP Interrupt */
+    if(__HAL_RTC_TIMESTAMP_GET_FLAG(hrtc, RTC_FLAG_TSF) != 0U)
+    {
+      /* TIMESTAMP callback */
+#if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
+      hrtc->TimeStampEventCallback(hrtc);
+#else
+      HAL_RTCEx_TimeStampEventCallback(hrtc);
+#endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
+      
+      /* Clear the TIMESTAMP interrupt pending bit */
+      __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSF);
+    }
+  }
+
+#if defined(RTC_TAMPER1_SUPPORT)
+  /* Get the Tamper1 interrupts source enable status */
+  if(__HAL_RTC_TAMPER_GET_IT_SOURCE(hrtc, RTC_IT_TAMP | RTC_IT_TAMP1) != 0U)
+  {
+    /* Get the pending status of the Tamper1 Interrupt */
+    if(__HAL_RTC_TAMPER_GET_FLAG(hrtc, RTC_FLAG_TAMP1F) != 0U)
+    {
+      /* Tamper1 callback */
+#if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
+      hrtc->Tamper1EventCallback(hrtc);
+#else
+      HAL_RTCEx_Tamper1EventCallback(hrtc);
+#endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
+
+      /* Clear the Tamper1 interrupt pending bit */
+      __HAL_RTC_TAMPER_CLEAR_FLAG(hrtc, RTC_FLAG_TAMP1F);
+    }
+  }
+#endif /* RTC_TAMPER1_SUPPORT */
+
+
+  /* Clear the EXTI's Flag for RTC TimeStamp and Tamper */
+  //__HAL_RTC_TAMPER_TIMESTAMP_EXTI_CLEAR_FLAG();  todo mm1mm check the IT - from cut 2.0 of Spirit3 device
+
+  /* Change RTC state */
+  hrtc->State = HAL_RTC_STATE_READY;
+}
+
+/**
+  * @brief  TimeStamp callback. 
+  * @param hrtc RTC handle
+  * @retval None
+  */
+WEAK_FUNCTION(void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc))
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hrtc);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_RTCEx_TimeStampEventCallback could be implemented in the user file
+  */
+}
+
+#if defined(RTC_TAMPER1_SUPPORT)
+/**
+  * @brief  Tamper 1 callback.
+  * @param hrtc RTC handle
+  * @retval None
+  */
+WEAK_FUNCTION(void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc))
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hrtc);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_RTCEx_Tamper1EventCallback could be implemented in the user file
+   */
+}
+#endif /* RTC_TAMPER1_SUPPORT */
+
+/**
+  * @brief  Handle TimeStamp polling request.
+  * @param hrtc RTC handle
+  * @param Timeout Timeout duration
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
+{ 
+  uint32_t tickstart = HAL_GetTick();
+
+  while(__HAL_RTC_TIMESTAMP_GET_FLAG(hrtc, RTC_FLAG_TSF) == 0U)
+  {
+    if(__HAL_RTC_TIMESTAMP_GET_FLAG(hrtc, RTC_FLAG_TSOVF) != 0U)
+    {
+      /* Clear the TIMESTAMP OverRun Flag */
+      __HAL_RTC_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_TSOVF);
+
+      /* Change TIMESTAMP state */
+      hrtc->State = HAL_RTC_STATE_ERROR; 
+
+      return HAL_ERROR; 
+    }
+
+    if(Timeout != HAL_MAX_DELAY)
+    {
+      if(((HAL_GetTick() - tickstart ) > Timeout)||(Timeout == 0U))
+      {
+        hrtc->State = HAL_RTC_STATE_TIMEOUT;
+        return HAL_TIMEOUT;
+      }
+    }
+  }
+   
+  /* Change RTC state */
+  hrtc->State = HAL_RTC_STATE_READY;
+  
+  return HAL_OK;
+}
+
+#if defined(RTC_TAMPER1_SUPPORT)
+/**
+  * @brief  Handle Tamper 1 Polling.
+  * @param hrtc RTC handle
+  * @param Timeout Timeout duration
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
+{
+  uint32_t tickstart = HAL_GetTick();
+
+  /* Get the status of the Interrupt */
+  while(__HAL_RTC_TAMPER_GET_FLAG(hrtc, RTC_FLAG_TAMP1F)== 0U)
+  {
+    if(Timeout != HAL_MAX_DELAY)
+    {
+      if(((HAL_GetTick() - tickstart ) > Timeout)||(Timeout == 0U))
+      {
+        hrtc->State = HAL_RTC_STATE_TIMEOUT;
+        return HAL_TIMEOUT;
+      }
+    }
+  }
+
+  /* Clear the Tamper Flag */
+  __HAL_RTC_TAMPER_CLEAR_FLAG(hrtc,RTC_FLAG_TAMP1F);
+  
+  /* Change RTC state */
+  hrtc->State = HAL_RTC_STATE_READY;
+  
+  return HAL_OK; 
+}
+#endif /* RTC_TAMPER1_SUPPORT */
+
+/**
+  * @}
+  */
+
+#endif 
+
+/** @addtogroup RTCEx_Exported_Functions_Group2
   * @brief    RTC Wake-up functions
   *
 @verbatim   

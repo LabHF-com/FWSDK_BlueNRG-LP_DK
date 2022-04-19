@@ -187,6 +187,38 @@ typedef	uint8_t	tBDAddr[6];
 /**
  * @}
  */
+   
+/**
+ * @name CTE Type
+ * @{
+ */   
+#define CTE_AOA         0x00
+#define CTE_AOD_1us     0x01
+#define CTE_AOD_2us     0x02
+/**
+ * @}
+ */
+
+/**
+ * @name CTE Type bitmask
+ * @{
+ */   
+#define CTE_AOA_BIT         0x01
+#define CTE_AOD_1us_BIT     0x02
+#define CTE_AOD_2us_BIT     0x04
+/**
+ * @}
+ */
+   
+/**
+ * @name CTE Slot Duration
+ * @{
+ */   
+#define CTE_SLOT_1us        0x01
+#define CTE_SLOT_2us        0x02
+/**
+ * @}
+ */
 
 /**
  * @name Reason for hci_le_transmit_power_reporting_event()

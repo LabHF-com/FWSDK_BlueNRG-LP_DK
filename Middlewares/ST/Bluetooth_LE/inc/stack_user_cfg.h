@@ -20,19 +20,20 @@
   ******************************************************************************
 * \section BLE_Config BLE stack configuration options  
 
-    - The BLE stack v3.1 supports the following outstanding features:
-      -- Controller Privacy
-      -- LE Secure Connections
-      -- Controller Master
-      -- Controller Data Length Extension
-      -- LE 2M PHY
-      -- LE Coded PHY
-      -- Extended Advertising
-      -- Periodic Advertising and Synchronizer
-      -- L2CAP Connection Oriented Channels
-      -- Constant Tone Extension
-      -- LE Power Control & Path Loss Monitoring
-    - In order to configure the BLE stack v3.1 or later the following predefined options are available:
+    - The BLE stack v3.0 or later supports the following outstanding features:
+      -- Controller Privacy (v3.0)
+      -- LE Secure Connections (v3.0)
+      -- Controller Master (v3.0)
+      -- Controller Data Length Extension (v3.0)
+      -- LE 2M/Coded PHY (v3.0)
+      -- Extended Advertising (v3.0)
+      -- Periodic Advertising and Synchronizer (v3.1)
+      -- L2CAP Connection Oriented Channels (v3.0)
+      -- Constant Tone Extension (v3.1)
+      -- Power Control & Path Loss Monitoring (v3.1)
+      -- Connection Support (v3.1a)
+    
+    - In order to configure the BLE stack v3.0 or later the following options are available:
         
         - BLE stack full configuration: all the outstanding features are included. 
           - To enable this configuration, the user is requested to add the following preprocessor option
@@ -40,31 +41,29 @@
             
             BLE_STACK_FULL_CONF
         
-        - BLE stack basic configuration: none of the outstanding features is included.
+        - BLE stack basic configuration: none of the outstanding features is included except for the Connection Support mode.
           - To enable this configuration, the user is requested to add the following preprocessor option
             to project configuration: 
             
             BLE_STACK_BASIC_CONF 
         
-        - BLE stack configuration with Slave Only mode and Data Length Extension:
+        - BLE stack configuration with Slave Only mode, Data Length Extension, and Connection Support:
           - To enable this configuration, the user is requested to add the following preprocessor option
             to project configuration:
             
             BLE_STACK_SLAVE_DLE_CONF 
         
-        - BLE stack configuration with Slave Only mode, Data Length Extension, LE 2M PHY, and LE Coded PHY.
+        - BLE stack configuration with Slave Only mode, Data Length Extension, LE 2M PHY, LE Coded PHY, and Connection Support.
           - To enable this configuration, the user is requested to add the following preprocessor option
             to project configuration:
             
             BLE_STACK_SLAVE_DLE_LE_2M_CODED_CONF
        
-        - BLE custom stack configuration defined on header file custom_ble_stack_conf.h placed on application Inc folder. 
+        - BLE stack custom configuration: the user decides the outstanding features to include.
           - To enable this configuration, the user is requested to add the following preprocessor option
             to project configuration:
             
             BLE_STACK_CUSTOM_CONF    
-
-       
 **/
 
 #ifndef _STACK_USER_CFG_H_
@@ -78,12 +77,10 @@
 
 
 /** @defgroup BLE_Stack_Config BLE Stack Modular Configuration
- *  @li BLE_STACK_BASIC_CONF: only basic features are enabled (no Controller Privacy, no LE Secure Connections,
-    no Master GAP role, no Data Length Extension)
+ *  @li BLE_STACK_BASIC_CONF: only basic features are enabled (e.g., Slave Only mode)
  *  @li BLE_STACK_FULL_CONF: all features are enabled
- *  @li BLE_STACK_SLAVE_DLE_CONF : Slave + Data Length Extension enabled (if available)
- *  @li BLE_STACK_SLAVE_DLE_LE_2M_CODED_CONF : Slave + Data Length Extension enabled  + PHY 2M/Coded PHY (if available)
- *  @li BLE_STACK_CUSTOM_CONF: custom configuration options defined on header file custom_ble_stack_conf.h
+ *  @li BLE_STACK_SLAVE_DLE_CONF: Slave Only + Data Length Extension enabled
+ *  @li BLE_STACK_SLAVE_DLE_LE_2M_CODED_CONF: Slave Only + Data Length Extension + PHY 2M/Coded PHY enabled
  *
  *  Uncomment one of the lines or define the configuration in your toolchain compiler preprocessor.
  *  @note It is mandatory to define one (and only one) of the options.
@@ -110,6 +107,9 @@
 #  error "No BLE_STACK_*_CONF has been defined."
 #endif
 
+#if !(defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS) )
+#  error "No CONFIG_DEVICE_BLUENRG_* has been defined."
+#endif
 
 /**
  * @brief Full BLE stack configuration
@@ -117,6 +117,7 @@
 #if defined(BLE_STACK_FULL_CONF)
 #  define CONTROLLER_PRIVACY_ENABLED                  (1U) /* Controller Privacy feature:                ENABLED  */
 #  define CONTROLLER_MASTER_ENABLED                   (1U) /* Master role:                               ENABLED  */
+#  if defined(CONFIG_DEVICE_BLUENRG_LP)
 #    define SECURE_CONNECTIONS_ENABLED                (1U) /* LE Secure Connections feature:             ENABLED  */
 #    define CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED  (1U) /* Data Length Extension feature:             ENABLED  */
 #    define CONTROLLER_2M_CODED_PHY_ENABLED           (1U) /* LE 2M + Coded PHYs:                        ENABLED  */
@@ -125,6 +126,18 @@
 #    define CONTROLLER_PERIODIC_ADV_ENABLED           (1U) /* Periodic Advertising and Synchronizer:     ENABLED  */
 #    define CONTROLLER_CTE_ENABLED                    (0U) /* Constant Tone Extension:                   DISABLED */
 #    define CONTROLLER_POWER_CONTROL_ENABLED          (1U) /* Power Control & Path Loss Monitoring:      ENABLED  */
+#    define CONNECTION_ENABLED                (1U) /* Connection Support:                        ENABLED  */
+#  elif defined(CONFIG_DEVICE_BLUENRG_LPS)
+#    define SECURE_CONNECTIONS_ENABLED                (1U) /* LE Secure Connections feature:             DISABLED */
+#    define CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED  (1U) /* Data Length Extension feature:             ENABLED  */
+#    define CONTROLLER_2M_CODED_PHY_ENABLED           (1U) /* LE 2M + Coded PHYs:                        ENABLED  */
+#    define CONTROLLER_EXT_ADV_SCAN_ENABLED           (1U) /* Extended Advertising and Scanning feature: ENABLED  */
+#    define L2CAP_COS_ENABLED                         (1U) /* L2CAP COS feature:                         DISABLED */
+#    define CONTROLLER_PERIODIC_ADV_ENABLED           (1U) /* Periodic Advertising and Synchronizer:     ENABLED  */
+#    define CONTROLLER_CTE_ENABLED                    (1U) /* Constant Tone Extension:                   ENABLED  */
+#    define CONTROLLER_POWER_CONTROL_ENABLED          (1U) /* Power Control & Path Loss Monitoring:      DISABLED */
+#    define CONNECTION_ENABLED                (1U) /* Connection Support:                        ENABLED  */
+#  endif
 
 /**
  * @brief Basic BLE stack configuration
@@ -140,6 +153,7 @@
 #  define CONTROLLER_PERIODIC_ADV_ENABLED             (0U) /* Periodic Advertising and Synchronizer:     DISABLED */
 #  define CONTROLLER_CTE_ENABLED                      (0U) /* Constant Tone Extension:                   DISABLED */
 #  define CONTROLLER_POWER_CONTROL_ENABLED            (0U) /* Power Control & Path Loss Monitoring:      DISABLED */
+#  define CONNECTION_ENABLED                          (1U) /* Connection Support:                        ENABLED  */
 
 /**
  * @brief BLE stack configuration: only Slave role with Data Length Extension feature enabled
@@ -154,7 +168,10 @@
 #  define CONTROLLER_PERIODIC_ADV_ENABLED             (0U) /* Periodic Advertising and Synchronizer:     DISABLED */
 #  define CONTROLLER_CTE_ENABLED                      (0U) /* Constant Tone Extension:                   DISABLED */
 #  define CONTROLLER_POWER_CONTROL_ENABLED            (0U) /* Power Control & Path Loss Monitoring:      DISABLED */
+#  define CONNECTION_ENABLED                          (1U) /* Connection Support:                        ENABLED  */
+# if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #    define CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED  (1U) /* Data Length Extension feature:             ENABLED  */
+#  endif
 
 /**
  * @brief BLE stack configuration: only Slave role with Data Length Extension feature and LE 2M + Coded PHYs
@@ -168,8 +185,11 @@
 #  define CONTROLLER_PERIODIC_ADV_ENABLED             (0U) /* Periodic Advertising and Synchronizer:     DISABLED */
 #  define CONTROLLER_CTE_ENABLED                      (0U) /* Constant Tone Extension:                   DISABLED */
 #  define CONTROLLER_POWER_CONTROL_ENABLED            (0U) /* Power Control & Path Loss Monitoring:      DISABLED */
+#  define CONNECTION_ENABLED                          (1U) /* Connection Support:                        ENABLED  */
+#  if defined(CONFIG_DEVICE_BLUENRG_LP)
 #    define CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED  (1U) /* Data Length Extension feature:             ENABLED  */
 #    define CONTROLLER_2M_CODED_PHY_ENABLED           (1U) /* LE 2M + Coded PHYs:                        ENABLED  */
+#  endif
 #elif defined(BLE_STACK_CUSTOM_CONF)
 #  include "custom_ble_stack_conf.h"
 #endif
@@ -253,6 +273,17 @@ tBleStatus GAP_set_extended_advertising_enable(uint8_t Enable,
                                                uint8_t Num_Of_Sets,
                                                Advertising_Set_Parameters_t* Advertising_Set_Parameters);
 
+void aci_gap_limited_discoverable_event_cb_ucfg(uint8_t header_type,
+                                                uint8_t* buff_p);
+void aci_gap_limited_discoverable_event_cb_ucfg_weak(uint8_t header_type,
+                                                     uint8_t* buff_p);
+void aci_gap_limited_discoverable_event_cb(uint8_t header_type,
+                                           uint8_t* buff_p);
+
+void GAP_LimDiscTimeoutcb_ucfg(uint8_t timer_id);
+void GAP_LimDiscTimeoutcb_ucfg_weak(uint8_t timer_id);
+void GAP_LimDiscTimeoutcb(uint8_t timer_id);
+
 void GAP_hci_le_advertising_set_terminated_evt_hndl_ucfg(uint8_t status,
                                                          uint8_t Advertising_Handle);
 void GAP_hci_le_advertising_set_terminated_evt_hndl_ucfg_weak(uint8_t status,
@@ -328,9 +359,30 @@ tBleStatus GAP_enable_disable_scan_legacy(BOOL enable,
 tBleStatus GAP_enable_disable_scan_ext(BOOL enable,
                                        uint8_t duplicate_filtering);
 
+tBleStatus GAP_connection_procedure_ucfg(uint8_t procedure_code,
+                                         uint8_t phys,
+                                         uint8_t peer_address_type,
+                                         uint8_t peer_address[6]);
+tBleStatus GAP_connection_procedure_ucfg_weak(uint8_t procedure_code,
+                                              uint8_t phys,
+                                              uint8_t peer_address_type,
+                                              uint8_t peer_address[6]);
+tBleStatus GAP_connection_procedure(uint8_t procedure_code,
+                                    uint8_t phys,
+                                    uint8_t peer_address_type,
+                                    uint8_t peer_address[6]);
+
+tBleStatus GAP_terminate_gap_procedure_ucfg(uint8_t procedure_code);
+tBleStatus GAP_terminate_gap_procedure_ucfg_weak(uint8_t procedure_code);
+tBleStatus GAP_terminate_gap_procedure(uint8_t procedure_code);
+
 tBleStatus GAP_discover_peer_name_ucfg(void);
 tBleStatus GAP_discover_peer_name_ucfg_weak(void);
 tBleStatus GAP_discover_peer_name(void);
+
+void GAP_name_disc_proc_connected_check_ucfg(uint16_t task_idx);
+void GAP_name_disc_proc_connected_check_ucfg_weak(uint16_t task_idx);
+void GAP_name_disc_proc_connected_check(uint16_t task_idx);
 
 void GAP_master_connection_complete_handler_ucfg(uint8_t status,
                                                  uint16_t connectionHandle);
@@ -361,6 +413,40 @@ tBleStatus GAP_suspend_resume_active_advertising_sets_ucfg(BOOL resume);
 tBleStatus GAP_suspend_resume_active_advertising_sets_ucfg_weak(BOOL resume);
 tBleStatus GAP_suspend_resume_active_advertising_sets_extended(BOOL resume);
 
+void GAP_ResumeAdvertising_ucfg(uint16_t task_idx);
+void GAP_ResumeAdvertising_ucfg_weak(uint16_t task_idx);
+void GAP_ResumeAdvertising(uint16_t task_idx);
+
+tBleStatus hci_acl_data_tx_cmpl_event_int_cb_ucfg(void* header_p,
+                                                  uint8_t* buff_p);
+tBleStatus hci_acl_data_tx_cmpl_event_int_cb_ucfg_weak(void* header_p,
+                                                       uint8_t* buff_p);
+tBleStatus hci_acl_data_tx_cmpl_event_int_cb(void* header_p,
+                                             uint8_t* buff_p);
+
+tBleStatus hci_acl_data_ind_event_int_cb_ucfg(void* header_p,
+                                              uint8_t* buff_p);
+tBleStatus hci_acl_data_ind_event_int_cb_ucfg_weak(void* header_p,
+                                                   uint8_t* buff_p);
+tBleStatus hci_acl_data_ind_event_int_cb(void* header_p,
+                                         uint8_t* buff_p);
+
+void hci_acl_Process_Q_ucfg(uint16_t task_idx);
+void hci_acl_Process_Q_ucfg_weak(uint16_t task_idx);
+void hci_acl_Process_Q(uint16_t task_idx);
+
+void hci_acl_Init_ucfg(void);
+void hci_acl_Init_ucfg_weak(void);
+void hci_acl_Init(void);
+
+void Controller_Process_Q_ucfg(uint16_t task_idx);
+void Controller_Process_Q_ucfg_weak(uint16_t task_idx);
+void Controller_Process_Q(uint16_t task_idx);
+
+void LLC_offline_control_procedures_processing_ucfg(uint16_t task_idx);
+void LLC_offline_control_procedures_processing_ucfg_weak(uint16_t task_idx);
+void LLC_offline_control_procedures_processing(uint16_t task_idx);
+
 uint32_t cte_csr_ucfg(void);
 uint32_t cte_csr_ucfg_weak(void);
 uint32_t cte_csr(void);
@@ -389,9 +475,293 @@ uint32_t master_csr_ucfg(void);
 uint32_t master_csr_ucfg_weak(void);
 uint32_t master_csr(void);
 
+uint32_t conn_supp_csr_ucfg(void);
+uint32_t conn_supp_csr_ucfg_weak(void);
+uint32_t conn_supp_csr(void);
+
 tBleStatus LLC_test_check_cte_params_ucfg(void* params);
 tBleStatus LLC_test_check_cte_params_ucfg_weak(void* params);
 tBleStatus LLC_test_check_cte_params(void* params);
+
+tBleStatus hci_disconnection_complete_event_int_cb_ucfg(void* header_p,
+                                                        uint8_t* buff_p);
+tBleStatus hci_disconnection_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                             uint8_t* buff_p);
+tBleStatus hci_disconnection_complete_event_int_cb(void* header_p,
+                                                   uint8_t* buff_p);
+
+tBleStatus hci_encryption_change_event_int_cb_ucfg(void* header_p,
+                                                   uint8_t* buff_p);
+tBleStatus hci_encryption_change_event_int_cb_ucfg_weak(void* header_p,
+                                                        uint8_t* buff_p);
+tBleStatus hci_encryption_change_event_int_cb(void* header_p,
+                                              uint8_t* buff_p);
+
+tBleStatus hci_encryption_key_refresh_complete_event_int_cb_ucfg(void* header_p,
+                                                                 uint8_t* buff_p);
+tBleStatus hci_encryption_key_refresh_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                                      uint8_t* buff_p);
+tBleStatus hci_encryption_key_refresh_complete_event_int_cb(void* header_p,
+                                                            uint8_t* buff_p);
+
+tBleStatus hci_le_connection_complete_event_int_cb_ucfg(void* header_p,
+                                                        uint8_t* buff_p);
+tBleStatus hci_le_connection_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                             uint8_t* buff_p);
+tBleStatus hci_le_connection_complete_event_int_cb(void* header_p,
+                                                   uint8_t* buff_p);
+
+tBleStatus hci_le_enhanced_connection_complete_event_int_cb_ucfg(void* header_p,
+                                                                 uint8_t* buff_p);
+tBleStatus hci_le_enhanced_connection_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                                      uint8_t* buff_p);
+tBleStatus hci_le_enhanced_connection_complete_event_int_cb(void* header_p,
+                                                            uint8_t* buff_p);
+
+tBleStatus hci_le_long_term_key_request_event_int_cb_ucfg(void* header_p,
+                                                          uint8_t* buff_p);
+tBleStatus hci_le_long_term_key_request_event_int_cb_ucfg_weak(void* header_p,
+                                                               uint8_t* buff_p);
+tBleStatus hci_le_long_term_key_request_event_int_cb(void* header_p,
+                                                     uint8_t* buff_p);
+
+tBleStatus hci_le_read_local_p256_public_key_complete_event_int_cb_ucfg(void* header_p,
+                                                                        uint8_t* buff_p);
+tBleStatus hci_le_read_local_p256_public_key_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                                             uint8_t* buff_p);
+tBleStatus hci_le_read_local_p256_public_key_complete_event_int_cb(void* header_p,
+                                                                   uint8_t* buff_p);
+
+tBleStatus hci_le_generate_dhkey_complete_event_int_cb_ucfg(void* header_p,
+                                                            uint8_t* buff_p);
+tBleStatus hci_le_generate_dhkey_complete_event_int_cb_ucfg_weak(void* header_p,
+                                                                 uint8_t* buff_p);
+tBleStatus hci_le_generate_dhkey_complete_event_int_cb(void* header_p,
+                                                       uint8_t* buff_p);
+
+tBleStatus hci_le_advertising_report_event_int_cb_ucfg(void* header_p,
+                                                       uint8_t* buff_p);
+tBleStatus hci_le_advertising_report_event_int_cb_ucfg_weak(void* header_p,
+                                                            uint8_t* buff_p);
+tBleStatus hci_le_advertising_report_event_int_cb(void* header_p,
+                                                  uint8_t* buff_p);
+
+tBleStatus hci_le_direct_advertising_report_event_int_cb_ucfg(void* header_p,
+                                                              uint8_t* buff_p);
+tBleStatus hci_le_direct_advertising_report_event_int_cb_ucfg_weak(void* header_p,
+                                                                   uint8_t* buff_p);
+tBleStatus hci_le_direct_advertising_report_event_int_cb(void* header_p,
+                                                         uint8_t* buff_p);
+
+tBleStatus hci_le_extended_advertising_report_event_int_cb_ucfg(void* header_p,
+                                                                uint8_t* buff_p);
+tBleStatus hci_le_extended_advertising_report_event_int_cb_ucfg_weak(void* header_p,
+                                                                     uint8_t* buff_p);
+tBleStatus hci_le_extended_advertising_report_event_int_cb(void* header_p,
+                                                           uint8_t* buff_p);
+
+tBleStatus hci_le_scan_timeout_event_int_cb_ucfg(void* header_p,
+                                                 uint8_t* buff_p);
+tBleStatus hci_le_scan_timeout_event_int_cb_ucfg_weak(void* header_p,
+                                                      uint8_t* buff_p);
+tBleStatus hci_le_scan_timeout_event_int_cb(void* header_p,
+                                            uint8_t* buff_p);
+
+tBleStatus hci_le_advertising_set_terminated_event_int_cb_ucfg(void* header_p,
+                                                               uint8_t* buff_p);
+tBleStatus hci_le_advertising_set_terminated_event_int_cb_ucfg_weak(void* header_p,
+                                                                    uint8_t* buff_p);
+tBleStatus hci_le_advertising_set_terminated_event_int_cb(void* header_p,
+                                                          uint8_t* buff_p);
+
+void aci_gatt_srv_attribute_modified_event_cb_ucfg(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_gatt_srv_attribute_modified_event_cb_ucfg_weak(uint8_t header_type,
+                                                        uint8_t* buff_p);
+void aci_gatt_srv_attribute_modified_event_cb(uint8_t header_type,
+                                              uint8_t* buff_p);
+
+void aci_gatt_proc_timeout_event_cb_ucfg(uint8_t header_type,
+                                         uint8_t* buff_p);
+void aci_gatt_proc_timeout_event_cb_ucfg_weak(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_gatt_proc_timeout_event_cb(uint8_t header_type,
+                                    uint8_t* buff_p);
+
+void aci_gatt_clt_indication_event_cb_ucfg(uint8_t header_type,
+                                           uint8_t* buff_p);
+void aci_gatt_clt_indication_event_cb_ucfg_weak(uint8_t header_type,
+                                                uint8_t* buff_p);
+void aci_gatt_clt_indication_event_cb(uint8_t header_type,
+                                      uint8_t* buff_p);
+
+void aci_gatt_clt_notification_event_cb_ucfg(uint8_t header_type,
+                                             uint8_t* buff_p);
+void aci_gatt_clt_notification_event_cb_ucfg_weak(uint8_t header_type,
+                                                  uint8_t* buff_p);
+void aci_gatt_clt_notification_event_cb(uint8_t header_type,
+                                        uint8_t* buff_p);
+
+void aci_gatt_clt_proc_complete_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_gatt_clt_proc_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_gatt_clt_proc_complete_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void aci_gatt_clt_error_resp_event_cb_ucfg(uint8_t header_type,
+                                           uint8_t* buff_p);
+void aci_gatt_clt_error_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                uint8_t* buff_p);
+void aci_gatt_clt_error_resp_event_cb(uint8_t header_type,
+                                      uint8_t* buff_p);
+
+void aci_gatt_clt_disc_read_char_by_uuid_resp_event_cb_ucfg(uint8_t header_type,
+                                                            uint8_t* buff_p);
+void aci_gatt_clt_disc_read_char_by_uuid_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                                 uint8_t* buff_p);
+void aci_gatt_clt_disc_read_char_by_uuid_resp_event_cb(uint8_t header_type,
+                                                       uint8_t* buff_p);
+
+void aci_gatt_tx_pool_available_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_gatt_tx_pool_available_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_gatt_tx_pool_available_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void aci_gatt_srv_confirmation_event_cb_ucfg(uint8_t header_type,
+                                             uint8_t* buff_p);
+void aci_gatt_srv_confirmation_event_cb_ucfg_weak(uint8_t header_type,
+                                                  uint8_t* buff_p);
+void aci_gatt_srv_confirmation_event_cb(uint8_t header_type,
+                                        uint8_t* buff_p);
+
+void aci_gatt_srv_read_event_cb_ucfg(uint8_t header_type,
+                                     uint8_t* buff_p);
+void aci_gatt_srv_read_event_cb_ucfg_weak(uint8_t header_type,
+                                          uint8_t* buff_p);
+void aci_gatt_srv_read_event_cb(uint8_t header_type,
+                                uint8_t* buff_p);
+
+void aci_gatt_srv_write_event_cb_ucfg(uint8_t header_type,
+                                      uint8_t* buff_p);
+void aci_gatt_srv_write_event_cb_ucfg_weak(uint8_t header_type,
+                                           uint8_t* buff_p);
+void aci_gatt_srv_write_event_cb(uint8_t header_type,
+                                 uint8_t* buff_p);
+
+void aci_att_exchange_mtu_resp_event_cb_ucfg(uint8_t header_type,
+                                             uint8_t* buff_p);
+void aci_att_exchange_mtu_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                  uint8_t* buff_p);
+void aci_att_exchange_mtu_resp_event_cb(uint8_t header_type,
+                                        uint8_t* buff_p);
+
+void aci_att_clt_find_info_resp_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_att_clt_find_info_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_att_clt_find_info_resp_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void aci_att_clt_find_by_type_value_resp_event_cb_ucfg(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void aci_att_clt_find_by_type_value_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                            uint8_t* buff_p);
+void aci_att_clt_find_by_type_value_resp_event_cb(uint8_t header_type,
+                                                  uint8_t* buff_p);
+
+void aci_att_clt_read_by_type_resp_event_cb_ucfg(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void aci_att_clt_read_by_type_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                      uint8_t* buff_p);
+void aci_att_clt_read_by_type_resp_event_cb(uint8_t header_type,
+                                            uint8_t* buff_p);
+
+void aci_att_clt_read_resp_event_cb_ucfg(uint8_t header_type,
+                                         uint8_t* buff_p);
+void aci_att_clt_read_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_att_clt_read_resp_event_cb(uint8_t header_type,
+                                    uint8_t* buff_p);
+
+void aci_att_clt_read_blob_resp_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_att_clt_read_blob_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_att_clt_read_blob_resp_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void aci_att_clt_read_multiple_resp_event_cb_ucfg(uint8_t header_type,
+                                                  uint8_t* buff_p);
+void aci_att_clt_read_multiple_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void aci_att_clt_read_multiple_resp_event_cb(uint8_t header_type,
+                                             uint8_t* buff_p);
+
+void aci_att_clt_read_by_group_type_resp_event_cb_ucfg(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void aci_att_clt_read_by_group_type_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                            uint8_t* buff_p);
+void aci_att_clt_read_by_group_type_resp_event_cb(uint8_t header_type,
+                                                  uint8_t* buff_p);
+
+void aci_att_clt_prepare_write_resp_event_cb_ucfg(uint8_t header_type,
+                                                  uint8_t* buff_p);
+void aci_att_clt_prepare_write_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void aci_att_clt_prepare_write_resp_event_cb(uint8_t header_type,
+                                             uint8_t* buff_p);
+
+void aci_att_clt_exec_write_resp_event_cb_ucfg(uint8_t header_type,
+                                               uint8_t* buff_p);
+void aci_att_clt_exec_write_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                    uint8_t* buff_p);
+void aci_att_clt_exec_write_resp_event_cb(uint8_t header_type,
+                                          uint8_t* buff_p);
+
+void aci_att_srv_prepare_write_req_event_cb_ucfg(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void aci_att_srv_prepare_write_req_event_cb_ucfg_weak(uint8_t header_type,
+                                                      uint8_t* buff_p);
+void aci_att_srv_prepare_write_req_event_cb(uint8_t header_type,
+                                            uint8_t* buff_p);
+
+void aci_att_srv_exec_write_req_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void aci_att_srv_exec_write_req_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_att_srv_exec_write_req_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void hci_disconnection_complete_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void hci_disconnection_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void hci_disconnection_complete_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
+
+void hci_encryption_change_event_cb_ucfg(uint8_t header_type,
+                                         uint8_t* buff_p);
+void hci_encryption_change_event_cb_ucfg_weak(uint8_t header_type,
+                                              uint8_t* buff_p);
+void hci_encryption_change_event_cb(uint8_t header_type,
+                                    uint8_t* buff_p);
+
+void hci_encryption_key_refresh_complete_event_cb_ucfg(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void hci_encryption_key_refresh_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                            uint8_t* buff_p);
+void hci_encryption_key_refresh_complete_event_cb(uint8_t header_type,
+                                                  uint8_t* buff_p);
+
+void hci_le_connection_complete_event_cb_ucfg(uint8_t header_type,
+                                              uint8_t* buff_p);
+void hci_le_connection_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void hci_le_connection_complete_event_cb(uint8_t header_type,
+                                         uint8_t* buff_p);
 
 void hci_le_advertising_report_event_cb_ucfg(uint8_t header_type,
                                              uint8_t* buff_p);
@@ -399,6 +769,13 @@ void hci_le_advertising_report_event_cb_ucfg_weak(uint8_t header_type,
                                                   uint8_t* buff_p);
 void hci_le_advertising_report_event_cb(uint8_t header_type,
                                         uint8_t* buff_p);
+
+void hci_le_long_term_key_request_event_cb_ucfg(uint8_t header_type,
+                                                uint8_t* buff_p);
+void hci_le_long_term_key_request_event_cb_ucfg_weak(uint8_t header_type,
+                                                     uint8_t* buff_p);
+void hci_le_long_term_key_request_event_cb(uint8_t header_type,
+                                           uint8_t* buff_p);
 
 void hci_le_read_local_p256_public_key_complete_event_cb_ucfg(uint8_t header_type,
                                                               uint8_t* buff_p);
@@ -413,6 +790,13 @@ void hci_le_generate_dhkey_complete_event_cb_ucfg_weak(uint8_t header_type,
                                                        uint8_t* buff_p);
 void hci_le_generate_dhkey_complete_event_cb(uint8_t header_type,
                                              uint8_t* buff_p);
+
+void hci_le_enhanced_connection_complete_event_cb_ucfg(uint8_t header_type,
+                                                       uint8_t* buff_p);
+void hci_le_enhanced_connection_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                            uint8_t* buff_p);
+void hci_le_enhanced_connection_complete_event_cb(uint8_t header_type,
+                                                  uint8_t* buff_p);
 
 void hci_le_direct_advertising_report_event_cb_ucfg(uint8_t header_type,
                                                     uint8_t* buff_p);
@@ -441,6 +825,48 @@ void hci_le_advertising_set_terminated_event_cb_ucfg_weak(uint8_t header_type,
                                                           uint8_t* buff_p);
 void hci_le_advertising_set_terminated_event_cb(uint8_t header_type,
                                                 uint8_t* buff_p);
+
+void hci_read_remote_version_information_complete_event_cb_ucfg(uint8_t header_type,
+                                                                uint8_t* buff_p);
+void hci_read_remote_version_information_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                                     uint8_t* buff_p);
+void hci_read_remote_version_information_complete_event_cb(uint8_t header_type,
+                                                           uint8_t* buff_p);
+
+void hci_number_of_completed_packets_event_cb_ucfg(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void hci_number_of_completed_packets_event_cb_ucfg_weak(uint8_t header_type,
+                                                        uint8_t* buff_p);
+void hci_number_of_completed_packets_event_cb(uint8_t header_type,
+                                              uint8_t* buff_p);
+
+void hci_data_buffer_overflow_event_cb_ucfg(uint8_t header_type,
+                                            uint8_t* buff_p);
+void hci_data_buffer_overflow_event_cb_ucfg_weak(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void hci_data_buffer_overflow_event_cb(uint8_t header_type,
+                                       uint8_t* buff_p);
+
+void hci_authenticated_payload_timeout_expired_event_cb_ucfg(uint8_t header_type,
+                                                             uint8_t* buff_p);
+void hci_authenticated_payload_timeout_expired_event_cb_ucfg_weak(uint8_t header_type,
+                                                                  uint8_t* buff_p);
+void hci_authenticated_payload_timeout_expired_event_cb(uint8_t header_type,
+                                                        uint8_t* buff_p);
+
+void hci_le_connection_update_complete_event_cb_ucfg(uint8_t header_type,
+                                                     uint8_t* buff_p);
+void hci_le_connection_update_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                          uint8_t* buff_p);
+void hci_le_connection_update_complete_event_cb(uint8_t header_type,
+                                                uint8_t* buff_p);
+
+void hci_le_read_remote_used_features_complete_event_cb_ucfg(uint8_t header_type,
+                                                             uint8_t* buff_p);
+void hci_le_read_remote_used_features_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                                  uint8_t* buff_p);
+void hci_le_read_remote_used_features_complete_event_cb(uint8_t header_type,
+                                                        uint8_t* buff_p);
 
 void hci_le_data_length_change_event_cb_ucfg(uint8_t header_type,
                                              uint8_t* buff_p);
@@ -484,6 +910,13 @@ void hci_le_scan_request_received_event_cb_ucfg_weak(uint8_t header_type,
 void hci_le_scan_request_received_event_cb(uint8_t header_type,
                                            uint8_t* buff_p);
 
+void hci_le_channel_selection_algorithm_event_cb_ucfg(uint8_t header_type,
+                                                      uint8_t* buff_p);
+void hci_le_channel_selection_algorithm_event_cb_ucfg_weak(uint8_t header_type,
+                                                           uint8_t* buff_p);
+void hci_le_channel_selection_algorithm_event_cb(uint8_t header_type,
+                                                 uint8_t* buff_p);
+
 void hci_le_connectionless_iq_report_event_cb_ucfg(uint8_t header_type,
                                                    uint8_t* buff_p);
 void hci_le_connectionless_iq_report_event_cb_ucfg_weak(uint8_t header_type,
@@ -526,6 +959,34 @@ void hci_le_transmit_power_reporting_event_cb_ucfg_weak(uint8_t header_type,
 void hci_le_transmit_power_reporting_event_cb(uint8_t header_type,
                                               uint8_t* buff_p);
 
+void hci_rx_acl_data_event_cb_ucfg(uint8_t header_type,
+                                   uint8_t* buff_p);
+void hci_rx_acl_data_event_cb_ucfg_weak(uint8_t header_type,
+                                        uint8_t* buff_p);
+void hci_rx_acl_data_event_cb(uint8_t header_type,
+                              uint8_t* buff_p);
+
+void aci_l2cap_connection_update_resp_event_cb_ucfg(uint8_t header_type,
+                                                    uint8_t* buff_p);
+void aci_l2cap_connection_update_resp_event_cb_ucfg_weak(uint8_t header_type,
+                                                         uint8_t* buff_p);
+void aci_l2cap_connection_update_resp_event_cb(uint8_t header_type,
+                                               uint8_t* buff_p);
+
+void aci_l2cap_proc_timeout_event_cb_ucfg(uint8_t header_type,
+                                          uint8_t* buff_p);
+void aci_l2cap_proc_timeout_event_cb_ucfg_weak(uint8_t header_type,
+                                               uint8_t* buff_p);
+void aci_l2cap_proc_timeout_event_cb(uint8_t header_type,
+                                     uint8_t* buff_p);
+
+void aci_l2cap_connection_update_req_event_cb_ucfg(uint8_t header_type,
+                                                   uint8_t* buff_p);
+void aci_l2cap_connection_update_req_event_cb_ucfg_weak(uint8_t header_type,
+                                                        uint8_t* buff_p);
+void aci_l2cap_connection_update_req_event_cb(uint8_t header_type,
+                                              uint8_t* buff_p);
+
 void aci_l2cap_cfc_connection_event_cb_ucfg(uint8_t header_type,
                                             uint8_t* buff_p);
 void aci_l2cap_cfc_connection_event_cb_ucfg_weak(uint8_t header_type,
@@ -547,6 +1008,13 @@ void aci_l2cap_flow_control_credit_event_cb_ucfg_weak(uint8_t header_type,
 void aci_l2cap_flow_control_credit_event_cb(uint8_t header_type,
                                             uint8_t* buff_p);
 
+void aci_l2cap_command_reject_event_cb_ucfg(uint8_t header_type,
+                                            uint8_t* buff_p);
+void aci_l2cap_command_reject_event_cb_ucfg_weak(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void aci_l2cap_command_reject_event_cb(uint8_t header_type,
+                                       uint8_t* buff_p);
+
 void aci_l2cap_sdu_data_tx_event_cb_ucfg(uint8_t header_type,
                                          uint8_t* buff_p);
 void aci_l2cap_sdu_data_tx_event_cb_ucfg_weak(uint8_t header_type,
@@ -560,6 +1028,63 @@ void aci_l2cap_sdu_data_rx_event_cb_ucfg_weak(uint8_t header_type,
                                               uint8_t* buff_p);
 void aci_l2cap_sdu_data_rx_event_cb(uint8_t header_type,
                                     uint8_t* buff_p);
+
+void aci_hal_scan_req_report_event_cb_ucfg(uint8_t header_type,
+                                           uint8_t* buff_p);
+void aci_hal_scan_req_report_event_cb_ucfg_weak(uint8_t header_type,
+                                                uint8_t* buff_p);
+void aci_hal_scan_req_report_event_cb(uint8_t header_type,
+                                      uint8_t* buff_p);
+
+void aci_gap_pairing_complete_event_cb_ucfg(uint8_t header_type,
+                                            uint8_t* buff_p);
+void aci_gap_pairing_complete_event_cb_ucfg_weak(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void aci_gap_pairing_complete_event_cb(uint8_t header_type,
+                                       uint8_t* buff_p);
+
+void aci_gap_pass_key_req_event_cb_ucfg(uint8_t header_type,
+                                        uint8_t* buff_p);
+void aci_gap_pass_key_req_event_cb_ucfg_weak(uint8_t header_type,
+                                             uint8_t* buff_p);
+void aci_gap_pass_key_req_event_cb(uint8_t header_type,
+                                   uint8_t* buff_p);
+
+void aci_gap_slave_security_initiated_event_cb_ucfg(uint8_t header_type,
+                                                    uint8_t* buff_p);
+void aci_gap_slave_security_initiated_event_cb_ucfg_weak(uint8_t header_type,
+                                                         uint8_t* buff_p);
+void aci_gap_slave_security_initiated_event_cb(uint8_t header_type,
+                                               uint8_t* buff_p);
+
+void aci_gap_bond_lost_event_cb_ucfg(uint8_t header_type,
+                                     uint8_t* buff_p);
+void aci_gap_bond_lost_event_cb_ucfg_weak(uint8_t header_type,
+                                          uint8_t* buff_p);
+void aci_gap_bond_lost_event_cb(uint8_t header_type,
+                                uint8_t* buff_p);
+
+void aci_gap_numeric_comparison_value_event_cb_ucfg(uint8_t header_type,
+                                                    uint8_t* buff_p);
+void aci_gap_numeric_comparison_value_event_cb_ucfg_weak(uint8_t header_type,
+                                                         uint8_t* buff_p);
+void aci_gap_numeric_comparison_value_event_cb(uint8_t header_type,
+                                               uint8_t* buff_p);
+
+void aci_gap_keypress_notification_event_cb_ucfg(uint8_t header_type,
+                                                 uint8_t* buff_p);
+void aci_gap_keypress_notification_event_cb_ucfg_weak(uint8_t header_type,
+                                                      uint8_t* buff_p);
+void aci_gap_keypress_notification_event_cb(uint8_t header_type,
+                                            uint8_t* buff_p);
+
+tBleStatus PM_init_ucfg(void);
+tBleStatus PM_init_ucfg_weak(void);
+tBleStatus PM_init(void);
+
+tBleStatus L2C_init_ucfg(uint8_t cos_enabled);
+tBleStatus L2C_init_ucfg_weak(uint8_t cos_enabled);
+tBleStatus L2C_init(uint8_t cos_enabled);
 
 tBleStatus L2C_cos_process_cfc_mode_command_ucfg(void* params);
 tBleStatus L2C_cos_process_cfc_mode_command_ucfg_weak(void* params);
@@ -605,30 +1130,13 @@ tBleStatus L2C_cos_le_frame_data_hndl_ucfg(void* params);
 tBleStatus L2C_cos_le_frame_data_hndl_ucfg_weak(void* params);
 tBleStatus L2C_cos_le_frame_data_hndl(void* params);
 
-void aci_hal_scan_req_report_event_cb_ucfg(uint8_t header_type,
-                                           uint8_t* buff_p);
-void aci_hal_scan_req_report_event_cb_ucfg_weak(uint8_t header_type,
-                                                uint8_t* buff_p);
-void aci_hal_scan_req_report_event_cb(uint8_t header_type,
-                                      uint8_t* buff_p);
+tBleStatus llc_conn_multi_link_connection_ucfg(uint8_t enable);
+tBleStatus llc_conn_multi_link_connection_ucfg_weak(uint8_t enable);
+tBleStatus llc_conn_multi_link_connection(uint8_t enable);
 
-tBleStatus LL_Read_RSSI_ucfg(int8_t* rssiVal,
-                             uint16_t connHandle);
-tBleStatus LL_Read_RSSI_ucfg_weak(int8_t* rssiVal,
-                                  uint16_t connHandle);
-tBleStatus LL_Read_RSSI(int8_t* rssiVal,
-                        uint16_t connHandle);
-
-BOOL LL_phy_upd_pending_ucfg(uint8_t conn_idx);
-BOOL LL_phy_upd_pending_ucfg_weak(uint8_t conn_idx);
-BOOL LL_phy_upd_pending(uint8_t conn_idx);
-
-void LLC_conn_process_rx_cte_ucfg(void* params,
-                                  uint8_t cte_type);
-void LLC_conn_process_rx_cte_ucfg_weak(void* params,
-                                       uint8_t cte_type);
-void LLC_conn_process_rx_cte(void* params,
-                             uint8_t cte_type);
+void llc_conn_slave_sleep_latency_cancellation_ucfg(uint16_t task_idx);
+void llc_conn_slave_sleep_latency_cancellation_ucfg_weak(uint16_t task_idx);
+void llc_conn_slave_sleep_latency_cancellation(uint16_t task_idx);
 
 void LL_cpe_init_length_update_ucfg(void);
 void LL_cpe_init_length_update_ucfg_weak(void);
@@ -650,6 +1158,14 @@ void LL_cpe_init_pcl_ucfg(void);
 void LL_cpe_init_pcl_ucfg_weak(void);
 void LL_cpe_init_pcl(void);
 
+void reclassify_channels_ucfg(void);
+void reclassify_channels_ucfg_weak(void);
+void reclassify_channels(void);
+
+void channel_Update_Offline_Processing_ucfg(uint16_t task_idx);
+void channel_Update_Offline_Processing_ucfg_weak(uint16_t task_idx);
+void channel_Update_Offline_Processing(uint16_t task_idx);
+
 void LL_conn_upd_max_tx_time_coded_ucfg(void* params);
 void LL_conn_upd_max_tx_time_coded_ucfg_weak(void* params);
 void LL_conn_upd_max_tx_time_coded(void* params);
@@ -658,9 +1174,9 @@ void LL_conn_upd_data_length_change_event_ucfg(void* params);
 void LL_conn_upd_data_length_change_event_ucfg_weak(void* params);
 void LL_conn_upd_data_length_change_event(void* params);
 
-void LLC_conn_init_cte_ctxt_ucfg(uint8_t conn_idx);
-void LLC_conn_init_cte_ctxt_ucfg_weak(uint8_t conn_idx);
-void LLC_conn_init_cte_ctxt(uint8_t conn_idx);
+void llc_conn_init_cte_ctxt_ucfg(uint8_t conn_idx);
+void llc_conn_init_cte_ctxt_ucfg_weak(uint8_t conn_idx);
+void llc_conn_init_cte_ctxt(uint8_t conn_idx);
 
 BOOL LLC_cte_request_procedure_ucfg(void* params);
 BOOL LLC_cte_request_procedure_ucfg_weak(void* params);
@@ -680,6 +1196,17 @@ void LLC_connection_cte_response_disable_ucfg_weak(uint8_t conn_idx,
 void LLC_connection_cte_response_disable(uint8_t conn_idx,
                                          uint8_t taskslot_no);
 
+void llc_cte_process_rx_cte_ucfg(void* params,
+                                 uint8_t cte_type);
+void llc_cte_process_rx_cte_ucfg_weak(void* params,
+                                      uint8_t cte_type);
+void llc_cte_process_rx_cte(void* params,
+                            uint8_t cte_type);
+
+void LLC_authenticated_payload_timeout_processing_ucfg(uint16_t task_idx);
+void LLC_authenticated_payload_timeout_processing_ucfg_weak(uint16_t task_idx);
+void LLC_authenticated_payload_timeout_processing(uint16_t task_idx);
+
 void LL_past_reload_txctrl_packet_ucfg(uint8_t conn_idx,
                                        uint8_t* pdu_ptr);
 void LL_past_reload_txctrl_packet_ucfg_weak(uint8_t conn_idx,
@@ -695,9 +1222,9 @@ void LL_past_default_params_ucfg(uint8_t conn_idx);
 void LL_past_default_params_ucfg_weak(uint8_t conn_idx);
 void LL_past_default_params(uint8_t conn_idx);
 
-void LLC_conn_init_pcl_ctxt_ucfg(uint8_t conn_idx);
-void LLC_conn_init_pcl_ctxt_ucfg_weak(uint8_t conn_idx);
-void LLC_conn_init_pcl_ctxt(uint8_t conn_idx);
+void llc_conn_init_pcl_ctxt_ucfg(uint8_t conn_idx);
+void llc_conn_init_pcl_ctxt_ucfg_weak(uint8_t conn_idx);
+void llc_conn_init_pcl_ctxt(uint8_t conn_idx);
 
 void LLC_pcl_hal_cntxt_init_ucfg(uintptr_t pcl_cntxt_p);
 void LLC_pcl_hal_cntxt_init_ucfg_weak(uintptr_t pcl_cntxt_p);
@@ -732,6 +1259,13 @@ BOOL LLC_pcl_offline_processing_ucfg(uint8_t conn_idx);
 BOOL LLC_pcl_offline_processing_ucfg_weak(uint8_t conn_idx);
 BOOL LLC_pcl_offline_processing(uint8_t conn_idx);
 
+tBleStatus LL_Read_RSSI_ucfg(int8_t* rssiVal,
+                             uint16_t connHandle);
+tBleStatus LL_Read_RSSI_ucfg_weak(int8_t* rssiVal,
+                                  uint16_t connHandle);
+tBleStatus LL_Read_RSSI(int8_t* rssiVal,
+                        uint16_t connHandle);
+
 uint8_t LLC_pcl_get_number_of_phys_ucfg(void);
 uint8_t LLC_pcl_get_number_of_phys_ucfg_weak(void);
 uint8_t LLC_pcl_get_number_of_phys(void);
@@ -739,6 +1273,10 @@ uint8_t LLC_pcl_get_number_of_phys(void);
 void LL_phy_upd_compute_data_PDU_length_params_ucfg(void* params);
 void LL_phy_upd_compute_data_PDU_length_params_ucfg_weak(void* params);
 void LL_phy_upd_compute_data_PDU_length_params(void* params);
+
+BOOL LL_phy_upd_pending_ucfg(uint8_t conn_idx);
+BOOL LL_phy_upd_pending_ucfg_weak(uint8_t conn_idx);
+BOOL LL_phy_upd_pending(uint8_t conn_idx);
 
 tBleStatus LL_phy_update_init_ucfg(void);
 tBleStatus LL_phy_update_init_ucfg_weak(void);
@@ -786,6 +1324,31 @@ void LLC_test_set_cte_ucfg(void* params);
 void LLC_test_set_cte_ucfg_weak(void* params);
 void LLC_test_set_cte(void* params);
 
+void ADV_ISR_connect_request_received_ucfg(void* pointer,
+                                           uint8_t* packet,
+                                           uint32_t PeerIDAddress[2]);
+void ADV_ISR_connect_request_received_ucfg_weak(void* pointer,
+                                                uint8_t* packet,
+                                                uint32_t PeerIDAddress[2]);
+void ADV_ISR_connect_request_received(void* pointer,
+                                      uint8_t* packet,
+                                      uint32_t PeerIDAddress[2]);
+
+void LL_eadv_EauxIsr_connect_response_sent_ucfg(void* pointer);
+void LL_eadv_EauxIsr_connect_response_sent_ucfg_weak(void* pointer);
+void LL_eadv_EauxIsr_connect_response_sent(void* pointer);
+
+void LL_eadv_EauxIsr_connect_request_received_ucfg(void* pointer,
+                                                   BOOL* calibration_required);
+void LL_eadv_EauxIsr_connect_request_received_ucfg_weak(void* pointer,
+                                                        BOOL* calibration_required);
+void LL_eadv_EauxIsr_connect_request_received(void* pointer,
+                                              BOOL* calibration_required);
+
+uint8_t EADV_start_request_radio_tasks_ucfg(void* pointer);
+uint8_t EADV_start_request_radio_tasks_ucfg_weak(void* pointer);
+uint8_t EADV_start_request_radio_tasks(void* pointer);
+
 tBleStatus LL_eadv_max_supported_data_check_ucfg(uint16_t Data_Length,
                                                  void* linkpointer);
 tBleStatus LL_eadv_max_supported_data_check_ucfg_weak(uint16_t Data_Length,
@@ -812,6 +1375,39 @@ tBleStatus LL_Remove_Advertising_Set(uint16_t Advertising_Handle);
 BOOL LL_extended_adv_add_enable_sync_info_auxind_pdu_ucfg(void* pointer);
 BOOL LL_extended_adv_add_enable_sync_info_auxind_pdu_ucfg_weak(void* pointer);
 BOOL LL_extended_adv_add_enable_sync_info_auxind_pdu(void* pointer);
+
+BOOL LL_escan_ProduceCreq_ucfg(void* pointer,
+                               uint8_t rx_phy,
+                               BOOL is_aux);
+BOOL LL_escan_ProduceCreq_ucfg_weak(void* pointer,
+                                    uint8_t rx_phy,
+                                    BOOL is_aux);
+BOOL LL_escan_ProduceCreq(void* pointer,
+                          uint8_t rx_phy,
+                          BOOL is_aux);
+
+void LL_escan_EscanIsr_connect_request_sent_ucfg(void* pointer,
+                                                 uint8_t phyindex,
+                                                 BOOL* calibration_required,
+                                                 BOOL* close_event_flag);
+void LL_escan_EscanIsr_connect_request_sent_ucfg_weak(void* pointer,
+                                                      uint8_t phyindex,
+                                                      BOOL* calibration_required,
+                                                      BOOL* close_event_flag);
+void LL_escan_EscanIsr_connect_request_sent(void* pointer,
+                                            uint8_t phyindex,
+                                            BOOL* calibration_required,
+                                            BOOL* close_event_flag);
+
+void LL_escan_EauxIsr_connect_response_received_ucfg(void* pointer,
+                                                     uint8_t* packet,
+                                                     uint8_t rx_phy);
+void LL_escan_EauxIsr_connect_response_received_ucfg_weak(void* pointer,
+                                                          uint8_t* packet,
+                                                          uint8_t rx_phy);
+void LL_escan_EauxIsr_connect_response_received(void* pointer,
+                                                uint8_t* packet,
+                                                uint8_t rx_phy);
 
 void LL_escan_ScanStopCancel_ucfg(void);
 void LL_escan_ScanStopCancel_ucfg_weak(void);
@@ -1121,36 +1717,41 @@ tBleStatus ll_write_supported_data(uint16_t Supported_Max_Tx_Octets,
                                    uint16_t Supported_Max_Rx_Octets,
                                    uint16_t Supported_Max_Rx_Time);
 
-void LL_Get_Supported_States_ucfg(uint8_t states[8]);
-void LL_Get_Supported_States_ucfg_weak(uint8_t states[8]);
-void LL_Get_Supported_States(uint8_t states[8]);
+void LL_init_ucfg(uint8_t dataLenExt,
+                  uint8_t PhyUpd,
+                  uint8_t ExtAdvScan,
+                  uint8_t CtrlPriv,
+                  uint8_t MasterRole,
+                  uint8_t PerAdvScan,
+                  uint8_t Cte,
+                  uint8_t Pcl,
+                  uint8_t Cns);
+void LL_init_ucfg_weak(uint8_t dataLenExt,
+                       uint8_t PhyUpd,
+                       uint8_t ExtAdvScan,
+                       uint8_t CtrlPriv,
+                       uint8_t MasterRole,
+                       uint8_t PerAdvScan,
+                       uint8_t Cte,
+                       uint8_t Pcl,
+                       uint8_t Cns);
+void LL_init(uint8_t dataLenExt,
+             uint8_t PhyUpd,
+             uint8_t ExtAdvScan,
+             uint8_t CtrlPriv,
+             uint8_t MasterRole,
+             uint8_t PerAdvScan,
+             uint8_t Cte,
+             uint8_t Pcl,
+             uint8_t Cns);
 
-tBleStatus LL_Start_Encryption_ucfg(uint16_t connHandle,
-                                    uint8_t* randNum,
-                                    uint8_t* ediv,
-                                    uint8_t* ltk);
-tBleStatus LL_Start_Encryption_ucfg_weak(uint16_t connHandle,
-                                         uint8_t* randNum,
-                                         uint8_t* ediv,
-                                         uint8_t* ltk);
-tBleStatus LL_Start_Encryption(uint16_t connHandle,
-                               uint8_t* randNum,
-                               uint8_t* ediv,
-                               uint8_t* ltk);
+void SMP_process_state_transition_actions_tsk_ucfg(uint16_t task_idx);
+void SMP_process_state_transition_actions_tsk_ucfg_weak(uint16_t task_idx);
+void SMP_process_state_transition_actions_tsk(uint16_t task_idx);
 
-void aci_gap_numeric_comparison_value_event_cb_ucfg(uint8_t header_type,
-                                                    uint8_t* buff_p);
-void aci_gap_numeric_comparison_value_event_cb_ucfg_weak(uint8_t header_type,
-                                                         uint8_t* buff_p);
-void aci_gap_numeric_comparison_value_event_cb(uint8_t header_type,
-                                               uint8_t* buff_p);
-
-void aci_gap_keypress_notification_event_cb_ucfg(uint8_t header_type,
-                                                 uint8_t* buff_p);
-void aci_gap_keypress_notification_event_cb_ucfg_weak(uint8_t header_type,
-                                                      uint8_t* buff_p);
-void aci_gap_keypress_notification_event_cb(uint8_t header_type,
-                                            uint8_t* buff_p);
+void SMP_process_pending_rx_packets_tsk_ucfg(uint16_t task_idx);
+void SMP_process_pending_rx_packets_tsk_ucfg_weak(uint16_t task_idx);
+void SMP_process_pending_rx_packets_tsk(uint16_t task_idx);
 
 tBleStatus smp_MI_Start_Encryption_ucfg(void* params);
 tBleStatus smp_MI_Start_Encryption_ucfg_weak(void* params);
@@ -1212,13 +1813,17 @@ tBleStatus smp_Process_Rx_Packet_Exception_Cases_sc_excerpt_ucfg(void* params);
 tBleStatus smp_Process_Rx_Packet_Exception_Cases_sc_excerpt_ucfg_weak(void* params);
 tBleStatus smp_Process_Rx_Packet_Exception_Cases_sc_excerpt(void* params);
 
-void smp_execute_actions_wrt_state_sc_phase2as2_mi_ucfg(void* params);
-void smp_execute_actions_wrt_state_sc_phase2as2_mi_ucfg_weak(void* params);
-void smp_execute_actions_wrt_state_sc_phase2as2_mi(void* params);
-
 void SMP_process_sc_ecc_pk_generation_tsk_ucfg(uint16_t task_idx);
 void SMP_process_sc_ecc_pk_generation_tsk_ucfg_weak(uint16_t task_idx);
 void SMP_process_sc_ecc_pk_generation_tsk(uint16_t task_idx);
+
+void SMP_init_ucfg(void);
+void SMP_init_ucfg_weak(void);
+void SMP_init(void);
+
+tBleStatus smp_debug_trudy__set_config_ucfg(uint32_t config);
+tBleStatus smp_debug_trudy__set_config_ucfg_weak(uint32_t config);
+tBleStatus smp_debug_trudy__set_config(uint32_t config);
 
 void smp_sc_init_ucfg(BOOL useDebugKey);
 void smp_sc_init_ucfg_weak(BOOL useDebugKey);
@@ -1235,6 +1840,10 @@ tBleStatus smp_sc_generate_new_local_oob_data(void);
 void smp_sc_update_statistics_on_pairing_complete_ucfg(void* params);
 void smp_sc_update_statistics_on_pairing_complete_ucfg_weak(void* params);
 void smp_sc_update_statistics_on_pairing_complete(void* params);
+
+tBleStatus SMP_sc_force_debug_key_usage_ucfg(uint8_t configValue);
+tBleStatus SMP_sc_force_debug_key_usage_ucfg_weak(uint8_t configValue);
+tBleStatus SMP_sc_force_debug_key_usage(uint8_t configValue);
 
 uint32_t secure_connections_csr_ucfg(void);
 uint32_t secure_connections_csr_ucfg_weak(void);
@@ -1254,6 +1863,60 @@ void smp_sc_hci_le_generate_dhkey_complete_evt_hndl_ucfg_weak(uint8_t status,
 void smp_sc_hci_le_generate_dhkey_complete_evt_hndl(uint8_t status,
                                                     uint8_t DHKey[32]);
 
+void GAT_att_cmn_init_ucfg(void);
+void GAT_att_cmn_init_ucfg_weak(void);
+void GAT_att_cmn_init(void);
+
+void GAT_att_cmn_timer_expire_tsk_ucfg(uint16_t task_idx);
+void GAT_att_cmn_timer_expire_tsk_ucfg_weak(uint16_t task_idx);
+void GAT_att_cmn_timer_expire_tsk(uint16_t task_idx);
+
+void GAT_att_cmn_tx_pool_evt_tsk_ucfg(uint16_t task_idx);
+void GAT_att_cmn_tx_pool_evt_tsk_ucfg_weak(uint16_t task_idx);
+void GAT_att_cmn_tx_pool_evt_tsk(uint16_t task_idx);
+
+void GAT_att_srv_process_rx_pckt_tsk_ucfg(uint16_t task_idx);
+void GAT_att_srv_process_rx_pckt_tsk_ucfg_weak(uint16_t task_idx);
+void GAT_att_srv_process_rx_pckt_tsk(uint16_t task_idx);
+
+void GAT_srv_db_hash_tsk_ucfg(uint16_t task_idx);
+void GAT_srv_db_hash_tsk_ucfg_weak(uint16_t task_idx);
+void GAT_srv_db_hash_tsk(uint16_t task_idx);
+
+void GAT_srv_send_srv_change_tsk_ucfg(uint16_t task_idx);
+void GAT_srv_send_srv_change_tsk_ucfg_weak(uint16_t task_idx);
+void GAT_srv_send_srv_change_tsk(uint16_t task_idx);
+
+tBleStatus aci_gap_slave_security_req_api(uint16_t Connection_Handle);
+
+tBleStatus aci_gap_set_io_capability_api(uint8_t IO_Capability);
+
+tBleStatus aci_gap_set_authentication_requirement_api(uint8_t Bonding_Mode,
+                                                      uint8_t MITM_Mode,
+                                                      uint8_t SC_Support,
+                                                      uint8_t KeyPress_Notification_Support,
+                                                      uint8_t Min_Encryption_Key_Size,
+                                                      uint8_t Max_Encryption_Key_Size,
+                                                      uint8_t Use_Fixed_Pin,
+                                                      uint32_t Fixed_Pin);
+
+tBleStatus aci_gap_pass_key_resp_api(uint16_t Connection_Handle,
+                                     uint32_t Pass_Key);
+
+tBleStatus aci_gap_get_security_level_api(uint16_t Connection_Handle,
+                                          uint8_t* Security_Mode,
+                                          uint8_t* Security_Level);
+
+tBleStatus aci_gap_terminate_api(uint16_t Connection_Handle,
+                                 uint8_t Reason);
+
+tBleStatus aci_gap_clear_security_db_api(void);
+
+tBleStatus aci_gap_remove_bonded_device_api(uint8_t peerIdentityAddressType,
+                                            uint8_t peerIdentityDeviceAddress[6]);
+
+tBleStatus aci_gap_allow_rebond_api(uint16_t Connection_Handle);
+
 tBleStatus aci_gap_start_connection_update_api(uint16_t Connection_Handle,
                                                uint16_t Conn_Interval_Min,
                                                uint16_t Conn_Interval_Max,
@@ -1265,11 +1928,32 @@ tBleStatus aci_gap_start_connection_update_api(uint16_t Connection_Handle,
 tBleStatus aci_gap_send_pairing_req_api(uint16_t Connection_Handle,
                                         uint8_t Force_Rebond);
 
+tBleStatus aci_gap_get_bonded_devices_api(uint8_t Offset,
+                                          uint8_t Max_Num_Of_Addresses,
+                                          uint8_t* Num_of_Addresses,
+                                          Bonded_Device_Entry_t* Bonded_Device_Entry);
+
+tBleStatus aci_gap_is_device_bonded_api(uint8_t Peer_Address_Type,
+                                        uint8_t Peer_Address[6]);
+
 tBleStatus aci_gap_numeric_comparison_value_confirm_yesno_api(uint16_t Connection_Handle,
                                                               uint8_t Confirm_Yes_No);
 
 tBleStatus aci_gap_passkey_input_api(uint16_t Connection_Handle,
                                      uint8_t Input_Type);
+
+tBleStatus aci_gap_get_oob_data_api(uint8_t OOB_Data_Type,
+                                    uint8_t* Address_Type,
+                                    uint8_t Address[6],
+                                    uint8_t* OOB_Data_Len,
+                                    uint8_t OOB_Data[16]);
+
+tBleStatus aci_gap_set_oob_data_api(uint8_t Device_Type,
+                                    uint8_t Address_Type,
+                                    uint8_t Address[6],
+                                    uint8_t OOB_Data_Type,
+                                    uint8_t OOB_Data_Len,
+                                    uint8_t OOB_Data[16]);
 
 tBleStatus aci_gap_set_scan_configuration_api(uint8_t duplicate_filtering,
                                               uint8_t scanning_filter_policy,
@@ -1310,7 +1994,7 @@ tBleStatus aci_gap_set_periodic_advertising_enable_api(uint8_t Enable,
                                                        uint8_t Advertising_Handle);
 
 tBleStatus aci_gap_set_periodic_advertising_data_api(uint8_t Advertising_Handle,
-                                                     uint8_t Advertising_Data_Length,
+                                                     uint16_t Advertising_Data_Length,
                                                      uint8_t* Advertising_Data);
 
 tBleStatus aci_gap_periodic_advertising_create_sync_api(uint8_t Options,
@@ -1363,12 +2047,154 @@ tBleStatus aci_gap_remove_advertising_set_api(uint8_t Advertising_Handle);
 
 tBleStatus aci_gap_clear_advertising_sets_api(void);
 
+tBleStatus aci_gatt_srv_init_api(void);
+
+tBleStatus aci_gatt_srv_add_service_api(ble_gatt_srv_def_t* Serv_p);
+
+tBleStatus aci_gatt_srv_rm_service_api(uint16_t Serv_Attr_H);
+
+uint16_t aci_gatt_srv_get_service_handle_api(ble_gatt_srv_def_t* Serv_p);
+
+tBleStatus aci_gatt_srv_include_service_api(uint16_t Serv_Attr_H,
+                                            uint16_t Incl_Serv_Attr_H);
+
+tBleStatus aci_gatt_srv_rm_include_service_api(uint16_t Incl_Serv_Attr_H);
+
+uint16_t aci_gatt_srv_get_include_service_handle_api(uint16_t Serv_Attr_H,
+                                                     ble_gatt_srv_def_t* Included_Srv_p);
+
+tBleStatus aci_gatt_srv_add_char_api(ble_gatt_chr_def_t* Char_p,
+                                     uint16_t Serv_Attr_H);
+
+tBleStatus aci_gatt_srv_rm_char_api(uint16_t Char_Decl_Attr_H);
+
+uint16_t aci_gatt_srv_get_char_decl_handle_api(ble_gatt_chr_def_t* Char_p);
+
+tBleStatus aci_gatt_srv_add_char_desc_api(ble_gatt_descr_def_t* Descr_p,
+                                          uint16_t Char_Attr_H);
+
+uint16_t aci_gatt_srv_get_descriptor_handle_api(ble_gatt_descr_def_t* Descr_p);
+
+tBleStatus aci_gatt_srv_notify_api(uint16_t Connection_Handle,
+                                   uint16_t Attr_Handle,
+                                   uint8_t Flags,
+                                   uint16_t Val_Length,
+                                   uint8_t* Val_p);
+
+tBleStatus aci_gatt_srv_resp_api(uint16_t Connection_Handle,
+                                 uint16_t Attr_Handle,
+                                 uint8_t Error_Code,
+                                 uint16_t Data_Len,
+                                 uint8_t* Data_p);
+
+tBleStatus aci_gatt_srv_read_handle_value_api(uint16_t Attr_Handle,
+                                              uint16_t* Val_Length_p,
+                                              uint8_t** Val_pp);
+
+tBleStatus aci_gatt_srv_read_multiple_instance_handle_value_api(uint16_t Connection_Handle,
+                                                                uint16_t Attr_Handle,
+                                                                uint16_t* Val_Length_p,
+                                                                uint8_t** Val_pp);
+
+tBleStatus aci_gatt_srv_write_multiple_instance_handle_value_api(uint16_t Connection_Handle,
+                                                                 uint16_t Attr_Handle,
+                                                                 uint16_t Char_Value_Length,
+                                                                 uint8_t* Char_Value);
+
+tBleStatus aci_gatt_set_event_mask_api(uint32_t GATT_Evt_Mask);
+
+tBleStatus aci_gatt_clt_exchange_config_api(uint16_t Connection_Handle);
+
+tBleStatus aci_gatt_clt_disc_all_primary_services_api(uint16_t Connection_Handle);
+
+tBleStatus aci_gatt_clt_disc_primary_service_by_uuid_api(uint16_t Connection_Handle,
+                                                         uint8_t UUID_Type,
+                                                         UUID_t* UUID);
+
+tBleStatus aci_gatt_clt_disc_all_char_of_service_api(uint16_t Connection_Handle,
+                                                     uint16_t Start_Handle,
+                                                     uint16_t End_Handle);
+
+tBleStatus aci_gatt_clt_disc_char_by_uuid_api(uint16_t Connection_Handle,
+                                              uint16_t Start_Handle,
+                                              uint16_t End_Handle,
+                                              uint8_t UUID_Type,
+                                              UUID_t* UUID);
+
+tBleStatus aci_gatt_clt_disc_all_char_desc_api(uint16_t Connection_Handle,
+                                               uint16_t Char_Handle,
+                                               uint16_t End_Handle);
+
+tBleStatus aci_gatt_clt_find_included_services_api(uint16_t Connection_Handle,
+                                                   uint16_t Start_Handle,
+                                                   uint16_t End_Handle);
+
+tBleStatus aci_gatt_clt_read_api(uint16_t Connection_Handle,
+                                 uint16_t Attr_Handle);
+
+tBleStatus aci_gatt_clt_read_long_api(uint16_t Connection_Handle,
+                                      uint16_t Attr_Handle,
+                                      uint16_t Val_Offset);
+
+tBleStatus aci_gatt_clt_read_using_char_uuid_api(uint16_t Connection_Handle,
+                                                 uint16_t Start_Handle,
+                                                 uint16_t End_Handle,
+                                                 uint8_t UUID_Type,
+                                                 UUID_t* UUID);
+
+tBleStatus aci_gatt_clt_read_multiple_char_value_api(uint16_t Connection_Handle,
+                                                     uint8_t Number_of_Handles,
+                                                     Handle_Entry_t* Handle_Entry);
+
+tBleStatus aci_gatt_clt_write_without_resp_api(uint16_t Connection_Handle,
+                                               uint16_t Attr_Handle,
+                                               uint16_t Attribute_Val_Length,
+                                               uint8_t* Attribute_Val);
+
+tBleStatus aci_gatt_clt_signed_write_without_resp_api(uint16_t Connection_Handle,
+                                                      uint16_t Attr_Handle,
+                                                      uint16_t Attribute_Val_Length,
+                                                      uint8_t* Attribute_Val);
+
+tBleStatus aci_gatt_clt_write_api(uint16_t Connection_Handle,
+                                  uint16_t Attr_Handle,
+                                  uint16_t Attribute_Val_Length,
+                                  uint8_t* Attribute_Val);
+
+tBleStatus aci_gatt_clt_write_long_api(uint16_t Connection_Handle,
+                                       ble_gatt_clt_write_ops_t* Write_Ops_p);
+
+tBleStatus aci_gatt_clt_write_char_reliable_api(uint16_t Connection_Handle,
+                                                uint8_t Num_Attrs,
+                                                ble_gatt_clt_write_ops_t* Write_Ops_p);
+
+tBleStatus aci_gatt_clt_prepare_write_req_api(uint16_t Connection_Handle,
+                                              uint16_t Attr_Handle,
+                                              uint16_t Val_Offset,
+                                              uint16_t Attribute_Val_Length,
+                                              uint8_t* Attribute_Val);
+
+tBleStatus aci_gatt_clt_execute_write_req_api(uint16_t Connection_Handle,
+                                              uint8_t Execute);
+
+tBleStatus aci_gatt_clt_confirm_indication_api(uint16_t Connection_Handle);
+
 tBleStatus aci_hal_set_le_power_control_api(uint8_t Enable,
                                             uint8_t PHY,
                                             int8_t RSSI_Target,
                                             uint8_t RSSI_Hysteresis,
                                             int8_t Initial_TX_Power,
                                             uint8_t RSSI_Filtering_Coefficient);
+
+tBleStatus aci_hal_get_anchor_point_api(uint16_t connection_handle,
+                                        uint16_t* event_counter,
+                                        uint32_t* anchor_point);
+
+tBleStatus aci_l2cap_connection_parameter_update_req_api(uint16_t Connection_Handle,
+                                                         uint16_t Conn_Interval_Min,
+                                                         uint16_t Conn_Interval_Max,
+                                                         uint16_t Slave_latency,
+                                                         uint16_t Timeout_Multiplier);
 
 tBleStatus aci_l2cap_connection_parameter_update_resp_api(uint16_t Connection_Handle,
                                                           uint16_t Conn_Interval_Min,
@@ -1419,7 +2245,46 @@ tBleStatus aci_l2cap_extract_sdu_data_api(uint16_t Connection_Handle,
                                           void* SDU_Data_Buffer,
                                           uint16_t* SDU_Length);
 
+tBleStatus hci_read_remote_version_information_api(uint16_t Connection_Handle);
+
+tBleStatus hci_le_read_remote_used_features_api(uint16_t Connection_Handle);
+
+tBleStatus hci_read_transmit_power_level_api(uint16_t Connection_Handle,
+                                             uint8_t Type,
+                                             int8_t* Transmit_Power_Level);
+
+tBleStatus hci_read_rssi_api(uint16_t Connection_Handle,
+                             int8_t* RSSI);
+
 tBleStatus hci_le_set_host_channel_classification_api(uint8_t LE_Channel_Map[5]);
+
+tBleStatus hci_le_read_channel_map_api(uint16_t Connection_Handle,
+                                       uint8_t LE_Channel_Map[5]);
+
+tBleStatus hci_disconnect_api(uint16_t Connection_Handle,
+                              uint8_t Reason);
+
+tBleStatus hci_le_create_connection_api(uint16_t LE_Scan_Interval,
+                                        uint16_t LE_Scan_Window,
+                                        uint8_t Initiator_Filter_Policy,
+                                        uint8_t Peer_Address_Type,
+                                        uint8_t Peer_Address[6],
+                                        uint8_t Own_Address_Type,
+                                        uint16_t Conn_Interval_Min,
+                                        uint16_t Conn_Interval_Max,
+                                        uint16_t Conn_Latency,
+                                        uint16_t Supervision_Timeout,
+                                        uint16_t Minimum_CE_Length,
+                                        uint16_t Maximum_CE_Length);
+
+tBleStatus hci_le_create_connection_cancel_api(void);
+
+tBleStatus hci_le_extended_create_connection_api(uint8_t Initiating_Filter_Policy,
+                                                 uint8_t Own_Address_Type,
+                                                 uint8_t Peer_Address_Type,
+                                                 uint8_t Peer_Address[6],
+                                                 uint8_t Initiating_PHYs,
+                                                 Extended_Create_Connection_Parameters_t* Extended_Create_Connection_Parameters);
 
 tBleStatus hci_le_set_connectionless_cte_transmit_parameters_api(uint8_t Advertising_Handle,
                                                                  uint8_t CTE_Length,
@@ -1468,9 +2333,20 @@ tBleStatus hci_le_start_encryption_api(uint16_t Connection_Handle,
                                        uint16_t Encrypted_Diversifier,
                                        uint8_t Long_Term_Key[16]);
 
+tBleStatus hci_le_long_term_key_request_reply_api(uint16_t Connection_Handle,
+                                                  uint8_t Long_Term_Key[16]);
+
+tBleStatus hci_le_long_term_key_requested_negative_reply_api(uint16_t Connection_Handle);
+
 tBleStatus hci_le_read_local_p256_public_key_api(void);
 
 tBleStatus hci_le_generate_dhkey_api(uint8_t Remote_P256_Public_Key[64]);
+
+tBleStatus hci_read_authenticated_payload_timeout_api(uint16_t Connection_Handle,
+                                                      uint16_t* Authenticated_Payload_Timeout);
+
+tBleStatus hci_write_authenticated_payload_timeout_api(uint16_t Connection_Handle,
+                                                       uint16_t Authenticated_Payload_Timeout);
 
 tBleStatus hci_le_set_extended_advertising_parameters_api(uint8_t Advertising_Handle,
                                                           uint16_t Advertising_Event_Properties,
@@ -1519,13 +2395,6 @@ tBleStatus hci_le_set_extended_scan_enable_api(uint8_t Enable,
                                                uint8_t Filter_Duplicates,
                                                uint16_t Duration,
                                                uint16_t Period);
-
-tBleStatus hci_le_extended_create_connection_api(uint8_t Initiating_Filter_Policy,
-                                                 uint8_t Own_Address_Type,
-                                                 uint8_t Peer_Address_Type,
-                                                 uint8_t Peer_Address[6],
-                                                 uint8_t Initiating_PHYs,
-                                                 Extended_Create_Connection_Parameters_t* Extended_Create_Connection_Parameters);
 
 tBleStatus hci_le_periodic_advertising_create_sync_api(uint8_t Options,
                                                        uint8_t Advertising_SID,
@@ -1660,21 +2529,6 @@ tBleStatus hci_le_set_scan_parameters_api(uint8_t LE_Scan_Type,
 
 tBleStatus hci_le_set_scan_enable_api(uint8_t LE_Scan_Enable,
                                       uint8_t Filter_Duplicates);
-
-tBleStatus hci_le_create_connection_api(uint16_t LE_Scan_Interval,
-                                        uint16_t LE_Scan_Window,
-                                        uint8_t Initiator_Filter_Policy,
-                                        uint8_t Peer_Address_Type,
-                                        uint8_t Peer_Address[6],
-                                        uint8_t Own_Address_Type,
-                                        uint16_t Conn_Interval_Min,
-                                        uint16_t Conn_Interval_Max,
-                                        uint16_t Conn_Latency,
-                                        uint16_t Supervision_Timeout,
-                                        uint16_t Minimum_CE_Length,
-                                        uint16_t Maximum_CE_Length);
-
-tBleStatus hci_le_create_connection_cancel_api(void);
 
 tBleStatus hci_le_connection_update_api(uint16_t Connection_Handle,
                                         uint16_t Conn_Interval_Min,

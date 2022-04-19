@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    rf_driver_assert.h
   * @author  RF Application Team
-  * @brief   BlueNRG_LP assert template file.
+  * @brief   assert template file.
   *          This file should be copied to the application folder and renamed
   *          to rf_driver_assert.h.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -20,8 +20,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef BlueNRG_LP_ASSERT_H
-#define BlueNRG_LP_ASSERT_H
+#ifndef RF_Driver_ASSERT_H
+#define RF_Driver_ASSERT_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -51,7 +51,9 @@
 }
 #endif
 
-#endif /* BlueNRG_LP_ASSERT_H */
+#endif /* RF_Driver_ASSERT_H */
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+

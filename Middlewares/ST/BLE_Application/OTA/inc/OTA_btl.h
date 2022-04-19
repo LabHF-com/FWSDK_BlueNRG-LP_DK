@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    OTA_btl.h
   * @author  AMS - RF Application team
-  * @version V1.0.0
-  * @date    30-April-2019
+  * @version V1.1.0
+  * @date    14-March-2022
   * @brief   Bluetooth LE Over The Air (OTA) FW upgrade header file
   ******************************************************************************
   * @attention
@@ -15,7 +15,7 @@
   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2022 STMicroelectronics</center></h2>
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -69,7 +69,7 @@
 
 #define SERVICE_MANAGER_OFFSET     (0x0)
 
-#define SERVICE_MANAGER_SIZE       PAGE_SIZE_ROUND(94* 1024) /* BlueNRG-LP, BLE stack v3.1 with modular approach */
+#define SERVICE_MANAGER_SIZE       PAGE_SIZE_ROUND(94* 1024) /* BlueNRG-LP,BlueNRG-LPS BLE stack v3.1x with modular approach */
 
 #define SM_APP_OFFSET              (SERVICE_MANAGER_OFFSET + SERVICE_MANAGER_SIZE)
 #define SM_APP_SIZE                PAGE_SIZE_TRUNC((_MEMORY_FLASH_SIZE_-SERVICE_MANAGER_SIZE-NVM_SIZE))
@@ -275,6 +275,38 @@ void OTA_Radio_Activity(uint32_t Next_State_SysTime);
  */
 void OTA_terminate_connection(void); 
 
+/**
+ * @brief  Function to be called when an aci_att_exchange_mtu_resp_event is
+ *         received.
+ * @param Connection_Handle Connection handle related to the response
+ * @param Server_RX_MTU ATT_MTU value agreed between server and client
+ *
+ * @note The API code could be subject to change in future releases.
+ */
+void OTA_att_exchange_mtu_resp_CB(uint16_t Connection_Handle,
+                                  uint16_t Att_MTU);
+
+/**
+ * @brief  Function to be called when an hci_le_data_length_change_event is
+ *         received.
+ * @param Connection_Handle Connection_Handle that identifies the
+ *        connection.
+ *
+ * @note The API code could be subject to change in future releases.
+ */
+void OTA_data_length_change_CB(uint16_t Connection_Handle);
+
+/**
+ * @brief  Function to be called when an aci_gatt_srv_read_event is
+ *         received.
+ * @param Connection_Handle Handle identifying the connection where the read
+ *        operation has been received.
+ * @param Attribute_Handle Handle of the attribute to read.
+ * @param Data_Offset Offset from which the peer is requesting the attribute
+ *        value.
+ *
+ * @note The API code could be subject to change in future releases.
+ */
 void OTA_Read_Char(uint16_t Connection_Handle, uint16_t Attribute_Handle, uint16_t Data_Offset); 
 #endif /* __BTL_H */
 

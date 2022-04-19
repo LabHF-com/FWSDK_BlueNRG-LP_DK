@@ -21,7 +21,9 @@
 #include "rf_driver_ll_rcc.h"
 #include "rf_driver_ll_system.h"
 #include "rf_driver_ll_pwr.h"
-#include "system_bluenrg_lp.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+#include "system_BlueNRG_LP.h"
+#endif
 
 
 #ifdef  USE_FULL_ASSERT

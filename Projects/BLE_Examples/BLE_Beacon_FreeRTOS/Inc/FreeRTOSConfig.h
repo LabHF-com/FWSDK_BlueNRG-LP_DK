@@ -99,5 +99,15 @@ standard names - or at least those used in the unmodified vector table. */
 #define xPortPendSVHandler PendSV_IRQHandler
 #define xPortSysTickHandler SysTick_IRQHandler
 
+/*-----------------------------------------------------------*/
+
+#ifdef __GNUC__
+
+#include "portmacro.h"
+/* Tickless idle/low power functionality. */
+extern void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime );
+#define portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime ) vPortSuppressTicksAndSleep( xExpectedIdleTime )
+#endif
+
 #endif /* FREERTOS_CONFIG_H */
 

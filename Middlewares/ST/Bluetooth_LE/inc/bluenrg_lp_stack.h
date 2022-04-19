@@ -50,7 +50,7 @@
  */
 #define BLE_STACK_DEFAULT_ATT_MTU                 (23U)
 
-#define BLE_STACK_MEM_BLOCK_SIZE                  (32)
+#define BLE_STACK_MEM_BLOCK_SIZE                  (32U)
 
 
 /**
@@ -72,7 +72,7 @@
  * 3.2 SECURITY MANAGER CHANNEL OVER L2CAP, BLUETOOTH SPECIFICATION Version 4.2
  * [Vol 3, Part H]
  */
-#define BLE_STACK_SM_SECURE_CONN_MTU              (65)
+#define BLE_STACK_SM_SECURE_CONN_MTU              (65U)
 
 /*
  * BLE_STACK_MAX_ATT_MTU: maximum supported ATT_MTU size.
@@ -82,12 +82,12 @@
 /**
  * BLE_STACK_DEFAULT_MAX_ATT_MTU: default max ATT_MTU size.
  */
-#define BLE_STACK_DEFAULT_MAX_ATT_MTU             (251 - 4) // (4 bytes for L2CAP header)
+#define BLE_STACK_DEFAULT_MAX_ATT_MTU             (251U - 4U) // (4 bytes for L2CAP header)
 
 /**
  * BLE_STACK_DEFAULT_MAX_ATT_SIZE: maximum attribute size.
  */
-#define BLE_STACK_DEFAULT_MAX_ATT_SIZE            (512)
+#define BLE_STACK_DEFAULT_MAX_ATT_SIZE            (512U)
 
 /**
  * BLE_STACK_MEM_BLOCK_X_MTU(mtu, n_links): compute how many memory blocks are needed to
@@ -98,13 +98,13 @@
  */
 
 #define BLE_STACK_MEM_BLOCK_X_TX(mtu)             (DIV_CEIL((mtu) + 4U, BLE_STACK_MEM_BLOCK_SIZE) + 1U)
-#define BLE_STACK_MEM_BLOCK_X_RX(mtu, n_link)     ((DIV_CEIL((mtu) + 4U, BLE_STACK_MEM_BLOCK_SIZE) + 2U) * (n_link) + 1)
-#define BLE_STACK_MEM_BLOCK_X_MTU(mtu, n_link)    (BLE_STACK_MEM_BLOCK_X_TX(mtu) + BLE_STACK_MEM_BLOCK_X_RX(mtu, (n_link)))
+#define BLE_STACK_MEM_BLOCK_X_RX(mtu, n_link)     ((DIV_CEIL((mtu) + 4U, BLE_STACK_MEM_BLOCK_SIZE) + 2U) * (n_link) + 1U)
+#define BLE_STACK_MEM_BLOCK_X_MTU(mtu, n_link)    (BLE_STACK_MEM_BLOCK_X_TX(mtu) + BLE_STACK_MEM_BLOCK_X_RX(mtu, n_link))
 
 /**
  * Minimum number of blocks required for secure connections
  */
-#define BLE_STACK_MBLOCKS_SECURE_CONNECTIONS      (4)
+#define BLE_STACK_MBLOCKS_SECURE_CONNECTIONS      (4U)
 
 /**
  * BLE_STACK_MBLOCKS_CALC(mtu, n_link): minimum number of buffers needed by the stack.
@@ -112,31 +112,36 @@
  *  - mtu: ATT_MTU size
  *  - n_link: maximum number of simultaneous connections
  */
-#define BLE_STACK_MBLOCKS_CALC(mtu, n_link)   (MAX(BLE_STACK_MEM_BLOCK_X_MTU(mtu, n_link), (BLE_STACK_MBLOCKS_SECURE_CONNECTIONS)))
+#define BLE_STACK_MBLOCKS_CALC(mtu, n_link)       MAX(BLE_STACK_MEM_BLOCK_X_MTU(mtu, n_link), BLE_STACK_MBLOCKS_SECURE_CONNECTIONS)
 
 /**
- * BLE_STACK_DEFAULT_MBLOCKS_COUNT: default memory blocks count
+ * Default memory blocks count
  */
 #define BLE_STACK_DEFAULT_MBLOCKS_COUNT           BLE_STACK_MBLOCKS_CALC(BLE_STACK_DEFAULT_MAX_ATT_MTU, BLE_STACK_NUM_LINKS)
 
 /**
- * BLE_STACK_GATT_ATTRIBUTE_SIZE: memory used for each attribute entry.
+ * Amount of memory used for each GATT attribute entry.
  */
 #define BLE_STACK_GATT_ATTRIBUTE_SIZE                       (8U)
 
 /**
- * BLE_STACK_NUM_GATT_MANDATORY_ATTRIBUTES: number of attributes used for
- * mandatory profiles (GATT and GAP).
+ * Number of GATT attributes used for mandatory profiles (GATT and GAP).
  */
 #define BLE_STACK_NUM_GATT_MANDATORY_ATTRIBUTES             (17U)
 
 /**
  * Amount of memory needed by each GATT Client procedure context
  */
-#define COEFF_NUM_GATT_CLIENT_PROCS (36)
+#define COEFF_NUM_GATT_CLIENT_PROCS (36U)
 
 /**
- * A part of the RAM, is dinamically allocated by initilizing all the pointers
+ * Amount of memory needed by GATT when connection support is enabled
+ */
+#define BLE_STACK_GATT_SIZE(CONN_SUPP_EN, GATT_ATTRIBUTES, GATT_CLIENT_PROCS) \
+    (((CONN_SUPP_EN) == 1U) ? BLE_STACK_GATT_ATTRIBUTE_SIZE * (GATT_ATTRIBUTES) + COEFF_NUM_GATT_CLIENT_PROCS * (GATT_CLIENT_PROCS) : 0U)
+
+/**
+ * A part of the RAM, is dinamically allocated by initializing all the pointers
  * defined in a global context variable "mem_alloc_ctx_p".
  * This initialization is made in the Dynamic_allocator functions, which
  * assing a portion of RAM given by the external application to the above
@@ -144,67 +149,109 @@
  *
  * The size of this Dynamic RAM is made of 2 main components:
  * - a part that is parameters-dependent (num of links, GATT buffers, ...),
- *   and which value is explicited by the following macro;
- * - a part, that may be considered "fixed", i.e. independent from the above
+ *   and whose value is explicited by the following macros BLE_STACK_*_SIZE;
+ * - a part, that may be considered "fixed", i.e., independent from the above
  *   mentioned parameters.
 */
-#define BLE_STACK_FIXED_BUFFER_SIZE_BYTES ((2238) + ((BLE_STACK_GATT_ATTRIBUTE_SIZE) * (BLE_STACK_NUM_GATT_MANDATORY_ATTRIBUTES)))
+#define BLE_STACK_FIXED_BUFFER_SIZE_BYTES (1498U)
 
 /**
  * Amount of memory needed by each radio link
  */
-#define COEFF_NUM_OF_LINKS (684)
+#   define COEFF_CONN_SUPP_EN   (752U + BLE_STACK_GATT_ATTRIBUTE_SIZE * BLE_STACK_NUM_GATT_MANDATORY_ATTRIBUTES)
+#   define COEFF_NUM_OF_LINKS_0 (48U)  // [DB] scheduler's tasks
+#   define COEFF_NUM_OF_LINKS_1 (636U)
+#   define BLE_STACK_LINKS_SIZE(CONN_SUPP_EN, NUM_OF_LINKS) \
+    (((CONN_SUPP_EN) == 1U) || ((NUM_OF_LINKS) > 0U) ? COEFF_CONN_SUPP_EN * (CONN_SUPP_EN) + COEFF_NUM_OF_LINKS_0 * (NUM_OF_LINKS) + COEFF_NUM_OF_LINKS_1 * (CONN_SUPP_EN) * (NUM_OF_LINKS) : 0U)
 
 /**
- * BLE_STACK_PHY_UPD_SIZE: amount of memory needed to support PHY Update feature
+ * Amount of memory needed for mem. blocks allocated for connections
  */
-#define BLE_STACK_PHY_UPD_SIZE(ENABLED, NUM_OF_LINKS)       (((ENABLED) == 1) ? (40+(NUM_OF_LINKS *16)) : (0))
+#define BLE_STACK_MBLOCK_SIZE(CONN_SUPP_EN, MEM_BLOCK_COUNT) (((CONN_SUPP_EN) == 1U) ? (4U + BLE_STACK_MEM_BLOCK_SIZE) * (MEM_BLOCK_COUNT) : 0U)
 
 /**
- * BLE_STACK_CONTROLLER_EXT_ADV_SIZE: amount of memory needed to support extended advertising and scanning feature
+ * Amount of memory needed to support PHY Update feature
  */
-#define BLE_STACK_CONTROLLER_EXT_ADV_SIZE(ENABLED, NUM_OF_LINKS, NUM_ADV_SET, NUM_AUX_EVENT) (((ENABLED) == 1) ? ((NUM_OF_LINKS *0)+164+(272*(NUM_ADV_SET-1))+(112*NUM_ADV_SET)+(NUM_AUX_EVENT*(68))) : (0))
+#define BLE_STACK_PHY_UPD_SIZE(CONN_SUPP_EN, PHY_UPD_EN, NUM_OF_LINKS) (((PHY_UPD_EN) == 1U) ? 8U + 48U * (CONN_SUPP_EN) * (NUM_OF_LINKS) : 0U)
 
 /**
- * BLE_STACK_L2C_COCS_SIZE: amount of memory needed to support L2CAP COCs (Connection Oriented Channels)
+ * Amount of memory needed to support extended advertising and scanning feature. Note that if 
+ * extended advertising is enabled the memory required by the legacy advertising set must be
+ * subracted from the total
  */
-#define BLE_STACK_L2C_COCS_SIZE(ENABLED, NUM_OF_COCS)       (((ENABLED) == 1) ? (NUM_OF_COCS *76) : (0))
+#define BLE_STACK_CONTROLLER_EXT_ADV_SIZE(ENABLED, NUM_ADV_SET, NUM_AUX_EVENT, NUM_OF_LINKS) \
+    (((ENABLED) == 1U) ? -292U + 384U * (NUM_ADV_SET) + 0U * (NUM_AUX_EVENT) + 0U * (NUM_OF_LINKS) : 0U)
 
 /**
- * BLE_STACK_D_LEN_EXT_SIZE: amount of memory needed to support Data Length Extension
- * feature.
+ * Amount of memory needed for the white list and, if connections are supported, also for connection ID list
  */
-#define BLE_STACK_D_LEN_EXT_SIZE(LEN_EXT_ENABLED, ADV_EXT_ENABLED)                  ((((LEN_EXT_ENABLED) == 1 )|((ADV_EXT_ENABLED) == 1)) ? (552) : (112))
+#define BLE_STACK_WHITE_LIST_SIZE(WL_SIZE_LOG2) (8U * (1U << (WL_SIZE_LOG2)))
+#define BLE_STACK_CONN_ID_LIST_SIZE(CONN_SUPP_EN, WL_SIZE_LOG2) (((CONN_SUPP_EN) == 1U) ? BLE_STACK_WHITE_LIST_SIZE(WL_SIZE_LOG2) : 0U)
 
 /**
- * BLE_STACK_CONTROLLER_PERIODIC_ADV_SIZE: amount of memory needed to support periodic advertising and synchronizing feature
+ * Amount of memory needed to support L2CAP COCs (Connection Oriented Channels)
  */
-#define BLE_STACK_CONTROLLER_PERIODIC_ADV_SIZE(ENABLED, NUM_ADV_SET, NUM_AUX_EVENT, NUM_OF_LINKS, ADV_LIST_LIZE) (((ENABLED) == 1) ? (32 + 168*(NUM_ADV_SET) + 184*(NUM_AUX_EVENT) + 56*(NUM_OF_LINKS) + 8*(1<<ADV_LIST_LIZE)): (0))
+#define BLE_STACK_L2C_COCS_SIZE(CONN_SUPP_EN, L2C_COS_EN, NUM_OF_COCS) (((CONN_SUPP_EN) == 1U) && ((L2C_COS_EN) == 1U) ? 76U * (NUM_OF_COCS) : 0U)
 
 /**
- * BLE_STACK_CONTROLLER_PRIV: amount of memory needed to support controller privacy feature
+ * Amount of memory needed to support Data Length Extension feature
  */
-#define BLE_STACK_CONTROLLER_PRIV(ENABLED, WHITE_LIST_SIZE_LOG2) (((ENABLED) == 1) ? (((1<<WHITE_LIST_SIZE_LOG2) *80)+8) : (0))
+#define BLE_STACK_D_LEN_EXT_SIZE(LEN_EXT_ENABLED, ADV_EXT_ENABLED) ((((LEN_EXT_ENABLED) == 1U) | ((ADV_EXT_ENABLED) == 1U)) ? 440U : 0U)
 
 /**
- * BLE_STACK_CTE_SIZE: amount of memory needed to support CTE feature
+ * Amount of memory needed to support periodic advertising and synchronizing feature
  */
-#define BLE_STACK_CTE_NUM_OF_LINKS(NUM_OF_LINKS)                                     ((NUM_OF_LINKS) * 8U)
-#define BLE_STACK_CTE_NUM_OF_ANT_IDS(NUM_OF_LINKS, NUM_OF_ANT_IDS)                   (((NUM_OF_ANT_IDS) > 0U) ? \
-                                                                                      (((0U*(NUM_OF_LINKS))+1U)*((((NUM_OF_ANT_IDS)-1U) | 3U)+1U)) : \
+#define BLE_STACK_CONTROLLER_PERIODIC_ADV_SIZE(PER_ADV_EN, CONN_SUPP_EN, NUM_OF_LINKS, NUM_ADV_SET) \
+    (((PER_ADV_EN) == 1U) ? 168U * (NUM_ADV_SET) + 32U * (CONN_SUPP_EN) * (NUM_OF_LINKS) : 0U)
+
+/**
+ * Amount of memory needed to support the master feature
+ */
+#define BLE_STACK_BASE_SIZE(CONN_SUPP_EN) (((CONN_SUPP_EN) == 1U) ? 32U : 20U)
+
+#define BLE_STACK_PAST_SIZE(CONN_SUPP_EN, NUM_OF_LINKS) (((CONN_SUPP_EN) == 1U) ? 24U * (NUM_OF_LINKS) : 0U)
+        
+#define BLE_STACK_PER_SYNC_SIZE(PER_ADV_EN, CONN_SUPP_EN, NUM_SYNC_SLOTS, NUM_OF_LINKS, ADV_LIST_LIZE)\
+    (((PER_ADV_EN) == 1U) ? BLE_STACK_BASE_SIZE(CONN_SUPP_EN) + 184U * (NUM_SYNC_SLOTS) + 8U * (1U << (ADV_LIST_LIZE)) + BLE_STACK_PAST_SIZE(CONN_SUPP_EN, NUM_OF_LINKS) : 0U)
+
+#define BLE_STACK_CONTROLLER_MASTER_SIZE(MASTER_EN, EXT_ADV_EN, PER_ADV_EN, CONN_SUPP_EN, NUM_AUX_EVENT, NUM_SYNC_SLOTS, NUM_OF_LINKS, ADV_LIST_LIZE) \
+    (((MASTER_EN) == 1U) ? 76U + (184U + 72U * (NUM_AUX_EVENT) + BLE_STACK_PER_SYNC_SIZE(PER_ADV_EN, CONN_SUPP_EN, NUM_SYNC_SLOTS, NUM_OF_LINKS, ADV_LIST_LIZE)) * (EXT_ADV_EN) : 0U)
+
+/**
+ * Amount of memory needed to support controller privacy feature
+ */
+#define BLE_STACK_CONTROLLER_PRIV_SIZE(ENABLED, WHITE_LIST_SIZE_LOG2) (((ENABLED) == 1U) ? 8U + 80U * (1U << (WHITE_LIST_SIZE_LOG2)) : 0U)
+
+/**
+ * Amount of memory needed to support CTE feature
+ */
+#define BLE_STACK_CTE_NUM_OF_LINKS(CONN_SUPP_EN, NUM_OF_LINKS) (((CONN_SUPP_EN) == 1U) ? 8U * (NUM_OF_LINKS) : 0U)
+#define BLE_STACK_CTE_NUM_OF_ANT_IDS(CONN_SUPP_EN, NUM_OF_LINKS, NUM_OF_ANT_IDS)\
+    (((NUM_OF_ANT_IDS) > 0U) ? (1U + 0U * (CONN_SUPP_EN) * (NUM_OF_LINKS)) * (1U + (((NUM_OF_ANT_IDS) - 1U) | 3U)) : 0U)
+    /** In the macro above, note that:
+     *  - the contribution associated with the nr. of links is 0 because the macro CONN_ANT_PATT is not defined
+     *  - the contribution associated with the nr. of antenna IDs is adapted to the word alignment
+     */
+#define BLE_STACK_CTE_NUM_OF_IQ_SAMPLES(NUM_OF_IQSAMPLES) (4U * (NUM_OF_IQSAMPLES))
+
+#define BLE_STACK_CTE_SIZE(CONN_SUPP_EN, CTE_EN, NUM_OF_LINKS, NUM_OF_ANT_IDS, NUM_OF_IQSAMPLES) \
+    (((CTE_EN) == 1U) ? 8U + \
+                        BLE_STACK_CTE_NUM_OF_LINKS(CONN_SUPP_EN, NUM_OF_LINKS) + \
+                        BLE_STACK_CTE_NUM_OF_ANT_IDS(CONN_SUPP_EN, NUM_OF_LINKS, NUM_OF_ANT_IDS) + \
+                        BLE_STACK_CTE_NUM_OF_IQ_SAMPLES(NUM_OF_IQSAMPLES) : \
                                                                                       0U)
-#define BLE_STACK_CTE_NUM_OF_IQ_SAMPLES(NUM_OF_IQSAMPLES)                            ((NUM_OF_IQSAMPLES) * 4U)
-
-#define BLE_STACK_CTE_SIZE(ENABLED, NUM_OF_LINKS, NUM_OF_ANT_IDS, NUM_OF_IQSAMPLES)  (((ENABLED) == 1U) ?                                            \
-                                                                                       (BLE_STACK_CTE_NUM_OF_LINKS(NUM_OF_LINKS)                   + \
-                                                                                        BLE_STACK_CTE_NUM_OF_ANT_IDS(NUM_OF_LINKS, NUM_OF_ANT_IDS) + \
-                                                                                        BLE_STACK_CTE_NUM_OF_IQ_SAMPLES(NUM_OF_IQSAMPLES) + 8U) : 0U) 
 
 /**
- * BLE_STACK_PCL_SIZE: amount of memory needed to support PCL feature
+ * Amount of memory needed to support PCL feature
  */
-#define BLE_STACK_PCL_NUM_OF_LINKS(NUM_OF_LINKS)  ((NUM_OF_LINKS) * 32U)
-#define BLE_STACK_PCL_SIZE(ENABLED, NUM_OF_LINKS) (((ENABLED) == 1U) ? 20 + BLE_STACK_PCL_NUM_OF_LINKS(NUM_OF_LINKS) : 0U)
+#define BLE_STACK_PCL_NUM_OF_LINKS(NUM_OF_LINKS)  (32U * (NUM_OF_LINKS))
+#define BLE_STACK_PCL_SIZE(CONN_SUPP_EN, PCL_EN, NUM_OF_LINKS) (((CONN_SUPP_EN) == 1U) && ((PCL_EN) == 1U) ? 20U + BLE_STACK_PCL_NUM_OF_LINKS(NUM_OF_LINKS) : 0U)
+
+/**
+ * Amount of memory needed by FIFOs
+ */
+#define CALC_FIFO_SIZE(FS) ((((FS) + 3U) >> 2U) << 2U)
+#define BLE_STACK_FIFO_SIZE(ISR0_FS, ISR1_FS, USER_FS) (CALC_FIFO_SIZE(ISR0_FS) + CALC_FIFO_SIZE(ISR1_FS) + CALC_FIFO_SIZE(USER_FS))
 
 /**
  *
@@ -230,6 +277,7 @@
  * @param NUM_CTE_ANT_IDS: Maximum antenna switching pattern length 
  * @param NUM_CTE_IQSAMPLES: Maximum number of IQ-Samples in the buffer
  * @param BLE_STACK_PCL_EN: Enable or disable the Power Control & Path Loss Monitoring feature. Valid values are 0 or 1.
+ * @param BLE_STACK_CONN_SUPP_EN: Enable or disable the support of ACL connections.
  * @param ISR0_FIFO_SIZE: Size of the internal FIFO used for critical controller events produced by the ISR (e.g. rx data packets)
  * @param ISR1_FIFO_SIZE: Size of the internal FIFO used for non-critical controller events produced by the ISR (e.g. advertising or IQ sampling reports)
  * @param USER_FIFO_SIZE: Size of the internal FIFO used for controller and host events produced outside the ISR
@@ -250,36 +298,38 @@
     WHITE_LIST_SIZE_LOG2,\
     BLE_STACK_L2CAP_COS_EN,\
     NUM_L2CAP_COCS,\
-    CONTROLLER_PERIODIC_ADV_ENABLED,\
+    CONTROLLER_PERIODIC_ADV_EN,\
     NUM_SYNC_SLOTS,\
     BLE_STACK_CTE_EN,\
     NUM_CTE_ANT_IDS,\
     NUM_CTE_IQSAMPLES,\
     BLE_STACK_PCL_EN,\
+    BLE_STACK_CONN_SUPP_EN,\
     ISR0_FIFO_SIZE,\
     ISR1_FIFO_SIZE,\
     USER_FIFO_SIZE)\
 (\
-  (BLE_STACK_FIXED_BUFFER_SIZE_BYTES)                                                                           + \
-  ((COEFF_NUM_OF_LINKS) * (BLE_STACK_NUM_LINKS))                                                                + \
-  ((BLE_STACK_GATT_ATTRIBUTE_SIZE) * (BLE_STACK_NUM_GATT_ATTRIBUTES))                                           + \
-  ((COEFF_NUM_GATT_CLIENT_PROCS) * (BLE_STACK_NUM_GATT_CLIENT_PROCS))                                           + \
-  ((BLE_STACK_MEM_BLOCK_SIZE + 4) * (BLE_STACK_MBLOCKS_COUNT))                                                  + \
+  BLE_STACK_FIXED_BUFFER_SIZE_BYTES                                                                             + \
+  BLE_STACK_LINKS_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_NUM_LINKS)                                             + \
+  BLE_STACK_GATT_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_NUM_GATT_ATTRIBUTES, BLE_STACK_NUM_GATT_CLIENT_PROCS)   + \
+  BLE_STACK_MBLOCK_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_MBLOCKS_COUNT)                                        + \
   BLE_STACK_D_LEN_EXT_SIZE(BLE_STACK_D_LEN_EXT_EN, BLE_STACK_EXT_ADV_SCAN_EN)                                   + \
-  BLE_STACK_PHY_UPD_SIZE(BLE_STACK_PHY_UPD_EN, BLE_STACK_NUM_LINKS)                                             + \
-  BLE_STACK_CONTROLLER_EXT_ADV_SIZE(BLE_STACK_EXT_ADV_SCAN_EN, BLE_STACK_NUM_LINKS, NUM_ADV_SET, NUM_AUX_EVENT) + \
-  BLE_STACK_CONTROLLER_PRIV(BLE_STACK_CTRL_PRIV_EN, WHITE_LIST_SIZE_LOG2)                                       + \
-  (0  * (BLE_STACK_SEC_CONN_EN))                                                                                + \
-  (0  * (BLE_STACK_MASTER_EN))                                                                                  + \
-  (16 * (1 << (WHITE_LIST_SIZE_LOG2)))                                                                          + \
-  BLE_STACK_L2C_COCS_SIZE(BLE_STACK_L2CAP_COS_EN, NUM_L2CAP_COCS)                                               + \
-  BLE_STACK_CONTROLLER_PERIODIC_ADV_SIZE(CONTROLLER_PERIODIC_ADV_ENABLED, NUM_ADV_SET,                            \
-                                         NUM_SYNC_SLOTS, BLE_STACK_NUM_LINKS, WHITE_LIST_SIZE_LOG2)             + \
-  BLE_STACK_CTE_SIZE(BLE_STACK_CTE_EN, BLE_STACK_NUM_LINKS, NUM_CTE_ANT_IDS, NUM_CTE_IQSAMPLES)                 + \
-  BLE_STACK_PCL_SIZE(BLE_STACK_PCL_EN, BLE_STACK_NUM_LINKS)                                                     + \
-  ((((ISR0_FIFO_SIZE) + 3) >> 2) << 2)                                                                          + \
-  ((((ISR1_FIFO_SIZE) + 3) >> 2) << 2)                                                                          + \
-  ((((USER_FIFO_SIZE) + 3) >> 2) << 2)                                                                            \
+  BLE_STACK_PHY_UPD_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_PHY_UPD_EN, BLE_STACK_NUM_LINKS)                     + \
+  BLE_STACK_CONTROLLER_EXT_ADV_SIZE(BLE_STACK_EXT_ADV_SCAN_EN, NUM_ADV_SET, NUM_AUX_EVENT, BLE_STACK_NUM_LINKS) + \
+  BLE_STACK_WHITE_LIST_SIZE(WHITE_LIST_SIZE_LOG2)                                                               + \
+  BLE_STACK_CONN_ID_LIST_SIZE(BLE_STACK_CONN_SUPP_EN, WHITE_LIST_SIZE_LOG2)                                     + \
+  BLE_STACK_CONTROLLER_PRIV_SIZE(BLE_STACK_CTRL_PRIV_EN, WHITE_LIST_SIZE_LOG2)                                  + \
+  (0U * (BLE_STACK_SEC_CONN_EN))                                                                                + \
+  BLE_STACK_CONTROLLER_MASTER_SIZE(                                                                               \
+    BLE_STACK_MASTER_EN, BLE_STACK_EXT_ADV_SCAN_EN, CONTROLLER_PERIODIC_ADV_EN, BLE_STACK_CONN_SUPP_EN,           \
+    NUM_AUX_EVENT, NUM_SYNC_SLOTS, BLE_STACK_NUM_LINKS, WHITE_LIST_SIZE_LOG2)                                   + \
+  BLE_STACK_L2C_COCS_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_L2CAP_COS_EN, NUM_L2CAP_COCS)                       + \
+  BLE_STACK_CONTROLLER_PERIODIC_ADV_SIZE(                                                                         \
+    CONTROLLER_PERIODIC_ADV_EN, BLE_STACK_CONN_SUPP_EN, BLE_STACK_NUM_LINKS, NUM_ADV_SET)                       + \
+  BLE_STACK_CTE_SIZE(\
+    BLE_STACK_CONN_SUPP_EN, BLE_STACK_CTE_EN, BLE_STACK_NUM_LINKS, NUM_CTE_ANT_IDS, NUM_CTE_IQSAMPLES)          + \
+  BLE_STACK_PCL_SIZE(BLE_STACK_CONN_SUPP_EN, BLE_STACK_PCL_EN, BLE_STACK_NUM_LINKS)                             + \
+  BLE_STACK_FIFO_SIZE(ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE)                                             \
 )
 
 /**
@@ -340,6 +390,7 @@ on the available device RAM)
         BLE_STACK_NUM_CTE_ANT_IDS,\
         BLE_STACK_NUM_IQSAMPLES,\
         CONTROLLER_POWER_CONTROL_ENABLED,\
+        CONNECTION_ENABLED,\
         ISR0_FIFO_SIZE,\
         ISR1_FIFO_SIZE,\
         USER_FIFO_SIZE\
@@ -350,7 +401,7 @@ on the available device RAM)
 * This structure contains memory and low level hardware configuration data for the device
 */
 typedef struct {
-  uint8_t* BLEStartRamAddress;  /**< Start address of the RAM buffer for GATT database allocated according to BLE_STACK_TOTAL_BUFFER_SIZE (32bit aligned RAM area) */
+  uint8_t* BLEStartRamAddress;  /**< Start address of the RAM buffer required by the Bluetooth stack. It must be 32-bit aligned. Use BLE_STACK_TOTAL_BUFFER_SIZE to calculate the correct size. */
   uint32_t TotalBufferSize;     /**< BLE_STACK_TOTAL_BUFFER_SIZE return value, used to check the MACRO correctness*/
   uint16_t NumAttrRecords;      /**< Maximum number of Attributes that can be stored in the GATT database. */
   uint8_t MaxNumOfClientProcs;  /**< Maximum number of concurrent Client's Procedures. This value shall be less or equal to NumOfLinks. */
@@ -434,7 +485,7 @@ uint8_t BLE_STACK_SleepCheck(void);
 void BLE_STACK_RadioHandler(uint32_t BlueInterrupt);
 
 /**
-  * @brief 'This function provide information when a new radio activity will be performed.
+  * @brief This function provide information when a new radio activity will be performed.
 Information provided includes type of radio activity and absolute time in system ticks when a new radio activity is schedule, if any.
   * @param NextStateSysTime 32bit absolute current time expressed in internal time units.
   * @retval Value indicating the next state:
@@ -455,14 +506,14 @@ uint8_t BLE_STACK_ReadNextRadioActivity(uint32_t *NextStateSysTime);
 */
 
 /* Statistic per link */
-typedef struct LLC_per_count_s {
+typedef struct llc_conn_per_statistic_s {
 
     uint16_t num_pkts;
     uint16_t num_crc_err;
     uint16_t num_evts;
     uint16_t num_miss_evts;
 
-} LLC_per_statistic_st;
+} llc_conn_per_statistic_st;
 
 /**
  * @brief     LLC function to collect statistics per link:
@@ -470,25 +521,25 @@ typedef struct LLC_per_count_s {
  *             - counters are reset every time the function is called
  *             - counters are stopped when the function is called with a pointer to NULL
  *
- * @param[in] Connection_Handle - connection handle that identifies the connection
- * @param[in] ptr - pointer to the buffer
- * @return    BLE_ERROR_UNKNOWN_CONNECTION_ID in case of invalid Connection_Handle
+ * @param[in] conn_handle - connection handle that identifies the connection
+ * @param[in] statistics_p - pointer to the buffer
+ * @return    BLE_ERROR_UNKNOWN_CONNECTION_ID in case of invalid conn_handle
  *            BLE_STATUS_SUCCESS otherwise
  */
-tBleStatus LLC_per_statistic(uint16_t Connection_Handle,
-                             LLC_per_statistic_st *ptr);
+tBleStatus llc_conn_per_statistic(uint16_t conn_handle,
+                                  llc_conn_per_statistic_st *statistics_p);
 
 
 /* Statistic per link and per channel */
 #define LLC_MAX_NUM_DATA_CHAN 37U
 
-typedef struct LLC_per_statistic_by_channel_s {
+typedef struct llc_conn_per_statistic_by_channel_s {
 
     uint16_t num_pkts[LLC_MAX_NUM_DATA_CHAN];
     uint16_t num_crc_err[LLC_MAX_NUM_DATA_CHAN];
     uint16_t num_miss_evts[LLC_MAX_NUM_DATA_CHAN];
     
-} LLC_per_statistic_by_channel_st;
+} llc_conn_per_statistic_by_channel_st;
 
 /**
  * @brief     LLC function to collect statistics per link and per channel:
@@ -496,13 +547,13 @@ typedef struct LLC_per_statistic_by_channel_s {
  *             - counters are reset every time the function is called
  *             - counters are stopped when the function is called with a pointer to NULL
  *
- * @param[in] Connection_Handle - connection handle that identifies the connection
- * @param[in] ptr - pointer to the buffer
- * @return    BLE_ERROR_UNKNOWN_CONNECTION_ID in case of invalid Connection_Handle
+ * @param[in] conn_handle - connection handle that identifies the connection
+ * @param[in] statistics_p - pointer to the buffer
+ * @return    BLE_ERROR_UNKNOWN_CONNECTION_ID in case of invalid conn_handle
  *            BLE_STATUS_SUCCESS otherwise
  */
-tBleStatus LLC_per_statistic_by_channel(uint16_t Connection_Handle,
-                                        LLC_per_statistic_by_channel_st *ptr);
+tBleStatus llc_conn_per_statistic_by_channel(uint16_t conn_handle,
+                                             llc_conn_per_statistic_by_channel_st *statistics_p);
 
 
 #endif /* BLUENRGLP_STACK_H */

@@ -9,12 +9,15 @@
 #define ERR_UNKNOWN_HCI_COMMAND (0x01)
 
 /* API definitions */
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_read_phy(uint16_t Connection_Handle,
                            uint8_t* TX_PHY,
                            uint8_t* RX_PHY)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 tBleStatus hci_le_set_default_phy(uint8_t ALL_PHYS,
                                   uint8_t TX_PHYS,
@@ -23,6 +26,8 @@ tBleStatus hci_le_set_default_phy(uint8_t ALL_PHYS,
     return ERR_UNKNOWN_HCI_COMMAND;
 }
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_phy(uint16_t Connection_Handle,
                           uint8_t ALL_PHYS,
                           uint8_t TX_PHYS,
@@ -31,6 +36,7 @@ tBleStatus hci_le_set_phy(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 tBleStatus hci_le_enhanced_receiver_test(uint8_t RX_Frequency,
                                          uint8_t Phy,

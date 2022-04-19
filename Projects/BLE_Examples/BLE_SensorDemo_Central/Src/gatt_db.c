@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "master_basic_profile.h"
@@ -588,16 +588,6 @@ void readTemperature(void)
   else
   {
     PRINTF("--- Master_Read_Value(0x%02x, %d)), env: OK\r\n",masterContext.tempHandle, masterContext.tempVal_length); 
-#if 0 //TBR
-    {
-      uint8_t len; 
-      len = (is_blue_ms == 1) ?  8 : 2; 
-     
-      for (uint8_t i=0; i<len; i++) {
-        PRINTF(" 0x%0x", masterContext.tempValue[i]);
-      }
-    }
-#endif 
   }
 }
 
@@ -643,7 +633,7 @@ void Master_PeerDataExchange_CB(uint8_t *procedure, uint8_t *status, uint16_t *c
   case NOTIFICATION_DATA_RECEIVED:
     {
       if ((masterContext.freeFallHandle+1) == data->attr_handle) {
-       if (data->data_value[0]) {
+       if ((is_blue_ms == 0) && (data->data_value[0])) {
 	 PRINTF("\n\n******************* FREE FALL DETECTION ***********************\r\n\n");
        }
       }

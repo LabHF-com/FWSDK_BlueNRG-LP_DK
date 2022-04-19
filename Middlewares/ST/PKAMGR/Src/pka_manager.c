@@ -201,14 +201,14 @@ PKAMGR_ResultStatus PKAMGR_SleepCheck(void)
     return PKAMGR_ERR_BUSY;
 }
 
-WEAK_FUNCTION(uint8_t PKAMGR_PowerSaveLevelCheck(uint8_t x))
-{
-  (void) x;                                 /* To avoid gcc/g++ warnings */
-  return 0;	
-
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
+//WEAK_FUNCTION(uint8_t PKAMGR_PowerSaveLevelCheck(uint8_t x))
+//{
+//  (void) x;                                 /* To avoid gcc/g++ warnings */
+//  return 0;	
+//
+//  /* NOTE : This function should not be modified, the callback is implemented 
+//  in the dedicated board file */
+//}
 
 PKAMGR_ResultStatus PKAMGR_Lock()
 {

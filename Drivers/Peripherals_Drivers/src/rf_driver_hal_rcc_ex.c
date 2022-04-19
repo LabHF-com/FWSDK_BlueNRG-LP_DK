@@ -11,7 +11,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -52,10 +52,12 @@
 #define LSCO2_GPIO_PORT        GPIOA
 #define LSCO2_PIN              GPIO_PIN_10
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define __LSCO3_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE()
 #define LSCO3_GPIO_PORT        GPIOB
 #define LSCO3_PIN              GPIO_PIN_12
 #define LSCO3_GPIO_AF          GPIO_AF1_LCO
+#endif
 
 
 
@@ -111,7 +113,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
   /*-------------------------- RF_BLE clock source configuration ---------------------*/
   if ((((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RF) == RCC_PERIPHCLK_RF))
   {
-    assert_param(IS_RCC_RF_BLE_CLOCK_DIVIDER(RFClockDivSelection));
+    assert_param(IS_RCC_RF_BLE_CLOCK_SOURCE(PeriphClkInit->RFClockSelection));
     __HAL_RCC_RF_RC64MPLL_SET_CONFIG(PeriphClkInit->RFClockSelection);
   }
 #endif
@@ -120,7 +122,6 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
   if ((((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_SMPS) == RCC_PERIPHCLK_SMPS))
   {
     assert_param(IS_RCC_SMPS_CLOCK_PRESC(PeriphClkInit->SmpsDivSelection));
-    assert_param(IS_RCC_SMPS_ADC_ANA_CLOCK_PRESC(PeriphClkInit->SmpsADCANADivSelection));
     __HAL_RCC_SMPS_DIV_CONFIG(PeriphClkInit->SmpsDivSelection);
   }
 
@@ -208,6 +209,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
   
   if(PeriphClk == RCC_PERIPHCLK_RF)
   {
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     switch(__HAL_RCC_RF_RC64MPLL_GET_CONFIG())
     {
       case RCC_RF_RC64MPLL_DIV2:
@@ -217,6 +219,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
         frequency = 16000000;
         break;
     }
+#endif
   }
   else if (PeriphClk == RCC_PERIPHCLK_SMPS)
   {
@@ -391,6 +394,7 @@ void HAL_RCCEx_DisableLSCO(void)
   * @note The LSI oscillator must be enable before calling this trimming function through @ref HAL_RCC_OscConfig
   * @retval HAL status
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 HAL_StatusTypeDef   HAL_RCCEx_TrimOsc(uint32_t OscillatorType)
 {
   HAL_StatusTypeDef status;
@@ -446,6 +450,7 @@ HAL_StatusTypeDef   HAL_RCCEx_TrimOsc(uint32_t OscillatorType)
   }
   return status;
 }
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
 
 /**
   * @}

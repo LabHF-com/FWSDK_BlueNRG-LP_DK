@@ -27,7 +27,9 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_ll_rcc.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -73,10 +75,15 @@ static const uint16_t LPUART_PRESCALER_TAB[] =
 #define LPUART_BRR_MASK               0x000FFFFFU
 #define LPUART_BRR_MIN_VALUE          0x00000300U
 
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define LPUART_PERIPHCLK               ( LL_RCC_GetLPUARTClockSource() == LL_RCC_LPUCLKSEL_16M ? 16000000U : 32768U )
+#endif /*  CONFIG_DEVICE_BLUENRG_LPS */
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 /* An always 16 MHz is requested by LPUART to maintain fixed baud rate while 
  * system clock is switching from a frequency to another)
  */
 #define LPUART_PERIPHCLK               16000000 
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
 /**
   * @}
   */
@@ -765,6 +772,41 @@ __STATIC_INLINE uint32_t LL_LPUART_GetWakeUpMethod(USART_TypeDef *LPUARTx)
 {
   return (uint32_t)(READ_BIT(LPUARTx->CR1, USART_CR1_WAKE));
 }
+
+#if defined(USART_CR1_UESM)
+/**
+  * @brief  LPUART enabled in STOP mode
+  * @rmtoll CR1          UESM           LL_LPUART_EnableInStopMode
+  * @param  LPUARTx LPUART Instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_LPUART_EnableInStopMode(USART_TypeDef *LPUARTx)
+{
+  SET_BIT(LPUARTx->CR1, USART_CR1_UESM);
+}
+
+/**
+  * @brief  LPUART disabled in STOP mode
+  * @rmtoll CR1          UESM           LL_LPUART_DisableInStopMode
+  * @param  LPUARTx LPUART Instance
+  * @retval None
+  */
+__STATIC_INLINE void LL_LPUART_DisableInStopMode(USART_TypeDef *LPUARTx)
+{
+  CLEAR_BIT(LPUARTx->CR1, USART_CR1_UESM);
+}
+
+/**
+  * @brief  Indicate if LPUART is enabled in STOP mode
+  * @rmtoll CR1          UESM           LL_LPUART_IsEnabledInStopMode
+  * @param  LPUARTx LPUART Instance
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_LPUART_IsEnabledInStopMode(USART_TypeDef *LPUARTx)
+{
+  return ((READ_BIT(LPUARTx->CR1, USART_CR1_UESM) == (USART_CR1_UESM)) ? 1UL : 0UL);
+}
+#endif
 
 /**
   * @brief  Set Word length (nb of data bits, excluding start and stop bits)

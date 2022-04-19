@@ -124,7 +124,9 @@ NO_INIT(REQUIRED(RAM_VR_TypeDef RAM_VR));
 static void SmpsTrimConfig(void)
 {
   uint32_t main_regulator, smps_out_voltage, lsi_bw, hsi_calib;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   uint32_t lsi_lpmu;
+#endif
   uint8_t eng_lsi_bw_flag;
   
   /* After reset wait until SMPS is ready */
@@ -159,15 +161,25 @@ static void SmpsTrimConfig(void)
   if (*(volatile uint32_t*)VALIDITY_LOCATION == VALIDITY_TAG) {
     main_regulator    = ((*(volatile uint32_t*)TRIMMING_LOCATION) & MAIN_REGULATOR_TRIM_Msk) >> MAIN_REGULATOR_TRIM_Pos;
     smps_out_voltage  = ((*(volatile uint32_t*)TRIMMING_LOCATION) & SMPS_TRIM_Msk) >> SMPS_TRIM_Pos;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     lsi_lpmu          = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_LPMU_TRIM_Msk) >> LSI_LPMU_TRIM_Pos;
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
     lsi_bw            = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_BW_TRIM_Msk) >> LSI_BW_TRIM_Pos;
     hsi_calib         = ((*(volatile uint32_t*)TRIMMING_LOCATION) & HSI_TRIM_Msk) >> HSI_TRIM_Pos;
     eng_lsi_bw_flag   = TRUE;
   } else {
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     main_regulator    = 0x08;
     lsi_lpmu          = 0x08;
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    main_regulator    = 0x03;
+    hsi_calib         = 0x1D;
+    lsi_bw            = 8;
+    eng_lsi_bw_flag   = TRUE;
+#endif
     smps_out_voltage  = 0x03;
   }
   
@@ -178,8 +190,10 @@ static void SmpsTrimConfig(void)
   if (eng_lsi_bw_flag)
     LL_RCC_LSI_SetTrimming(lsi_bw);
   
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   /* Set LSI LPMU Trimming value */
   LL_PWR_SetLSILPMUTrim(lsi_lpmu);
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
   
   /* Set Main Regulator voltage Trimming value */ 
   LL_PWR_SetMRTrim(main_regulator);

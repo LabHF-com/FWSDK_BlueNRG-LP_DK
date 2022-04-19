@@ -60,7 +60,7 @@
 #define ISR0_FIFO_SIZE   (256)
 #define ISR1_FIFO_SIZE   (768)
 #define USER_FIFO_SIZE   (1024)
- 
+
 /* Number of GATT attributes needed for the beacon demo. */
 #define NUM_GATT_ATTRIBUTES     (NUM_APP_GATT_ATTRIBUTES_CONF) 
 
@@ -134,8 +134,8 @@ extern uint8_t hot_table_radio_config[];
     .L2CAP_NumChannels = NUM_L2CAP_COCS_CONF,                                   \
     .NumOfSyncSlots = NUM_SYNC_SLOTS_CONF,                                      \
     .CTE_MaxNumAntennaIDs = MAX_NUM_CTE_ANTENNA_IDS,                            \
-    .CTE_MaxNumIQSamples = MAX_NUM_CTE_IQ_SAMPLES, 	         		\
-    .isr0_fifo_size = ISR0_FIFO_SIZE,				          	\
+    .CTE_MaxNumIQSamples = MAX_NUM_CTE_IQ_SAMPLES, 	                            \
+    .isr0_fifo_size = ISR0_FIFO_SIZE,                                           \
     .isr1_fifo_size = ISR1_FIFO_SIZE,                                           \
     .user_fifo_size = USER_FIFO_SIZE                                            \
 }

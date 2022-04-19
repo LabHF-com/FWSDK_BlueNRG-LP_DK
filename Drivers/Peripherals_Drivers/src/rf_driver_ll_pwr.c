@@ -81,17 +81,22 @@ ErrorStatus LL_PWR_DeInit(void)
   /* Apply reset values to all PWR registers */
   LL_PWR_WriteReg(CR1, PWR_CR1_RESET_VALUE);
   LL_PWR_WriteReg(CR2, PWR_CR2_RESET_VALUE);
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   LL_PWR_WriteReg(CR3, PWR_CR3_RESET_VALUE);
   LL_PWR_WriteReg(CR4, PWR_CR4_RESET_VALUE);
+#endif
   LL_PWR_WriteReg(CR5, PWR_CR5_RESET_VALUE);
   LL_PWR_WriteReg(PUCRA, PWR_PUCRA_RESET_VALUE);
   LL_PWR_WriteReg(PDCRA, PWR_PDCRA_RESET_VALUE);
   LL_PWR_WriteReg(PUCRB, PWR_PUCRB_RESET_VALUE);
   LL_PWR_WriteReg(PDCRB, PWR_PDCRB_RESET_VALUE);
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   LL_PWR_WriteReg(IOxCFG, PWR_IOxCFG_RESET_VALUE);
+#endif /*  CONFIG_DEVICE_BLUENRG_LP */
   LL_PWR_WriteReg(ENGTRIM, PWR_ENGTRIM_RESET_VALUE);
   
   /* Clear all flags */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   LL_PWR_WriteReg(SR1,
                     LL_PWR_EWS_INT
                   | LL_PWR_EWS_BLEHOST 
@@ -109,6 +114,7 @@ ErrorStatus LL_PWR_DeInit(void)
                   | LL_PWE_EWS_EW1     
                   | LL_PWE_EWS_EW0
                  );
+#endif
 
   
   return SUCCESS;

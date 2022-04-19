@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 #include "rf_driver_ll_dmamux.h"
 
 /** @addtogroup RF_DRIVER_LL_Driver
@@ -1133,24 +1135,7 @@ __STATIC_INLINE uint32_t LL_DMA_GetM2MDstAddress(DMA_TypeDef *DMAx, uint32_t Cha
   *         @arg @ref LL_DMA_CHANNEL_6
   *         @arg @ref LL_DMA_CHANNEL_7
   *         @arg @ref LL_DMA_CHANNEL_8
-  * @param  Request This parameter can be one of the following values:
-  *         @arg @ref LL_DMAMUX_REQ_MEM2MEM
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_TX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH0
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH1
+  * @param  Request This parameter can be a value of @ref DMAMUX_LL_EC_REQUEST
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Request)
@@ -1172,24 +1157,7 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel
   *         @arg @ref LL_DMA_CHANNEL_6
   *         @arg @ref LL_DMA_CHANNEL_7
   *         @arg @ref LL_DMA_CHANNEL_8
-  * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMAMUX_REQ_MEM2MEM
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_TX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH0
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH1
+  * @retval Returned This parameter can be a value of @ref DMAMUX_LL_EC_REQUEST
   */
 __STATIC_INLINE uint32_t LL_DMA_GetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel)
 {

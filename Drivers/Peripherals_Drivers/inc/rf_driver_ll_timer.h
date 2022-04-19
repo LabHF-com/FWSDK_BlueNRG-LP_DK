@@ -28,7 +28,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
 #include "rf_driver_ll_radio_2g4.h"
 
 /** @addtogroup RF_DRIVER_LL_Driver
@@ -74,7 +76,14 @@ typedef struct timer_calibration_s {
   * @{
   */
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+/**
+ * @brief  Allows a virtual timer to wake up the device in BlueNRG-LP cuts 1.0 and 2.0.
+ */
+#define HOST_WAKEUP_FIX_ENABLE (0)
+#else
 #define HOST_WAKEUP_FIX_ENABLE (1)
+#endif
     
 /** @defgroup TIMER_Ticks_Definition TIMER Ticks Definition
   * @{
@@ -105,32 +114,33 @@ typedef struct timer_calibration_s {
 /** @defgroup TIMER_Exported_Macros TIMER Exported Macros
   * @{
   */ 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+  #define TIMER_GET_SLOW_FREQEUNCY            (RADIO_CTRL->CLK32FREQUENCY_REG & RADIO_CTRL_CLK32FREQUENCY_REG_SLOW_FREQUENCY)
+  #define TIMER_GET_SLOW_PERIOD               (RADIO_CTRL->CLK32PERIOD_REG & RADIO_CTRL_CLK32PERIOD_REG_SLOW_PERIOD)
+  #define TIMER_GET_SLOW_CLK_IRQ              (RADIO_CTRL->RADIO_CONTROL_IRQ_STATUS & RADIO_CTRL_RADIO_CONTROL_IRQ_STATUS_SLOW_CLK_IRQ)
 
-#define TIMER_GET_SLOW_FREQEUNCY            (RADIO_CTRL->CLK32FREQUENCY_REG & RADIO_CTRL_CLK32FREQUENCY_REG_SLOW_FREQUENCY)
-#define TIMER_GET_SLOW_PERIOD               (RADIO_CTRL->CLK32PERIOD_REG & RADIO_CTRL_CLK32PERIOD_REG_SLOW_PERIOD)
-#define TIMER_GET_SLOW_CLK_IRQ              (RADIO_CTRL->RADIO_CONTROL_IRQ_STATUS & RADIO_CTRL_RADIO_CONTROL_IRQ_STATUS_SLOW_CLK_IRQ)
+  #define TIMER_DISABLE_TIMER12               BLUE->TIMEOUTDESTREG = 0U;
+  #define TIMER_DISABLE_WAKEUP_TIMER          WAKEUP->BLUE_SLEEP_REQUEST_MODE &= ~(WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN)
+  #define TIMER_DISABLE_RADIO_TIMERS          {\
+                                               BLUE->TIMEOUTDESTREG = 0U;\
+                                               TIMER_DISABLE_WAKEUP_TIMER;\
+                                              }
+  #define TIMER_DISABLE_CM0_TIMER             WAKEUP->CM0_SLEEP_REQUEST_MODE &= ~(WAKEUP_CM0_SLEEP_REQUEST_MODE_CPU_WAKEUP_EN)
 
-#define TIMER_DISABLE_TIMER12               BLUE->TIMEOUTDESTREG = 0U;
-#define TIMER_DISABLE_WAKEUP_TIMER          WAKEUP->BLUE_SLEEP_REQUEST_MODE &= ~(WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN)
-#define TIMER_DISABLE_RADIO_TIMERS          {\
-                                             BLUE->TIMEOUTDESTREG = 0U;\
-                                             TIMER_DISABLE_WAKEUP_TIMER;\
-                                            }
-#define TIMER_DISABLE_CM0_TIMER             WAKEUP->CM0_SLEEP_REQUEST_MODE &= ~(WAKEUP_CM0_SLEEP_REQUEST_MODE_CPU_WAKEUP_EN)
+  #define TIMER_GET_TIMER1_STATUS             (BLUE->TIMEOUTDESTREG == BLUE_TIMEOUTDESTREG_DESTINATION_1)
+  #define TIMER_GET_TIMER2_STATUS             (BLUE->TIMEOUTDESTREG == (BLUE_TIMEOUTDESTREG_DESTINATION_1 | BLUE_TIMEOUTDESTREG_DESTINATION_0))
+  #define TIMER_GET_BLUE_WAKEUP_EN            WAKEUP->BLUE_SLEEP_REQUEST_MODE & WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN
 
-#define TIMER_GET_TIMER1_STATUS             (BLUE->TIMEOUTDESTREG == BLUE_TIMEOUTDESTREG_DESTINATION_1)
-#define TIMER_GET_TIMER2_STATUS             (BLUE->TIMEOUTDESTREG == (BLUE_TIMEOUTDESTREG_DESTINATION_1 | BLUE_TIMEOUTDESTREG_DESTINATION_0))
-#define TIMER_GET_BLUE_WAKEUP_EN            WAKEUP->BLUE_SLEEP_REQUEST_MODE & WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN
+  #define TIMER_SET_TIMER1(time)              {\
+                                               BLUE->TIMEOUTREG = time;\
+                                               BLUE->TIMEOUTDESTREG = BLUE_TIMEOUTDESTREG_DESTINATION_1;\
+                                              }
 
-#define TIMER_SET_TIMER1(time)              {\
-                                             BLUE->TIMEOUTREG = time;\
-                                             BLUE->TIMEOUTDESTREG = BLUE_TIMEOUTDESTREG_DESTINATION_1;\
-                                            }
+  #define TIMER_ENABLE_BLUE_SLEEP_REQ         WAKEUP->BLUE_SLEEP_REQUEST_MODE |= (WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN | WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_EN)
+  #define TIMER_ENABLE_CM0_SLEEP_REQ          WAKEUP->CM0_SLEEP_REQUEST_MODE |= WAKEUP_CM0_SLEEP_REQUEST_MODE_CPU_WAKEUP_EN
 
-#define TIMER_ENABLE_BLUE_SLEEP_REQ         WAKEUP->BLUE_SLEEP_REQUEST_MODE |= (WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN | WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_EN)
-#define TIMER_ENABLE_CM0_SLEEP_REQ          WAKEUP->CM0_SLEEP_REQUEST_MODE |= WAKEUP_CM0_SLEEP_REQUEST_MODE_CPU_WAKEUP_EN
-
-#define TIMER_BLUE_SET_REQ_MODE(req_mode)   (MODIFY_REG(WAKEUP->BLUE_SLEEP_REQUEST_MODE,WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_REQ_MODE,req_mode))
+  #define TIMER_BLUE_SET_REQ_MODE(req_mode)   (MODIFY_REG(WAKEUP->BLUE_SLEEP_REQUEST_MODE,WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_REQ_MODE,req_mode))
+#endif
 
 /**
   * @}
@@ -173,6 +183,19 @@ void TIMER_StartCalibration(void);
 * @retval   TRUE if calibration is running, FALSE otherwise.
 */
 BOOL TIMER_IsCalibrationRunning(void);
+
+/**
+  * @brief   Return TRUE if new calibration data is available.
+  * @retval  TRUE if calibration data is available, FALSE otherwise.
+  * @warning Call the @TIMER_ClearCalibrationDataAvailableFlag() API to clear the avaliability flag after the data read.
+  */
+BOOL TIMER_IsCalibrationDataAvailable(void);
+
+/**
+  * @brief  Clear the calibration data available flag.
+  * @retval None
+  */
+void TIMER_ClearCalibrationDataAvailableFlag(void);
 
 /**
   * @brief  Records the result of the last calibration in the internal context.
@@ -223,6 +246,17 @@ uint32_t TIMER_SetRadioHostWakeupTime(uint32_t delay, BOOL* share);
   * @retval None
   */
 void TIMER_GetCurrentCalibrationData(TIMER_CalibrationType *data);
+
+/**
+  * @brief  Records the calibration interval. This information 
+  *         is used to understand if an absolute time register 
+  *         wrap happens since the device startup configration.
+  * @param  time: Calibration interval (STU)
+  * @warning This function is not re-entrant since it updates the context variable storing the system time.
+  *          It should be called only in user context and not in interrupt context.
+* @retval   None
+*/
+void TIMER_SaveCalibrationInterval(uint32_t time);
 
 /**
 * @brief  Return the MTU corresponding to the STU passed as parameter.

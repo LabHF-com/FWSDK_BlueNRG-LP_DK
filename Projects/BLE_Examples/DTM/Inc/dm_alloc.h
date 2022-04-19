@@ -28,8 +28,9 @@
 /******************************************************************************
  * FUNCTION PROTOTYPES
  *****************************************************************************/
-void dm_init(uint16_t buffer_size, uint8_t *buffer_p);
-uint32_t *dm_alloc(uint16_t size);
-void dm_free(uint32_t *buffer_p);
+void dm_init(uint16_t buffer_size, uint32_t *buffer_p);
+void *dm_alloc(uint16_t size);
+void *dm_realloc(void *buffer_p, uint16_t size);
+void dm_free(void *buffer_p);
 
 #endif

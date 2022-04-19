@@ -13,8 +13,6 @@
 #define DEBUG 1
 #endif
 
-#define ENABLE_SECURITY         0
-
 #if DEBUG
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -35,7 +33,7 @@
 /* RC service, control point characteristics definition */
 static const ble_gatt_chr_def_t rc_chars[] = {
     /* Control point characteristic */ 
- #if ENABLE_SECURITY
+#if ENABLE_SECURITY /* Define at project level to protect the characteristic. */
     {
         .properties = BLE_GATT_SRV_CHAR_PROP_READ | BLE_GATT_SRV_CHAR_PROP_WRITE | BLE_GATT_SRV_CHAR_PROP_WRITE_NO_RESP | BLE_GATT_SRV_CHAR_PROP_AUTH_SIGN_WRITE,
         .permissions = BLE_GATT_SRV_PERM_AUTHEN_READ|BLE_GATT_SRV_PERM_AUTHEN_WRITE,

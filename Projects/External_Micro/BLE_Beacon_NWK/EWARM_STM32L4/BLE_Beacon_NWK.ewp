@@ -286,7 +286,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>11111110</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -353,10 +353,10 @@
                     <state>$PROJ_DIR$\..\inc\</state>
                     <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\CMSIS\Device\ST\STM32L4xx\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\STM32L4xx_HAL_Driver\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\STM32L1xx_HAL_BlueNRG-LP_Drivers\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI\includes</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI</state>
                 </option>
@@ -374,7 +374,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -383,7 +383,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -1356,7 +1356,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>11111110</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -1423,10 +1423,10 @@
                     <state>$PROJ_DIR$\..\inc\</state>
                     <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\CMSIS\Device\ST\STM32L4xx\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\STM32L4xx_HAL_Driver\Inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\STM32L1xx_HAL_BlueNRG-LP_Drivers\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI\includes</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI</state>
                 </option>
@@ -1444,7 +1444,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -1453,7 +1453,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -2168,16 +2168,16 @@
             <group>
                 <name>STM32L4xx_BlueNRGLP</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\src\SDK_EVAL_GPIO.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\Src\SDK_EVAL_GPIO.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\src\SDK_EVAL_Spi.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\Src\SDK_EVAL_Spi.c</name>
                     <excluded>
                         <configuration>BLE_Beacon_NWK_UART</configuration>
                     </excluded>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\src\SDK_EVAL_Uart.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_BlueNRGLP\Src\SDK_EVAL_Uart.c</name>
                     <excluded>
                         <configuration>BLE_Beacon_NWK_SPI</configuration>
                     </excluded>
@@ -2186,10 +2186,10 @@
             <group>
                 <name>STM32L4xx_Nucleo</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\src\SDK_EVAL_Com.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\Src\SDK_EVAL_Com.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\src\SDK_EVAL_Led.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\External_micro\BSP\STM32Lxx_Nucleo\Src\SDK_EVAL_Led.c</name>
                 </file>
             </group>
         </group>
@@ -2213,16 +2213,16 @@
             <group>
                 <name>HAL</name>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\src\clock.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Src\clock.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\src\gp_timer.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Src\gp_timer.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\src\list.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Src\list.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\src\osal.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Src\osal.c</name>
                 </file>
             </group>
             <group>

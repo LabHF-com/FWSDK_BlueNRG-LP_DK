@@ -169,11 +169,16 @@ void BLECNTR_InitGlobal(void)
     BLECNTR_GlobSetChkflagautoclearena();                /* Enable autoclear of the ACTIVE bit in the GlobalStatMach */
     BLECNTR_GlobEnableIntnoactivelerrorInt();           /* Enable Interrupt at the timer trig event, when Active bit is not set */
 
-    BLECNTR_GlobSetDefaultAntennaid(0x01U);
+    BLECNTR_GlobSetDefaultAntennaid(0x00U);
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     if (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) >= LL_BLUENRG_LP_CUT_20) {
       udra_flag = 1;
     }
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    udra_flag = 1;
+#endif /* CONFIG_DEVICE_BLUENRG_LPS */
     
   if (udra_flag) {
       /* The commands in the hot table start at word 4
@@ -215,6 +220,14 @@ void BLECNTR_InitGlobal(void)
       hot_table_radio_config[index++] = 0x01;
       hot_table_radio_config[index++] = RRM_VIT_CONF_DIG_ENG;
       hot_table_radio_config[index++] = RRM->VIT_CONF_DIG_ENG;
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+      hot_table_radio_config[index++] = 0x01;
+      hot_table_radio_config[index++] = RRM_ANTSW_DIG0_USR;
+      hot_table_radio_config[index++] = RRM->ANTSW_DIG0_USR;
+      hot_table_radio_config[index++] = 0x01;
+      hot_table_radio_config[index++] = RRM_ANTSW_DIG1_USR;
+      hot_table_radio_config[index++] = RRM->ANTSW_DIG1_USR;
+#endif
       hot_table_radio_config[index++] = 0x00;
     }
     
@@ -242,7 +255,11 @@ uint32_t BLECNTR_GeTimer2TimeoutForIfs(uint32_t T_Ifs, BLECNTR_Transaction Trans
          * T_IFS measurements in connection, initiating and active
          * scanning
          */
+#ifdef CONFIG_DEVICE_BLUENRG_LP
         const int32_t Adjust_Value = 4;
+#else
+        const int32_t Adjust_Value = 6;
+#endif
         Tx_Delay_Comp = (TX_DELAY_START>>3) + Adjust_Value;
     }
     else if(Transaction == BLECNTR_TxRx)
@@ -252,7 +269,11 @@ uint32_t BLECNTR_GeTimer2TimeoutForIfs(uint32_t T_Ifs, BLECNTR_Transaction Trans
          * They could be optimized after careful analysis of timing margins and
          * AGC behavior.
          */
+#ifdef CONFIG_DEVICE_BLUENRG_LP
         const int32_t Adjust_Value = 4;
+#else
+        const int32_t Adjust_Value = 4;
+#endif
         Tx_Delay_Comp = (TX_DELAY_END>>3) + Adjust_Value;
     }
     else if(Transaction == BLECNTR_TxTx)
@@ -260,7 +281,11 @@ uint32_t BLECNTR_GeTimer2TimeoutForIfs(uint32_t T_Ifs, BLECNTR_Transaction Trans
         /* The correction values below have been determined by sniffer
          * T_IFS measurements in extended advertising (AUX_CHAIN_IND)
          */
+#ifdef CONFIG_DEVICE_BLUENRG_LP
         const int32_t Adjust_Value = 1;
+#else
+        const int32_t Adjust_Value = 2;
+#endif
         Tx_Delay_Comp = ((TX_DELAY_START + TX_DELAY_END)>>3) + Adjust_Value;
     }
     else
@@ -320,10 +345,16 @@ void BLECNTR_ClearInterrupt(uint32_t x)
     LL_RADIO_BlueSetInterrupt1RegRegister(x);
 }
 
-void BLECNTR_ClearSemareq()
+void BLECNTR_ClearSemareq(void)
 {
     LL_RADIO_BlueSetClearSemaphoreRequest(0x1U);
 }
+
+void BLECNTR_TxRxSkip(void)
+{
+    LL_RADIO_BlueSetTxRxSkip(0x1U);
+}
+
 
 uint32_t* BLECNTR_GetCipherTextPtr()
 {
@@ -347,17 +378,29 @@ BOOL BLECNTR_GetEncryptDoneStatus()
 
 uint8_t BLECNTR_GetIqsamplesMissingError(void)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  return (uint8_t)LL_BLUE_GetIQSamplesMissingError(); 
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_GetIqsamplesNumber(void)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  return (uint8_t)LL_BLUE_GetIQSamplesNumber();
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_getIqsamplesReady(void)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    return (uint8_t)LL_BLUE_GetIQSamplesReady();
+#elif defined(CONFIG_DEVICE_BLUENRG_LP)
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_GetIsrLatency()
@@ -553,6 +596,27 @@ uint32_t BLECNTR_IntGetIntStatusNoactiveError(uint32_t x)
 }
 #endif
 
+#if defined(BLUE_STATUSREG_TXRXSKIP_Msk)
+uint32_t BLECNTR_IntGetIntStatusTxRxSkip(uint32_t x)
+{
+    return (uint32_t)(x & BLUE_STATUSREG_TXRXSKIP_Msk);
+}
+#endif
+
+#if defined(BLUE_STATUSREG_TXERROR_1_Msk)
+uint32_t BLECNTR_IntGetIntStatusTxError1(uint32_t x)
+{
+    return (uint32_t)(x & BLUE_STATUSREG_TXERROR_1_Msk);
+}
+#endif
+
+#if defined(BLUE_STATUSREG_TXERROR_3_Msk)
+uint32_t BLECNTR_IntGetIntStatusTxError3(uint32_t x)
+{
+    return (uint32_t)(x & BLUE_STATUSREG_TXERROR_3_Msk);
+}
+#endif
+
 #if defined(BLUE_STATUSREG_RCVOK_Msk)
 uint32_t BLECNTR_IntGetIntStatusRxOk(uint32_t x)
 {
@@ -596,7 +660,11 @@ void BLECNTR_PacketClrCrcinitSel(BLECNTR_TXRXPACK_TypeDef* packetP)
 
 void BLECNTR_PacketClrCteSamplingEn(BLECNTR_TXRXPACK_TypeDef* packetP)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTEAndSamplingEnable((TXRXPACK_TypeDef*)packetP, 0x0);
+#else 
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_PacketClrIncChan(BLECNTR_TXRXPACK_TypeDef* packetP)
@@ -616,7 +684,11 @@ void BLECNTR_PacketDisableWhitening(BLECNTR_TXRXPACK_TypeDef* packetP)
 
 uint8_t BLECNTR_PacketGetCteSamplingEn(BLECNTR_TXRXPACK_TypeDef* packetP)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)  
+  return (uint8_t)LL_RADIO_GetCTEAndSamplingEnable((TXRXPACK_TypeDef *)packetP);
+#else
   return (uint8_t)0;
+#endif
 
 }
 
@@ -643,7 +715,11 @@ void BLECNTR_PacketSetCrcinitSel(BLECNTR_TXRXPACK_TypeDef* packetP)
 
 void BLECNTR_PacketSetCteSamplingEn(BLECNTR_TXRXPACK_TypeDef* packetP)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTEAndSamplingEnable((TXRXPACK_TypeDef*)packetP, 0x01);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_PacketSetDataPduFormat(BLECNTR_TXRXPACK_TypeDef* packetP)
@@ -773,12 +849,20 @@ void BLECNTR_SetRcvLen(BLECNTR_TXRXPACK_TypeDef* packetP, uint32_t rcvLen)
 
 void BLECNTR_SmCteOff(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTEDisable(smNo, 0x01);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmCteOn(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTEDisable(smNo, 0x00);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmEnRadioConfig(uint8_t smNo, uint32_t enable)
@@ -817,27 +901,47 @@ void BLECNTR_SmGetChannelMap(uint8_t smNo, uint8_t* chanMap)
 
 uint8_t BLECNTR_SmGetCteAntennaPatternLen(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    return (uint8_t)LL_RADIO_GetAntennaPatternLength(smNo);
+#else
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_SmGetCteAodNaoa(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)  
+    return (uint8_t)LL_RADIO_GetAodNaoa(smNo);
+#else
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_SmGetCteSlotWidth(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  return (uint8_t)LL_RADIO_GetCTESlotWidth(smNo);
+#else
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_SmGetCteStatus(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    return (uint8_t)LL_RADIO_GetCTEDisable(smNo);
+#else
   return (uint8_t)0;
+#endif
 }
 
 uint8_t BLECNTR_SmGetCteTime(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  return (uint8_t)LL_RADIO_GetCTETime(smNo);
+#else
   return (uint8_t)0;
+#endif
 }
 
 uint32_t* BLECNTR_SmGetEncIvPtr(uint8_t smNo)
@@ -950,42 +1054,83 @@ void BLECNTR_SmSetCrcInit(uint8_t smNo, uint32_t x)
 
 void BLECNTR_SmSetCteAntennaPatternLen(uint8_t smNo, uint8_t antPattLen)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetAntennaPatternLength(smNo, (uint32_t) antPattLen);
+#else
   /* nothing to do */
+#endif
+}
+
+uint32_t BLECNTR_SmGetCteAntennaPatternPtr(uint8_t smNo)
+{
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  return LL_RADIO_GetAntennaPatternPtr(smNo);
+#else
+  return 0x00UL;
+#endif
 }
 
 void BLECNTR_SmSetCteAntennaPatternPtr(uint8_t smNo, uint8_t* antPattP)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetAntennaPatternPtr(smNo, (uint32_t)(uintptr_t)antPattP);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteAoa(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetAodNaoa(smNo, 0x0);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteAod(uint8_t smNo)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetAodNaoa(smNo, 0x01);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteIqsamplesPtr(uint8_t smNo, uint32_t* iqSamplesP)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetIQSamplesPtr(smNo, (uint32_t)(uintptr_t)iqSamplesP);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteMaxIqsamplesNumb(uint8_t smNo, uint8_t iqsamplesNumb)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetMaximumIQSamplesNumber(smNo, (uint32_t) iqsamplesNumb);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteSlotWidth(uint8_t smNo, uint32_t cteSlot)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTESlotWidth(smNo, cteSlot);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetCteTime(uint8_t smNo, uint8_t cteTime)
 {
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+  LL_RADIO_SetCTETime(smNo, (uint32_t) cteTime);
+#else
   /* nothing to do */
+#endif
 }
 
 void BLECNTR_SmSetDataLength(uint8_t smNo, uint8_t length)

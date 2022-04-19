@@ -44,7 +44,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
-#include "system_bluenrg_lp.h"
+#include "system_BlueNRG_LP.h"
 #include "rf_driver_ll_flash.h"
 
 #ifndef AUTO_CLEAN

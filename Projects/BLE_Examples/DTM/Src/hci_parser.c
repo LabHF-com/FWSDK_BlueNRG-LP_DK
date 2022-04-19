@@ -2,7 +2,7 @@
 ******************************************************************************
 * @file    hci_parser.c 
 * @author  VMA RF Application Team
-  * @version V1.1.0
+  * @version V1.2.0
   * @date    April-2018
 * @brief   Transport layer file
 ******************************************************************************
@@ -40,7 +40,7 @@
 #define DTM_DEBUG 0
 #endif 
 
-#define HCI_PACKET_SIZE 532 // Maximum size of HCI packets are 255 bytes + the HCI header (3 bytes) + 1 byte for transport layer.
+#define HCI_PACKET_SIZE 536 // Maximum size of HCI packets are 255 bytes + the HCI header (3 bytes) + 1 byte for transport layer.
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -147,7 +147,6 @@ void packet_received(void)
     send_event(buffer_out, buffer_out_len, 1);
     break;
   case HCI_ACLDATA_PKT:
-#if defined(LL_ONLY) || (DTM_DEBUG==1)
     {
       uint16_t connHandle;
       uint16_t dataLen;
@@ -162,7 +161,6 @@ void packet_received(void)
       bc_flag = (hci_buffer[2] >> 6) & 0x3;
       hci_tx_acl_data(connHandle, pb_flag, bc_flag, dataLen, pduData);
     }
-#endif
     break;
   case HCI_COMMAND_PKT:
   case HCI_COMMAND_EXT_PKT:
@@ -174,7 +172,6 @@ void packet_received(void)
   }
 }
 
-#ifdef LL_ONLY
 tBleStatus hci_rx_acl_data_event(uint16_t connHandle, uint8_t  pb_flag, uint8_t  bc_flag, uint16_t  dataLen, uint8_t*  pduData)
 {
   uint8_t buffer_out[251+5];
@@ -185,6 +182,5 @@ tBleStatus hci_rx_acl_data_event(uint16_t connHandle, uint8_t  pb_flag, uint8_t 
   Osal_MemCpy(buffer_out+3,&dataLen, 2);
   Osal_MemCpy(buffer_out+5, pduData, dataLen);
   send_event(buffer_out, dataLen+2+2+1, -1);
-  return 0; // TBR
+  return 0;
 }
-#endif

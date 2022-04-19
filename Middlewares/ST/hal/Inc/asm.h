@@ -32,7 +32,21 @@
 #define LABEL(label)                label:
 
 #else
-#ifdef __GNUC__
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100))
+#define __CODE__		    AREA	|.text|, CODE, READONLY
+#define __THUMB__                   
+#define EXPORT_FUNC(f)			    f PROC	
+#define __BSS__                     AREA	|.bss|, DATA, READWRITE, NOINIT
+#define __EXPORT__                  EXPORT
+#define __IMPORT__                  IMPORT
+#define __SPACE__                   SPACE
+#define GLOBAL_VAR(val)             val
+#define __END__					END
+#define ENDFUNC			    ENDP
+#define ALIGN_MEM(n)			  ALIGN n
+#define LABEL(label)                label
+
+#elif defined(__GNUC__)
 .syntax unified
 .cpu cortex-m0
 .fpu softvfp
@@ -50,22 +64,6 @@
 #define ALIGN_MEM(n)				.align n>>1
 #define LABEL(label)                label:
 
-#else
-#ifdef __CC_ARM
-#define __CODE__		    AREA	|.text|, CODE, READONLY
-#define __THUMB__                   
-#define EXPORT_FUNC(f)			    f PROC	
-#define __BSS__                     AREA	|.bss|, DATA, READWRITE, NOINIT
-#define __EXPORT__                  EXPORT
-#define __IMPORT__                  IMPORT
-#define __SPACE__                   SPACE
-#define GLOBAL_VAR(val)             val
-#define __END__					END
-#define ENDFUNC			    ENDP
-#define ALIGN_MEM(n)			  ALIGN n
-#define LABEL(label)                label
-
-#endif
 #endif
 #endif
 

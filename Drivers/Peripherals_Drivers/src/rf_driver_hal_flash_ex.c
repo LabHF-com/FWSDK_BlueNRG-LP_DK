@@ -38,7 +38,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -288,8 +288,6 @@ HAL_StatusTypeDef HAL_FLASHEx_OTPWrite_IT(uint32_t Address, uint32_t Data)
   */
 HAL_StatusTypeDef HAL_FLASHEx_PageProtection(FLASH_PageProtectionTypeDef *pageProtectionStruct)
 {
-  uint32_t dev_cut_version;
-  
   /* Check Null pointer */
   if(pageProtectionStruct == NULL)
   {
@@ -301,13 +299,16 @@ HAL_StatusTypeDef HAL_FLASHEx_PageProtection(FLASH_PageProtectionTypeDef *pagePr
 
   /* Process Locked */
   __HAL_LOCK(&pFlash);
-
+  
+#ifdef CONFIG_DEVICE_BLUENRG_LP
+  uint32_t dev_cut_version;
   dev_cut_version = (LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision();
   
   if (dev_cut_version == LL_BLUENRG_LP_CUT_10)
   {
     pageProtectionStruct->pageProt_1 = 0;
   }
+#endif
   
   if (pageProtectionStruct->state == ENABLE)
   {

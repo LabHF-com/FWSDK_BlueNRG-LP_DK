@@ -31,7 +31,6 @@
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 
 const char name[] = LOCAL_NAME;

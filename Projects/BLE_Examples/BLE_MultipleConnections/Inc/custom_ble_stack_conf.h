@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    custom_ble_stack_config.h
   * @author  AMS - RF Application team
-  * @version V1.0.0
-  * @date    07 April 2020
+  * @version V1.1.0
+  * @date    07 December 2021
   * @brief   Custom BLE stack modular configuration options header file
   ******************************************************************************
   * @attention
@@ -44,6 +44,7 @@
         - CONTROLLER_PERIODIC_ADV_ENABLED           : Periodic Advertising and Synchronizer     (1:ENABLED; 0: DISABLED) 
         - CONTROLLER_CTE_ENABLED                    : Constant Tone Extension                   (1:ENABLED; 0: DISABLED) 
         - CONTROLLER_POWER_CONTROL_ENABLED          : LE Power Control                          (1:ENABLED; 0: DISABLED) 
+        - CONNECTION_ENABLED                        : Connection Support                        (1:ENABLED; 0: DISABLED)
 **/
 
 #ifndef _CUSTOM_BLE_STACK_CONF_H_
@@ -66,5 +67,6 @@
 #define CONTROLLER_PERIODIC_ADV_ENABLED           (0U) 
 #define CONTROLLER_CTE_ENABLED                    (0U)
 #define CONTROLLER_POWER_CONTROL_ENABLED          (0U)
+#define CONNECTION_ENABLED                        (1U)
 
 #endif // _CUSTOM_BLE_STACK_CONF_H_

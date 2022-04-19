@@ -9,6 +9,8 @@
 #define ERR_UNKNOWN_HCI_COMMAND (0x01)
 
 /* API definitions */
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_cfc_connection_req(uint16_t Connection_Handle,
                                         uint16_t SPSM,
                                         uint16_t CID,
@@ -20,7 +22,10 @@ tBleStatus aci_l2cap_cfc_connection_req(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_cfc_connection_resp(uint16_t Connection_Handle,
                                          uint8_t Identifier,
                                          uint16_t CID,
@@ -33,7 +38,10 @@ tBleStatus aci_l2cap_cfc_connection_resp(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_send_flow_control_credits(uint16_t Connection_Handle,
                                                uint16_t CID,
                                                uint16_t RX_Credits,
@@ -42,13 +50,19 @@ tBleStatus aci_l2cap_send_flow_control_credits(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_disconnect(uint16_t Connection_Handle,
                                 uint16_t CID)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_transmit_sdu_data(uint16_t Connection_Handle,
                                        uint16_t CID,
                                        uint16_t SDU_Length,
@@ -56,7 +70,10 @@ tBleStatus aci_l2cap_transmit_sdu_data(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus aci_l2cap_extract_sdu_data(uint16_t Connection_Handle,
                                       uint16_t CID,
                                       uint16_t SDU_Data_Buffer_Size,
@@ -65,5 +82,6 @@ tBleStatus aci_l2cap_extract_sdu_data(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 #endif

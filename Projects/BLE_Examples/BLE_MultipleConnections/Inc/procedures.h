@@ -9,11 +9,11 @@ tBleStatus ConfigureAdvertising(uint8_t filter_policy);
 tBleStatus StartAdvertising(void);
 tBleStatus StopAdvertising(void);
 
-void StartGeneralConnectionEstablishment(void);
+tBleStatus StartGeneralConnectionEstablishment(void);
 tBleStatus StartAutoConnection(void);
 void StopScan(void);
 
-void BlacklistHit(uint8_t address_type, uint8_t address[]);
+int BlacklistHit(uint8_t address_type, uint8_t address[]);
 void BlacklistReset(void);
 
 

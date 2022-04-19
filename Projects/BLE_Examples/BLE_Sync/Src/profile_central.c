@@ -57,7 +57,7 @@
 #define PRINTF_DBG2(...)
 #endif
 
-#define PRINT_ADDDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
+#define PRINT_ADDRESS(a)   PRINTF("0x%02X%02X%02X%02X%02X%02X", a[5], a[4], a[3], a[2], a[1], a[0])
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -120,8 +120,8 @@ uint8_t DeviceInit(void)
   
   role |= GAP_CENTRAL_ROLE;
   
-  /* Set the TX power to -2 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  /* Set the TX power to 0 dBm */
+  aci_hal_set_tx_power_level(0, 24);
   
   NETCLOCK_Init();
 
@@ -147,7 +147,7 @@ uint8_t DeviceInit(void)
 
   aci_hal_read_config_data(0x80, &addr_len, address);
   PRINTF("Static random address: ");
-  PRINT_ADDDRESS(address);
+  PRINT_ADDRESS(address);
   PRINTF("\r\n");
 
   /* Set the device name */
@@ -193,7 +193,7 @@ uint8_t DeviceInit(void)
 
 void testCB(void *param)
 {
-  LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);
+  LL_GPIO_SetOutputPin(TEST_PULSE_GPIO_PORT, TEST_PULSE_GPIO_PIN);
   
   printf("0x%08X%08X\n", (uint32_t)(next_vtime_vtimer>>32),(uint32_t)next_vtime_vtimer);
   
@@ -201,7 +201,7 @@ void testCB(void *param)
   
   NETCLOCK_StartTimer(next_vtime_vtimer, testCB);  
   
-  LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_4);
+  LL_GPIO_ResetOutputPin(TEST_PULSE_GPIO_PORT, TEST_PULSE_GPIO_PIN);
 }
 
 /*******************************************************************************
@@ -262,7 +262,7 @@ void hci_le_connection_complete_event(uint8_t Status,
        connection_info.conn_handle = Connection_Handle;       
        
        PRINTF("Connected with slave ");
-       PRINT_ADDDRESS(Peer_Address);
+       PRINT_ADDRESS(Peer_Address);
        PRINTF("\r\n");
        
        APP_FLAG_SET(CONNECTED);

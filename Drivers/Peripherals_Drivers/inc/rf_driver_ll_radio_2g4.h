@@ -27,8 +27,12 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "system_BlueNRG_LP.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -64,7 +68,11 @@
 
     
 /* Hot table size */
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define HOT_TABLE_SIZE 37
+#else
 #define HOT_TABLE_SIZE 31
+#endif
 
 /* RRM register address for the hot table */
 #define RRM_CBIAS1_ANA_ENG      (0x5E)
@@ -77,8 +85,9 @@
 #define RRM_LR_PD_THR_DIG_ENG   (0x21)
 #define RRM_LR_AAC_THR_DIG_ENG  (0x23)
 #define RRM_VIT_CONF_DIG_ENG    (0x1B)
-  
-   
+#define RRM_ANTSW_DIG0_USR      (0x90)
+#define RRM_ANTSW_DIG1_USR      (0x91)
+
    
 /** @defgroup GlobalStatmach_Masks GlobalStatmach Masks
   * @{
@@ -146,6 +155,11 @@
 #define GLOBAL_WORD5_INTACTIVE2ERR_Pos                                     (30UL)
 #define GLOBAL_WORD5_INTACTIVE2ERR_Msk                                     (0x40000000UL)
 #define GLOBAL_WORD5_INTACTIVE2ERR                                         GLOBAL_WORD5_INTACTIVE2ERR_Msk
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define GLOBAL_WORD6_DEFAULTANTENNAID_Pos                                  (0UL)
+#define GLOBAL_WORD6_DEFAULTANTENNAID_Msk                                  (0x7fUL)
+#define GLOBAL_WORD6_DEFAULTANTENNAID                                      GLOBAL_WORD6_DEFAULTANTENNAID_Msk
+#endif
 
 #define GLOBAL_BYTE4_CURSTMACHNUM_Msk                                      (0x7F)
 #define GLOBAL_BYTE4_ACTIVE_Msk                                            (0x80)
@@ -172,6 +186,9 @@
 #define GLOBAL_BYTE23_INTACTIVE2ERR_Msk                                    (0x40)
 #define GLOBAL_BYTE23_INTCONFIGERROR_Msk                                   (0x80)
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define GLOBAL_BYTE24_DEFAULTANTENNAID_Msk                                 (0x7F)
+#endif
 
 /**
 * @}
@@ -205,6 +222,11 @@
 #define STATEMACH_WORD0_TXPHY_Pos                                          (24UL)
 #define STATEMACH_WORD0_TXPHY_Msk                                          (0x7000000UL)
 #define STATEMACH_WORD0_TXPHY                                              STATEMACH_WORD0_TXPHY_Msk
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define STATEMACH_WORD0_CTEDISABLE_Pos                                     (27UL)
+#define STATEMACH_WORD0_CTEDISABLE_Msk                                     (0x8000000UL)
+#define STATEMACH_WORD0_CTEDISABLE                                         STATEMACH_WORD0_CTEDISABLE_Msk
+#endif   
 #define STATEMACH_WORD0_RXPHY_Pos                                          (28UL)
 #define STATEMACH_WORD0_RXPHY_Msk                                          (0x70000000UL)
 #define STATEMACH_WORD0_RXPHY                                              STATEMACH_WORD0_RXPHY_Msk
@@ -259,6 +281,29 @@
 #define STATEMACH_WORDE_ENCRYPTIV_0_31_Pos                                 (0UL)
 #define STATEMACH_WORDE_ENCRYPTIV_0_31_Msk                                 (0xffffffffUL)
 #define STATEMACH_WORDE_ENCRYPTIV_0_31                                     STATEMACH_WORDE_ENCRYPTIV_0_31_Msk
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define STATEMACH_WORD14_AOD_NAOA_Pos                                      (0UL)
+#define STATEMACH_WORD14_AOD_NAOA_Msk                                      (0x1UL)
+#define STATEMACH_WORD14_AOD_NAOA                                          STATEMACH_WORD14_AOD_NAOA_Msk
+#define STATEMACH_WORD14_CTESLOTWIDTH_Pos                                  (1UL)
+#define STATEMACH_WORD14_CTESLOTWIDTH_Msk                                  (0x2UL)
+#define STATEMACH_WORD14_CTESLOTWIDTH                                      STATEMACH_WORD14_CTESLOTWIDTH_Msk
+#define STATEMACH_WORD14_CTETIME_Pos                                       (2UL)
+#define STATEMACH_WORD14_CTETIME_Msk                                       (0x7cUL)
+#define STATEMACH_WORD14_CTETIME                                           STATEMACH_WORD14_CTETIME_Msk
+#define STATEMACH_WORD14_MAXIMUMIQSAMPLESNUMBER_Pos                        (8UL)
+#define STATEMACH_WORD14_MAXIMUMIQSAMPLESNUMBER_Msk                        (0x7f00UL)
+#define STATEMACH_WORD14_MAXIMUMIQSAMPLESNUMBER                            STATEMACH_WORD14_MAXIMUMIQSAMPLESNUMBER_Msk
+#define STATEMACH_WORD14_ANTENNAPATTERNLENGTH_Pos                          (16UL)
+#define STATEMACH_WORD14_ANTENNAPATTERNLENGTH_Msk                          (0xff0000UL)
+#define STATEMACH_WORD14_ANTENNAPATTERNLENGTH                              STATEMACH_WORD14_ANTENNAPATTERNLENGTH_Msk
+#define STATEMACH_WORD15_IQSAMPLESPTR_Pos                                  (0UL)
+#define STATEMACH_WORD15_IQSAMPLESPTR_Msk                                  (0xffffffffUL)
+#define STATEMACH_WORD15_IQSAMPLESPTR                                      STATEMACH_WORD15_IQSAMPLESPTR_Msk
+#define STATEMACH_WORD16_ANTENNAPATTERNPTR_Pos                             (0UL)
+#define STATEMACH_WORD16_ANTENNAPATTERNPTR_Msk                             (0xffffffffUL)
+#define STATEMACH_WORD16_ANTENNAPATTERNPTR                                 STATEMACH_WORD16_ANTENNAPATTERNPTR_Msk
+#endif
    
    
 #define STATEMACH_BYTE0_UCHAN_Msk                                          (0x3F)
@@ -278,6 +323,9 @@
 
 #define STATEMACH_BYTE3_TXPHY_Msk                                          (0x07)
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define STATEMACH_BYTE3_CTEDISABLE_Msk                                     (0x08)
+#endif
 
 #define STATEMACH_BYTE3_RXPHY_Msk                                          (0x70)
 
@@ -292,6 +340,11 @@
 #define STATEMACH_BYTE35_INTRXOVERFLOWERROR_Msk                            (0x40)
 #define STATEMACH_BYTE35_RXDEBUGCRC_Msk                                    (0x80)
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define STATEMACH_BYTE80_AOD_NAOA_Msk                                      (0x01)
+#define STATEMACH_BYTE80_CTESLOTWIDTH_Msk                                  (0x02)
+#define STATEMACH_BYTE80_AOD_CTETIME_Msk                                   (0x7C)
+#endif
 
 /**
 * @}
@@ -310,9 +363,16 @@
 #define TXRXPACK_WORD1_KEEPSEMAREQ_Pos                                     (2UL)
 #define TXRXPACK_WORD1_KEEPSEMAREQ_Msk                                     (0x4UL)
 #define TXRXPACK_WORD1_KEEPSEMAREQ                                         TXRXPACK_WORD1_KEEPSEMAREQ_Msk
+#ifdef CONFIG_DEVICE_BLUENRG_LP
 #define TXRXPACK_WORD1_SUPPENA_Pos                                        (3UL)
 #define TXRXPACK_WORD1_SUPPENA_Msk                                        (0x8UL)
 #define TXRXPACK_WORD1_SUPPENA                                            TXRXPACK_WORD1_SUPPENA_Msk
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Pos                           (3UL)
+#define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Msk                           (0x8UL)
+#define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE                               TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Msk
+#endif
 #define TXRXPACK_WORD1_CRCINITSEL_Pos                                      (4UL)
 #define TXRXPACK_WORD1_CRCINITSEL_Msk                                      (0x10UL)
 #define TXRXPACK_WORD1_CRCINITSEL                                          TXRXPACK_WORD1_CRCINITSEL_Msk
@@ -374,7 +434,11 @@
 #define TXRXPACK_BYTE4_CALREQ_Msk                                          (0x01)
 #define TXRXPACK_BYTE4_CHANALGO2SEL_Msk                                    (0x02)
 #define TXRXPACK_BYTE4_KEEPSEMAREQ_Msk                                     (0x04)
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define TXRXPACK_BYTE4_CTEANDSAMPLINGENABLE_Msk                            (0x08)
+#else
 #define TXRXPACK_BYTE4_SUPPENA_Msk                                         (0x08)
+#endif
 #define TXRXPACK_BYTE4_CRCINITSEL_Msk                                      (0x10)
 #define TXRXPACK_BYTE4_ADVERTISE_Msk                                       (0x20)
 #define TXRXPACK_BYTE4_SN_EN_Msk                                           (0x40)
@@ -387,6 +451,10 @@
 #define TXRXPACK_BYTE5_DISABLEWHITENING_Msk                                (0x10)
 #define TXRXPACK_BYTE5_TESTPACKET_Msk                                      (0x20)
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#define TXRXPACK_BYTE5_RTTPACKET_Msk                                       (0x40)
+#define TXRXPACK_BYTE5_SQTEPACKET_Msk                                      (0x80)
+#endif
 
 #define TXRXPACK_BYTE14_TIMER2_19_16_Msk                                   (0x0F)
 #define TXRXPACK_BYTE14_TIMER2EN_Msk                                       (0x10)
@@ -517,6 +585,34 @@ typedef struct {
 /**
   * @brief Radio Link State Machine Word oriented description
   */
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+typedef struct {
+    volatile uint32_t  WORD0;
+    volatile uint32_t  WORD1;
+    volatile uint32_t  WORD2;
+    volatile uint32_t  WORD3;
+    volatile uint32_t  WORD4;
+    volatile uint32_t  WORD5;
+    volatile uint32_t  WORD6;
+    volatile uint32_t  WORD7;
+    volatile uint32_t  WORD8;
+    volatile uint32_t  WORD9;
+    volatile uint32_t  WORDA;
+    volatile uint32_t  WORDB;
+    volatile uint32_t  WORDC;
+    volatile uint32_t  WORDD;
+    volatile uint32_t  WORDE;
+    volatile uint32_t  WORDF;
+    volatile uint32_t WORD10;
+    volatile uint32_t WORD11;
+    volatile uint32_t WORD12;
+    volatile uint32_t WORD13;
+    volatile uint32_t WORD14;
+    volatile uint32_t WORD15;
+    volatile uint32_t WORD16; 
+} STATMACH_WORD_TypeDef;
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   typedef struct {
     volatile uint32_t  WORD0;
     volatile uint32_t  WORD1;
@@ -539,12 +635,22 @@ typedef struct {
     volatile uint32_t WORD12;
     volatile uint32_t WORD13;
 } STATMACH_WORD_TypeDef;
+#endif
 
 
 
 /**
   * @brief Radio TxRxPack Word oriented description
   */
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+typedef struct {
+    volatile uint32_t WORD0;
+    volatile uint32_t WORD1;
+    volatile uint32_t WORD2;
+    volatile uint32_t WORD3;
+} TXRXPACK_WORD_TypeDef;
+#endif
+#ifdef CONFIG_DEVICE_BLUENRG_LP
 typedef struct {
     volatile uint32_t WORD0;
     volatile uint32_t WORD1;
@@ -552,8 +658,92 @@ typedef struct {
     volatile uint32_t WORD3;
     volatile uint32_t WORD4;
 } TXRXPACK_WORD_TypeDef;   
+#endif
    
    
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  
+/**
+  * @brief Radio Global State Machine description
+  */
+
+typedef struct {
+    volatile uint32_t RADIOCONFIGPTR;
+    volatile uint8_t BYTE4;
+    volatile uint8_t WAKEUPINITDELAY;
+    volatile uint8_t TIMER12INITDELAYCAL;
+    volatile uint8_t TIMER2INITDELAYNOCAL;
+    volatile uint8_t TRANSMITCALDELAYCHK;
+    volatile uint8_t TRANSMITNOCALDELAYCHK;
+    volatile uint8_t RECEIVECALDELAYCHK;
+    volatile uint8_t RECEIVENOCALDELAYCHK;
+    volatile uint8_t CONFIGENDDURATION;
+    volatile uint8_t TXDATAREADYCHECK;
+    volatile uint8_t TXDELAYSTART;
+    volatile uint8_t BYTE15;
+    volatile uint8_t TXREADYTIMEOUT;
+    volatile uint8_t RCVTIMEOUT[3];
+    volatile uint8_t BYTE20;
+    volatile uint8_t BYTE21;
+    volatile uint8_t BYTE22;
+    volatile uint8_t BYTE23;
+    volatile uint8_t DEFAULTANTENNAID;
+    volatile uint8_t RESERVED[3];
+} GLOBALSTATMACH_TypeDef;
+
+/**
+  * @brief Radio Link State Machine description
+  */
+
+typedef struct {
+    volatile uint8_t BYTE0;
+    volatile uint8_t BYTE1;
+    volatile uint8_t BYTE2;
+    volatile uint8_t BYTE3;
+    volatile uint32_t TXPOINT;
+    volatile uint32_t RCVPOINT;
+    volatile uint32_t TXPOINTPREV;
+    volatile uint32_t RCVPOINTPREV;
+    volatile uint32_t TXPOINTNEXT;
+    volatile uint8_t PCNTTX[5];
+    volatile uint8_t PCNTRCV[5];
+    volatile uint8_t BYTE34;
+    volatile uint8_t BYTE35;
+    volatile uint32_t ACCADDR;
+    volatile uint8_t CRCINIT[3];
+    volatile uint8_t MAXRECEIVEDLENGTH;
+    volatile uint8_t PAPOWER;
+    volatile uint8_t HOPINCR;
+    volatile uint8_t USEDCHANNELFLAGS[5];
+    volatile uint8_t RESERVED;
+    volatile uint16_t CONNEVENTCOUNTER;
+    volatile uint16_t PAEVENTCOUNTER;
+    volatile uint8_t ENCRYPTIV[8];
+    volatile uint8_t ENCRYPTK[16];
+    volatile uint8_t BYTE80;
+    volatile uint8_t MAXIQSAMPLESNUMBER;
+    volatile uint8_t ANTENNAPATTERNLENGTH;
+    volatile uint8_t SQTIME;
+    volatile uint32_t IQSAMPLESPTR;
+    volatile uint32_t ANTENNAPATTERNPTR;
+} STATMACH_TypeDef;
+
+/**
+  * @brief Radio TxRxPack description
+  */
+
+typedef struct {
+    volatile uint32_t NEXTPTR;
+    volatile uint8_t  BYTE4;
+    volatile uint8_t  BYTE5;
+    volatile uint16_t RESERVED;
+    volatile uint32_t DATAPTR;
+    volatile uint8_t TIMER2[2];
+    volatile uint8_t BYTE14;
+    volatile uint8_t BYTE15;
+} TXRXPACK_TypeDef;
+
+#else /* BlueNRG_LP */
 /**
   * @brief Radio Global State Machine description
   */
@@ -627,6 +817,7 @@ typedef struct {
     volatile uint8_t BYTE15;
     volatile uint32_t SUPPLEMENTPTR;
 } TXRXPACK_TypeDef;
+#endif
 
 typedef enum {
   STATE_MACHINE_0 = 0,
@@ -2848,6 +3039,17 @@ __STATIC_INLINE uint32_t LL_RADIO_BlueGetClearSemaphoreRequest(void)
   return (uint32_t)(READ_BIT(BLUE->CMDREG, BLUE_CMDREG_CLEARSEMAREQ) >> BLUE_CMDREG_CLEARSEMAREQ_Pos);
 }
 
+/**
+  * @brief  
+  * @note   
+  * @rmtoll CMDREG          BLUE_CMDREG_TXRXSKIP       LL_RADIO_BlueSetTxRxSkip
+  * @param  value
+  * @retval None
+  */
+__STATIC_INLINE void LL_RADIO_BlueSetTxRxSkip(uint32_t value)
+{
+  MODIFY_REG_FIELD(BLUE->CMDREG, BLUE_CMDREG_TXRXSKIP, value);
+}
 
 /**
   * @brief  

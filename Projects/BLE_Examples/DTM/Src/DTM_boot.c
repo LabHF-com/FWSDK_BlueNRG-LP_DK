@@ -17,9 +17,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "BlueNRG_LPx.h"
+#include "bluenrg_lpx.h"
 #include "DTM_config.h"
-#include "miscutil.h"
 #include "hw_config.h"
 #include "rf_driver_hal_vtimer.h"
 #include "bleplat.h"
@@ -28,6 +27,9 @@
 #include "rng_manager.h"
 #include "aes_manager.h"
 #include "ble_controller.h"
+#include "dm_alloc.h"
+#include "aci_adv_nwk.h"   
+#include "aci_l2cap_nwk.h"
 
 /* Private typedef -----------------------------------------------------------*/
 typedef  PACKED(struct) devConfigS  {
@@ -149,7 +151,7 @@ typedef  PACKED(struct) devConfigS  {
 static devConfig_t deviceConfig;
 
 NO_INIT(uint32_t dyn_alloc_a[DYNAMIC_MEMORY_SIZE>>2]);
-NO_INIT(uint32_t aci_gatt_wr_buffer[ACI_GATT_WR_BUFFER_SIZE_CONF>>2]);
+NO_INIT(uint32_t aci_gatt_adv_nwk_buffer[ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF>>2]);
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -162,24 +164,29 @@ static uint8_t DTM_SmpsTrimConfig(uint8_t smps_config)
 {
   uint8_t ret_val = SUCCESS;
   uint8_t mem_config_smps_none = 0;
-  uint32_t main_regulator, smps_out_voltage, lsi_lpmu, lsi_bw, hsi_calib;
+  uint32_t main_regulator, smps_out_voltage, lsi_bw, hsi_calib;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
+  uint32_t lsi_lpmu;
+#endif
   uint8_t eng_lsi_bw_flag;
   
-  /* After reset wait until SMPS is ready */
-  SystemTimer_TimeoutConfig(16000000, 200, TRUE);
-  while(LL_PWR_IsSMPSReady() == 0)
-  {
-    if (SystemTimer_TimeoutExpired()) 
+  if(smps_config != SMPS_NONE) {
+    /* After reset wait until SMPS is ready */
+    SystemTimer_TimeoutConfig(16000000, 200, TRUE);
+    while(LL_PWR_IsSMPSReady() == 0)
     {
-      ret_val = SYSTEM_CONFIG_SMPS_READY_ERROR;
-      break;
+      if (SystemTimer_TimeoutExpired()) 
+      {
+        ret_val = SYSTEM_CONFIG_SMPS_READY_ERROR;
+        break;
+      }
     }
-  }
-  /* Disable the System Timer */
-  SystemTimer_TimeoutConfig(0, 0, FALSE);
-  if (ret_val != SUCCESS) 
-  {
-    return ret_val;
+    /* Disable the System Timer */
+    SystemTimer_TimeoutConfig(0, 0, FALSE);
+    if (ret_val != SUCCESS) 
+    {
+      return ret_val;
+    }
   }
   
   if(smps_config == SMPS_10uH) {
@@ -208,14 +215,18 @@ static uint8_t DTM_SmpsTrimConfig(uint8_t smps_config)
   if (*(volatile uint32_t*)VALIDITY_LOCATION == VALIDITY_TAG) {
     main_regulator    = ((*(volatile uint32_t*)TRIMMING_LOCATION) & MAIN_REGULATOR_TRIM_Msk) >> MAIN_REGULATOR_TRIM_Pos;
     smps_out_voltage  = ((*(volatile uint32_t*)TRIMMING_LOCATION) & SMPS_TRIM_Msk) >> SMPS_TRIM_Pos;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     lsi_lpmu          = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_LPMU_TRIM_Msk) >> LSI_LPMU_TRIM_Pos;
+#endif
     lsi_bw            = ((*(volatile uint32_t*)TRIMMING_LOCATION) & LSI_BW_TRIM_Msk) >> LSI_BW_TRIM_Pos;
     hsi_calib         = ((*(volatile uint32_t*)TRIMMING_LOCATION) & HSI_TRIM_Msk) >> HSI_TRIM_Pos;
     eng_lsi_bw_flag   = TRUE;
   } else {
     main_regulator    = 0x08;
     smps_out_voltage  = 0x03;
+#ifdef CONFIG_DEVICE_BLUENRG_LP
     lsi_lpmu          = 0x08;
+#endif
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
   }
@@ -227,8 +238,10 @@ static uint8_t DTM_SmpsTrimConfig(uint8_t smps_config)
   if (eng_lsi_bw_flag)
     LL_RCC_LSI_SetTrimming(lsi_bw);
   
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   /* Set LSI LPMU Trimming value */
   LL_PWR_SetLSILPMUTrim(lsi_lpmu);
+#endif
 
   /* Set Main Regulator voltage Trimming value */ 
   LL_PWR_SetMRTrim(main_regulator);
@@ -365,9 +378,15 @@ void DTM_SystemInit(void)
   /* Store in RAM the AppBase information */
   RAM_VR.AppBase = (uint32_t) (__vector_table);
 
+#ifdef CONFIG_DEVICE_BLUENRG_LP
   /* Enable all the RAM banks in retention during DEEPSTOP */
   LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_1|LL_PWR_RAMRET_2|LL_PWR_RAMRET_3);
+#endif /* CONFIG_DEVICE_BLUENRG_LP */
 	
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  /* Enable all the RAM banks in retention during DEEPSTOP */
+  LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_1);
+#endif /* CONFIG_DEVICE_BLUENRG_LPS */
   
   /* HW SMPS and HW Trimming value Configuration */
   DTM_SmpsTrimConfig(deviceConfig.SMPS_management);
@@ -437,11 +456,6 @@ void DTM_StackInit(void)
     calibration_interval = 0;
   }
   
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != 0) {
-    while(1);
-  }
-  
   BLECNTR_InitGlobal();
   
   HAL_VTIMER_InitType VTIMER_InitStruct = {MIN(deviceConfig.HS_startup_time, MAX_HS_STARTUP_TIME), initialcalibration, calibration_interval};
@@ -457,10 +471,21 @@ void DTM_StackInit(void)
       while(1);
   }
   
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
-
-  ACI_gatt_nwk_init(ACI_GATT_WR_BUFFER_SIZE_CONF, ACI_ATT_QUEUED_WRITE_SIZE_CONF,
-                    (uint8_t *)aci_gatt_wr_buffer);
+  
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != 0) {
+    while(1);
+  }
+  
+  /* Used by aci_gatt_nwk and adv_buff_alloc libraries.  */
+  dm_init(ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF, aci_gatt_adv_nwk_buffer);
+  
+  aci_adv_nwk_init();
+  
+  ACI_gatt_nwk_init(ACI_ATT_QUEUED_WRITE_SIZE_CONF);
+  
+  aci_l2cap_nwk_init();
 }
 

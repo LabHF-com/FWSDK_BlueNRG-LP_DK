@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    rf_driver_ll_usart.c
+  * @file    rf_driver_ll_flash.c
   * @author  RF Application Team
   * @brief   FLASH LL module driver.
   ******************************************************************************

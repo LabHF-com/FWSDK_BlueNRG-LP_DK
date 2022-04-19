@@ -15,7 +15,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "clock.h" 
@@ -76,19 +76,21 @@ uint8_t OTA_ServiceManager_DeviceInit(void)
   static uint8_t adv_data[] = {0x02,AD_TYPE_FLAGS, FLAG_BIT_LE_GENERAL_DISCOVERABLE_MODE|FLAG_BIT_BR_EDR_NOT_SUPPORTED,
                                14, AD_TYPE_COMPLETE_LOCAL_NAME,'O','T','A','S','e','r','v','i','c','e','M','g','r'};
   
+#if 0 //TBR: use static random address for OTA Service manager
   {
     uint8_t bdaddr[] = {0x12, 0x34, 0x00, 0xE1, 0x80, 0x02};
     
     aci_hal_write_config_data(CONFIG_DATA_PUBADDR_OFFSET, CONFIG_DATA_PUBADDR_LEN,
                               bdaddr);
   }
+#endif
   
   ret = aci_gatt_srv_init();    
   
   {
     uint16_t service_handle, dev_name_char_handle, appearance_char_handle;
     
-    ret  = aci_gap_init(GAP_PERIPHERAL_ROLE, 0,0x07, 0, &service_handle, &dev_name_char_handle, &appearance_char_handle);
+    ret  = aci_gap_init(GAP_PERIPHERAL_ROLE, 0,0x07, STATIC_RANDOM_ADDR, &service_handle, &dev_name_char_handle, &appearance_char_handle);
   }
 
 #if 0 //TBR
@@ -110,7 +112,7 @@ uint8_t OTA_ServiceManager_DeviceInit(void)
     PRINTF("\r\nError while adding OTA service.\n");
   
   /* 0 dBm output power */
-  aci_hal_set_tx_power_level(0,25);
+  aci_hal_set_tx_power_level(0, 24);
   
   
   ret = aci_gap_set_advertising_configuration(0, GAP_MODE_GENERAL_DISCOVERABLE,
@@ -254,6 +256,21 @@ void aci_gatt_srv_write_event(uint16_t Connection_Handle,
   {
     aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_error, 0,  NULL);
   }
+}
+
+void aci_att_exchange_mtu_resp_event(uint16_t Connection_Handle,
+                                     uint16_t Server_RX_MTU)
+{
+  OTA_att_exchange_mtu_resp_CB(Connection_Handle, Server_RX_MTU);
+}
+
+void hci_le_data_length_change_event(uint16_t Connection_Handle,
+                                     uint16_t MaxTxOctets,
+                                     uint16_t MaxTxTime,
+                                     uint16_t MaxRxOctets,
+                                     uint16_t MaxRxTime)
+{
+  OTA_data_length_change_CB(Connection_Handle);  
 }
 
 

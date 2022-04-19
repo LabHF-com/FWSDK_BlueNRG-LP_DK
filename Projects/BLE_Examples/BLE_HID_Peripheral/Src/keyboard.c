@@ -16,7 +16,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -65,6 +65,10 @@ typedef struct hidValueS {
 
 hidService_Type hid_param;
 report_Type reportReferenceDesc[NUM_REPORTS];
+const char *manufacName = "ST";
+const char *modelNumber = "0001";
+const char *fwRevision = "0630";
+const char *swRevision = "0001";
 
 
 uint8_t dev_name[]={'S', 'T', 'K', 'e', 'y', 'b', 'o', 'a', 'r', 'd'}; 
@@ -319,10 +323,10 @@ uint8_t Configure_HidPeripheral(void)
   battery.inReportMap = FALSE;
 
   /* Device Information Service */
-  memcpy(devInf.manufacName, "ST Micro", 8);
-  memcpy(devInf.modelNumber, "0001", 4);
-  memcpy(devInf.fwRevision, "0630", 4);
-  memcpy(devInf.swRevision, "0001", 4);
+  devInf.manufacName = manufacName;
+  devInf.modelNumber = modelNumber;
+  devInf.fwRevision = fwRevision;
+  devInf.swRevision = swRevision;
   devInf.pnpID[0] = 0x01;
   devInf.pnpID[1] = 0x30;
   devInf.pnpID[2] = 0x00;

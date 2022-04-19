@@ -8,8 +8,10 @@ Gap_profile_set_dev_name
 AESMGR_Init
 AESMGR_Encrypt
 BLECNTR_InitGlobal
+BLECNTR_GlobSetDefaultAntennaid
 PKAMGR_Init
 PKAMGR_PowerSaveLevelCheck
+PKA_IRQHandler
 RNGMGR_Init
 HAL_VTIMER_Init
 HAL_VTIMER_Tick
@@ -24,6 +26,7 @@ HAL_VTIMER_PowerSaveLevelCheck
 HAL_VTIMER_TimeoutCallback
 HAL_VTIMER_WakeUpCallback
 HAL_VTIMER_RadioTimerIsr
+HAL_VTIMER_EndOfRadioActivityIsr
 BLEPLAT_Init
 NVMDB_Tick
 hci_disconnect
@@ -139,6 +142,7 @@ aci_hal_get_link_status
 aci_hal_set_radio_activity_mask
 aci_hal_set_event_mask
 aci_hal_set_le_power_control
+aci_hal_get_evt_fifo_max_level
 aci_gap_set_io_capability
 aci_gap_set_authentication_requirement
 aci_gap_pass_key_resp

@@ -35,6 +35,8 @@ tBleStatus hci_le_set_connectionless_iq_sampling_enable(uint16_t Sync_Handle,
     return ERR_UNKNOWN_HCI_COMMAND;
 }
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_connection_cte_receive_parameters(uint16_t Connection_Handle,
                                                         uint8_t Sampling_Enable,
                                                         uint8_t Slot_Durations,
@@ -43,7 +45,10 @@ tBleStatus hci_le_set_connection_cte_receive_parameters(uint16_t Connection_Hand
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_set_connection_cte_transmit_parameters(uint16_t Connection_Handle,
                                                          uint8_t CTE_Type,
                                                          uint8_t Switching_Pattern_Length,
@@ -51,7 +56,10 @@ tBleStatus hci_le_set_connection_cte_transmit_parameters(uint16_t Connection_Han
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_connection_cte_request_enable(uint16_t Connection_Handle,
                                                 uint8_t Enable,
                                                 uint16_t CTE_Request_Interval,
@@ -60,12 +68,16 @@ tBleStatus hci_le_connection_cte_request_enable(uint16_t Connection_Handle,
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
+#if (defined(CONNECTION_ENABLED) &&\
+            (CONNECTION_ENABLED == 1))
 tBleStatus hci_le_connection_cte_response_enable(uint16_t Connection_Handle,
                                                  uint8_t Enable)
 {
     return ERR_UNKNOWN_HCI_COMMAND;
 }
+#endif
 
 tBleStatus hci_le_read_antenna_information(uint8_t* Supported_Switching_Sampling_Rates,
                                            uint8_t* Num_Antennae,

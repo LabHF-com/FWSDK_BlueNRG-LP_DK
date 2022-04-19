@@ -109,32 +109,32 @@
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_button.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_button.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_button.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_com.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_com.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_com.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_i2c.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_i2c.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_i2c.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_io.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_io.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_io.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_led.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_led.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_led.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_spi.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STEVAL-IDB011V1/Src/bluenrg_lp_evb_spi.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_spi.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/lps22hh_reg.c</name>
@@ -150,6 +150,11 @@
       <name>Drivers/CMSIS/system_BlueNRG_LP.c</name>
     <type>1</type>
     <locationURI>PARENT-5-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</locationURI>
+    </link>
+  <link>
+      <name>Drivers/CMSIS/startup_BlueNRG_LP.c</name>
+    <type>1</type>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</locationURI>
     </link>
   <link>
       <name>Drivers/Peripherals_Drivers/rf_driver_hal_power_manager.c</name>
@@ -262,9 +267,9 @@
     <locationURI>PARENT-2-PROJECT_LOC/Src/BLE_Beacon_Flash_main.c</locationURI>
     </link>
   <link>
-      <name>Example/User/bluenrg_lp_it.c</name>
+      <name>Example/User/rf_device_it.c</name>
     <type>1</type>
-    <locationURI>PARENT-2-PROJECT_LOC/Src/bluenrg_lp_it.c</locationURI>
+    <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_it.c</locationURI>
     </link>
   <link>
       <name>Middlewares/AES/aes_manager_bluenrg_lp.c</name>
@@ -275,6 +280,11 @@
       <name>Middlewares/BLE_Stack/libbluenrg_lp_stack.a</name>
     <type>1</type>
     <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/libbluenrg_lp_stack.a</locationURI>
+    </link>
+  <link>
+      <name>Middlewares/BLE_Stack/stack_cns_api_stubs.c</name>
+    <type>1</type>
+    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_cns_api_stubs.c</locationURI>
     </link>
   <link>
       <name>Middlewares/BLE_Stack/stack_user_cfg.c</name>

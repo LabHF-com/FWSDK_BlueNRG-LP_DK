@@ -44,9 +44,9 @@
 #define USB2SERIAL_FW_VERSION_MINOR    5 //CMSIS-DAP FW 1.5
                   
                   
-#define DTM_FW_VERSION_MAJOR    1 //BlueNRG-LP SDK 1.1.0
-#define DTM_FW_VERSION_MINOR    1 //BlueNRG-LP SDK 1.1.0
-#define DTM_FW_VERSION_PATCH    0 //BlueNRG-LP SDK 1.1.0
+#define DTM_FW_VERSION_MAJOR    1 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
+#define DTM_FW_VERSION_MINOR    2 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
+#define DTM_FW_VERSION_PATCH    0 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
 
 #ifdef UART_INTERFACE                  
 #define DTM_VARIANT             1

@@ -23,7 +23,7 @@
   To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
   -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
   -# Open the KEIL project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\MDK-ARM\\{STEVAL-IDB011V1}\\BLE_RC_LongRange.uvprojx</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\BLE_RC_LongRange.uvprojx</tt> 
   -# Select desired configuration to build
   -# Select Project->Rebuild all target files. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\EWARM\\{STEVAL-IDB011V1}\\BLE_RC_LongRange.eww</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\BLE_RC_LongRange.eww</tt> 
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -45,7 +45,7 @@
   To use the project with WiSE-Studio IDE (GCC toolchain), please follow the instructions below:
   -# Open the WiSE-Studio IDE
   -# Select File, Import, Existing Projects into Workspace
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\WiSE-Studio\\{STEVAL-IDB011V1}</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Project\\BLE_Examples\\BLE_RC_LongRange\\WiSE-Studio\\{STEVAL-IDB011V1|STEVAL-IDB012V1}</tt> 
   -# Select desired configuration to build
   -# Select Project->Build Project. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -53,12 +53,14 @@
   -# Alternatively, open the Flasher utility and download the built binary image.
 
 * \subsection Project_configurations Project configurations
-- \c Client - Release configuration
+- \c Client - Client configuration
 - \c Server - Server configuration
 
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB011V1
+- \c STEVAL-IDB011V2
+- \c STEVAL-IDB012V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,34 +97,42 @@
                         
 * \section Pin_settings Pin settings
 @table
-|            |       Client       |       Server       |
---------------------------------------------------------
-|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V1  |
---------------------------------------------------------
-|     A1     |      Not Used      |      Not Used      |
-|     A11    |      Not Used      |      Not Used      |
-|     A12    |      Not Used      |      Not Used      |
-|     A13    |      Not Used      |      Not Used      |
-|     A14    |      Not Used      |      Not Used      |
-|     A15    |      Not Used      |      Not Used      |
-|     A4     |      Not Used      |      Not Used      |
-|     A5     |      Not Used      |      Not Used      |
-|     A6     |      Not Used      |      Not Used      |
-|     A7     |      Not Used      |      Not Used      |
-|     A8     |      Not Used      |      Not Used      |
-|     A9     |      Not Used      |      Not Used      |
-|     B0     |      Not Used      |      Not Used      |
-|     B14    |      Not Used      |      Not Used      |
-|     B2     |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |
-|     B7     |      Not Used      |      Not Used      |
-|     B8     |      Not Used      |      Not Used      |
-|     B9     |      Not Used      |      Not Used      |
-|     GND    |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |
+|            |                            Client                             |||                            Server                             |||
+--------------------------------------------------------------------------------------------------------------------------------------------------
+|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
+--------------------------------------------------------------------------------------------------------------------------------------------------
+|     A0     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A12    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A13    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A14    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A15    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A3     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     A4     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A5     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A6     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A7     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A9     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     B12    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     B13    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     B9     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -140,38 +150,38 @@
 
 * \section LEDs_description LEDs description
 @table
-|            |           Client           |           Server           |
-------------------------------------------------------------------------
-|  LED name  |       STEVAL-IDB011V1      |       STEVAL-IDB011V1      |
-------------------------------------------------------------------------
-|     DL1    |          Not Used          |          Not Used          |
-|     DL2    |  Led under remote control  |  Led under remote control  |
-|     DL3    |  Led under remote control  |  Led under remote control  |
-|     DL4    |          Not Used          |          Not Used          |
-|     U5     |  Led under remote control  |  Led under remote control  |
+|            |                                        Client                                         |||                                        Server                                         |||
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LED name  |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     DL2    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL3    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL4    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     U5     |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|                |       Client       |       Server       |
-------------------------------------------------------------
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V1  |
-------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|                |                             Client                              |||                             Server                              |||
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |       Not Used       |      Not Used      |      Not Used      |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |       Not Used       |      Not Used      |      Not Used      |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |
 
 @endtable
 
 * \section Usage Usage
 
-This demo shows how to control a remote device (like an attuator) using BlueNRG-LP and Bluetooth LE specification v5.0 Coded PHY feature.
+This demo shows how to control a remote device (like an attuator) using BlueNRG-LP, BlueNRG-LPS on Coded PHY (Bluetooth LE specifications v5.0), to reach longer distances.
 
-THe demo requires 2 BlueNRG-LP STEVAL boards configured, respectively, with the Client and Server project configurations.
+THe demo requires 2 BlueNRG-LP/BlueNRG-LPS STEVAL boards configured, respectively, with the Client and Server project configurations.
 
-Boards can be powered from USB cable or from batteries (insert AAA batteries on the boards and move jumper JP2 to "BAT" position).
+Boards can be powered from USB cable or from batteries (insert AAA batteries on the boards and move jumper JP2 to "BAT" position on BlueNRG-LP kit. No action is required on BlueNRG-LPS kit).
 
 The demo application works as follow:
 - The server device starts by entering discoverable mode with a fixed address (0x0280E10000E1). LED2 is blinking, showing that the board is in advertising, using 1 Mbps PHY.
@@ -180,7 +190,8 @@ The demo application works as follow:
 - To measure the communication range, move the board away from each other till the LED3 on the server is blinking at a constant rate. When the blinking rate of the LED3 becomes to be lower, it means that several packets are retransmitted by the client and hence the boards are at the limit of a stable communication range.
 - While connected, press button PUSH1 on one of the boards to start the procedure to change the used PHY to the Coded PHY. When the procedure completes (i.e. coded PHY activated), LED1 is switched on. PUSH1 button can be pressed again on the same device to switch PHY back to 1Mbps. Note: when PHY is switched by a device, the other device will not be able to switch PHY.
 - User can measure the stable communication range when using coded PHY by repeating the test described above: just moving the board away from each other till the LED3 on the server is blinking at a constant rate. An increased stable communication range compared to 1 Mbps PHY should be visible.
-- PUSH1 button can also be used while not connected to switch advertising or scanning PHY from 1 Mbps to Coded PHY and viceversa.
+- PUSH1 button can also be used while not connected to switch advertising or scanning PHY from 1 Mbps to Coded PHY and vice versa.
+- On the Client, some statistics on the link quality are printed.
 
 
 **/
@@ -197,7 +208,7 @@ The demo application works as follow:
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -244,13 +255,7 @@ void ModulesInit(void)
   BLE_STACK_InitTypeDef BLE_STACK_InitParams = BLE_STACK_INIT_PARAMETERS;
   
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA|LL_AHB_PERIPH_RNG);
-  
-  /* BlueNRG-LP stack init */
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != BLE_STATUS_SUCCESS) {
-    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
-    while(1);
-  }
+
   
   BLECNTR_InitGlobal();
   
@@ -267,8 +272,15 @@ void ModulesInit(void)
       while(1);
   }
   
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
+  
+  /* BlueNRG-LP stack init */
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != BLE_STATUS_SUCCESS) {
+    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
+    while(1);
+  }
 
 }
 
@@ -360,15 +372,8 @@ PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level)
   return POWER_SAVE_LEVEL_STOP_NOTIMER;
 }
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

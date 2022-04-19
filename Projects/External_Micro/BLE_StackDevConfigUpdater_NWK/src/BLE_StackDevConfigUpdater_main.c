@@ -55,6 +55,19 @@ void SystemInit_NWK(void)
 }
 
 
+/*
+ ******************************************************************************
+ ******************************************************************************
+ * 
+ * The project requires that the target device is specified.
+ * This is done using the preprocessor symbol:
+ *  - BlueNRG-LP is CONFIG_DEVICE_BLUENRG_LP
+ *  - BlueNRG-LPS is CONFIG_DEVICE_BLUENRG_LPS
+ * The default is BlueNRG-LP.
+ *
+ ****************************************************************************
+ ****************************************************************************
+*/
 int main(void)
 {
   int ret;

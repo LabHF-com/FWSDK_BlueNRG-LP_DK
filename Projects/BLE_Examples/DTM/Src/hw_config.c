@@ -20,7 +20,7 @@
 */ 
 
 /* Includes ------------------------------------------------------------------*/
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "rf_driver_ll_system.h"
 #include "hw_config.h"
 

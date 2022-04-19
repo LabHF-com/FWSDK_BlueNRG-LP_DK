@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m0plus -xc
 /*******************************************************************************
 * BlueNRG-LP generic linker file for KEIL
 * Main linker variables to control it are:
@@ -43,7 +43,7 @@ BlueNRG-LP memory map
 +-----------------------+ 0x10000000
 */
 
-#define _MEMORY_RAM_BEGIN_    0x20000000 
+#define _MEMORY_RAM_BEGIN_    0x20000000
 #ifdef CONFIG_DEVICE_BLUENRG_345
 #define _MEMORY_RAM_SIZE_     0x8000          /* 32KB  */
 #define _MEMORY_RAM_END_      0x20007FFF
@@ -218,10 +218,10 @@ LR_IROM1 (_MEMORY_FLASH_BEGIN_+MEMORY_FLASH_APP_OFFSET) _MEMORY_FLASH_SIZE_  {  
   REGION_FLASH_NVM (_MEMORY_FLASH_END_- FLASH_NVM_DATASIZE + 1) UNINIT FLASH_NVM_DATASIZE  {
   }
   ram_vr_block 0x20000004 UNINIT 0x2C {
-   *.o (.ram_vr)
+   *.o (.bss.ram_vr)
   }
   crash_info_ram_vr_block 0x20000034 UNINIT 40 {  
-  *.o (.crash_info_ram_vr)
+  *.o (.bss.crash_info_ram_vr)
   }
   BLUE 0x200000C0 {
   *.o (.bss.__blue_RAM)
@@ -240,5 +240,4 @@ LR_IROM1 (_MEMORY_FLASH_BEGIN_+MEMORY_FLASH_APP_OFFSET) _MEMORY_FLASH_SIZE_  {  
    *.o (.noinit.data)
   }
   ARM_LIB_STACK (_MEMORY_RAM_END_+1) EMPTY -0xC00 { }
-  ARM_LIB_HEAP  (_MEMORY_RAM_END_+1-0xC00) EMPTY -0x700 { }
 }

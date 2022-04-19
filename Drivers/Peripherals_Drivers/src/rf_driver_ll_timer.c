@@ -75,6 +75,8 @@ typedef struct timer_context_s {
   int32_t last_period1;             /** Period global in last calibration */
   uint32_t last_machine_time; /** Last machine time used to update cumulative time */
   uint32_t last_calibration_machine_time; /** Last machine time when calibration was performed */
+  uint32_t calibration_machine_interval; /** Calibration Interval MTU */
+  uint64_t last_system_time; /** Last System Time */
   uint8_t  periodic_calibration; /** Tells whether periodic hardware calibration is needed or not, i.e. lsosc speed varies with temperature, etc. */
   uint8_t tx_cal_delay; /**time in MTU to be compensated if transmission and pll calibration are requested. The value in RAM must be initialized before the TIMER is initialized*/
   uint8_t tx_no_cal_delay; /**time in MTU to be compensated if transmission is requested. The value in RAM must be initialized before the TIMER is initialized*/
@@ -86,6 +88,7 @@ typedef struct timer_context_s {
   uint8_t rx_no_cal_delay_st; /**time in STU to be compensated if reception is requested. The value in RAM must be initialized before the TIMER is initialized*/
   uint8_t tim12_delay_mt;
   uint8_t last_setup_time; /**setup time of last timer programmed*/
+  uint8_t calibration_data_available; /**Flag to signal if a new calibration data is available or not*/
 } TIMER_ContextType; 
 
 /**
@@ -206,10 +209,19 @@ static uint32_t us_to_machinetime(uint32_t time)
 static uint64_t get_system_time_and_machine(TIMER_ContextType *context, uint32_t *current_machine_time)
 {
   uint32_t difftime;
-  uint64_t new_time = context->cumulative_time;
+  uint64_t new_time;
+  
+  ATOMIC_SECTION_BEGIN();
+  new_time = context->cumulative_time;
   *current_machine_time = WAKEUP->ABSOLUTE_TIME;
   difftime = TIME_ABSDIFF(*current_machine_time, context->last_machine_time);
   new_time += blue_unit_conversion(difftime,context->period1, MULT64_THR_PERIOD);
+  if (new_time < TIMER_Context.last_system_time) {
+    new_time += blue_unit_conversion(TIMER_MAX_VALUE,context->period1, MULT64_THR_PERIOD);
+  }
+  TIMER_Context.last_system_time = new_time;
+  ATOMIC_SECTION_END();
+
   return new_time;
 }
 
@@ -243,6 +255,10 @@ static void update_system_time(TIMER_ContextType *context)
   blue_unit_conversion(TIME_ABSDIFF(current_machine_time,
                                       context->last_calibration_machine_time),
                                       period, MULT64_THR_PERIOD);
+
+  if ((TIMER_Context.periodic_calibration == 0) && (TIME_ABSDIFF(current_machine_time, context->last_calibration_machine_time) < context->calibration_machine_interval)) {
+    context->cumulative_time += blue_unit_conversion(TIMER_MAX_VALUE, period, MULT64_THR_PERIOD);
+  }
   context->last_machine_time = current_machine_time;
   context->last_calibration_machine_time = current_machine_time;
   context->last_calibration_time = context->cumulative_time;
@@ -312,7 +328,9 @@ void TIMER_Init(TIMER_InitType* TIMER_InitStruct)
   TIMER_Context.cumulative_time = 0;
   TIMER_Context.last_machine_time = WAKEUP->ABSOLUTE_TIME;
   TIMER_Context.last_calibration_machine_time = TIMER_Context.last_machine_time;
+  TIMER_Context.last_system_time = 0;
   TIMER_Context.last_calibration_time = 0;
+  TIMER_Context.calibration_data_available = 0;
   update_cal_delay(&TIMER_Context);
   TIMER_Context.tx_cal_delay_st = us_to_systime(blueglob->TRANSMITCALDELAYCHK + tx_delay_start) + \
                                     WAKEUP_INIT_DELAY;
@@ -387,6 +405,25 @@ BOOL TIMER_IsCalibrationRunning(void)
 }
 
 /**
+  * @brief   Return TRUE if new calibration data is available.
+  * @retval  TRUE if calibration data is available, FALSE otherwise.
+  * @warning Call the @TIMER_ClearCalibrationDataAvailableFlag() API to clear the avaliability flag after the data read.
+  */
+BOOL TIMER_IsCalibrationDataAvailable(void)
+{
+  return (TIMER_Context.calibration_data_available == 1);
+}
+
+/**
+  * @brief  Clear the calibration data available flag.
+  * @retval None
+  */
+void TIMER_ClearCalibrationDataAvailableFlag(void)
+{
+  TIMER_Context.calibration_data_available = 0;
+}
+
+/**
  * @brief   Records the result of the last calibration in the internal context.
  *          It updates the XTAL startup time.
  *          It updates also the cumulative STU variable, so it should be called peiodically to manage timer wrapping,
@@ -405,6 +442,7 @@ void TIMER_UpdateCalibrationData(void)
     ATOMIC_SECTION_BEGIN();
     /* Copying only the updated fields.
     Faster than memcpy: TIMER_Context = ContextToUpdate;*/
+    TIMER_Context.calibration_data_available = 1;
     TIMER_Context.period = ContextToUpdate.period;
     TIMER_Context.freq = ContextToUpdate.freq;
     TIMER_Context.freq1 = ContextToUpdate.freq1;
@@ -473,6 +511,19 @@ void TIMER_GetCurrentCalibrationData(TIMER_CalibrationType *data)
   data->last_calibration_time = TIMER_Context.last_calibration_time;
   data->period = TIMER_Context.period;
   data->last_calibration_machine_time = TIMER_Context.last_calibration_machine_time; /* Last machine time when calibration was performed */
+}
+
+/**
+  * @brief  Records the calibration interval. This information 
+  *         is used to understand if a absolute time wrap register happens since the device startup configration.
+  * @param  time: Calibration interval (STU)
+  * @warning This function is not re-entrant since it updates the context variable storing the system time.
+  *          It should be called only in user context and not in interrupt context.
+* @retval   None
+*/
+void TIMER_SaveCalibrationInterval(uint32_t time)
+{
+  TIMER_Context.calibration_machine_interval = blue_unit_conversion(time, TIMER_Context.freq1, MULT64_THR_FREQ);
 }
 
 /**
@@ -623,8 +674,8 @@ uint32_t TIMER_SetRadioHostWakeupTime(uint32_t delay, BOOL* share)
  *                   The maximum value STU is dependent on the speed of the low speed oscillator.
  * @param   event_type: 1 Tx event.
                         0 Rx event
- * @param   cal_req: 1 pll calibartion is requested.
-                    0 pll calibartion is not requested.
+ * @param   cal_req: 1 pll calibration is requested.
+                    0 pll calibration is not requested.
  * @warning This function should be called with interrupts disabled to avoid programming the timer with a value in the past
  * @retval  0 if a correct timeout has been programmed in the timeout register
  * @retval  1 if a correct timeout cannot be programmed
@@ -663,7 +714,7 @@ uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req
   /* At this point, it is care of the upper layers to guarantee that the timeout represents an absolute time in the future */
   relTimeout = timeout - (uint32_t)get_system_time_and_machine(&TIMER_Context,&current_time);
   /*Check if the timeout is beyond the wakeup time offset. Then program either the WakeUp timer or the Timer1*/
-  if (relTimeout > device_delay + TIMER_Context.hs_startup_time + MARGIN_EXT)
+  if (relTimeout > (device_delay + TIMER_Context.hs_startup_time + MARGIN_EXT))
   {
     /*The timeout is after the wakeup_time_offset, So it is ok to program the wakeup timer*/
     delay = blue_unit_conversion(relTimeout, TIMER_Context.freq1, MULT64_THR_FREQ) \

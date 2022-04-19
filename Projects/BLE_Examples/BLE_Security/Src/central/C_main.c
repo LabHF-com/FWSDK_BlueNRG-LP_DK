@@ -24,7 +24,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_power_manager.h"
@@ -79,13 +79,7 @@ void ModulesInit(void)
   BLE_STACK_InitTypeDef BLE_STACK_InitParams = BLE_STACK_INIT_PARAMETERS;
   
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA|LL_AHB_PERIPH_RNG);
-  
-  /* BlueNRG-LP stack init */
-  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
-  if (ret != BLE_STATUS_SUCCESS) {
-    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
-    while(1);
-  }
+
   
   BLECNTR_InitGlobal();
   
@@ -102,8 +96,15 @@ void ModulesInit(void)
       while(1);
   }
   
-    /* Init the AES block */
+  /* Init the AES block */
   AESMGR_Init();
+  
+  /* BlueNRG-LP stack init */
+  ret = BLE_STACK_Init(&BLE_STACK_InitParams);
+  if (ret != BLE_STATUS_SUCCESS) {
+    printf("Error in BLE_STACK_Init() 0x%02x\r\n", ret);
+    while(1);
+  }
 }
 
 void ModulesTick(void)
@@ -212,15 +213,8 @@ void HAL_PWR_MNGR_WakeupIOCallback(uint32_t source)
   }
 }
 
-/* Hardware Error event. 
-   This event is used to notify the Host that a hardware failure has occurred in the Controller. 
-   Hardware_Code Values:
-   - 0x01: Radio state error
-   - 0x02: Timer overrun error
-   - 0x03: Internal queue overflow error
-   - 0x04: Late Radio ISR
-   After this event with error code 0x01, 0x02 or 0x03, it is recommended to force a device reset. */
-
+/* Event used to notify the Host that a hardware failure has occurred in the Controller. 
+   See bluenrg_lp_events.h. */
 void hci_hardware_error_event(uint8_t Hardware_Code)
 {
   if (Hardware_Code <= 0x03)

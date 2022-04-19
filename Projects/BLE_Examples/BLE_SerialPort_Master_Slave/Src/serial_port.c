@@ -16,7 +16,7 @@
 /* Include -------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "gp_timer.h" 
 #include "ble_const.h" 
 #include "app_state.h"
@@ -238,7 +238,7 @@ uint8_t SerialPort_DeviceInit(void)
   Setup_DeviceAddress();
 
   /* Set the TX power to 0 dBm */
-  aci_hal_set_tx_power_level(0, 25);
+  aci_hal_set_tx_power_level(0, 24);
 
   /* GATT Init */
   ret = aci_gatt_srv_init();    

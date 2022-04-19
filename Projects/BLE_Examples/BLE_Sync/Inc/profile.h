@@ -6,6 +6,10 @@
 #define MAX_NUM_SLAVES 1
 #endif
 
+
+#define TEST_PULSE_GPIO_PORT        GPIOB
+#define TEST_PULSE_GPIO_PIN         LL_GPIO_PIN_4
+
 // Service data
 #define PROFILE_DATA_NODE        0
 #define PROFILE_DATA_COLLECTOR   1

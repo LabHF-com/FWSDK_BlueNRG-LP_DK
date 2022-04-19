@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bluenrg_lp_it.h"
+#include "rf_device_it.h"
 #include "ble_const.h"
 #include "bluenrg_lp_stack.h"
 #include "rf_driver_hal_vtimer.h"
@@ -36,6 +36,8 @@ uint8_t button1_pressed = FALSE, button2_pressed = FALSE;
 /* Private defines -----------------------------------------------------------*/
 
 #define DEBOUNCE_TIMEOUT_MS     300
+#define STATS_INTERVAL_MS       10000
+
 
 /* Enable debug printf */
 #ifndef DEBUG
@@ -59,7 +61,13 @@ static uint8_t debounce_timeout_occurred = TRUE;
 static VTIMER_HandleType debounce_timer;
 static VTIMER_HandleType scanningLEDTimerHandle;
 static VTIMER_HandleType writeTimerHandle;
+static VTIMER_HandleType statsTimerHandle;
 static uint8_t phy = LE_1M_PHY;
+
+static llc_conn_per_statistic_st per_statistic_ptr;
+static uint16_t CRC_errs_perc;
+static uint16_t missed_evts_perc;
+static uint8_t packet_err_rate;
 
   
 #if DO_NOT_USE_VTIMER_CB
@@ -69,6 +77,7 @@ static uint8_t phy = LE_1M_PHY;
 /* Private function prototypes -----------------------------------------------*/
 void ScanningLEDTimeoutCB(void *param);
 void writeTimeoutCB(void *param);
+void statsTimeoutCB(void *param);
 void toggle_LED(void);
 /* Private functions ---------------------------------------------------------*/
 void DebounceTimeoutCB(void *param);
@@ -90,7 +99,7 @@ uint8_t RC_DeviceInit(void)
     return ret;
   }
   
-  /* Set the TX power to 0 dBm */
+  /* Set the TX power */
   aci_hal_set_tx_power_level(0, OUTPUT_POWER_LEVEL);
   
   /* GATT Init */
@@ -150,6 +159,7 @@ uint8_t RC_DeviceInit(void)
   debounce_timer.callback = DebounceTimeoutCB;
   scanningLEDTimerHandle.callback = ScanningLEDTimeoutCB;
   writeTimerHandle.callback = writeTimeoutCB;
+  statsTimerHandle.callback = statsTimeoutCB;
     
   return BLE_STATUS_SUCCESS;
 }
@@ -255,18 +265,33 @@ void toggle_LED(void)
   tBleStatus ret;
   static uint8_t val = 1<<CONTROL_LED;
   
-  ret = aci_gatt_clt_write(connection_handle, 0x0012, 1, &val);
-  
-  PRINTF("Write 0x%02X to handle 0x0012, 0x%02X\n", val, ret);
-  
   if(val==0){
-    BSP_LED_Off(CONTROL_LED);
+    BSP_LED_On(CONTROL_LED);
     val = 1<<CONTROL_LED;
   }
   else {
-    BSP_LED_On(CONTROL_LED);
+    BSP_LED_Off(CONTROL_LED);
     val = 0;
   }
+  
+  ret = aci_gatt_clt_write(connection_handle, 0x0012, 1, &val);
+  
+  PRINTF("Write 0x%02X to handle 0x0012, 0x%02X\n", val, ret);
+}
+
+void statsTimeoutCB(void *param)
+{
+  CRC_errs_perc = (uint32_t)per_statistic_ptr.num_crc_err*100/per_statistic_ptr.num_pkts;
+  missed_evts_perc = (uint32_t)per_statistic_ptr.num_miss_evts*100/per_statistic_ptr.num_evts;
+  packet_err_rate = (uint32_t)(per_statistic_ptr.num_miss_evts+per_statistic_ptr.num_crc_err)*100/(per_statistic_ptr.num_evts+per_statistic_ptr.num_miss_evts);
+  
+  PRINTF("- CRC errs = %d%%\n- Missed evts = %d%%\n", CRC_errs_perc, missed_evts_perc);
+
+  PRINTF("- PER = %d%%\n", packet_err_rate);
+  
+  llc_conn_per_statistic(connection_handle, &per_statistic_ptr);
+
+  HAL_VTIMER_StartTimerMs(&statsTimerHandle, STATS_INTERVAL_MS);
 }
 
 void DebounceTimeoutCB(void *param)
@@ -321,6 +346,10 @@ void hci_le_connection_complete_event(uint8_t Status,
   
   HAL_VTIMER_StopTimer(&scanningLEDTimerHandle);
   
+  llc_conn_per_statistic(connection_handle, &per_statistic_ptr);
+
+  HAL_VTIMER_StartTimerMs(&statsTimerHandle, STATS_INTERVAL_MS);
+
 #if AUTO_TOGGLE_LED  
     
 #if DO_NOT_USE_VTIMER_CB
@@ -376,6 +405,9 @@ void hci_disconnection_complete_event(uint8_t Status,
   printf("Disconnected\n");
   
   BSP_LED_Off(ADVSCAN_CONN_LED);
+  BSP_LED_Off(CONTROL_LED);
+  
+  HAL_VTIMER_StopTimer(&statsTimerHandle);
   
 #if AUTO_TOGGLE_LED  
 #if !DO_NOT_USE_VTIMER_CB
@@ -415,5 +447,14 @@ void hci_le_phy_update_complete_event(uint8_t Status,
     PRINTF("Unexpected\n");
     BSP_LED_Off(LONG_RANGE_LED);
   }
+
+  HAL_VTIMER_StopTimer(&statsTimerHandle);
+  CRC_errs_perc = 0.0;
+  missed_evts_perc = 0.0;
+  packet_err_rate = 0.0;
+  
+  llc_conn_per_statistic(connection_handle, &per_statistic_ptr);
+  HAL_VTIMER_StartTimerMs(&statsTimerHandle, STATS_INTERVAL_MS);  
+
 }
 

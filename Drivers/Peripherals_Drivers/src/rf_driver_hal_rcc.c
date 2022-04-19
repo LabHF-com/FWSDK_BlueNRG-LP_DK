@@ -35,7 +35,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -48,7 +48,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_hal.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "system_BlueNRG_LP.h"
+#endif
 
 /** @addtogroup RF_DRIVER_HAL_Driver
   * @{
@@ -94,7 +96,9 @@
 
 #define __MCO3_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE()
 #define MCO3_GPIO_PORT        GPIOB
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define MCO3_PIN              GPIO_PIN_15
+#endif
 
 #define __COUNTOF(_A_)   (sizeof(_A_) / sizeof(*(_A_)))
 /**
@@ -314,7 +318,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
   {
     /* Check the parameters */
     assert_param(IS_RCC_HSI(RCC_OscInitStruct->HSIState));
-    assert_param(IS_RCC_HSI_CALIBRATION_VALUE(RCC_OscInitStruct->HSICalibrationValue));
 
     /* Check if HSI is used as system clock */
     const uint32_t temp_sysclksrc = __HAL_RCC_GET_SYSCLK_SOURCE();
@@ -344,8 +347,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
               return HAL_TIMEOUT;
             }
           }
-          /* Adjusts the Internal High Speed oscillator (HSI) calibration value.*/
-          __HAL_RCC_HSI_CALIBRATIONVALUE_ADJUST(RCC_OscInitStruct->HSICalibrationValue);
         }
         else
         {
@@ -374,8 +375,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
     /* Check the LSI State */
     if (RCC_OscInitStruct->LSIState != RCC_LSI_OFF)
     {
-      assert_param(IS_RCC_LSI_CALIBRATION_VALUE(RCC_OscInitStruct->LSICalibrationValue));
-      
+
       /*  Enable the Internal Low Speed oscillator (LSI) and set trimming value */
       __HAL_RCC_LSI_ENABLE();
       
@@ -390,8 +390,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
           return HAL_TIMEOUT;
         }
       }
-      /* Adjusts the Internal Low Speed oscillator (LSI) calibration value */
-      __HAL_RCC_LSI_CALIBRATIONVALUE_ADJUST(RCC_OscInitStruct->LSICalibrationValue);
     }
     else
     {
@@ -678,7 +676,9 @@ void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_M
     __MCO3_CLK_ENABLE();
     /* Configue the MCO3 pin in alternate function mode */
     GPIO_InitStruct.Pin       = MCO3_PIN;
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     GPIO_InitStruct.Alternate = GPIO_AF2_MCO;
+#endif
     HAL_GPIO_Init(MCO3_GPIO_PORT, &GPIO_InitStruct);
   }
 
@@ -738,8 +738,6 @@ void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
     RCC_OscInitStruct->HSIState = RCC_HSI_OFF;
   }
 
-  RCC_OscInitStruct->HSICalibrationValue = LL_RCC_HSI_GetCalibTrimming();
-
   /* Get the LSE configuration -----------------------------------------------*/
   if ((RCC->CR & RCC_CR_LSEBYP) == RCC_CR_LSEBYP)
   {
@@ -764,7 +762,6 @@ void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
     RCC_OscInitStruct->LSIState = RCC_LSI_OFF;
   }
 
-  RCC_OscInitStruct->LSICalibrationValue = LL_RCC_LSI_GetTrimming();
 }
 
 /**
