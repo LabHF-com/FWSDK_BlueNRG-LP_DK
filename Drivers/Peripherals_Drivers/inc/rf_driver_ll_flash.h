@@ -48,7 +48,8 @@
 /** @defgroup FLASH_Constants FLASH Constants
   * @{
   */
-#define LL_FLASH_SIZE                      (((*(uint32_t *)FLASHSIZE_BASE & 0xFFFF) + 1) << 2U)
+#define LL_FLASH_SIZE_MASK                 FLASH_FLASH_SIZE_FLASH_SIZE
+#define LL_FLASH_SIZE                      (((*(uint32_t *)FLASHSIZE_BASE & LL_FLASH_SIZE_MASK) + 1) << 2U)
 #define LL_FLASH_START_ADDR                NVM_BASE
 #define LL_FLASH_END_ADDR                  (LL_FLASH_START_ADDR + LL_FLASH_SIZE - 1U)
 
@@ -139,8 +140,36 @@
   */
 
 /* Exported macros -----------------------------------------------------------*/
+   
+   
 /** @defgroup FLASH_Exported_Macros FLASH Exported Macros
   *  @{
+  */
+
+   /** @addtogroup FLASH_LL_Macros
+  * @{
+  */
+
+#define IS_LL_FLASH_MAIN_MEM_ADDRESS(__VALUE__)          (((__VALUE__) >= LL_FLASH_START_ADDR) && ((__VALUE__) <= LL_FLASH_END_ADDR))
+
+#define IS_LL_FLASH_PROGRAM_MAIN_MEM_ADDRESS(__VALUE__)  (((__VALUE__) >= LL_FLASH_START_ADDR) && ((__VALUE__) <= (LL_FLASH_START_ADDR + LL_FLASH_SIZE - 4UL)) && (((__VALUE__) % 4UL) == 0UL))
+
+#define IS_LL_FLASH_PROGRAM_OTP_ADDRESS(__VALUE__)       (((__VALUE__) >= OTP_AREA_BASE) && ((__VALUE__) <= (OTP_AREA_END_ADDR + 1UL - 4UL)) && (((__VALUE__) % 4UL) == 0UL))
+
+#define IS_LL_FLASH_PROGRAM_ADDRESS(__VALUE__)           ((IS_LL_FLASH_PROGRAM_MAIN_MEM_ADDRESS(__VALUE__)) || (IS_LL_FLASH_PROGRAM_OTP_ADDRESS(__VALUE__)))
+
+#define IS_LL_FLASH_PAGE(__VALUE__)                      ((__VALUE__) <= LL_FLASH_PAGE_NUMBER)
+
+#define IS_LL_ADDR_ALIGNED_32BITS(__VALUE__)             (((__VALUE__) & ~0x3U) == (__VALUE__))
+
+#define IS_LL_FLASH_WAIT_STATES(__VALUE__)               (((__VALUE__) == LL_FLASH_WAIT_STATES_0) || \
+                                                         ((__VALUE__) == LL_FLASH_WAIT_STATES_1))
+
+#define IS_LL_FLASH_TYPE_ERASE(__VALUE__)                (((__VALUE__) == LL_FLASH_TYPE_ERASE_PAGES) || \
+                                                         ((__VALUE__) == LL_FLASH_TYPE_ERASE_MASSERASE))
+
+/**
+  * @}
   */
 
 /** @defgroup USART_LL_EM_WRITE_READ Common Write and read registers Macros

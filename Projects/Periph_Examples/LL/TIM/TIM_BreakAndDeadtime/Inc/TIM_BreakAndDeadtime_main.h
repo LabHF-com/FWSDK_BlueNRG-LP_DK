@@ -113,7 +113,7 @@ void Error_Handler(void);
  
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                                            TIM17
 #define LL_EnableClock(LL_PERIPH_TIMx)                  LL_APB0_EnableClock(LL_APB0_PERIPH_TIM17)
@@ -127,11 +127,11 @@ void Error_Handler(void);
 #define TIMx_CH1_PORT                                   GPIOB
 
   /**TIMx GPIO Configuration  
-  PA10 / AF2   ------> TIM17_CH1N
+  PB4 / AF2   ------> TIM17_CH1N
   */
-#define TIMx_CH1N_PIN                                   LL_GPIO_PIN_10
-#define TIMx_CH1N_AF                                    LL_GPIO_AF_6
-#define TIMx_CH1N_PORT                                  GPIOA
+#define TIMx_CH1N_PIN                                   LL_GPIO_PIN_4
+#define TIMx_CH1N_AF                                    LL_GPIO_AF_2
+#define TIMx_CH1N_PORT                                  GPIOB
   
   /**TIMx GPIO Configuration  
   PB5 / AF2   ------> TIM17_BKIN 
@@ -140,7 +140,7 @@ void Error_Handler(void);
 #define TIMx_BKIN_AF                                    LL_GPIO_AF_2
 #define TIMx_BKIN_PORT                                  GPIOB 
 
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 #ifdef __cplusplus

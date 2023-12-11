@@ -143,7 +143,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                            TIM2
 #define TIMx_IRQn                       TIM2_IRQn
@@ -179,7 +179,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 #define TIMx_CH4_AF                     GPIO_AF3_TIM2
 #define TIMx_CH4_PORT                   GPIOB
  
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 #ifdef __cplusplus

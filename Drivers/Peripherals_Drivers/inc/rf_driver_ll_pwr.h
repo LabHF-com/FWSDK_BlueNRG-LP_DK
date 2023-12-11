@@ -104,57 +104,57 @@ extern "C" {
   * @{
   */
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#define LL_PWE_EWS_ALL            0xFFFFFFFF                /* Enable all the wakeup source                   */
+#define LL_PWR_EWS_ALL            0xFFFFFFFF                /* Enable all the wakeup source                   */
 #define LL_PWR_EWS_INT            PWR_CR3_EIWL              /* Enable wakeup on Internal event (RTC)          */
 #if defined(PWR_CR3_EIWL2)
 #define LL_PWR_EWS_INT2           PWR_CR3_EIWL2             /* Enable wakeup on Internal event 2 (LPUART)     */
 #endif
 #define LL_PWR_EWS_BLEHOST        PWR_CR3_EWBLEHCPU         /* Enable wakeup on BLE Host CPU event            */
 #define LL_PWR_EWS_BLE            PWR_CR3_EWBLE             /* Enable wakeup on BLE event                     */
-#define LL_PWE_EWS_EW11           PWR_CR3_EWU11             /* Enable wakeup on PA11 I/O event                */
-#define LL_PWE_EWS_EW10           PWR_CR3_EWU10             /* Enable wakeup on PA10 I/O event                */
-#define LL_PWE_EWS_EW9            PWR_CR3_EWU9              /* Enable wakeup on PA9 I/O event                 */
-#define LL_PWE_EWS_EW8            PWR_CR3_EWU8              /* Enable wakeup on PA8 I/O event                 */
-#define LL_PWE_EWS_EW7            PWR_CR3_EWU7              /* Enable wakeup on PB7 I/O event                 */
-#define LL_PWE_EWS_EW6            PWR_CR3_EWU6              /* Enable wakeup on PB6 I/O event                 */
-#define LL_PWE_EWS_EW5            PWR_CR3_EWU5              /* Enable wakeup on PB5 I/O event                 */
-#define LL_PWE_EWS_EW4            PWR_CR3_EWU4              /* Enable wakeup on PB4 I/O event                 */
-#define LL_PWE_EWS_EW3            PWR_CR3_EWU3              /* Enable wakeup on PB3 I/O event                 */
-#define LL_PWE_EWS_EW2            PWR_CR3_EWU2              /* Enable wakeup on PB2 I/O event                 */
-#define LL_PWE_EWS_EW1            PWR_CR3_EWU1              /* Enable wakeup on PB1 I/O event                 */
-#define LL_PWE_EWS_EW0            PWR_CR3_EWU0              /* Enable wakeup on PB0 I/O event                 */
+#define LL_PWR_EWS_EW11           PWR_CR3_EWU11             /* Enable wakeup on PA11 I/O event                */
+#define LL_PWR_EWS_EW10           PWR_CR3_EWU10             /* Enable wakeup on PA10 I/O event                */
+#define LL_PWR_EWS_EW9            PWR_CR3_EWU9              /* Enable wakeup on PA9 I/O event                 */
+#define LL_PWR_EWS_EW8            PWR_CR3_EWU8              /* Enable wakeup on PA8 I/O event                 */
+#define LL_PWR_EWS_EW7            PWR_CR3_EWU7              /* Enable wakeup on PB7 I/O event                 */
+#define LL_PWR_EWS_EW6            PWR_CR3_EWU6              /* Enable wakeup on PB6 I/O event                 */
+#define LL_PWR_EWS_EW5            PWR_CR3_EWU5              /* Enable wakeup on PB5 I/O event                 */
+#define LL_PWR_EWS_EW4            PWR_CR3_EWU4              /* Enable wakeup on PB4 I/O event                 */
+#define LL_PWR_EWS_EW3            PWR_CR3_EWU3              /* Enable wakeup on PB3 I/O event                 */
+#define LL_PWR_EWS_EW2            PWR_CR3_EWU2              /* Enable wakeup on PB2 I/O event                 */
+#define LL_PWR_EWS_EW1            PWR_CR3_EWU1              /* Enable wakeup on PB1 I/O event                 */
+#define LL_PWR_EWS_EW0            PWR_CR3_EWU0              /* Enable wakeup on PB0 I/O event                 */
 #if defined(PWR_CR6_EWU27)
-#define LL_PWE_EWS_EW27           (PWR_CR6_EWU27 << 16)     /* Enable wakeup on PA15 I/O event                */
+#define LL_PWR_EWS_EW27           (PWR_CR6_EWU27 << 16)     /* Enable wakeup on PA15 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU26)
-#define LL_PWE_EWS_EW26           (PWR_CR6_EWU26 << 16)     /* Enable wakeup on PA14 I/O event                */
+#define LL_PWR_EWS_EW26           (PWR_CR6_EWU26 << 16)     /* Enable wakeup on PA14 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU25) 
-#define LL_PWE_EWS_EW25           (PWR_CR6_EWU25 << 16)     /* Enable wakeup on PA13 I/O event                */
+#define LL_PWR_EWS_EW25           (PWR_CR6_EWU25 << 16)     /* Enable wakeup on PA13 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU24)
-#define LL_PWE_EWS_EW24           (PWR_CR6_EWU24 << 16)     /* Enable wakeup on PA12 I/O event                */
+#define LL_PWR_EWS_EW24           (PWR_CR6_EWU24 << 16)     /* Enable wakeup on PA12 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU23)
-#define LL_PWE_EWS_EW23           (PWR_CR6_EWU23 << 16)     /* Enable wakeup on PB11 I/O event                */
+#define LL_PWR_EWS_EW23           (PWR_CR6_EWU23 << 16)     /* Enable wakeup on PB11 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU22)
-#define LL_PWE_EWS_EW22           (PWR_CR6_EWU22 << 16)     /* Enable wakeup on PB10 I/O event                */
+#define LL_PWR_EWS_EW22           (PWR_CR6_EWU22 << 16)     /* Enable wakeup on PB10 I/O event                */
 #endif
 #if defined(PWR_CR6_EWU21)
-#define LL_PWE_EWS_EW21           (PWR_CR6_EWU21 << 16)     /* Enable wakeup on PB9 I/O event                 */
+#define LL_PWR_EWS_EW21           (PWR_CR6_EWU21 << 16)     /* Enable wakeup on PB9 I/O event                 */
 #endif
 #if defined(PWR_CR6_EWU20)
-#define LL_PWE_EWS_EW20           (PWR_CR6_EWU20 << 16)     /* Enable wakeup on PB8 I/O event                 */
+#define LL_PWR_EWS_EW20           (PWR_CR6_EWU20 << 16)     /* Enable wakeup on PB8 I/O event                 */
 #endif
-#define LL_PWE_EWS_EW19           (PWR_CR6_EWU19 << 16)     /* Enable wakeup on LP-PA7 or LPS-PB15 I/O event  */
-#define LL_PWE_EWS_EW18           (PWR_CR6_EWU18 << 16)     /* Enable wakeup on LP-PA6 or LPS-PB14 I/O event  */
-#define LL_PWE_EWS_EW17           (PWR_CR6_EWU17 << 16)     /* Enable wakeup on LP-PA5 or LPS-PB13 I/O event  */
-#define LL_PWE_EWS_EW16           (PWR_CR6_EWU16 << 16)     /* Enable wakeup on LP-PA4 or LPS-PB12 I/O event  */
-#define LL_PWE_EWS_EW15           (PWR_CR6_EWU15 << 16)     /* Enable wakeup on PA3 I/O event                 */
-#define LL_PWE_EWS_EW14           (PWR_CR6_EWU14 << 16)     /* Enable wakeup on PA2 I/O event                 */
-#define LL_PWE_EWS_EW13           (PWR_CR6_EWU13 << 16)     /* Enable wakeup on PA1 I/O event                 */
-#define LL_PWE_EWS_EW12           (PWR_CR6_EWU12 << 16)     /* Enable wakeup on PA0 I/O event                 */
+#define LL_PWR_EWS_EW19           (PWR_CR6_EWU19 << 16)     /* Enable wakeup on LP-PA7 or LPS-PB15 I/O event  */
+#define LL_PWR_EWS_EW18           (PWR_CR6_EWU18 << 16)     /* Enable wakeup on LP-PA6 or LPS-PB14 I/O event  */
+#define LL_PWR_EWS_EW17           (PWR_CR6_EWU17 << 16)     /* Enable wakeup on LP-PA5 or LPS-PB13 I/O event  */
+#define LL_PWR_EWS_EW16           (PWR_CR6_EWU16 << 16)     /* Enable wakeup on LP-PA4 or LPS-PB12 I/O event  */
+#define LL_PWR_EWS_EW15           (PWR_CR6_EWU15 << 16)     /* Enable wakeup on PA3 I/O event                 */
+#define LL_PWR_EWS_EW14           (PWR_CR6_EWU14 << 16)     /* Enable wakeup on PA2 I/O event                 */
+#define LL_PWR_EWS_EW13           (PWR_CR6_EWU13 << 16)     /* Enable wakeup on PA1 I/O event                 */
+#define LL_PWR_EWS_EW12           (PWR_CR6_EWU12 << 16)     /* Enable wakeup on PA0 I/O event                 */
 #endif
 
 /**
@@ -277,6 +277,7 @@ extern "C" {
 /** @defgroup PWR_LL_EC_SMPS_OUTLVL SMPS Output Level
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_PWR_SMPS_OUTLVL_1V2               (0x000000000U)
 #define LL_PWR_SMPS_OUTLVL_1V25              (PWR_CR5_SMPSLVL_0)
 #define LL_PWR_SMPS_OUTLVL_1V3               (PWR_CR5_SMPSLVL_1)
@@ -293,6 +294,8 @@ extern "C" {
 #define LL_PWR_SMPS_OUTLVL_1V85              (PWR_CR5_SMPSLVL_3|PWR_CR5_SMPSLVL_2|PWR_CR5_SMPSLVL_0)
 #define LL_PWR_SMPS_OUTLVL_1V9               (PWR_CR5_SMPSLVL_3|PWR_CR5_SMPSLVL_2|PWR_CR5_SMPSLVL_1)
 #define LL_PWR_SMPS_OUTLVL_1V95              (PWR_CR5_SMPSLVL)
+#endif
+
 /**
   * @}
   */
@@ -385,12 +388,81 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBORinSDN(void)
   return ((READ_BIT(PWR->CR1, PWR_CR1_ENSDNBOR) == (PWR_CR1_ENSDNBOR)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_SDWN_WUEN_WUEN)
+/**
+  * @brief  Shutdown I/O Wakeup enable.
+  * @rmtoll SDWN_WUEN          WUEN           LL_PWR_EnableIOWakeupSDN
+  * @retval None
+  */
+__STATIC_INLINE void LL_PWR_EnableIOWakeupSDN(void)
+{
+  SET_BIT(PWR->SDWN_WUEN, PWR_SDWN_WUEN_WUEN);
+}
+
+/**
+  * @brief  Shutdown I/O Wakeup disable.
+  * @rmtoll SDWN_WUEN          WUEN           LL_PWR_DisableIOWakeupSDN
+  * @retval None
+  */
+__STATIC_INLINE void LL_PWR_DisableIOWakeupSDN(void)
+{
+  CLEAR_BIT(PWR->SDWN_WUEN, PWR_SDWN_WUEN_WUEN);
+}
+
+/**
+  * @brief  Checks if Shutdown I/O Wakeup is enabled or disabled.
+  * @rmtoll SDWN_WUEN         WUEN     LL_PWR_IsEnabledIOWakeupSDN
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledIOWakeupSDN(void)
+{
+  return ((READ_BIT(PWR->SDWN_WUEN, PWR_SDWN_WUEN_WUEN) == (PWR_SDWN_WUEN_WUEN)) ? 1UL : 0UL);
+}
+
+/**
+  * @brief  Shutdown I/O Wakeup Polarity configuration.
+  * @rmtoll SDWN_WUPOL          WUPOL           LL_PWR_IOWakeupPolaritySDN
+  * @param  pol:
+  *             - 0 : PB0 pin wakeup from shutdown on high pulse or high level detection
+  *             - 1 : PB0 pin wakeup from shutdown on low pulse or low level detection
+  * @retval None
+  */
+__STATIC_INLINE void LL_PWR_IOWakeupPolaritySDN(uint8_t pol)
+{
+  if (pol == 0) {
+    CLEAR_BIT(PWR->SDWN_WUPOL, PWR_SDWN_WUPOL_WUPOL);
+  } else {
+    SET_BIT(PWR->SDWN_WUPOL, PWR_SDWN_WUPOL_WUPOL);
+  }
+}
+
+/**
+  * @brief  Checks if Shutdown I/O Wakeup from PB0 pin occurred.
+  * @rmtoll SDWN_WUF         WUF     LL_PWR_IsIOWakeupSDN
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_PWR_IsIOWakeupSDN(void)
+{
+  return ((READ_BIT(PWR->SDWN_WUF, PWR_SDWN_WUF_WUF) == (PWR_SDWN_WUF_WUF)) ? 1UL : 0UL);
+}
+
+/**
+  * @brief  Clear I/O Wakeup from PB0 pin occurred flag
+  * @rmtoll SDWN_WUF          WUF           LL_PWR_ClearIOWakeupFlagSDN
+  * @retval None
+  */
+__STATIC_INLINE void LL_PWR_ClearIOWakeupFlagSDN(void)
+{
+  CLEAR_BIT(PWR->SDWN_WUF, PWR_SDWN_WUF_WUF);
+}
+#endif
+
 /**
   * @brief  Select the low-power mode.
   * @rmtoll CR1          LPMS           LL_PWR_LowPowerMode
   * @param  selection Low Power Mode Selection. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_MODE_DEEPSTOP
-  *         @arg @ref LL_PWR_MODE_SHUTDOWN
+  * @arg LL_PWR_MODE_DEEPSTOP
+  * @arg LL_PWR_MODE_SHUTDOWN
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_LowPowerMode(uint32_t selection)
@@ -468,11 +540,11 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledTempSens(void)
   * @brief  Enable the RAM bank retention.
   * @rmtoll CR2         RAMRET1/RAMRET2/RAMRET3      LL_PWR_EnableRAMBankRet
   * @param  banks RAM bank selection. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_RAMRET_1
-  *         @arg @ref LL_PWR_RAMRET_2
-  *         @arg @ref LL_PWR_RAMRET_3
+  * @arg LL_PWR_RAMRET_1
+  * @arg LL_PWR_RAMRET_2
+  * @arg LL_PWR_RAMRET_3
   * @retval None
-  * @note   For BlueNRG-LPS  devices is valid only LL_PWR_RAMRET_1
+  * @note   For BlueNRG-LPS  devices only LL_PWR_RAMRET_1 is valid
   */
 __STATIC_INLINE void LL_PWR_EnableRAMBankRet(uint32_t banks)
 {
@@ -483,10 +555,10 @@ __STATIC_INLINE void LL_PWR_EnableRAMBankRet(uint32_t banks)
   * @brief  Get the RAM banks retention selected.
   * @rmtoll CR2         RAMRET1/RAMRET2/RAMRET3      LL_PWR_GetRAMBankRet
   * @retval RAM bank selection. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_RAMRET_1
-  *         @arg @ref LL_PWR_RAMRET_2
-  *         @arg @ref LL_PWR_RAMRET_3
-  * @note   For BlueNRG-LPS  devices is valid only LL_PWR_RAMRET_1
+  * @arg LL_PWR_RAMRET_1
+  * @arg LL_PWR_RAMRET_2
+  * @arg LL_PWR_RAMRET_3
+  * @note   For BlueNRG-LPS  devices only LL_PWR_RAMRET_1 is valid 
   */
 __STATIC_INLINE uint32_t LL_PWR_GetRAMBankRet(void)
 {
@@ -506,9 +578,9 @@ __STATIC_INLINE uint32_t LL_PWR_GetRAMBankRet(void)
   * @brief  Disable the RAM bank retention.
   * @rmtoll CR2         RAMRET1/RAMRET2/RAMRET3      LL_PWR_DisableRAMBankRet
   * @param  banks RAM bank selection. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_RAMRET_1
-  *         @arg @ref LL_PWR_RAMRET_2
-  *         @arg @ref LL_PWR_RAMRET_3
+  * @arg LL_PWR_RAMRET_1
+  * @arg LL_PWR_RAMRET_2
+  * @arg LL_PWR_RAMRET_3
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_DisableRAMBankRet(uint32_t banks)
@@ -550,14 +622,14 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVD(void)
   * @brief  Set PVD voltage level.
   * @rmtoll CR2         PVDLS      LL_PWR_SetPVDLevel
   * @param  level PVD voltage level selection. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_PVDLEVEL_0
-  *         @arg @ref LL_PWR_PVDLEVEL_1
-  *         @arg @ref LL_PWR_PVDLEVEL_2
-  *         @arg @ref LL_PWR_PVDLEVEL_3
-  *         @arg @ref LL_PWR_PVDLEVEL_4
-  *         @arg @ref LL_PWR_PVDLEVEL_5
-  *         @arg @ref LL_PWR_PVDLEVEL_6
-  *         @arg @ref LL_PWR_PVDLEVEL_7
+  * @arg LL_PWR_PVDLEVEL_0
+  * @arg LL_PWR_PVDLEVEL_1
+  * @arg LL_PWR_PVDLEVEL_2
+  * @arg LL_PWR_PVDLEVEL_3
+  * @arg LL_PWR_PVDLEVEL_4
+  * @arg LL_PWR_PVDLEVEL_5
+  * @arg LL_PWR_PVDLEVEL_6
+  * @arg LL_PWR_PVDLEVEL_7
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t level)
@@ -569,14 +641,14 @@ __STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t level)
   * @brief  Get PVD voltage level.
   * @rmtoll CR2         PVDLS      LL_PWR_GetPVDLevel
   * @retval PVD voltage level selection. The parameter can be one of the following values:
-  *         @arg @ref LL_PWR_PVDLEVEL_0
-  *         @arg @ref LL_PWR_PVDLEVEL_1
-  *         @arg @ref LL_PWR_PVDLEVEL_2
-  *         @arg @ref LL_PWR_PVDLEVEL_3
-  *         @arg @ref LL_PWR_PVDLEVEL_4
-  *         @arg @ref LL_PWR_PVDLEVEL_5
-  *         @arg @ref LL_PWR_PVDLEVEL_6
-  *         @arg @ref LL_PWR_PVDLEVEL_7
+  * @arg LL_PWR_PVDLEVEL_0
+  * @arg LL_PWR_PVDLEVEL_1
+  * @arg LL_PWR_PVDLEVEL_2
+  * @arg LL_PWR_PVDLEVEL_3
+  * @arg LL_PWR_PVDLEVEL_4
+  * @arg LL_PWR_PVDLEVEL_5
+  * @arg LL_PWR_PVDLEVEL_6
+  * @arg LL_PWR_PVDLEVEL_7
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
 {
@@ -588,43 +660,43 @@ __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
   * @brief  Enable Wakeup Source to get out of DEEPSTOP mode.
   * @rmtoll CR3/CR6               LL_PWR_EnableWakeupSource
   * @param  wakeup_sources Enable the wakeup sources. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_EWS_INT
-  *         @arg @ref LL_PWR_EWS_INT2
-  *         @arg @ref LL_PWR_EWS_BLEHOST 
-  *         @arg @ref LL_PWR_EWS_BLE     
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11    
-  *         @arg @ref LL_PWE_EWS_EW10    
-  *         @arg @ref LL_PWE_EWS_EW9     
-  *         @arg @ref LL_PWE_EWS_EW8     
-  *         @arg @ref LL_PWE_EWS_EW7     
-  *         @arg @ref LL_PWE_EWS_EW6     
-  *         @arg @ref LL_PWE_EWS_EW5     
-  *         @arg @ref LL_PWE_EWS_EW4     
-  *         @arg @ref LL_PWE_EWS_EW3     
-  *         @arg @ref LL_PWE_EWS_EW2     
-  *         @arg @ref LL_PWE_EWS_EW1     
-  *         @arg @ref LL_PWE_EWS_EW0
+  * @arg LL_PWR_EWS_INT
+  * @arg LL_PWR_EWS_INT2
+  * @arg LL_PWR_EWS_BLEHOST 
+  * @arg LL_PWR_EWS_BLE     
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11    
+  * @arg LL_PWR_EWS_EW10    
+  * @arg LL_PWR_EWS_EW9     
+  * @arg LL_PWR_EWS_EW8     
+  * @arg LL_PWR_EWS_EW7     
+  * @arg LL_PWR_EWS_EW6     
+  * @arg LL_PWR_EWS_EW5     
+  * @arg LL_PWR_EWS_EW4     
+  * @arg LL_PWR_EWS_EW3     
+  * @arg LL_PWR_EWS_EW2     
+  * @arg LL_PWR_EWS_EW1     
+  * @arg LL_PWR_EWS_EW0
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
-  *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for
+  *         BlueNRG-LPS.
+  *         LL_PWR_EWS_INT2 is not valid for BlueNRG-LP device.
   */
 __STATIC_INLINE void LL_PWR_EnableWakeupSource(uint32_t wakeup_sources)
 {
@@ -636,42 +708,42 @@ __STATIC_INLINE void LL_PWR_EnableWakeupSource(uint32_t wakeup_sources)
   * @brief  Disable Wakeup Source to get out of DEEPSTOP mode.
   * @rmtoll CR3/CR6               LL_PWR_DisableWakeupSource
   * @param  wakeup_sources Disable the wakeup sources. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_EWS_INT
-  *         @arg @ref LL_PWR_EWS_BLEHOST 
-  *         @arg @ref LL_PWR_EWS_BLE     
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11    
-  *         @arg @ref LL_PWE_EWS_EW10    
-  *         @arg @ref LL_PWE_EWS_EW9     
-  *         @arg @ref LL_PWE_EWS_EW8     
-  *         @arg @ref LL_PWE_EWS_EW7     
-  *         @arg @ref LL_PWE_EWS_EW6     
-  *         @arg @ref LL_PWE_EWS_EW5     
-  *         @arg @ref LL_PWE_EWS_EW4     
-  *         @arg @ref LL_PWE_EWS_EW3     
-  *         @arg @ref LL_PWE_EWS_EW2     
-  *         @arg @ref LL_PWE_EWS_EW1     
-  *         @arg @ref LL_PWE_EWS_EW0
+  * @arg LL_PWR_EWS_INT
+  * @arg LL_PWR_EWS_BLEHOST 
+  * @arg LL_PWR_EWS_BLE     
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11    
+  * @arg LL_PWR_EWS_EW10    
+  * @arg LL_PWR_EWS_EW9     
+  * @arg LL_PWR_EWS_EW8     
+  * @arg LL_PWR_EWS_EW7     
+  * @arg LL_PWR_EWS_EW6     
+  * @arg LL_PWR_EWS_EW5     
+  * @arg LL_PWR_EWS_EW4     
+  * @arg LL_PWR_EWS_EW3     
+  * @arg LL_PWR_EWS_EW2     
+  * @arg LL_PWR_EWS_EW1     
+  * @arg LL_PWR_EWS_EW0
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
-  *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for
+  *         BlueNRG-LPS.
+  *         LL_PWR_EWS_INT2 is not valid for BlueNRG-LP device.
   */
 __STATIC_INLINE void LL_PWR_DisableWakeupSource(uint32_t wakeup_sources)
 {
@@ -683,43 +755,43 @@ __STATIC_INLINE void LL_PWR_DisableWakeupSource(uint32_t wakeup_sources)
   * @brief  Is Wakeup Source enabled.
   * @rmtoll CR3/CR6               LL_PWR_IsEnabledWakeupSource
   * @param  wakeup_sources Disable the wakeup sources. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_EWS_INT
-  *         @arg @ref LL_PWR_EWS_INT2
-  *         @arg @ref LL_PWR_EWS_BLEHOST 
-  *         @arg @ref LL_PWR_EWS_BLE     
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11    
-  *         @arg @ref LL_PWE_EWS_EW10    
-  *         @arg @ref LL_PWE_EWS_EW9     
-  *         @arg @ref LL_PWE_EWS_EW8     
-  *         @arg @ref LL_PWE_EWS_EW7     
-  *         @arg @ref LL_PWE_EWS_EW6     
-  *         @arg @ref LL_PWE_EWS_EW5     
-  *         @arg @ref LL_PWE_EWS_EW4     
-  *         @arg @ref LL_PWE_EWS_EW3     
-  *         @arg @ref LL_PWE_EWS_EW2     
-  *         @arg @ref LL_PWE_EWS_EW1     
-  *         @arg @ref LL_PWE_EWS_EW0
+  * @arg LL_PWR_EWS_INT
+  * @arg LL_PWR_EWS_INT2
+  * @arg LL_PWR_EWS_BLEHOST 
+  * @arg LL_PWR_EWS_BLE     
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11    
+  * @arg LL_PWR_EWS_EW10    
+  * @arg LL_PWR_EWS_EW9     
+  * @arg LL_PWR_EWS_EW8     
+  * @arg LL_PWR_EWS_EW7     
+  * @arg LL_PWR_EWS_EW6     
+  * @arg LL_PWR_EWS_EW5     
+  * @arg LL_PWR_EWS_EW4     
+  * @arg LL_PWR_EWS_EW3     
+  * @arg LL_PWR_EWS_EW2     
+  * @arg LL_PWR_EWS_EW1     
+  * @arg LL_PWR_EWS_EW0
   * @retval State of bit (1 or 0).
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
-  *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for
+  *         BlueNRG-LPS.
+  *         LL_PWR_EWS_INT2 is not valid for BlueNRG-LP device.
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeupSource(uint32_t wakeup_sources)
 {
@@ -731,41 +803,40 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeupSource(uint32_t wakeup_sources)
   * @brief  Set the polarity for the I/Os wakeup sources.
   * @rmtoll CR4/CR7               LL_PWR_SetWakeupIOPolarity
   * @param  IO IO to configure. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11
-  *         @arg @ref LL_PWE_EWS_EW10
-  *         @arg @ref LL_PWE_EWS_EW9
-  *         @arg @ref LL_PWE_EWS_EW8
-  *         @arg @ref LL_PWE_EWS_EW7
-  *         @arg @ref LL_PWE_EWS_EW6
-  *         @arg @ref LL_PWE_EWS_EW5
-  *         @arg @ref LL_PWE_EWS_EW4
-  *         @arg @ref LL_PWE_EWS_EW3
-  *         @arg @ref LL_PWE_EWS_EW2
-  *         @arg @ref LL_PWE_EWS_EW1
-  *         @arg @ref LL_PWE_EWS_EW0
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11
+  * @arg LL_PWR_EWS_EW10
+  * @arg LL_PWR_EWS_EW9
+  * @arg LL_PWR_EWS_EW8
+  * @arg LL_PWR_EWS_EW7
+  * @arg LL_PWR_EWS_EW6
+  * @arg LL_PWR_EWS_EW5
+  * @arg LL_PWR_EWS_EW4
+  * @arg LL_PWR_EWS_EW3
+  * @arg LL_PWR_EWS_EW2
+  * @arg LL_PWR_EWS_EW1
+  * @arg LL_PWR_EWS_EW0
   * @param  polarity IO polarity to configure. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_WUP_RISIEDG 
-  *         @arg @ref LL_PWR_WUP_FALLEDG 
+  * @arg LL_PWR_WUP_RISIEDG 
+  * @arg LL_PWR_WUP_FALLEDG 
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_SetWakeupIOPolarity(uint32_t IO, uint32_t polarity)
 {
@@ -783,40 +854,39 @@ __STATIC_INLINE void LL_PWR_SetWakeupIOPolarity(uint32_t IO, uint32_t polarity)
   * @brief  Get the polarity for the I/Os wakeup sources.
   * @rmtoll CR4/CR7               LL_PWR_GetWakeupIOPolarity
   * @param  IO IO configured. This parameter can be one of the following values:
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11
-  *         @arg @ref LL_PWE_EWS_EW10
-  *         @arg @ref LL_PWE_EWS_EW9
-  *         @arg @ref LL_PWE_EWS_EW8
-  *         @arg @ref LL_PWE_EWS_EW7
-  *         @arg @ref LL_PWE_EWS_EW6
-  *         @arg @ref LL_PWE_EWS_EW5
-  *         @arg @ref LL_PWE_EWS_EW4
-  *         @arg @ref LL_PWE_EWS_EW3
-  *         @arg @ref LL_PWE_EWS_EW2
-  *         @arg @ref LL_PWE_EWS_EW1
-  *         @arg @ref LL_PWE_EWS_EW0
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11
+  * @arg LL_PWR_EWS_EW10
+  * @arg LL_PWR_EWS_EW9
+  * @arg LL_PWR_EWS_EW8
+  * @arg LL_PWR_EWS_EW7
+  * @arg LL_PWR_EWS_EW6
+  * @arg LL_PWR_EWS_EW5
+  * @arg LL_PWR_EWS_EW4
+  * @arg LL_PWR_EWS_EW3
+  * @arg LL_PWR_EWS_EW2
+  * @arg LL_PWR_EWS_EW1
+  * @arg LL_PWR_EWS_EW0
   * @retval The IO polarity. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_WUP_RISIEDG 
-  *         @arg @ref LL_PWR_WUP_FALLEDG 
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
+  * @arg LL_PWR_WUP_RISIEDG 
+  * @arg LL_PWR_WUP_FALLEDG 
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE uint32_t LL_PWR_GetWakeupIOPolarity(uint32_t IO)
 {
@@ -832,42 +902,41 @@ __STATIC_INLINE uint32_t LL_PWR_GetWakeupIOPolarity(uint32_t IO)
   * @brief  Get which source woken up the device after a DEEPSTOP.
   * @rmtoll SR1/SR3               LL_PWR_GetWakeupSource
   * @retval Wakeup Source from DEEPSTOP. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_EWS_INT
-  *         @arg @ref LL_PWR_EWS_INT2
-  *         @arg @ref LL_PWR_EWS_BLEHOST 
-  *         @arg @ref LL_PWR_EWS_BLE     
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12
-  *         @arg @ref LL_PWE_EWS_EW11    
-  *         @arg @ref LL_PWE_EWS_EW10    
-  *         @arg @ref LL_PWE_EWS_EW9     
-  *         @arg @ref LL_PWE_EWS_EW8     
-  *         @arg @ref LL_PWE_EWS_EW7     
-  *         @arg @ref LL_PWE_EWS_EW6     
-  *         @arg @ref LL_PWE_EWS_EW5     
-  *         @arg @ref LL_PWE_EWS_EW4     
-  *         @arg @ref LL_PWE_EWS_EW3     
-  *         @arg @ref LL_PWE_EWS_EW2     
-  *         @arg @ref LL_PWE_EWS_EW1     
-  *         @arg @ref LL_PWE_EWS_EW0
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
-  *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
+  * @arg LL_PWR_EWS_INT
+  * @arg LL_PWR_EWS_INT2
+  * @arg LL_PWR_EWS_BLEHOST 
+  * @arg LL_PWR_EWS_BLE     
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12
+  * @arg LL_PWR_EWS_EW11    
+  * @arg LL_PWR_EWS_EW10    
+  * @arg LL_PWR_EWS_EW9     
+  * @arg LL_PWR_EWS_EW8     
+  * @arg LL_PWR_EWS_EW7     
+  * @arg LL_PWR_EWS_EW6     
+  * @arg LL_PWR_EWS_EW5     
+  * @arg LL_PWR_EWS_EW4     
+  * @arg LL_PWR_EWS_EW3     
+  * @arg LL_PWR_EWS_EW2     
+  * @arg LL_PWR_EWS_EW1     
+  * @arg LL_PWR_EWS_EW0
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for BlueNRG-LPS devices. 
+  *         LL_PWR_EWS_INT2 is not valid for BlueNRG-LP device.
   */
 __STATIC_INLINE uint32_t LL_PWR_GetWakeupSource(void)
 {
@@ -881,45 +950,44 @@ __STATIC_INLINE uint32_t LL_PWR_GetWakeupSource(void)
   * @brief  Clear the source that woken up the device after a DEEPSTOP.
   * @rmtoll SR1 /SR3              LL_PWR_ClearWakeupSource
   * @param  source Wakeup Source from DEEPSTOP. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWE_EWS_ALL
-  *         @arg @ref LL_PWR_EWS_INT
-  *         @arg @ref LL_PWR_EWS_INT2
-  *         @arg @ref LL_PWR_EWS_BLEHOST 
-  *         @arg @ref LL_PWR_EWS_BLE     
-  *         @arg @ref LL_PWE_EWS_EW27
-  *         @arg @ref LL_PWE_EWS_EW26
-  *         @arg @ref LL_PWE_EWS_EW25
-  *         @arg @ref LL_PWE_EWS_EW24
-  *         @arg @ref LL_PWE_EWS_EW23
-  *         @arg @ref LL_PWE_EWS_EW22
-  *         @arg @ref LL_PWE_EWS_EW21
-  *         @arg @ref LL_PWE_EWS_EW20
-  *         @arg @ref LL_PWE_EWS_EW19
-  *         @arg @ref LL_PWE_EWS_EW18
-  *         @arg @ref LL_PWE_EWS_EW17
-  *         @arg @ref LL_PWE_EWS_EW16
-  *         @arg @ref LL_PWE_EWS_EW15
-  *         @arg @ref LL_PWE_EWS_EW14
-  *         @arg @ref LL_PWE_EWS_EW13
-  *         @arg @ref LL_PWE_EWS_EW12     
-  *         @arg @ref LL_PWE_EWS_EW11    
-  *         @arg @ref LL_PWE_EWS_EW10    
-  *         @arg @ref LL_PWE_EWS_EW9     
-  *         @arg @ref LL_PWE_EWS_EW8     
-  *         @arg @ref LL_PWE_EWS_EW7     
-  *         @arg @ref LL_PWE_EWS_EW6     
-  *         @arg @ref LL_PWE_EWS_EW5     
-  *         @arg @ref LL_PWE_EWS_EW4     
-  *         @arg @ref LL_PWE_EWS_EW3     
-  *         @arg @ref LL_PWE_EWS_EW2     
-  *         @arg @ref LL_PWE_EWS_EW1     
-  *         @arg @ref LL_PWE_EWS_EW0
-  *         @arg @ref LL_PWE_EWS_ALL
+  * @arg LL_PWR_EWS_ALL
+  * @arg LL_PWR_EWS_INT
+  * @arg LL_PWR_EWS_INT2
+  * @arg LL_PWR_EWS_BLEHOST 
+  * @arg LL_PWR_EWS_BLE     
+  * @arg LL_PWR_EWS_EW27
+  * @arg LL_PWR_EWS_EW26
+  * @arg LL_PWR_EWS_EW25
+  * @arg LL_PWR_EWS_EW24
+  * @arg LL_PWR_EWS_EW23
+  * @arg LL_PWR_EWS_EW22
+  * @arg LL_PWR_EWS_EW21
+  * @arg LL_PWR_EWS_EW20
+  * @arg LL_PWR_EWS_EW19
+  * @arg LL_PWR_EWS_EW18
+  * @arg LL_PWR_EWS_EW17
+  * @arg LL_PWR_EWS_EW16
+  * @arg LL_PWR_EWS_EW15
+  * @arg LL_PWR_EWS_EW14
+  * @arg LL_PWR_EWS_EW13
+  * @arg LL_PWR_EWS_EW12     
+  * @arg LL_PWR_EWS_EW11    
+  * @arg LL_PWR_EWS_EW10    
+  * @arg LL_PWR_EWS_EW9     
+  * @arg LL_PWR_EWS_EW8     
+  * @arg LL_PWR_EWS_EW7     
+  * @arg LL_PWR_EWS_EW6     
+  * @arg LL_PWR_EWS_EW5     
+  * @arg LL_PWR_EWS_EW4     
+  * @arg LL_PWR_EWS_EW3     
+  * @arg LL_PWR_EWS_EW2     
+  * @arg LL_PWR_EWS_EW1     
+  * @arg LL_PWR_EWS_EW0
+  * @arg LL_PWR_EWS_ALL
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWE_EWS_EW20, 
-  *         LL_PWE_EWS_EW21, LL_PWE_EWS_EW22, LL_PWE_EWS_EW23, LL_PWE_EWS_EW24, 
-  *         LL_PWE_EWS_EW25, LL_PWE_EWS_EW26 and LL_PWE_EWS_EW27
-  *         For BlueNRG-LP device is not valid LL_PWR_EWS_INT2
+  * @note   LL_PWR_EWS_EW20, LL_PWR_EWS_EW21, LL_PWR_EWS_EW22, LL_PWR_EWS_EW23, LL_PWR_EWS_EW24, 
+  *         LL_PWR_EWS_EW25, LL_PWR_EWS_EW26 and LL_PWR_EWS_EW27 are not valid for BlueNRG-LPS devices. 
+  *         LL_PWR_EWS_INT2 is not valid for BlueNRG-LP device.
   */
 __STATIC_INLINE void LL_PWR_ClearWakeupSource(uint32_t source)
 {
@@ -933,17 +1001,17 @@ __STATIC_INLINE void LL_PWR_ClearWakeupSource(uint32_t source)
   * @brief  Get IO BOOT value.
   * @rmtoll SR2               LL_PWR_GetIOBootVal
   * @param  IO. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_PA8_LATCH_POR
-  *         @arg @ref LL_PWR_PA9_LATCH_POR
-  *         @arg @ref LL_PWR_PA10_LATCH_POR
-  *         @arg @ref LL_PWR_PA11_LATCH_POR
-  *         @arg @ref LL_PWR_PB12_LATCH_POR
-  *         @arg @ref LL_PWR_PB13_LATCH_POR
-  *         @arg @ref LL_PWR_PB14_LATCH_POR
-  *         @arg @ref LL_PWR_PB15_LATCH_POR
+  * @arg LL_PWR_PA8_LATCH_POR
+  * @arg LL_PWR_PA9_LATCH_POR
+  * @arg LL_PWR_PA10_LATCH_POR
+  * @arg LL_PWR_PA11_LATCH_POR
+  * @arg LL_PWR_PB12_LATCH_POR
+  * @arg LL_PWR_PB13_LATCH_POR
+  * @arg LL_PWR_PB14_LATCH_POR
+  * @arg LL_PWR_PB15_LATCH_POR
   * @retval State of pin (1 or 0).
-  * @note   For BlueNRG-LP device are not valid LL_PWR_PB12_LATCH_POR,
-  *         LL_PWR_PB13_LATCH_POR, LL_PWR_PB14_LATCH_POR, LL_PWR_PB15_LATCH_POR 
+  * @note   LL_PWR_PB12_LATCH_POR, LL_PWR_PB13_LATCH_POR, LL_PWR_PB14_LATCH_POR, LL_PWR_PB15_LATCH_POR
+  *         are not valid for BlueNRG-LP. 
   */
 __STATIC_INLINE uint32_t LL_PWR_GetIOBootVal(uint32_t IO)
 {
@@ -1018,8 +1086,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsSMPSinPRECHARGEMode(void)
   * @brief  Set SMPS Mode.
   * @rmtoll CR5          PWR_CR5_NOSMPS           LL_PWR_SetSMPSMode
   * @param mode SMPS Mode. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS
-  *         @arg @ref LL_PWR_NO_SMPS
+  * @arg LL_PWR_SMPS
+  * @arg LL_PWR_NO_SMPS
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetSMPSMode(uint32_t mode)
@@ -1031,8 +1099,8 @@ __STATIC_INLINE void LL_PWR_SetSMPSMode(uint32_t mode)
   * @brief  Get SMPS Mode.
   * @rmtoll CR5          PWR_CR5_NOSMPS           LL_PWR_GetSMPSMode
   * @retval SMPS Mode. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS
-  *         @arg @ref LL_PWR_NO_SMPS
+  * @arg LL_PWR_SMPS
+  * @arg LL_PWR_NO_SMPS
   */
   __STATIC_INLINE uint32_t LL_PWR_GetSMPSMode(void)
 {
@@ -1043,8 +1111,8 @@ __STATIC_INLINE void LL_PWR_SetSMPSMode(uint32_t mode)
   * @brief  Set SMPS in PRECHARGE Mode.
   * @rmtoll CR5          PWR_CR5_SMPSFBYP           LL_PWR_SetSMPSPrechargeMode
   * @param mode SMPS in Precharge Mode. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_NO_SMPS_PRECHARGE
-  *         @arg @ref LL_PWR_SMPS_PRECHARGE
+  * @arg LL_PWR_NO_SMPS_PRECHARGE
+  * @arg LL_PWR_SMPS_PRECHARGE
   * @retval None
   */
 __STATIC_INLINE void  LL_PWR_SetSMPSPrechargeMode(uint32_t mode)
@@ -1066,8 +1134,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSMPSPrechargeMode(void)
   * @brief  Set SMPS OPEN Mode during DEEPSTOP.
   * @rmtoll CR5          PWR_CR5_NOSMPS           LL_PWR_SetSMPSOpenMode
   * @param  mode SMPS Mode. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_NO_SMPS_LPOPEN
-  *         @arg @ref LL_PWR_SMPS_LPOPEN
+  * @arg LL_PWR_NO_SMPS_LPOPEN
+  * @arg LL_PWR_SMPS_LPOPEN
   */
 __STATIC_INLINE void LL_PWR_SetSMPSOpenMode(uint32_t mode)
 {
@@ -1078,9 +1146,9 @@ __STATIC_INLINE void LL_PWR_SetSMPSOpenMode(uint32_t mode)
   * @brief  Set SMPS BOM
   * @rmtoll CR5   PWR_CR5_SMPSBOMSEL_0/PWR_CR5_SMPSBOMSEL_1    LL_PWR_SetSMPSBOM
   * @param  BOM BOM. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_BOM1
-  *         @arg @ref LL_PWR_SMPS_BOM2
-  *         @arg @ref LL_PWR_SMPS_BOM3
+  * @arg LL_PWR_SMPS_BOM1
+  * @arg LL_PWR_SMPS_BOM2
+  * @arg LL_PWR_SMPS_BOM3
   */
 __STATIC_INLINE void LL_PWR_SetSMPSBOM(uint32_t BOM)
 {
@@ -1091,9 +1159,9 @@ __STATIC_INLINE void LL_PWR_SetSMPSBOM(uint32_t BOM)
   * @brief  Get SMPS BOM
   * @rmtoll CR5   PWR_CR5_SMPSBOMSEL_0/PWR_CR5_SMPSBOMSEL_1    LL_PWR_GetSMPSBOM
   * @retval BOM. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_BOM1
-  *         @arg @ref LL_PWR_SMPS_BOM2
-  *         @arg @ref LL_PWR_SMPS_BOM3
+  * @arg LL_PWR_SMPS_BOM1
+  * @arg LL_PWR_SMPS_BOM2
+  * @arg LL_PWR_SMPS_BOM3
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSMPSBOM(void)
 {
@@ -1104,22 +1172,37 @@ __STATIC_INLINE uint32_t LL_PWR_GetSMPSBOM(void)
   * @brief  Set SMPS Output Level
   * @rmtoll CR5   PWR_CR5_SMPSLVL    LL_PWR_SetSMPSOutputLevel
   * @param  output_level Output Level. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V2
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V25             
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V3              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V35             
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V4              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V45              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V5               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V55              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V6               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V65              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V7               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V75              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V8               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V85              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V9               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V95
+  *         Applicable values for BlueNRG-LP and BlueNRG-LPS:
+  * @arg LL_PWR_SMPS_OUTLVL_1V2
+  * @arg LL_PWR_SMPS_OUTLVL_1V25
+  * @arg LL_PWR_SMPS_OUTLVL_1V3
+  * @arg LL_PWR_SMPS_OUTLVL_1V35
+  * @arg LL_PWR_SMPS_OUTLVL_1V4
+  * @arg LL_PWR_SMPS_OUTLVL_1V45
+  * @arg LL_PWR_SMPS_OUTLVL_1V5
+  * @arg LL_PWR_SMPS_OUTLVL_1V55
+  * @arg LL_PWR_SMPS_OUTLVL_1V6
+  * @arg LL_PWR_SMPS_OUTLVL_1V65
+  * @arg LL_PWR_SMPS_OUTLVL_1V7
+  * @arg LL_PWR_SMPS_OUTLVL_1V75
+  * @arg LL_PWR_SMPS_OUTLVL_1V8
+  * @arg LL_PWR_SMPS_OUTLVL_1V85
+  * @arg LL_PWR_SMPS_OUTLVL_1V9
+  * @arg LL_PWR_SMPS_OUTLVL_1V95
+  *         Applicable values for Spirit3:
+  * @arg LL_PWR_SMPS_OUTLVL_1V20
+  * @arg LL_PWR_SMPS_OUTLVL_1V30
+  * @arg LL_PWR_SMPS_OUTLVL_1V40
+  * @arg LL_PWR_SMPS_OUTLVL_1V50
+  * @arg LL_PWR_SMPS_OUTLVL_1V60
+  * @arg LL_PWR_SMPS_OUTLVL_1V70
+  * @arg LL_PWR_SMPS_OUTLVL_1V80
+  * @arg LL_PWR_SMPS_OUTLVL_1V90
+  * @arg LL_PWR_SMPS_OUTLVL_2V00
+  * @arg LL_PWR_SMPS_OUTLVL_2V10
+  * @arg LL_PWR_SMPS_OUTLVL_2V20
+  * @arg LL_PWR_SMPS_OUTLVL_2V30
+  * @arg LL_PWR_SMPS_OUTLVL_2V40
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetSMPSOutputLevel(uint32_t output_level)
@@ -1131,22 +1214,37 @@ __STATIC_INLINE void LL_PWR_SetSMPSOutputLevel(uint32_t output_level)
   * @brief  Get SMPS Output Level
   * @rmtoll CR5   PWR_CR5_SMPSLVL    LL_PWR_GetSMPSOutputLevel
   * @retval Output Level. This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V2
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V25             
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V3              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V35             
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V4              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V45              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V5               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V55              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V6               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V65              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V7               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V75              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V8               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V85              
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V9               
-  *         @arg @ref LL_PWR_SMPS_OUTLVL_1V95
+  *         Applicable values for BlueNRG-LP and BlueNRG-LPS:
+  * @arg LL_PWR_SMPS_OUTLVL_1V2
+  * @arg LL_PWR_SMPS_OUTLVL_1V25
+  * @arg LL_PWR_SMPS_OUTLVL_1V3
+  * @arg LL_PWR_SMPS_OUTLVL_1V35
+  * @arg LL_PWR_SMPS_OUTLVL_1V4
+  * @arg LL_PWR_SMPS_OUTLVL_1V45
+  * @arg LL_PWR_SMPS_OUTLVL_1V5
+  * @arg LL_PWR_SMPS_OUTLVL_1V55
+  * @arg LL_PWR_SMPS_OUTLVL_1V6
+  * @arg LL_PWR_SMPS_OUTLVL_1V65
+  * @arg LL_PWR_SMPS_OUTLVL_1V7
+  * @arg LL_PWR_SMPS_OUTLVL_1V75
+  * @arg LL_PWR_SMPS_OUTLVL_1V8
+  * @arg LL_PWR_SMPS_OUTLVL_1V85
+  * @arg LL_PWR_SMPS_OUTLVL_1V9
+  * @arg LL_PWR_SMPS_OUTLVL_1V95
+  *         Applicable values for Spirit3:
+  * @arg LL_PWR_SMPS_OUTLVL_1V20
+  * @arg LL_PWR_SMPS_OUTLVL_1V30
+  * @arg LL_PWR_SMPS_OUTLVL_1V40
+  * @arg LL_PWR_SMPS_OUTLVL_1V50
+  * @arg LL_PWR_SMPS_OUTLVL_1V60
+  * @arg LL_PWR_SMPS_OUTLVL_1V70
+  * @arg LL_PWR_SMPS_OUTLVL_1V80
+  * @arg LL_PWR_SMPS_OUTLVL_1V90
+  * @arg LL_PWR_SMPS_OUTLVL_2V00
+  * @arg LL_PWR_SMPS_OUTLVL_2V10
+  * @arg LL_PWR_SMPS_OUTLVL_2V20
+  * @arg LL_PWR_SMPS_OUTLVL_2V30
+  * @arg LL_PWR_SMPS_OUTLVL_2V40
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSMPSOutputLevel(void)
 {
@@ -1187,26 +1285,25 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDCfg(void)
   * @brief  Enable the IO pull-up configuration for port A.
   * @rmtoll PUCRA               LL_PWR_EnablePUA
   * @param  IO Pins Pull-up enable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_EnablePUA(uint32_t IO)
 {
@@ -1218,26 +1315,25 @@ __STATIC_INLINE void LL_PWR_EnablePUA(uint32_t IO)
   * @brief  Disable the IO pull-up configuration for port A.
   * @rmtoll PUCRA               LL_PWR_DisablePUA
   * @param  IO Pins Pull-up disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_DisablePUA(uint32_t IO)
 {
@@ -1248,26 +1344,25 @@ __STATIC_INLINE void LL_PWR_DisablePUA(uint32_t IO)
   * @brief  Checks if IO pull-up is enabled or disabled for port A.
   * @rmtoll PUCRA               LL_PWR_IsEnabledPUA
   * @param  IO Pins Pull-up disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUA(uint32_t IO)
 {
@@ -1278,26 +1373,25 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUA(uint32_t IO)
   * @brief  Enable the IO pull-down configuration for port A.
   * @rmtoll PDCRA               LL_PWR_EnablePDA
   * @param  IO Pins Pull-down enable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_EnablePDA(uint32_t IO)
 {
@@ -1309,26 +1403,25 @@ __STATIC_INLINE void LL_PWR_EnablePDA(uint32_t IO)
   * @brief  Disable the IO pull-down configuration for port A.
   * @rmtoll PDCRA               LL_PWR_DisablePDA
   * @param  IO Pins Pull-down disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_DisablePDA(uint32_t IO)
 {
@@ -1339,26 +1432,25 @@ __STATIC_INLINE void LL_PWR_DisablePDA(uint32_t IO)
   * @brief  Checks if IO pull-down is enabled or disabled for port A.
   * @rmtoll PDCRA               LL_PWR_IsEnabledPDA
   * @param  IO Pins Pull-down disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDA(uint32_t IO)
 {
@@ -1370,26 +1462,25 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDA(uint32_t IO)
   * @rmtoll PDCRA/PUCRA               LL_PWR_SetNoPullA
   * @param  GPIOx GPIO Port
   * @param  IO Pins No Pull cofiguration. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5,
-  *         LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
-  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15
+  * @note   LL_PWR_PUPD_IO4, LL_PWR_PUPD_IO5, LL_PWR_PUPD_IO6, LL_PWR_PUPD_IO7, LL_PWR_PUPD_IO12, LL_PWR_PUPD_IO13,
+  *         LL_PWR_PUPD_IO14, LL_PWR_PUPD_IO15 are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_SetNoPullA(uint32_t IO)
 {
@@ -1401,25 +1492,25 @@ __STATIC_INLINE void LL_PWR_SetNoPullA(uint32_t IO)
   * @brief  Enable the IO pull-up configuration for port B.
   * @rmtoll PUCRB               LL_PWR_EnablePUB
   * @param  IO Pins Pull-up enable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS. 
   */
 __STATIC_INLINE void LL_PWR_EnablePUB(uint32_t IO)
 {
@@ -1431,25 +1522,25 @@ __STATIC_INLINE void LL_PWR_EnablePUB(uint32_t IO)
   * @brief  Disable the IO pull-up configuration for port B.
   * @rmtoll PUCRB               LL_PWR_DisablePUB
   * @param  IO Pins Pull-up disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_DisablePUB(uint32_t IO)
 {
@@ -1460,25 +1551,25 @@ __STATIC_INLINE void LL_PWR_DisablePUB(uint32_t IO)
   * @brief  Checks if IO pull-up is enabled or disabled for port B.
   * @rmtoll PUCRB               LL_PWR_IsEnabledPUB
   * @param  IO Pins Pull-up disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUB(uint32_t IO)
 {
@@ -1489,25 +1580,25 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUB(uint32_t IO)
   * @brief  Enable the IO pull-down configuration for port B.
   * @rmtoll PDCRB               LL_PWR_EnablePDB
   * @param  IO Pins Pull-down enable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_EnablePDB(uint32_t IO)
 {
@@ -1519,25 +1610,25 @@ __STATIC_INLINE void LL_PWR_EnablePDB(uint32_t IO)
   * @brief  Disable the IO pull-down configuration for port B.
   * @rmtoll PDCRB               LL_PWR_DisablePDB
   * @param  IO Pins Pull-down disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_DisablePDB(uint32_t IO)
 {
@@ -1548,25 +1639,25 @@ __STATIC_INLINE void LL_PWR_DisablePDB(uint32_t IO)
   * @brief  Checks if IO pull-down is enabled or disabled for port B.
   * @rmtoll PDCRB               LL_PWR_IsEnabledPDB
   * @param  IO Pins Pull-down disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval State of bit (1 or 0).
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDB(uint32_t IO)
 {
@@ -1578,25 +1669,25 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPDB(uint32_t IO)
   * @rmtoll PDCRB/PUCRB               LL_PWR_SetNoPullB
   * @param  GPIOx GPIO Port
   * @param  IO Pins Pull-down disable. This parameter can be a combination of the following values:
-  *         @arg @ref LL_PWR_PUPD_IO0
-  *         @arg @ref LL_PWR_PUPD_IO1
-  *         @arg @ref LL_PWR_PUPD_IO2
-  *         @arg @ref LL_PWR_PUPD_IO3
-  *         @arg @ref LL_PWR_PUPD_IO4
-  *         @arg @ref LL_PWR_PUPD_IO5
-  *         @arg @ref LL_PWR_PUPD_IO6
-  *         @arg @ref LL_PWR_PUPD_IO7
-  *         @arg @ref LL_PWR_PUPD_IO8
-  *         @arg @ref LL_PWR_PUPD_IO9
-  *         @arg @ref LL_PWR_PUPD_IO10
-  *         @arg @ref LL_PWR_PUPD_IO11
-  *         @arg @ref LL_PWR_PUPD_IO12
-  *         @arg @ref LL_PWR_PUPD_IO13
-  *         @arg @ref LL_PWR_PUPD_IO14
-  *         @arg @ref LL_PWR_PUPD_IO15
+  * @arg LL_PWR_PUPD_IO0
+  * @arg LL_PWR_PUPD_IO1
+  * @arg LL_PWR_PUPD_IO2
+  * @arg LL_PWR_PUPD_IO3
+  * @arg LL_PWR_PUPD_IO4
+  * @arg LL_PWR_PUPD_IO5
+  * @arg LL_PWR_PUPD_IO6
+  * @arg LL_PWR_PUPD_IO7
+  * @arg LL_PWR_PUPD_IO8
+  * @arg LL_PWR_PUPD_IO9
+  * @arg LL_PWR_PUPD_IO10
+  * @arg LL_PWR_PUPD_IO11
+  * @arg LL_PWR_PUPD_IO12
+  * @arg LL_PWR_PUPD_IO13
+  * @arg LL_PWR_PUPD_IO14
+  * @arg LL_PWR_PUPD_IO15
   * @retval None
-  * @note   For BlueNRG-LPS device are not valid LL_PWR_PUPD_IO8, 
-  *         LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  * @note   LL_PWR_PUPD_IO8, LL_PWR_PUPD_IO9, LL_PWR_PUPD_IO10, LL_PWR_PUPD_IO11
+  *         devices are not valid for BlueNRG-LPS.
   */
 __STATIC_INLINE void LL_PWR_SetNoPullB(uint32_t IO)
 {
@@ -1609,10 +1700,10 @@ __STATIC_INLINE void LL_PWR_SetNoPullB(uint32_t IO)
   * @brief  Set PA4 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA4OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA4OutputinDEEPSTOP(uint32_t mode)
@@ -1624,10 +1715,10 @@ __STATIC_INLINE void LL_PWR_SetPA4OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA4 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA4OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA4OutputinDEEPSTOP(void)
 {
@@ -1640,10 +1731,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA4OutputinDEEPSTOP(void)
   * @brief  Set PA5 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA5OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA5OutputinDEEPSTOP(uint32_t mode)
@@ -1655,10 +1746,10 @@ __STATIC_INLINE void LL_PWR_SetPA5OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA5 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA5OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA5OutputinDEEPSTOP(void)
 {
@@ -1671,10 +1762,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA5OutputinDEEPSTOP(void)
   * @brief  Set PA6 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA6OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA6OutputinDEEPSTOP(uint32_t mode)
@@ -1686,10 +1777,10 @@ __STATIC_INLINE void LL_PWR_SetPA6OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA6 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA6OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA6OutputinDEEPSTOP(void)
 {
@@ -1702,10 +1793,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA6OutputinDEEPSTOP(void)
   * @brief  Set PA7 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA7OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA7OutputinDEEPSTOP(uint32_t mode)
@@ -1717,10 +1808,10 @@ __STATIC_INLINE void LL_PWR_SetPA7OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA7 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA7OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA7OutputinDEEPSTOP(void)
 {
@@ -1733,10 +1824,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA7OutputinDEEPSTOP(void)
   * @brief  Set PA8 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA8OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA8OutputinDEEPSTOP(uint32_t mode)
@@ -1748,10 +1839,10 @@ __STATIC_INLINE void LL_PWR_SetPA8OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA8 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA8OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA8OutputinDEEPSTOP(void)
 {
@@ -1764,10 +1855,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA8OutputinDEEPSTOP(void)
   * @brief  Set PA9 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA9OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA9OutputinDEEPSTOP(uint32_t mode)
@@ -1779,10 +1870,10 @@ __STATIC_INLINE void LL_PWR_SetPA9OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA9 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA9OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA9OutputinDEEPSTOP(void)
 {
@@ -1795,10 +1886,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA9OutputinDEEPSTOP(void)
   * @brief  Set PA10 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA10OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA10OutputinDEEPSTOP(uint32_t mode)
@@ -1810,10 +1901,10 @@ __STATIC_INLINE void LL_PWR_SetPA10OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA10 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA10OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_LCO
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_LCO
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA10OutputinDEEPSTOP(void)
 {
@@ -1826,10 +1917,10 @@ __STATIC_INLINE uint32_t LL_PWR_GetPA10OutputinDEEPSTOP(void)
   * @brief  Set PA11 during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_SetPA11OutputinDEEPSTOP
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPA11OutputinDEEPSTOP(uint32_t mode)
@@ -1841,10 +1932,10 @@ __STATIC_INLINE void LL_PWR_SetPA11OutputinDEEPSTOP(uint32_t mode)
   * @brief  Get PA11 output during DEEPSTOP mode.
   * @rmtoll IOxCFG               LL_PWR_GetPA11OutputinDEEPSTOP
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_IOCFG_BYP
-  *         @arg @ref LL_PWR_IOCFG_RTC
-  *         @arg @ref LL_PWR_IOCFG_LOW
-  *         @arg @ref LL_PWR_IOCFG_HIGH
+  * @arg LL_PWR_IOCFG_BYP
+  * @arg LL_PWR_IOCFG_RTC
+  * @arg LL_PWR_IOCFG_LOW
+  * @arg LL_PWR_IOCFG_HIGH
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPA11OutputinDEEPSTOP(void)
 {
@@ -2100,10 +2191,10 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledDBGRET(void)
   * @brief  Select SMPS PRECHARGE limit current.
   * @rmtoll CR5               LL_PWR_SetSMPSPrechargeLimitCurrent
   * @param  mode This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_2_5
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_5
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_10
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_20
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_2_5
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_5
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_10
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_20
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetSMPSPrechargeLimitCurrent(uint32_t mode)
@@ -2115,10 +2206,10 @@ __STATIC_INLINE void LL_PWR_SetSMPSPrechargeLimitCurrent(uint32_t mode)
   * @brief  Get SMPS PRECHARGE limit current selected.
   * @rmtoll CR5               LL_PWR_GetSMPSPrechargeLimitCurrent
   * @retval This parameter can be one of the following values:
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_2_5
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_5
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_10
-  *         @arg @ref LL_PWR_SMPS_PRECH_LIMIT_CUR_20
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_2_5
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_5
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_10
+  * @arg LL_PWR_SMPS_PRECH_LIMIT_CUR_20
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSMPSPrechargeLimitCurrent(void)
 {

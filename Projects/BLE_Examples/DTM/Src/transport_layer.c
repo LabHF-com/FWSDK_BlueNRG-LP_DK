@@ -34,13 +34,14 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define EVENT_BUFFER_SIZE    2300
 #define MAX_EVENT_SIZE  (536)
 
-#ifdef CONFIG_DEVICE_BLUENRG_LP //TBR
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define COMMAND_BUFFER_SIZE  (536 + 4)
-#else
+#define EVENT_BUFFER_SIZE    2300
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define COMMAND_BUFFER_SIZE  265        /* Decrease buffer size for reducing RAM footprint */
+#define EVENT_BUFFER_SIZE    1024
 #endif 
 
 #define FIFO_ALIGNMENT       4
@@ -95,16 +96,21 @@ uint8_t restore_flag = 0;
 /* Flag to signal if a timoeout HEADER_NOT_RECEIVED happens */
 static uint8_t header_timeout = 0;
 
-ALIGN(2) uint8_t buff_dma[MAX_EVENT_SIZE + SPI_HEADER_LEN + 1]; //[EVENT_BUFFER_SIZE];
+ALIGN(2) uint8_t buff_dma[MAX_EVENT_SIZE + SPI_HEADER_LEN + 1];
 
 #endif
 
 /* Private function prototypes -----------------------------------------------*/
 static void enqueue_event(circular_fifo_t *fifo, uint16_t buff_len1, uint8_t *buff_evt1, uint16_t buff_len2, uint8_t *buff_evt2, int8_t overflow_index);
 /* Private functions ---------------------------------------------------------*/
+extern uint8_t tone_started;
 
 PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level)
 {
+  if(tone_started)
+  {
+    return POWER_SAVE_LEVEL_RUNNING;
+  }
 #ifndef SPI_INTERFACE
   if (( (dma_state == DMA_IDLE) && (fifo_size(&event_fifo) > 0) )|| (fifo_size(&command_fifo) > 0) || reset_pending) {
     return POWER_SAVE_LEVEL_RUNNING;
@@ -125,7 +131,8 @@ PowerSaveLevels App_PowerSaveLevel_Check(PowerSaveLevels level)
   }
   
   else if ((SPI_STATE_CHECK(SPI_PROT_SLEEP_STATE) || SPI_STATE_CHECK(SPI_PROT_CONFIGURED_STATE) ) && (fifo_size(&event_fifo) == 0)) {
-    SPI_STATE_TRANSACTION(SPI_PROT_SLEEP_STATE);
+    if(!SPI_STATE_CHECK(SPI_PROT_SLEEP_STATE)) // This check is to avoid unnecessary debug annotation
+      SPI_STATE_TRANSACTION(SPI_PROT_SLEEP_STATE);
     
     /* Edge mode is the normal mode.
     * Level mode is for SLEEP mode because:
@@ -219,7 +226,7 @@ uint16_t process_command(uint16_t op_code, uint8_t *buffer_in, uint16_t buffer_i
     return ret_val;
   }
   
-  for (i = 0; i < (sizeof(hci_command_table)/sizeof(hci_command_table_type)); i++) {
+  for (i = 0; hci_command_table[i].opcode != 0; i++) {
     if (op_code == hci_command_table[i].opcode) {
       ret_val = hci_command_table[i].execute(buffer_in, buffer_in_length, buffer_out, buffer_out_max_length);      
       /* add get crash handler */
@@ -287,9 +294,6 @@ void transport_layer_init(void)
   /** Enable SPI interrupts */
   LL_EXTI_EnableIT(BSP_SPI_EXTI_CS_PIN);
   
-  /* Enable SPI */
-//  LL_SPI_TransmitData8(BSP_SPI, 0xFF);
-  LL_SPI_Enable(BSP_SPI);
   DMA_Configuration();
   SPI_STATE_TRANSACTION(SPI_PROT_CONFIGURED_STATE);
 #endif
@@ -488,12 +492,9 @@ void transport_layer_tick(void)
     if ((fifo_size(&event_fifo) > 0) && (SPI_STATE_CHECK(SPI_PROT_CONFIGURED_STATE) || SPI_STATE_CHECK(SPI_PROT_SLEEP_STATE))) { //&& LL_GPIO_IsInputPinSet(SPIx_GPIO_PORT, SPIx_CS_PIN)) {
     uint8_t *ptr;
     if (fifo_get_ptr_var_len_item(&event_fifo, &size, &ptr) == 0) {
-      DEBUG_NOTES(PARSE_EVENT_PEND);
       SPI_STATE_TRANSACTION(SPI_PROT_CONFIGURED_EVENT_PEND_STATE);
       
-      if(SPI_STATE_CHECK(SPI_PROT_CONFIGURED_EVENT_PEND_STATE) && LL_GPIO_IsInputPinSet(BSP_SPI_CS_GPIO_PORT, BSP_SPI_CS_PIN)) {
-        SPI_STATE_TRANSACTION(SPI_PROT_WAITING_HEADER_STATE);        
-      }
+      SPI_STATE_TRANSACTION(SPI_PROT_WAITING_HEADER_STATE);
       
       if (!header_timeout)
         transport_layer_send_data(ptr, size);
@@ -517,11 +518,7 @@ void transport_layer_tick(void)
         tmp_spi_dma_len = (command_fifo_dma_len - tmp_spi_dma_len);
 #endif
     if(tmp_spi_dma_len > 4) {
-      
-      DEBUG_NOTES(HEADER_RECEIVED);
-      //      SPI_STATE_TRANSACTION(SPI_PROT_HEADER_RECEIVED_STATE);
       SPI_STATE_TRANSACTION(SPI_PROT_WAITING_DATA_STATE);
-      DEBUG_NOTES(SPI_PROT_WAITING_DATA);
       LL_GPIO_ResetOutputPin(BSP_SPI_IRQ_GPIO_PORT, BSP_SPI_IRQ_PIN); /* Issue the SPI communication request */
       DEBUG_NOTES(IRQ_FALL);
       break;
@@ -578,10 +575,28 @@ void transport_layer_tick(void)
       return;
     }
     len=process_command(opcode, buffer+offset, size-offset, buffer_out, sizeof(buffer_out));
+#if (BUFFER_CMDS_ON_BUSY == 1)
+    uint8_t status_offset = (buffer_out[1] == 0x0E) ? 6 : 3; /* 0x0E: command complete, 0x0F: command status */
+    /* Apply command buffering in case of CONTROLLER BUSY error with the exception of the 
+     * aci_l2cap_connection_parameter_update_resp command (see  req_pbs #990070)
+     */
+    if ((*(buffer_out+status_offset) != BLE_ERROR_CONTROLLER_BUSY) || (opcode == 0xfd82))
+    {
+      DEBUG_NOTES(COMMAND_PROCESSED);
+      /* Set user events back to normal queue */
+      send_event(buffer_out, len, 1);
+      fifo_flush(&command_fifo);
+    }
+    else
+    {
+        fifo_roll_back(&command_fifo, size); 
+    }
+#else
     DEBUG_NOTES(COMMAND_PROCESSED);
     /* Set user events back to normal queue */
     send_event(buffer_out, len, 1);
     fifo_flush(&command_fifo);
+#endif 
   }
   
   if(event_lost_register.event_lost==1) {

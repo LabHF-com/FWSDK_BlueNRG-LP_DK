@@ -20,7 +20,7 @@
  *****************************************************************************/
 #include "bluenrg_lp_gatt.h"
 #include "DTM_config.h"
-#include "bluenrg_lp_gatt_server.h"
+#include "ble_const.h"
 
 /******************************************************************************
  * CONSTANT SYMBOLS
@@ -43,6 +43,11 @@
 #define GATT_AUTHOR_OP_TYPE_WRITE_CMD               (0x11U)
 #define GATT_AUTHOR_OP_TYPE_PREP_WRITE              (0x12U)
 
+#define L2C_CID_ATTRIBUTE_PROTOCOL                  (4U)
+
+#define ACI_GATT_EATT_SUPPORTED()                   ((Gatt_profile_get_supported_feature() & \
+                                                      BLE_GATT_SRV_SUPPORTED_FEATURES_EATT) == \
+                                                      BLE_GATT_SRV_SUPPORTED_FEATURES_EATT)
 /******************************************************************************
  * TYPES
  *****************************************************************************/
@@ -104,23 +109,25 @@ void ACI_gatt_nwk_reset(void);
  *
  * @param Connection_Handle[in] The connection handle for wich the Procedure
  *                              Complete event is issued.
+ * @param CID[in] The channel ID.
  * @param Error_Code[in] The returned error coded.
  *
  * @return void
  *
  */
-void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle, uint8_t Error_Code);
+void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle, uint16_t CID, uint8_t Error_Code);
 
 /**
  * @brief Disconnection Event handler. This function is used to release the
  * allocated resources for the given connection handle.
  *
  * @param Connection_Handle[in] The connection handle
+ * @param CID[in] The channel ID.
  *
  * @return void
  *
  */
-void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle);
+void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle, uint16_t CID);
 
 /**
  * @brief Add a service to GATT Server. When a service is created in the server, the host needs to
@@ -456,9 +463,9 @@ tBleStatus aci_gatt_srv_read_handle_value_nwk(uint16_t Attr_Handle,
  * @retval Value indicating success or error code.
  */
 tBleStatus aci_gatt_srv_read_multiple_instance_handle_value_nwk(uint16_t Connection_Handle,
-                                                            uint16_t Attr_Handle,
-                                                            uint16_t *Value_Length,
-                                                            uint8_t Value[]);
+                                                                uint16_t Attr_Handle,
+                                                                uint16_t *Value_Length,
+                                                                uint8_t Value[]);
 /**
  * @brief This command sets the access permission for the attribute handle specified.
  * @param Attr_Handle Handle of the attribute whose security permission has to be modified
@@ -568,4 +575,151 @@ void aci_gatt_srv_authorize_nwk_event(uint16_t Conn_Handle,
  */
 tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
                                         uint8_t Exec);
+
+/**
+ * @brief Start the procedure to write an attribute value.
+ * When the procedure is completed, a @ref aci_gatt_clt_proc_complete_event event is generated.
+ * During the procedure, @ref aci_att_clt_prepare_write_resp_event and @ref aci_att_clt_exec_write_resp_event
+ * events are raised.
+ * @param Connection_Handle Connection handle that identifies the connection.
+ * Values:
+ * - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Handle of the attribute to be written
+ * Values:
+ * - 0x0001 ... 0xFFFF
+ * @param Attribute_Val_Length Length of the value to be written
+ * @param Attribute_Val Value to be written
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_gatt_eatt_clt_write_nwk(uint16_t Connection_Handle,
+                                       uint16_t CID,
+                                       uint16_t Attr_Handle,
+                                       uint16_t Attribute_Val_Length,
+                                       uint8_t Attribute_Val[]);
+/**
+ * @brief Start the procedure to write a long attribute value.
+ * When the procedure is completed, a @ref aci_gatt_clt_proc_complete_event event is generated.
+ * During the procedure, @ref aci_att_clt_prepare_write_resp_event and @ref aci_att_clt_exec_write_resp_event
+ * events are raised.
+ * @param Connection_Handle Connection handle that identifies the connection.
+ * Values:
+ * - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Handle of the attribute to be written
+ * Values:
+ * - 0x0001 ... 0xFFFF
+ * @param Val_Offset Offset at which the attribute has to be written
+ * Values:
+ * - 0 ... 511
+ * @param Attribute_Val_Length Length of the value to be written
+ * @param Attribute_Val Value to be written
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_gatt_eatt_clt_write_long_nwk(uint16_t Connection_Handle,
+                                            uint16_t CID,
+                                            uint16_t Attr_Handle,
+                                            uint16_t Val_Offset,
+                                            uint16_t Attribute_Val_Length,
+                                            uint8_t Attribute_Val[]);
+/**
+ * @brief Start the procedure to write a characteristic reliably.
+ * When the procedure is completed, a  @ref aci_gatt_clt_proc_complete_event event is generated.
+ * During the procedure, @ref aci_att_clt_prepare_write_resp_event and @ref aci_att_clt_exec_write_resp_event
+ * events are raised.
+ * @param Connection_Handle Connection handle that identifies the connection.
+ * Values:
+ * - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Handle of the attribute to be written
+ * Values:
+ * - 0x0001 ... 0xFFFF
+ * @param Val_Offset Offset at which the attribute has to be written
+ * Values:
+ * - 0 ... 511
+ * @param Attribute_Val_Length Length of the value to be written
+ * @param Attribute_Val Value to be written
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_gatt_eatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
+                                                     uint16_t CID,
+                                                     uint16_t Attr_Handle,
+                                                     uint16_t Val_Offset,
+                                                     uint16_t Attribute_Val_Length,
+                                                     uint8_t Attribute_Val[]);
+
+/**
+ * @brief
+ * @param Conn_Handle Connection handle to be used to identify the connection with the peer device.
+ * Values:
+ * - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Offset from which the value needs to be read or write
+ * Values:
+ * - 0 ... 511
+ * @param Operation_Type
+ * Values:
+ * - 0x00: Read
+ * - 0x10: Write Request
+ * - 0x11: Write Command or Signed Write Command
+ * - 0x12: Prepare Write Request
+ * @param Error_Code Offset from which the value needs to be read or write
+ * Values:
+ * - 0 ... 511
+ * @param Data_Offset Offset from which the value needs to be read or write
+ * Values:
+ * - 0 ... 511
+ * @param Data_Length Length of Data field
+ * @param Data The data that the client has requested to write
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_gatt_eatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
+                                                uint16_t CID,
+                                                uint16_t Attr_Handle,
+                                                uint8_t Operation_Type,
+                                                uint8_t Error_Code,
+                                                uint16_t Data_Offset,
+                                                uint16_t Data_Length,
+                                                uint8_t Data[]);
+
+/**
+ * @brief This event is generated if authorization is needed to access the attribute value.
+ * @ref aci_gatt_srv_authorize_resp_nwk command must be sent in response to this event.
+ * @param Conn_Handle Connection handle to be used to identify the connection with the peer device.
+ * Values:
+ * - 0x0000 ... 0x0EFF
+ * @param Attr_Handle
+ * @param Operation_Type
+ * Values:
+ * - 0x00: Read
+ * - 0x10: Write Request
+ * - 0x11: Write Command or Signed Write Command
+ * - 0x12: Prepare Write Request
+ * @param Attr_Val_Offset Offset from which the value needs to be read or write
+ * Values:
+ * - 0 ... 511
+ * @param Data_Length Length of Data field
+ * @param Data The data that the client has requested to write
+ * @retval None
+ */
+void aci_gatt_eatt_srv_authorize_nwk_event(uint16_t Conn_Handle,
+                                           uint16_t CID,
+                                           uint16_t Attr_Handle,
+                                           uint8_t Operation_Type,
+                                           uint16_t Attr_Val_Offset,
+                                           uint8_t Data_Length,
+                                           uint8_t Data[]);
+
+/**
+ * @brief Response to aci_att_srv_exec_write_req_event.
+ * @param Conn_Handle Connection handle that identifies the connection.
+ *        Values:
+ *        - 0x0000 ... 0x0EFF
+ * @param Exec If 1, allow execution of queued writes. If 0 flush all queued
+ *        writes for the given connection handle.
+ *        Values:
+ *        - 0x00: FLUSH
+ *        - 0x01: EXECUTE
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_gatt_eatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
+                                                 uint16_t CID,
+                                                 uint8_t Exec);
+
 #endif

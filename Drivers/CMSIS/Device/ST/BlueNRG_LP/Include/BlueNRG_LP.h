@@ -214,7 +214,7 @@ typedef struct {
   * @brief DMA Multiplexer
   */
 typedef struct {             /*!< DMAMUX Structure                                                                   */
-  __IO uint32_t   CCR;       /*!< DMA Multiplexer Channel x Control Register    Address offset: 0x0004 * (channel x) */
+  __IO uint32_t   CxCR;       /*!< DMA Multiplexer Channel x Control Register    Address offset: 0x0004 * (channel x) */
 } DMAMUX_Channel_TypeDef;
 
   

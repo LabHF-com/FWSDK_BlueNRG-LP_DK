@@ -38,7 +38,7 @@
 /******************************************************************************
  * Includes
  *****************************************************************************/
-#include "ble_status.h"
+#include <stdint.h>
 
 /******************************************************************************
  * CONSTANT SYMBOLS
@@ -114,6 +114,7 @@
 #define BLE_GATT_SRV_CENTRAL_ADDRESS_RESOLUTION_UUID    (0x2AA6U)
 #define BLE_GATT_SRV_CLIENT_SUPP_FEATURE_CHR_UUID       (0x2B29U)
 #define BLE_GATT_SRV_DB_HASH_CHR_UUID                   (0x2B2AU)
+#define BLE_GATT_SRV_SUPPORTED_FEATURES_CHR_UUID        (0x2B3AU)
 
 #define BLE_GATT_SRV_GATT_SERVICE_UUID                  (0x1801U)
 #define BLE_GATT_SRV_GAP_SERVICE_UUID                   (0x1800U)
@@ -217,12 +218,21 @@
 #define BLE_ATT_ERR_DB_OUT_OF_SYNC                      (0x12U) /**< The server requests the client to rediscover the database. */
 #define BLE_ATT_ERR_VALUE_NOT_ALLOWED                   (0x13U) /**< The attribute parameter value was not allowed. */
 #define BLE_ATT_ERR_APPL_MIN                            (0x80U) /**< Application error code defined by a higher layer specification.
-                                                                 *   Lower error value. */
+                                                                 *   Lower error value.
+                                                                 */
 #define BLE_ATT_ERR_APPL_MAX                            (0x9FU) /**< Application error code defined by a higher layer specification.
-                                                                 *   Higher error value. */
+                                                                 *   Higher error value.
+                                                                 */
 #define BLE_ATT_ERR_CMN_PROF_SRVC_MIN                   (0xE0U) /**< Common profile and service error codes defined in [Core Specification
                                                                  *   Supplement], Part B.
-                                                                 *   Lower error value. */
+                                                                 *   Lower error value.
+                                                                 */
+#define BLE_ATT_ERR_CCCD_IMPROPERLY_CONFIGURED          (0xFDU) /**< The Client Characteristic Configuration Descriptor Improperly Configured error
+                                                                 *   code is used when a Client Characteristic Configuration descriptor is not
+                                                                 *   configured according to the requirements of the profile or service.
+                                                                 *   2.3 CLIENT CHARACTERISTIC CONFIGURATION DESCRIPTOR IMPROPERLY CONFIGURED (0xFD)
+                                                                 *   Supplement to the Bluetooth Core Specification | CSS v10, Part B page 34
+                                                                 */
 #define BLE_ATT_ERR_CMN_PROF_SRVC_MAX                   (0xFFU) /**< Common profile and service error codes defined in [Core Specification
                                                                  *   Supplement], Part B.
                                                                  *   Higher error value. */
@@ -324,14 +334,49 @@
  * assignments, BLUETOOTH CORE SPECIFICATION Version 5.1 | Vol 3, Part G page 2404
  */
 #define BLE_GATT_SRV_CSF_ROBUST_CACHING                 (0x01U)
-      
-#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_BITS_PER_CONN    (1U)
 
-#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_VAL_MASK        (0x01U)
+/**
+ * Bit assigned for Enhanced ATT bearer
+ *
+ * Table 7.6: Client Supported Features bit assignments
+ * BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 3, Part G page 1602
+ */
+#define BLE_GATT_SRV_CSF_EATT                           (0x02U)
+
+/**
+ * Bit assigned for Multiple Handle Value Notifications
+ *
+ * Table 7.6: Client Supported Features bit assignments
+ * BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 3, Part G page 1603
+ */
+#define BLE_GATT_SRV_CSF_MULTI_HANDLE_VAL_NOTIFICATION  (0x04U)
+
+#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_BITS_PER_CONN    (4U)
+
+#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_VAL_MASK        (0x07U)
+
 #define BLE_GATT_SRV_CLIENT_SUP_FEATURE_VALUE_LEN       (1U)
-#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_CONN_PER_BYTE    (8U / BLE_GATT_SRV_CLIENT_SUP_FEATURE_VALUE_LEN)
+#define BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_CONN_PER_BYTE    (8U / BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_BITS_PER_CONN)
 #define BLE_GATT_SRV_CLIENT_SUP_FEATURE_SIZE_X_CONN(NUM_CONN)  (((NUM_CONN) / \
                                                                  BLE_GATT_SRV_CLIENT_SUP_FEATURE_NUM_CONN_PER_BYTE) + 1U)
+/**
+ *@}
+ */
+ 
+/**
+ *@name GATT_SRV_SUPPORTED_FEATURES
+ * Server Supported Features Characteristic is used to indicate support for
+ * server features. The server shall set a bit only if the corresponding
+ * feature is supported.
+ *
+ * Table 7.11: Server Supported Features bit assignments
+ * 7.4 SERVER SUPPORTED FEATURES
+ * BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 3, Part G page 1605
+ *@{
+ */
+#define BLE_GATT_SRV_SUPPORTED_FEATURES_EATT            (1U) /**< Enhanced ATT bearer supported. */
+
+#define BLE_GATT_SRV_SUPPORTED_FEATURES_VAL_LEN         (1U)
 /**
  *@}
  */

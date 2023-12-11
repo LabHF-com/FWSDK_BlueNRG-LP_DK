@@ -467,8 +467,8 @@ WEAK_FUNCTION(void HAL_SMBUS_MspDeInit(SMBUS_HandleTypeDef *hsmbus))
   * @param  hsmbus Pointer to a SMBUS_HandleTypeDef structure that contains
   *                the configuration information for the specified SMBUS.
   * @param  AnalogFilter This parameter can be one of the following values:
-  *         @arg @ref SMBUS_ANALOGFILTER_ENABLE
-  *         @arg @ref SMBUS_ANALOGFILTER_DISABLE
+  * @arg @ref SMBUS_ANALOGFILTER_ENABLE
+  * @arg @ref SMBUS_ANALOGFILTER_DISABLE
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_SMBUS_ConfigAnalogFilter(SMBUS_HandleTypeDef *hsmbus, uint32_t AnalogFilter)

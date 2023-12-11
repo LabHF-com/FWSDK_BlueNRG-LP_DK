@@ -115,7 +115,7 @@
 /**
   * @brief  NO_INLINE
   *         This function attribute suppresses the inlining of a function at the call points of the function.
-  *         Usage:  NO_INIT_SECTION(void my_noinline_function(void))
+  *         Usage:  NO_INLINE(void my_noinline_function(void))
   */
 #define NO_INLINE(function)                   _Pragma(QUOTEME(optimize=no_inline)) function
 
@@ -196,7 +196,7 @@ extern void __iar_program_start(void);
 /**
   * @brief  NO_INLINE
   *         This function attribute suppresses the inlining of a function at the call points of the function.
-  *         Usage:  NO_INIT_SECTION(void my_noinline_function(void))
+  *         Usage:  NO_INLINE(void my_noinline_function(void))
   */
 #define NO_INLINE(function)                   __attribute__((noinline)) function
 

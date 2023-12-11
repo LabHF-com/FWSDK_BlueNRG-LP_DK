@@ -131,13 +131,11 @@ static cmd_t command_table[] = {
         .command_flag = CMD_ATT_MTU,
     },
 #endif 
-#if SET_L2CAP_COS 
     {
         .cmd = 'l',
         .description = "Enable/disable L2CAP COS txing",
         .command_flag = CMD_L2C_COS_TX,
     },
-#endif
     {
         .cmd = 'z',
         .description = "Enable/disable slow throughput",
@@ -157,7 +155,7 @@ static cmd_t command_table[] = {
 #if CLIENT
     {
         .cmd = 'b',
-        .description = "Switch bidirectional test on-off",
+        .description = "Enable/disable writes w/o response",
         .command_flag = CMD_BIDIRECT
     },
     {
@@ -310,12 +308,13 @@ static uint8_t ll_rx_phy = 0x1; //1 mbps
 
 #define ALIGN_UPTO_32BITS(VAL)            (((((unsigned int)(VAL)) - 1U) | \
                                             (sizeof(uint32_t) - 1U)) + 1U)
-#if SET_L2CAP_COS 
+/* Buffer used to receive and reassemble SDUs */
 static uint8_t l2c_cos_rx_sdu_buffer[L2C_COS_RX_SDU_BUFFER_SIZE_X_MTU(L2C_MAX_MTU)];
+/* Buffer used to keep SDUs to transmit. */
 static uint8_t l2c_cos_tx_sdu_buffer[L2C_COS_NUM_TX_BUFFER][L2C_TX_BUFFER_SIZE];
 static uint8_t l2c_cos_tx_sdu_buffer_idx = 0;
 static uint16_t l2c_peer_mtu = 0;
-#endif
+
 static uint32_t th_down_counter = 0;
 static uint32_t th_start_counter = 0;
 
@@ -391,10 +390,8 @@ void print_app_flags()
     printf("TX average throughput = %d.%01d\n", PRINT_INT(tx_app_context.avg_val),PRINT_FLOAT(tx_app_context.avg_val));
     printf("RX average throughput = %d.%01d\n", PRINT_INT(rx_app_context.avg_val),PRINT_FLOAT(rx_app_context.avg_val));
     printf("Aggregated average throughput = %d.%01d\n", PRINT_INT( (tx_app_context.avg_val + rx_app_context.avg_val) ),PRINT_FLOAT( (tx_app_context.avg_val + rx_app_context.avg_val)));
-#if SET_L2CAP_COS 
     printf("L2CAP COS TX average throughput = %d.%01d\n", PRINT_INT(l2c_cos_tx_app_context.avg_val),PRINT_FLOAT(l2c_cos_tx_app_context.avg_val));
     printf("L2CAP COS RX average throughput = %d.%01d\n", PRINT_INT(l2c_cos_rx_app_context.avg_val),PRINT_FLOAT(l2c_cos_rx_app_context.avg_val));
-#endif 
 #if SET_PHY 
     printf("LE PHY (1 --> 1 Mbps; 2 --> 2 Mbps); TX = %d, RX= %d\n", ll_tx_phy ,ll_rx_phy);
 #endif 
@@ -409,9 +406,7 @@ void print_app_flags()
     printf("\t %s = NOTIFICATIONS_ENABLED\n", PRINT_APP_FLAG_FORMAT(NOTIFICATIONS_ENABLED));
     printf("\t %s = CONN_PARAM_UPD_SENT\n", PRINT_APP_FLAG_FORMAT(CONN_PARAM_UPD_SENT));
 #if SERVER 
-#if SET_L2CAP_COS 
     printf("\t %s = L2CAP_PARAM_UPD_SENT\n", PRINT_APP_FLAG_FORMAT(L2CAP_PARAM_UPD_SENT));
-#endif 
 #endif
     printf("\t %s = TX_BUFFER_FULL\n", PRINT_APP_FLAG_FORMAT(TX_BUFFER_FULL));
     printf("\t %s = ATT_MTU_START_EXCHANGE\n", PRINT_APP_FLAG_FORMAT(ATT_MTU_START_EXCHANGE));
@@ -967,7 +962,6 @@ void APP_Tick(void)
           COMMAND_CLEAR(CMD_PHY_2M_RX);
         }
 #endif 
-#if SET_L2CAP_COS 
         if(COMMAND_IS_SET(CMD_L2C_COS_TX))
         {
             if(APP_FLAG(L2C_COS_TX))
@@ -1004,7 +998,6 @@ void APP_Tick(void)
 
             COMMAND_CLEAR(CMD_L2C_COS_TX);
         }
-#endif 
         else if(COMMAND_IS_SET(CMD_PRINT_FLAGS))
         {
             print_app_flags();
@@ -1070,12 +1063,12 @@ void APP_Tick(void)
             if(APP_FLAG(SEND_COMMAND))
             {
                 APP_FLAG_CLEAR(SEND_COMMAND);
-                printf("Set unidirectional mode\n");
+                printf("Disable writes w/o response\n");
             }
             else
             {
                 APP_FLAG_SET(SEND_COMMAND);
-                printf("Set bidirectional mode\n");
+                printf("Enable writes w/o response\n");
                 if(!APP_FLAG(TIMER_STARTED))
                 {
                     Timer_Set(&throughput_timer, CLOCK_SECOND * THROUGHPUT_TIMER_VAL_SEC);
@@ -1318,7 +1311,6 @@ void APP_Tick(void)
             APP_FLAG_SET(FEAT_EXCHANGE_REQ);
     }
 }
-#if SET_L2CAP_COS 
         if(APP_FLAG(L2C_COS_TX))
         {
             uint16_t i;
@@ -1354,7 +1346,6 @@ void APP_Tick(void)
                 l2c_cos_tx_app_context.end_time = Clock_Time();
             }
         }
-#endif
     }
 }
 
@@ -1771,33 +1762,36 @@ void aci_blue_crash_info_event(uint8_t Crash_Type,
     }
 }
 
-#if SET_L2CAP_COS 
-void aci_l2cap_cfc_connection_event(uint16_t Connection_Handle,
+void aci_l2cap_cos_connection_event(uint16_t Connection_Handle,
                                     uint8_t Event_Type,
-                                    uint16_t Result,
                                     uint8_t Identifier,
                                     uint16_t SPSM,
-                                    uint16_t CID,
-                                    uint16_t Remote_CID,
                                     uint16_t Peer_MTU,
                                     uint16_t Peer_MPS,
-                                    uint16_t Initial_Credits)
+                                    uint16_t Initial_Credits,
+                                    uint16_t Result,
+                                    uint8_t CID_Count,
+                                    conn_cid_t conn_cid[])
 {
     tBleStatus ret;
 
-    printf("Received aci_l2cap_cfc_connection_event:\r\n");
+    printf("Received aci_l2cap_cos_connection_event:\r\n");
     printf("Connection Handle = %d\r\n", Connection_Handle);
     printf("Event type = 0x%02X\r\n", Event_Type);
-    printf("Result = 0x%04X\r\n", Result);
     printf("Identifier = 0x%02X\r\n", Identifier);
     printf("SPSM = 0x%04X\r\n", SPSM);
-    printf("CID = 0x%04X\r\n", CID);
-    printf("Remote CID = %d\r\n", Remote_CID);
     printf("Peer MTU = %d\r\n", Peer_MTU);
     printf("Peer MPS = %d\r\n", Peer_MPS);
-    printf("Initial Credit = %d\r\n", Initial_Credits);
+    printf("Initial Credits = %d\r\n", Initial_Credits);
+    printf("Result = 0x%04X\r\n", Result);
+    
+    for(int i = 0; i < CID_Count; i++)
+    {
+      printf("Local CID = 0x%04X\r\n", conn_cid[i].Local_CID);
+      printf("Remote CID = %d\r\n", conn_cid[i].Remote_CID);
+    }
 
-    if(Event_Type == L2CAP_CONN_REQ)
+    if(Event_Type == L2CAP_CFC_CONN_REQ)
     {
         /* reply to the incoming Connection Event (Request) by sending a Connection response
          * with our own CID irrespective of the CID coming with connection event that is inevitably NULL */
@@ -1815,7 +1809,7 @@ void aci_l2cap_cfc_connection_event(uint16_t Connection_Handle,
             printf("Error calling aci_l2cap_cfc_connection_resp = 0x%02X\r\n", ret);
         }
     }
-    else if(Event_Type == L2CAP_CONN_RESP)
+    else if(Event_Type == L2CAP_CFC_CONN_RESP)
     {
         APP_FLAG_SET(L2C_COS_TX);
         l2c_peer_mtu = Peer_MTU;
@@ -1828,6 +1822,7 @@ void aci_l2cap_sdu_data_rx_event(uint16_t Connection_Handle,
                                  uint16_t SDU_Length)
 {
     tBleStatus ret;
+    /* Buffer used to extract one received SDU. */
     uint8_t rx_buffer[L2C_COS_RX_SDU_BUFFER_SIZE];
     uint16_t sdu_len;
     /** printf("aci_l2cap_sdu_data_rx_event Connection_Handle=0x%04X CID=0x%04X RX_Credit_Balance=%d SDU_Length=%d\r\n", Connection_Handle, CID, RX_Credit_Balance, SDU_Length); */
@@ -1846,8 +1841,6 @@ void aci_l2cap_sdu_data_rx_event(uint16_t Connection_Handle,
     }
 }
 
-#endif
-
 void aci_l2cap_disconnection_complete_event(uint16_t Connection_Handle,
                                             uint16_t CID)
 {
@@ -1859,7 +1852,6 @@ void aci_l2cap_disconnection_complete_event(uint16_t Connection_Handle,
     }
 }
 
-#if SET_L2CAP_COS 
 void aci_l2cap_sdu_data_tx_event(uint16_t Connection_Handle,
                                  uint16_t CID,
                                  uint16_t SDU_Length,
@@ -1878,4 +1870,3 @@ void aci_l2cap_flow_control_credit_event(uint16_t Connection_Handle,
    /** printf("aci_l2cap_flow_control_credit_event Connection_Handle=0x%04X CID=0x%02X TX_Credits=%d TX_Credit_Balance=%d\r\n",
                                                         Connection_Handle, CID, TX_Credits, TX_Credit_Balance);*/
 }
-#endif 

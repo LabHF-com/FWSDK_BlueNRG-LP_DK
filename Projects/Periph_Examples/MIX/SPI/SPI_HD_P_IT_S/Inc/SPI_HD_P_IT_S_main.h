@@ -43,7 +43,7 @@ extern "C" {
   #define CONFIG_DATASIZE_16BIT 1
 #endif  
 
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)   
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
   
 #if !defined( USE_SPI1_PINS ) & !defined( USE_SPI2_PINS )
   // default SPI pins for this example

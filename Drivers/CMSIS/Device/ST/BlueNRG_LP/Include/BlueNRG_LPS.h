@@ -210,7 +210,7 @@ typedef struct {
   * @brief DMA Multiplexer
   */
 typedef struct {             /*!< DMAMUX Structure                                                                   */
-  __IO uint32_t   CCR;       /*!< DMA Multiplexer Channel x Control Register    Address offset: 0x0004 * (channel x) */
+  __IO uint32_t   CxCR;       /*!< DMA Multiplexer Channel x Control Register    Address offset: 0x0004 * (channel x) */
 } DMAMUX_Channel_TypeDef;
 
   
@@ -250,7 +250,6 @@ typedef struct {                                /*!< IWDG Structure             
   __IM  uint32_t  SR;                           /*!< (@ 0x0000000C) Status register                                            */
   __IOM uint32_t  WINR;                         /*!< (@ 0x00000010) Window register                                            */
 } IWDG_TypeDef;                                 /*!< Size = 20 (0x14)                                                          */
-
 
 
 /* =========================================================================================================================== */
@@ -6658,7 +6657,7 @@ typedef struct {                                /*!< Wakeup structure           
 /* =====================================================   Bits definition for PKA RAM   ===================================================== */ 
 #define PKA_RAM_OFFSET                            0x400U                           /*!< PKA RAM address offset */
 
-/* Index list to access the PKA RAM throug the PKA_RAM->RAM[index] structure */
+/* Index list to access the PKA RAM through the PKA_RAM->RAM[index] structure */
 
 /* Compute Montgomery parameter input data */
 #define PKA_MONTGOMERY_PARAM_IN_MOD_NB_BITS       ((0x404U - PKA_RAM_OFFSET)>>2)   /*!< Input modulus number of bits */

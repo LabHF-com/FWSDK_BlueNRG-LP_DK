@@ -134,7 +134,6 @@ void USER_BUTTON_IRQHandler(void)
 }
 
 
-
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
 

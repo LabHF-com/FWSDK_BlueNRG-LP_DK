@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : UART_CircularDMA_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -143,24 +145,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      ON: error     |      ON: error     |      ON: error     |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      ON: error     |      ON: error     |      ON: error     |      ON: error     |      ON: error     |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 	@endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -271,9 +273,6 @@ int main(void)
     while(1);
   }
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
@@ -296,7 +295,7 @@ int main(void)
   */
 static void MX_USART1_UART_Init(void)
 {
-  huart1.Instance = USARTx_INSTANCE;
+  huart1.Instance = USARTx;
   huart1.Init.BaudRate = 115200;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
@@ -334,7 +333,7 @@ static void MX_DMA_Init(void)
   __HAL_RCC_DMA_CLK_ENABLE();
 
   /* DMA interrupt init */
-  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY );
   HAL_NVIC_EnableIRQ(DMA_IRQn);
 }
 

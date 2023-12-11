@@ -8,7 +8,6 @@
 #ifdef TX_CONFIGURATION
 
 /* image of TxRx Example BlueNRG-LP + 64 MHz XTAL - TX configuration */
-
 #warning "Image for BlueNRG-LP 64 MHz XTAL - TX configuration"
 const unsigned char image[] =
 {
@@ -1808,7 +1807,6 @@ const unsigned char image[] =
 #ifdef TX_CONFIGURATION
 
 /* image of TxRx Example BlueNRG-LPS + 64 MHz XTAL - TX configuration */
-
 #warning "Image for BlueNRG-LPS 64 MHz XTAL - TX configuration"
 const unsigned char image[] =
 {

@@ -268,8 +268,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetDeviceJTAG_ID(void)
   * @brief  Set memory mapping at address 0x00000000
   * @rmtoll CONFIG PREMAP/REMAP      LL_SYSCFG_SetRemapMemory
   * @param  Memory This parameter can be one of the following values:
-  *         @arg @ref LL_SYSCFG_REMAP_FLASH
-  *         @arg @ref LL_SYSCFG_REMAP_SRAM
+  * @arg LL_SYSCFG_REMAP_FLASH
+  * @arg LL_SYSCFG_REMAP_SRAM
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
@@ -281,8 +281,8 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
   * @brief  Get memory mapping at address 0x00000000
   * @rmtoll CONFIG PREMAP/REMAP      LL_SYSCFG_GetRemapMemory
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SYSCFG_REMAP_FLASH
-  *         @arg @ref LL_SYSCFG_REMAP_SRAM
+  * @arg LL_SYSCFG_REMAP_FLASH
+  * @arg LL_SYSCFG_REMAP_SRAM
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
 {
@@ -305,16 +305,16 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
   * @brief  Enable the I2C fast mode plus driving capability.
   * @rmtoll I2C_FMP_CTRL  I2C1_PAx_FMP/I2C2_PBx_FMP   LL_SYSCFG_EnableFastModePlus
   * @param  ConfigFastModePlus This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA0
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA1
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB6
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB7
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB10
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB11
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA6
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA7
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA13
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA14
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA0
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA1
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB6
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB7
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB10
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB11
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA6
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA7
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA13
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA14
   * @retval None
   * @note   LL_SYSCFG_I2C_FASTMODEPLUS_PB10, LL_SYSCFG_I2C_FASTMODEPLUS_PB11, LL_SYSCFG_I2C_FASTMODEPLUS_PA6,
   *         LL_SYSCFG_I2C_FASTMODEPLUS_PA7, LL_SYSCFG_I2C_FASTMODEPLUS_PA13 and LL_SYSCFG_I2C_FASTMODEPLUS_PA14
@@ -328,16 +328,16 @@ __STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
   * @brief  Disable the I2C fast mode plus driving capability.
   * @rmtoll I2C_FMP_CTRL  I2C1_PAx_FMP/I2C2_PBx_FMP   LL_SYSCFG_DisableFastModePlus
   * @param  ConfigFastModePlus This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA0
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA1
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB6
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB7
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB10
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB11
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA6
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA7
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA13
-  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PA14
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA0
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA1
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB6
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB7
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB10
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PB11
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA6
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA7
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA13
+  * @arg LL_SYSCFG_I2C_FASTMODEPLUS_PA14
   * @retval None
   * @note   LL_SYSCFG_I2C_FASTMODEPLUS_PB10, LL_SYSCFG_I2C_FASTMODEPLUS_PB11, LL_SYSCFG_I2C_FASTMODEPLUS_PA6,
   *         LL_SYSCFG_I2C_FASTMODEPLUS_PA7, LL_SYSCFG_I2C_FASTMODEPLUS_PA13 and LL_SYSCFG_I2C_FASTMODEPLUS_PA14
@@ -359,8 +359,8 @@ __STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
   * @brief  Enable PWRC Interrupt Mask
   * @rmtoll PWRC_IER        LL_SYSCFG_PWRC_EnableIT
   * @param  Interrupt This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_PWRC_PVD
-  *         @arg @ref LL_SYSCFG_PWRC_WKUP
+  * @arg LL_SYSCFG_PWRC_PVD
+  * @arg LL_SYSCFG_PWRC_WKUP
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_PWRC_EnableIT(uint32_t Interrupt)
@@ -372,8 +372,8 @@ __STATIC_INLINE void LL_SYSCFG_PWRC_EnableIT(uint32_t Interrupt)
   * @brief  Disable PWRC Interrupt Mask
   * @rmtoll PWRC_IER        LL_SYSCFG_PWRC_DisableIT
   * @param  Interrupt This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_PWRC_PVD
-  *         @arg @ref LL_SYSCFG_PWRC_WKUP
+  * @arg LL_SYSCFG_PWRC_PVD
+  * @arg LL_SYSCFG_PWRC_WKUP
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_PWRC_DisableIT(uint32_t Interrupt)
@@ -385,8 +385,8 @@ __STATIC_INLINE void LL_SYSCFG_PWRC_DisableIT(uint32_t Interrupt)
   * @brief  Indicate if PWRC Interrupt Mask is enabled
   * @rmtoll PWRC_IER        LL_SYSCFG_PWRC_IsEnabledIT
   * @param  Interrupt This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_PWRC_PVD
-  *         @arg @ref LL_SYSCFG_PWRC_WKUP
+  * @arg LL_SYSCFG_PWRC_PVD
+  * @arg LL_SYSCFG_PWRC_WKUP
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_PWRC_IsEnabledIT(uint32_t Interrupt)
@@ -398,8 +398,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_PWRC_IsEnabledIT(uint32_t Interrupt)
   * @brief  Get PWRC Interrupt Status
   * @rmtoll PWRC_ISCR        LL_SYSCFG_PWRC_GetStatusIT
   * @param  Interrupt This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_PWRC_PVD
-  *         @arg @ref LL_SYSCFG_PWRC_WKUP
+  * @arg LL_SYSCFG_PWRC_PVD
+  * @arg LL_SYSCFG_PWRC_WKUP
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_PWRC_GetStatusIT(uint32_t Interrupt)
@@ -411,8 +411,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_PWRC_GetStatusIT(uint32_t Interrupt)
   * @brief  Clear PWRC Interrupt Status
   * @rmtoll PWRC_ISCR        LL_SYSCFG_PWRC_ClearIT
   * @param  Interrupt This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_PWRC_PVD
-  *         @arg @ref LL_SYSCFG_PWRC_WKUP
+  * @arg LL_SYSCFG_PWRC_PVD
+  * @arg LL_SYSCFG_PWRC_WKUP
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_PWRC_ClearIT(uint32_t Interrupt)
@@ -432,8 +432,8 @@ __STATIC_INLINE void LL_SYSCFG_PWRC_ClearIT(uint32_t Interrupt)
   * @brief  Set FLASH Latency
   * @rmtoll FLASH_CONFIG    WAIT_STATE      LL_FLASH_SetLatency
   * @param  Latency This parameter can be one of the following values:
-  *         @arg @ref LL_FLASH_LATENCY_0
-  *         @arg @ref LL_FLASH_LATENCY_1
+  * @arg LL_FLASH_LATENCY_0
+  * @arg LL_FLASH_LATENCY_1
   * @retval None
   */
 __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
@@ -445,8 +445,8 @@ __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
   * @brief  Get FLASH Latency
   * @rmtoll FLASH_CONFIG    WAIT_STATE     LL_FLASH_GetLatency
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_FLASH_LATENCY_0
-  *         @arg @ref LL_FLASH_LATENCY_1
+  * @arg LL_FLASH_LATENCY_0
+  * @arg LL_FLASH_LATENCY_1
   */
 __STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
 {
@@ -538,8 +538,8 @@ __STATIC_INLINE uint32_t LL_IO_AnalogSwitchControl_VINP2_ATB0_IsEnabled(void)
   *         is programmed in analog mode
   * @rmtoll GPIO_SWA_CTRL    ATB1_nPVD   LL_IO_AnalogSwitchControl_PB14
   * @param  feature this parameter can be one of the following values:
-  *         @arg @ref LL_SYSCFG_PB14_PVD
-  *         @arg @ref LL_SYSCFG_PB14_ATB1
+  * @arg LL_SYSCFG_PB14_PVD
+  * @arg LL_SYSCFG_PB14_ATB1
   * @retval None
   */
 __STATIC_INLINE void LL_IO_SetAnalogSwitchControl_PB14(uint32_t feature)
@@ -552,8 +552,8 @@ __STATIC_INLINE void LL_IO_SetAnalogSwitchControl_PB14(uint32_t feature)
   *         is programmed in analog mode
   * @rmtoll GPIO_SWA_CTRL    ATB1_nPVD   LL_IO_AnalogSwitchControl_PB14
   * @retval The return value can be one of the following values:
-  *         @arg @ref LL_SYSCFG_PB14_PVD
-  *         @arg @ref LL_SYSCFG_PB14_ATB1
+  * @arg LL_SYSCFG_PB14_PVD
+  * @arg LL_SYSCFG_PB14_ATB1
   */
 __STATIC_INLINE uint32_t LL_IO_GetAnalogSwitchControl_PB14(void)
 {
@@ -572,8 +572,8 @@ __STATIC_INLINE uint32_t LL_IO_GetAnalogSwitchControl_PB14(void)
   * @brief  Enable Tx Rx Interrupt
   * @rmtoll BLERXTX_IER        LL_SYSCFG_BLERXTX_EnableIT
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_BLERXTX_EnableIT(uint32_t Signal)
@@ -585,8 +585,8 @@ __STATIC_INLINE void LL_SYSCFG_BLERXTX_EnableIT(uint32_t Signal)
   * @brief  Disable Tx Rx Interrupt
   * @rmtoll BLERXTX_IER        LL_SYSCFG_BLERXTX_DisableIT
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_BLERXTX_DisableIT(uint32_t Signal)
@@ -598,8 +598,8 @@ __STATIC_INLINE void LL_SYSCFG_BLERXTX_DisableIT(uint32_t Signal)
   * @brief  Indicate if Tx Rx Interrupt is enabled
   * @rmtoll BLERXTX_IER        LL_SYSCFG_BLERXTX_IsEnabledIT
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsEnabledIT(uint32_t Signal)
@@ -620,11 +620,11 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsEnabledIT(uint32_t Signal)
   * @brief  Set Tx/Rx Interrupt Detection Type
   * @rmtoll BLERXTX_DTR        LL_SYSCFG_BLERXTX_SetType
   * @param  Type This parameter can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLERXTX_DET_TYPE_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_DET_TYPE_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_DET_TYPE_EDGE
+  * @arg LL_SYSCFG_BLERXTX_DET_TYPE_LEVEL
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_BLERXTX_SetType(uint8_t Type, uint32_t Signal)
@@ -640,11 +640,11 @@ __STATIC_INLINE void LL_SYSCFG_BLERXTX_SetType(uint8_t Type, uint32_t Signal)
   * @brief  Get Tx/Rx Interrupt Detection Type
   * @rmtoll BLERXTX_DTR        LL_SYSCFG_BLERXTX_GetType
   * @param  Signal This parameter one of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval One of the following values:
-  *         @arg @ref LL_SYSCFG_BLERXTX_DET_TYPE_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_DET_TYPE_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_DET_TYPE_EDGE
+  * @arg LL_SYSCFG_BLERXTX_DET_TYPE_LEVEL
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_GetType(uint32_t Signal)
 {
@@ -667,14 +667,14 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_GetType(uint32_t Signal)
   * @brief  Set Tx Rx Interrupt Trigger 
   * @rmtoll BLERXTX_IBER/BLERXTX__IEVR/BLERXTX__DTR        LL_SYSCFG_BLERXTX_SetTrigger
   * @param  Trigger This parameter can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_RISING_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_LOW_LEVEL
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_HIGH_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_RISING_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_LOW_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_HIGH_LEVEL
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_BLERXTX_SetTrigger(uint8_t Trigger, uint32_t Signal)
@@ -709,14 +709,14 @@ __STATIC_INLINE void LL_SYSCFG_BLERXTX_SetTrigger(uint8_t Trigger, uint32_t Sign
   * @brief  Get Tx Rx Interrupt Trigger
   * @rmtoll BLERXTX_IBER/BLERXTX_IEVR/BLERXTX_DTR        LL_SYSCFG_BLERXTX_GetTrigger
   * @param  Signal This parameter can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval The return value can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_RISING_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_LOW_LEVEL
-  *         @arg @ref LL_SYSCFG_BLERXTX_TRIGGER_HIGH_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_RISING_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_FALLING_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_BOTH_EDGE
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_LOW_LEVEL
+  * @arg LL_SYSCFG_BLERXTX_TRIGGER_HIGH_LEVEL
   */
 __STATIC_INLINE uint8_t LL_SYSCFG_BLERXTX_GetTrigger(uint32_t Signal)
 {
@@ -757,8 +757,8 @@ __STATIC_INLINE uint8_t LL_SYSCFG_BLERXTX_GetTrigger(uint32_t Signal)
   * @note  This bit is cleared by writing a 1 to the bit.
   * @rmtoll BLERXTX_ISCR                   LL_SYSCFG_BLERXTX_IsInterruptPending
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsInterruptPending(uint32_t Signal)
@@ -771,8 +771,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERXTX_IsInterruptPending(uint32_t Signal)
   * @brief Clear the Tx Rx Interrupt 
   * @rmtoll BLERXTX_ISCR                   LL_SYSCFG_BLERXTX_ClearInterrupt
   * @param  Signal This parameter can be a combination of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_EVENT
+  * @arg LL_SYSCFG_BLE_TX_EVENT
+  * @arg LL_SYSCFG_BLE_RX_EVENT
   * @retval None
   */
 __STATIC_INLINE void LL_SYSCFG_BLERXTX_ClearInterrupt(uint32_t Signal)
@@ -786,8 +786,8 @@ __STATIC_INLINE void LL_SYSCFG_BLERXTX_ClearInterrupt(uint32_t Signal)
   * @brief Returns the TX interrupt edge status on a TX sequence event
   * @rmtoll BLERXTX_ISCR                   LL_SYSCFG_BLETX_EdgeSequence
   * @retval  The return value can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_TX_FALLING_EDGE_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_TX_RISING_EDGE_EVENT
+  * @arg LL_SYSCFG_BLE_TX_FALLING_EDGE_EVENT
+  * @arg LL_SYSCFG_BLE_TX_RISING_EDGE_EVENT
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_BLETX_EdgeSequence(void)
 {
@@ -801,8 +801,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLETX_EdgeSequence(void)
   * @brief Returns the RX interrupt edge status on a RX sequence event
   * @rmtoll BLERXTX_ISCR                   LL_SYSCFG_BLERX_EdgeSequence
   * @retval  The return value can be one of the following values:
-  *         @arg @ref LL_SYSCFG_BLE_RX_FALLING_EDGE_EVENT
-  *         @arg @ref LL_SYSCFG_BLE_RX_RISING_EDGE_EVENT
+  * @arg LL_SYSCFG_BLE_RX_FALLING_EDGE_EVENT
+  * @arg LL_SYSCFG_BLE_RX_RISING_EDGE_EVENT
   */
 __STATIC_INLINE uint32_t LL_SYSCFG_BLERX_EdgeSequence(void)
 {
@@ -811,6 +811,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_BLERX_EdgeSequence(void)
 #endif
 
 #endif
+
 
 
 /**

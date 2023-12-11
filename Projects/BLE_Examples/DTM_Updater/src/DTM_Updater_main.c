@@ -65,7 +65,7 @@ int main(void)
     updater_init();
     updater(ENTERED_REASON_BAD_BLUEFLAG);
   }
-  else if(boot_pin != 0) {
+  else if(boot_pin != 0 && !(RAM_VR.ResetReason & (RCC_CSR_PORRSTF|RCC_CSR_SFTRSTF|RCC_CSR_WDGRSTF|RCC_CSR_LOCKUPRSTF))) {
     updater_init();
     updater(ENTERED_REASON_IRQ_PIN);
   }

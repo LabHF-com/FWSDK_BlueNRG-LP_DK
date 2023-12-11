@@ -1,6 +1,6 @@
 /**
 ******************************************************************************
-* @file    BlueNRGLP_it.c 
+* @file    rf_device_it.c 
 * @author  AMS RF Application Team
 * @version V1.0.0
 * @date    25-March-2019
@@ -30,7 +30,7 @@
 
 #include "rf_driver_ll_rtc.h"
 
-/** @addtogroup BlueNRGLP_StdPeriph_Examples
+/** @addtogroup StdPeriph_Examples
 * @{
 */
 

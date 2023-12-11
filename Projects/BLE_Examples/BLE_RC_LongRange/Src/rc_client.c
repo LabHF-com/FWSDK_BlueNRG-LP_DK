@@ -65,10 +65,6 @@ static VTIMER_HandleType statsTimerHandle;
 static uint8_t phy = LE_1M_PHY;
 
 static llc_conn_per_statistic_st per_statistic_ptr;
-static uint16_t CRC_errs_perc;
-static uint16_t missed_evts_perc;
-static uint8_t packet_err_rate;
-
   
 #if DO_NOT_USE_VTIMER_CB
   static uint32_t last_time;  
@@ -281,11 +277,14 @@ void toggle_LED(void)
 
 void statsTimeoutCB(void *param)
 {
-  CRC_errs_perc = (uint32_t)per_statistic_ptr.num_crc_err*100/per_statistic_ptr.num_pkts;
-  missed_evts_perc = (uint32_t)per_statistic_ptr.num_miss_evts*100/per_statistic_ptr.num_evts;
-  packet_err_rate = (uint32_t)(per_statistic_ptr.num_miss_evts+per_statistic_ptr.num_crc_err)*100/(per_statistic_ptr.num_evts+per_statistic_ptr.num_miss_evts);
+  /* CRC error rate over the received packets */
+  uint8_t CRC_errs_perc = (uint32_t)per_statistic_ptr.num_crc_err*100/per_statistic_ptr.num_pkts;
+  /* Missed packet rate over the total number of RX events */
+  uint8_t missed_pckt_perc = (uint32_t)per_statistic_ptr.num_miss_evts*100/(per_statistic_ptr.num_pkts+per_statistic_ptr.num_miss_evts);
+  /* Packet error rate (packets missed or not received) over the total number of RX events */
+  uint8_t packet_err_rate = (uint32_t)(per_statistic_ptr.num_crc_err+per_statistic_ptr.num_miss_evts)*100/(per_statistic_ptr.num_pkts+per_statistic_ptr.num_miss_evts);
   
-  PRINTF("- CRC errs = %d%%\n- Missed evts = %d%%\n", CRC_errs_perc, missed_evts_perc);
+  PRINTF("- CRC errs = %d%%\n- Missed packets = %d%%\n", CRC_errs_perc, missed_pckt_perc);
 
   PRINTF("- PER = %d%%\n", packet_err_rate);
   
@@ -449,9 +448,6 @@ void hci_le_phy_update_complete_event(uint8_t Status,
   }
 
   HAL_VTIMER_StopTimer(&statsTimerHandle);
-  CRC_errs_perc = 0.0;
-  missed_evts_perc = 0.0;
-  packet_err_rate = 0.0;
   
   llc_conn_per_statistic(connection_handle, &per_statistic_ptr);
   HAL_VTIMER_StartTimerMs(&statsTimerHandle, STATS_INTERVAL_MS);  

@@ -16,8 +16,6 @@
 
 #include "hal_types.h"
 #include "gatt_db.h"
-#include "bluenrg_lp_gatt_server.h"
-#include "bluenrg_lp_gap.h"
 #include "bluenrg_lp_gatt_aci.h"
 #include <string.h>
 #include "osal.h"

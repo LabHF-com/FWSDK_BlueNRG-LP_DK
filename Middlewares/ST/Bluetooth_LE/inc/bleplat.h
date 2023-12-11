@@ -21,8 +21,9 @@
 #define BLEPLAT_H__
 
 #include <stdint.h>
+#include "bleplat_cntr.h"
 
-#define RSSI_INVALID (127)
+#define RSSI_INVALID                    127
 
 /* Enumerated values used for the return of the functions: */
 
@@ -32,17 +33,17 @@ typedef enum
   BLEPLAT_FULL  = -1,
   BLEPLAT_BUSY  = -2,
   BLEPLAT_EOF   = -3
-} bleplat_nvm_status;
+} BLEPLAT_NvmStatusTypeDef;
 
 
 /* Enumerated values used for the 'type' of NVM functions: */
 
 typedef enum
 {
-  BLEPLAT_NVM_TYPE_SEC        =  0,
-  BLEPLAT_NVM_TYPE_GATT       =  1,
-  BLEPLAT_NVM_TYPE_DEVICE_ID  =  2,
-} bleplat_nvm_record_type;
+  BLEPLAT_NVM_REC_SEC        =  0,
+  BLEPLAT_NVM_REC_GATT       =  1,
+  BLEPLAT_NVM_REC_DEVICE_ID  =  2,
+} BLEPLAT_NvmRecordTypeDef;
 
 
 /* Enumerated values used for the 'mode' of NVM functions: */
@@ -53,13 +54,68 @@ typedef enum
   BLEPLAT_NVM_NEXT     =  1,
   BLEPLAT_NVM_CURRENT  =  2,
   BLEPLAT_NVM_ALL      =  3
-} bleplat_nvm_record_mode;
+} BLEPLAT_NvmSeekModeTypeDef;
+
+typedef enum
+{
+  BLEPLAT_PKA_SUCCESS     =  0,
+  BLEPLAT_PKA_ERROR       = -1,
+  BLEPLAT_PKA_ERR_BUSY    = -2,
+  BLEPLAT_PKA_ERR_PARAM   = -3,
+  BLEPLAT_PKA_ERR_PROCESS = -4
+} BLEPLAT_PkaStatusTypeDef;
+
+typedef void (*BLEPLAT_PkaFuncCb)(BLEPLAT_PkaStatusTypeDef errorCode, void *args);
+
+typedef enum {  
+  BLEPLAT_AES_FLAGS_DEFAULT = (uint32_t) (0x00000000), /*!< User Flag: No flag specified. This is the default value that should be set to this flag  */  
+  BLEPLAT_AES_FLAGS_DONT_PERFORM_KEY_SCHEDULE = (uint32_t) (0x00000001), /*!< User Flag: Used to force the init to not reperform key schedule.\n
+                                                                 The classic example is where the same key is used on a new message, in this case to redo key scheduling is
+                                                                 a useless waste of computation, could be particularly useful on GCM, where key schedule is very complicated. */    
+  BLEPLAT_AES_FLAGS_FINAL_APPEND = (uint32_t) (0x00000020),   /*!< User Flag: Must be set in CMAC mode before the final Append call occurs. */
+  BLEPLAT_AES_FLAGS_OPERATION_COMPLETED  = (uint32_t) (0x00000002),   /*!< Internal Flag (not to be set/read by user): used to check that the Finish function has been already called */  
+  BLEPLAT_AES_FLAGS_NO_MORE_APPEND_ALLOWED = (uint32_t) (0x00000004), /*!< Internal Flag (not to be set/read by user): it is set when the last append has been called. Used where the append is called with an InputSize not
+                                                                    multiple of the block size, which means that is the last input.*/
+  BLEPLAT_AES_FLAGS_NO_MORE_HEADER_APPEND_ALLOWED = (uint32_t) (0x00000010),   /*!< Internal Flag (not to be set/read by user): only for authenticated encryption modes. \n
+                                                                      It is set when the last header append has been called. Used where the header append is called with an InputSize not
+                                                                      multiple of the block size, which means that is the last input.*/
+  BLEPLAT_AES_FLAGS_APPEND_DONE = (uint32_t) (0x00000040),   /*!< Internal Flag (not to be set/read by user): only for CMAC.It is set when the first append has been called */
+  BLEPLAT_AES_FLAGS_SET_COUNTER = (uint32_t)(0x00000080),    /*!< User Flag: With ChaCha20 this is used to indicate a value for the counter, used to process non contiguous blocks (i.e. jump ahead)*/
+
+} AESflagsTypeDef; /*!< Type definitation for Symmetric Key Flags */
+
+#define BLEPLAT_AES_MAX_EXPKEY_SIZE   44  /*!< The max size of the AES expanded key (in uint32_t) */
+#define BLEPLAT_AES128_KEY_SIZE       16 /*!< Number of bytes (uint8_t) necessary to store an AES key of 128 bits. */
 
 
-/* General functions: */
+typedef struct
+{
+  uint32_t mContextId; /*!< Unique ID of this context. \b Not \b used in current implementation. */
+  AESflagsTypeDef mFlags; /*!< 32 bit mFlags, used to perform keyschedule and future use */
+  const uint8_t *pmKey; /*!< Pointer to original Key buffer */
+  const uint8_t *pmIv; /*!< Pointer to original Initialization Vector buffer */
+  int32_t   mIvSize; /*!< Size of the Initialization Vector in bytes */
+  uint32_t   amIv[4]; /*!< Temporary result/IV */
+  int32_t   mKeySize;   /*!< Key length in bytes */
+  uint32_t   amExpKey[BLEPLAT_AES_MAX_EXPKEY_SIZE];   /*!< Expanded AES key */
+  const uint8_t *pmTag;   /*!< Pointer to Authentication TAG. This value must be set in decryption, and this TAG will be verified */
+  int32_t mTagSize; /*!< Size of the Tag to return. This must be set by the caller prior to calling Init */
+} BLEPLAT_AESCMACctxTypeDef; /*<! AES context structure for CMAC mode */
 
-extern void BLEPLAT_Init( void );
+typedef struct BLEPLAT_TimerHandleS {
+	uint64_t ExpiryTime; /*!< Managed internally when the timer is started */
+	void (*Callback)(void *); /*!< Pointer to the user callback */
+	uint8_t active; /*!< Managed internally when the timer is started */
+	struct BLEPLAT_TimerHandleS *next; /*!< Managed internally when the timer is started */
+	void *userData; /*!< Pointer to user data */
+} BLEPLAT_TimerHandleTypeDef;
 
+
+void BLEPLAT_MemCpy(void *Dest, const void *Src, unsigned int Size);
+void BLEPLAT_MemSet(void *Ptr, int Value, unsigned int Size);
+int BLEPLAT_MemCmp(void *S1, void *S2, unsigned int Size);
+
+void BLEPLAT_Init(void);
 
 /**
  * @brief Get Device ID, Version and Revision numbers
@@ -73,7 +129,7 @@ extern void BLEPLAT_Init( void );
  *
  * @retval None
  */
-extern void BLEPLAT_get_part_info(uint8_t *device_id, uint8_t *major_cut, uint8_t *minor_cut);
+void BLEPLAT_GetPartInfo(uint8_t *pDeviceId, uint8_t *pMajorCut, uint8_t *pMinorCut);
 
 
 /* Non Volatile Memory (NVM) interface:
@@ -81,23 +137,21 @@ extern void BLEPLAT_get_part_info(uint8_t *device_id, uint8_t *major_cut, uint8_
  * This interface is only called from BLE stack Tick/Commands context
  */
 
-extern bleplat_nvm_status BLEPLAT_NvmAdd( bleplat_nvm_record_type type,
-                           const uint8_t* data,
-                           uint16_t size,
-                           const uint8_t* extra_data,
-                           uint16_t extra_size );
+BLEPLAT_NvmStatusTypeDef BLEPLAT_NvmAdd(BLEPLAT_NvmRecordTypeDef Type,
+                                        const uint8_t* pData,
+                                        uint16_t Size,
+                                        const uint8_t* pExtraData,
+                                        uint16_t ExtraSize);
+ 
+BLEPLAT_NvmStatusTypeDef BLEPLAT_NvmGet(BLEPLAT_NvmSeekModeTypeDef Mode,
+                                        BLEPLAT_NvmRecordTypeDef Type,
+                                        uint16_t Offset,
+                                        uint8_t* pData,
+                                        uint16_t Size);
 
-extern bleplat_nvm_status BLEPLAT_NvmGet( bleplat_nvm_record_mode mode,
-                           bleplat_nvm_record_type type,
-                           uint16_t offset,
-                           uint8_t* data,
-                           uint16_t size );
+int BLEPLAT_NvmCompare(uint16_t Offset, const uint8_t* pData, uint16_t Size);
 
-extern int BLEPLAT_NvmCompare( uint16_t offset,
-                               const uint8_t* data,
-                               uint16_t size );
-
-extern void BLEPLAT_NvmDiscard( bleplat_nvm_record_mode mode );
+void BLEPLAT_NvmDiscard(BLEPLAT_NvmSeekModeTypeDef Mode);
 
 
 /* Public Key Algorithms (PKA) interface:
@@ -105,95 +159,76 @@ extern void BLEPLAT_NvmDiscard( bleplat_nvm_record_mode mode );
  * This interface is only called from BLE stack Tick/Commands context
  */
 
-extern int BLEPLAT_PkaStatus( void );
+BLEPLAT_PkaStatusTypeDef BLEPLAT_PkaStartP256Key(const uint32_t *PrivateKey, BLEPLAT_PkaFuncCb FuncCb);
 
-extern int BLEPLAT_PkaStartP256Key( const uint32_t* local_private_key );
-
-extern void BLEPLAT_PkaReadP256Key( uint32_t* local_public_key );
-
-extern int BLEPLAT_PkaStartDhKey( const uint32_t* local_private_key,
-                                  const uint32_t* remote_public_key );
-
-extern int BLEPLAT_PkaReadDhKey( uint32_t* dh_key );
-
+BLEPLAT_PkaStatusTypeDef BLEPLAT_PkaStartDHkey(uint32_t* PrivateKey,
+                                         uint32_t* PublicKey,
+                                         BLEPLAT_PkaFuncCb FuncCb);
 
 /* Advanced Encryption Standard (AES) interface:
  *
  * This interface is only called from BLE stack Tick/Commands context
  */
 
-extern void BLEPLAT_AesEcbEncrypt( const uint8_t* key,
-                                   const uint8_t* input,
-                                   uint8_t* output );
+// TODO: change uint32_t to uint8_t?
+void BLEPLAT_AesEcbEncrypt(const uint32_t *plainTextData,
+                           const uint32_t *key,
+                           uint32_t *encryptedData);
 
-extern void BLEPLAT_AesCmacCompute( const uint8_t* key,
-                                    const uint8_t* input,
-                                    uint32_t input_length,
-                                    uint8_t* output_tag );
+int32_t BLEPLAT_AesCMACEncryptInit(BLEPLAT_AESCMACctxTypeDef *pAESCMACctx);
 
+int32_t BLEPLAT_AesCMACEncryptAppend(BLEPLAT_AESCMACctxTypeDef *pAESCMACctx,
+                                     const uint8_t  *pInputBuffer, 
+                                     int32_t InputSize);
+
+int32_t BLEPLAT_AesCMACEncryptFinish(BLEPLAT_AESCMACctxTypeDef *pAESCMACctx,
+                                     uint8_t *pOutputBuffer,
+                                     int32_t *pOutputSize);
 
 /* Random Number Generation (RNG) interface:
  *
  * This interface is called from both BLE stack contexts: ISR and Tick/Commands
  */
 
-extern uint16_t BLEPLAT_RngGetVal( void );
+void BLEPLAT_RngGetRandom16(uint16_t* Num);
+
+void BLEPLAT_RngGetRandom32(uint32_t* Num);
 
 /**
   * @brief  Convert TX output power in dBm to the related Power Amplifier level
   * @param  TX_dBm Desired TX output power.  
-  * @param  high_power Set to 0 if normal TX power mode is used at this moment.
-  *                    Set to 1 if TX power mode has been switched to high (to
-  *                    reach maximum power). If this parameter does not reflect
-  *                    current power mode, the function does not return the
-  *                    correct PA level to give the desired output power.
   *
   * @retval PA level that has to be set in the radio register to have a TX
   *         output power lower than or equal to the desired output power
   */
-uint8_t BLEPLAT_DBmToPALevel(int8_t TX_dBm, uint8_t high_power);
+uint8_t BLEPLAT_DBmToPALevel(int8_t TxDBm);
 
 /**
   * @brief  Convert TX output power in dBm to the related Power Amplifier level
   * @param  TX_dBm Desired TX output power.  
-  * @param  high_power Set to 0 if normal TX power mode is used at this moment.
-  *                    Set to 1 if TX power mode has been switched to high (to
-  *                    reach maximum power). If this parameter does not reflect
-  *                    current power mode, the function does not return the
-  *                    correct PA level to give the desired output power.
   *
   * @retval PA level that has to be set in the radio register to have a TX
   *         output power greater than or equal to the desired output power
   */
-uint8_t BLEPLAT_DBmToPALevelGe(int8_t TX_dBm, uint8_t high_power);
+uint8_t BLEPLAT_DBmToPALevelGe(int8_t TxDBm);
 
 /**
   * @brief  Convert Power Amplifier level to TX output power in dBm
   * @param  PA_Level Level setting for the Power Amplifier
-  * @param  high_power Set to 0 if normal TX power mode is used at this moment.
-  *                    Set to 1 if TX power mode has been switched to high (to
-  *                    reach maximum power). If this parameter does not reflect
-  *                    current power mode, the function does not return the
-  *                    correct output power at the given PA level.
   *
   * @retval Output power in dBm, corresponding to the given PA level. If PA
   *         level is invalid, returned value is 127.
   */
-int8_t BLEPLAT_PALevelToDBm(uint8_t PA_Level, uint8_t high_power);
+int8_t BLEPLAT_PALevelToDBm(uint8_t PaLevel);
 
 /**
   * @brief  Return minimum and maximum supported TX power.
-  * @param[in]   high_power Set to 0 if normal TX power mode is used at this moment.
-  *                         Set to 1 if TX power mode has been switched to high (to
-  *                         reach maximum power). If this parameter does not reflect
-  *                         current power mode, the function does not return the
-  *                         correct maximum output power.
   * @param[out]  Min_Tx_Power Minimum supported TX power in dBm.
   * @param[out]  Max_Tx_Power Maximum supported TX power in dBm.
   *
   * @retval None
   */
-void BLEPLAT_ReadTransmitPower(uint8_t high_power, int8_t *Min_Tx_Power, int8_t *Max_Tx_Power);
+void BLEPLAT_ReadTransmitPower(int8_t *MinTxPower, int8_t *MaxTxPower);
 
 /**
   * @brief  Configure the radio in order to increase output power level.
@@ -202,15 +237,7 @@ void BLEPLAT_ReadTransmitPower(uint8_t high_power, int8_t *Min_Tx_Power, int8_t 
   *                Set to 1 to enable high power mode. Set ot 0 to disable.
   * @retval None
   */
-void BLEPLAT_SetHighPower(uint8_t enable);
-
-/**
-  * @brief      Read the RSSI and AGC HW registers.
-  * @param[out] value of the RSSI registers packed on 16 bits.
-  * @param[out] value of the AGC register.
-  * @retval     None
-  */
-void BLEPLAT_GetRawRSSIRegs(uint32_t *rssi_reg, uint32_t *agc_reg);
+void BLEPLAT_SetHighPower(uint8_t Enable);
 
 /**
   * @brief  Return the current RSSI measured for the last received packet
@@ -232,15 +259,44 @@ int8_t BLEPLAT_CalculateRSSI(void);
   *                           the average RSSI.
   * @retval Next RSSI average value
   */
-int8_t BLEPLAT_UpdateAvgRSSI(int8_t avg_rssi, int8_t rssi, uint8_t rssi_filter_coeff);
+int8_t BLEPLAT_UpdateAvgRSSI(int8_t AvgRssi, int8_t Rssi, uint8_t RssiFilterCoeff);
 
-void BLEPLAT_InitCTE(void);
+/**
+  * @brief  Return the maximum Power Amplifier level available for the device.
+  * @return Maximum PA level
+  */
+uint8_t BLEPLAT_GetMaxPALevel(void);
+
+/**
+  * @brief  Return the default level to be set for the Power Amplifier.
+  * @return Default PA level
+  */
+uint8_t BLEPLAT_GetDefaultPALevel(void);
+
+void BLEPLAT_InitCTE(uint8_t smNo);
 
 void BLEPLAT_DeinitCTE(void);
 
-void BLEPLAT_CalibrateCTE(void);
+void BLEPLAT_CalibrateCTE(uint8_t smNo);
 
-void BLEPLAT_AntIdxRemap(uint8_t antPattLen, uint8_t *antRamTableP, uint8_t* antPattP);
+void BLEPLAT_AntIdxRemap(uint8_t antPattLen, uint8_t *pAntRamTable, const uint8_t* pAntPatt);
 
+uint64_t BLEPLAT_GetCurrentSysTime(void);
+
+uint64_t BLEPLAT_GetFutureSysTime64(uint32_t SysTime);
+
+int BLEPLAT_StartTimer(BLEPLAT_TimerHandleTypeDef *TimerHandle, uint64_t Time);
+
+void BLEPLAT_StopTimer(BLEPLAT_TimerHandleTypeDef *TimerHandle);
+
+uint8_t BLEPLAT_SetRadioTimerValue(uint32_t Time, uint8_t EventType, uint8_t CalReq);
+
+uint8_t BLEPLAT_ClearRadioTimerValue(void);
+
+uint64_t BLEPLAT_GetAnchorPoint(uint64_t *current_system_time);
+
+void BLEPLAT_SetRadioCloseTimeout(void);
+
+uint8_t BLEPLAT_SetRadioTimerRelativeUsValue(uint32_t RelTimeoutUs, uint8_t Tx, uint8_t PLLCal);
 
 #endif /* ! BLEPLAT_H__ */

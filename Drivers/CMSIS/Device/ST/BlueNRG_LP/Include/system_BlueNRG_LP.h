@@ -121,7 +121,7 @@
 #define _MEMORY_FLASH_END_       0x1007FFFF
 #define _MEMORY_BYTES_PER_PAGE_  (2048)
 
-#elif defined CONFIG_DEVICE_BLUENRG_LPS
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)
 
 /**
  * @brief RAM base address
@@ -137,6 +137,7 @@
 #define _MEMORY_FLASH_SIZE_      0x30000          /* 192KB */
 #define _MEMORY_FLASH_END_       0x1006FFFF
 #define _MEMORY_BYTES_PER_PAGE_  (2048)
+
 
 #endif
 

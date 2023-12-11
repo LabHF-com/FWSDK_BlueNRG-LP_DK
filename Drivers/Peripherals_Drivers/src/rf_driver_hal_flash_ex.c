@@ -12,7 +12,7 @@
                    ##### Flash Extended features #####
   ==============================================================================
 
-  [..] The FLASH interface for BLUENRG_LP devices contains the following additional features
+  [..] The FLASH interface contains the following additional features
 
        (+) Single bank memory organization
        (+) Readout protection
@@ -21,8 +21,8 @@
 
                         ##### How to use this driver #####
  ==============================================================================
-  [..] This driver provides functions to configure and program the FLASH memory
-       of all BLUENRG_LP devices. It includes
+  [..] This driver provides functions to configure and program the FLASH memory. 
+       It includes
       (#) Flash Memory Erase functions:
            (++) Erase function: Erase page, erase all sectors
            (++) There are two modes of erase :
@@ -370,19 +370,14 @@ static void FLASH_MassErase(void)
   * @retval None
   */
 void FLASH_PageErase(uint32_t Page)
-{
-  uint16_t pageAddress;
-  
+{  
   /* Check the parameters */
   assert_param(IS_FLASH_PAGE(Page));
 
   /* Clear All Flags */
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_CMDDONE|FLASH_FLAG_CMDSTART|FLASH_FLAG_CMDERR|FLASH_FLAG_ILLCMD);
 
-  pageAddress = (((Page * FLASH_PAGE_SIZE)>>2) & 0xFFFF);
-    
-  /* Write the page address */
-  FLASH->ADDRESS = pageAddress;
+  FLASH->ADDRESS = (((Page * FLASH_PAGE_SIZE)>>2) & FLASH_SIZE_MASK);
   
   /* Write the ERASE command */
   FLASH->COMMAND = FLASH_CMD_ERASE_PAGES;
@@ -396,7 +391,7 @@ void FLASH_PageErase(uint32_t Page)
   */
 static void FLASH_Program_OTPWord(uint32_t Address, uint32_t Data)
 {
-  uint16_t otp_address, addr_offset;
+  uint32_t otp_address, addr_offset;
   
   
   /* Clear All Flags */

@@ -44,39 +44,193 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "system_util.h"
+#include "bleplat.h"  
   
 /** @addtogroup BLECNTR_Peripheral  BLE CONTROLLER
  * @{
+ */
+  
+/** @defgroup BLECNTR_Exported_Macros           Exported Macros
+ * @{
+ */
+
+#define BLECNTR_ResultStatus                            BLEPLAT_CNTR_ResultStatus
+#define BLECNTR_SUCCESS                                 BLEPLAT_CNTR_SUCCESS
+#define BLECNTR_ERROR                                   BLEPLAT_CNTR_ERROR
+#define BLECNTR_ERROR_TIMEOUT                           BLEPLAT_CNTR_ERROR_TIMEOUT
+  
+#define BLECNTR_Transaction                             BLEPLAT_CNTR_Transaction
+#define BLECNTR_TxRx                                    BLEPLAT_CNTR_TxRx
+#define BLECNTR_RxTx                                    BLEPLAT_CNTR_RxTx
+#define BLECNTR_TxTx                                    BLEPLAT_CNTR_TxTx
+#define BLECNTR_RxRx                                    BLEPLAT_CNTR_RxRx
+  
+#define BLECNTR_TXRXPACK_TypeDef                        BLEPLAT_CNTR_TXRXPACK_TypeDef
+
+#define BLECNTR_Init                                    BLEPLAT_CNTR_Init
+#define BLECNTR_Deinit                                  BLEPLAT_CNTR_Deinit
+#define BLECNTR_InitGlobal                              BLEPLAT_CNTR_InitGlobal 
+#define BLECNTR_ClearInterrupt                          BLEPLAT_CNTR_ClearInterrupt  
+#define BLECNTR_ClearSemareq                            BLEPLAT_CNTR_ClearSemareq 
+#define BLECNTR_TxRxSkip                                BLEPLAT_CNTR_TxRxSkip 
+#define BLECNTR_GetCipherTextPtr                        BLEPLAT_CNTR_GetCipherTextPtr 
+#define BLECNTR_GetClrTextPtr                           BLEPLAT_CNTR_GetClrTextPtr 
+#define BLECNTR_GetEncKeyPtr                            BLEPLAT_CNTR_GetEncKeyPtr 
+#define BLECNTR_GetEncryptDoneStatus                    BLEPLAT_CNTR_GetEncryptDoneStatus 
+#define BLECNTR_GetIqsamplesMissingError                BLEPLAT_CNTR_GetIqsamplesMissingError 
+#define BLECNTR_GetIqsamplesNumber                      BLEPLAT_CNTR_GetIqsamplesNumber 
+#define BLECNTR_getIqsamplesReady                       BLEPLAT_CNTR_getIqsamplesReady 
+#define BLECNTR_GetIsrLatency                           BLEPLAT_CNTR_GetIsrLatency 
+#define BLECNTR_GetTimercapture                         BLEPLAT_CNTR_GetTimercapture 
+#define BLECNTR_GlobDisableBlue                         BLEPLAT_CNTR_GlobDisableBlue 
+#define BLECNTR_GlobEnableBlue                          BLEPLAT_CNTR_GlobEnableBlue 
+#define BLECNTR_GlobEnableIntnoactivelerrorInt          BLEPLAT_CNTR_GlobEnableIntnoactivelerrorInt 
+#define BLECNTR_GlobEnableOverrunAct2Int                BLEPLAT_CNTR_GlobEnableOverrunAct2Int 
+#define BLECNTR_GlobGetDefaultAntennaid                 BLEPLAT_CNTR_GlobGetDefaultAntennaid 
+#define BLECNTR_GlobGetWakeupinitdelay                  BLEPLAT_CNTR_GlobGetWakeupinitdelay 
+#define BLECNTR_GlobReloadRadioConfigP                  BLEPLAT_CNTR_GlobReloadRadioConfigP 
+#define BLECNTR_GlobSetChkflagautoclearena              BLEPLAT_CNTR_GlobSetChkflagautoclearena 
+#define BLECNTR_GlobSetDefaultAntennaid                 BLEPLAT_CNTR_GlobSetDefaultAntennaid 
+#define BLECNTR_GlobSetInitRadioDelayTxCal              BLEPLAT_CNTR_GlobSetInitRadioDelayTxCal 
+#define BLECNTR_GlobSetInitRadioDelayTxNocal            BLEPLAT_CNTR_GlobSetInitRadioDelayTxNocal 
+#define BLECNTR_GlobSetRadioConfigP                     BLEPLAT_CNTR_GlobSetRadioConfigP 
+#define BLECNTR_GlobSetWakeupinitdelay                  BLEPLAT_CNTR_GlobSetWakeupinitdelay 
+#define BLECNTR_GlobWriteConfigEnd                      BLEPLAT_CNTR_GlobWriteConfigEnd 
+#define BLECNTR_GlobWritePeriodslow                     BLEPLAT_CNTR_GlobWritePeriodslow 
+#define BLECNTR_GlobWriteRcvdelay                       BLEPLAT_CNTR_GlobWriteRcvdelay 
+#define BLECNTR_GlobWriteRcvdelay1                      BLEPLAT_CNTR_GlobWriteRcvdelay1 
+#define BLECNTR_GlobWriteSlot                           BLEPLAT_CNTR_GlobWriteSlot 
+#define BLECNTR_GlobWriteTimer12initdelaycal            BLEPLAT_CNTR_GlobWriteTimer12initdelaycal 
+#define BLECNTR_GlobWriteTimer2initdelaynocal           BLEPLAT_CNTR_GlobWriteTimer2initdelaynocal 
+#define BLECNTR_GlobWriteTxDataReadyCheck               BLEPLAT_CNTR_GlobWriteTxDataReadyCheck 
+#define BLECNTR_GlobWriteTxReadyTimeout                 BLEPLAT_CNTR_GlobWriteTxReadyTimeout 
+#define BLECNTR_GlobWriteTxdelay                        BLEPLAT_CNTR_GlobWriteTxdelay
+#define BLECNTR_GlobWriteTxdelayEnd                     BLEPLAT_CNTR_GlobWriteTxdelayEnd 
+#define BLECNTR_IntGetIntStatusAnyHwError               BLEPLAT_CNTR_IntGetIntStatusAnyHwError  
+#define BLECNTR_IntGetIntStatusRxOverflowError          BLEPLAT_CNTR_IntGetIntStatusRxOverflowError  
+#define BLECNTR_IntGetIntStatusBitAct2Error             BLEPLAT_CNTR_IntGetIntStatusBitAct2Error  
+#define BLECNTR_IntGetIntStatusBitTimerOverrun          BLEPLAT_CNTR_IntGetIntStatusBitTimerOverrun  
+#define BLECNTR_IntGetIntStatusCrcErr                   BLEPLAT_CNTR_IntGetIntStatusCrcErr  
+#define BLECNTR_IntGetIntStatusDone                     BLEPLAT_CNTR_IntGetIntStatusDone  
+#define BLECNTR_IntGetIntStatusEncErr                   BLEPLAT_CNTR_IntGetIntStatusEncErr  
+#define BLECNTR_IntGetIntStatusLenErr                   BLEPLAT_CNTR_IntGetIntStatusLenErr  
+#define BLECNTR_IntGetIntStatusNoactiveError            BLEPLAT_CNTR_IntGetIntStatusNoactiveError  
+#define BLECNTR_IntGetIntStatusRxOk                     BLEPLAT_CNTR_IntGetIntStatusRxOk  
+#define BLECNTR_IntGetIntStatusTimeout                  BLEPLAT_CNTR_IntGetIntStatusTimeout  
+#define BLECNTR_IntGetIntStatusTrigRcv                  BLEPLAT_CNTR_IntGetIntStatusTrigRcv  
+#define BLECNTR_IntGetIntStatusTxDone                   BLEPLAT_CNTR_IntGetIntStatusTxDone  
+#define BLECNTR_IntGetIntStatusTxOk                     BLEPLAT_CNTR_IntGetIntStatusTxOk  
+#define BLECNTR_IntGetIntStatusTxRxSkip                 BLEPLAT_CNTR_IntGetIntStatusTxRxSkip  
+#define BLECNTR_IntGetIntStatusTxError1                 BLEPLAT_CNTR_IntGetIntStatusTxError1  
+#define BLECNTR_IntGetIntStatusTxError3                 BLEPLAT_CNTR_IntGetIntStatusTxError3  
+#define BLECNTR_PacketClrCrcinitSel                     BLEPLAT_CNTR_PacketClrCrcinitSel 
+#define BLECNTR_PacketClrCteSamplingEn                  BLEPLAT_CNTR_PacketClrCteSamplingEn 
+#define BLECNTR_PacketClrIncChan                        BLEPLAT_CNTR_PacketClrIncChan 
+#define BLECNTR_PacketClrPllTrig                        BLEPLAT_CNTR_PacketClrPllTrig 
+#define BLECNTR_PacketDisableWhitening                  BLEPLAT_CNTR_PacketDisableWhitening 
+#define BLECNTR_PacketGetCteSamplingEn                  BLEPLAT_CNTR_PacketGetCteSamplingEn 
+#define BLECNTR_PacketGetDataPtr                        BLEPLAT_CNTR_PacketGetDataPtr 
+#define BLECNTR_PacketInitTo0                           BLEPLAT_CNTR_PacketInitTo0 
+#define BLECNTR_PacketSetAdvPduFormat                   BLEPLAT_CNTR_PacketSetAdvPduFormat 
+#define BLECNTR_PacketSetCrcinitSel                     BLEPLAT_CNTR_PacketSetCrcinitSel 
+#define BLECNTR_PacketSetCteSamplingEn                  BLEPLAT_CNTR_PacketSetCteSamplingEn 
+#define BLECNTR_PacketSetDataPduFormat                  BLEPLAT_CNTR_PacketSetDataPduFormat 
+#define BLECNTR_PacketSetDataPtr                        BLEPLAT_CNTR_PacketSetDataPtr 
+#define BLECNTR_PacketSetIncChan                        BLEPLAT_CNTR_PacketSetIncChan 
+#define BLECNTR_PacketSetIntCrcErr                      BLEPLAT_CNTR_PacketSetIntCrcErr 
+#define BLECNTR_PacketSetIntDone                        BLEPLAT_CNTR_PacketSetIntDone 
+#define BLECNTR_PacketSetIntRcvOk                       BLEPLAT_CNTR_PacketSetIntRcvOk 
+#define BLECNTR_PacketSetIntTimeout                     BLEPLAT_CNTR_PacketSetIntTimeout 
+#define BLECNTR_PacketSetIntTrigRcv                     BLEPLAT_CNTR_PacketSetIntTrigRcv 
+#define BLECNTR_PacketSetIntTxOk                        BLEPLAT_CNTR_PacketSetIntTxOk 
+#define BLECNTR_PacketSetKeepsemareq                    BLEPLAT_CNTR_PacketSetKeepsemareq 
+#define BLECNTR_PacketSetNextPtr                        BLEPLAT_CNTR_PacketSetNextPtr 
+#define BLECNTR_PacketSetNextRxMode                     BLEPLAT_CNTR_PacketSetNextRxMode 
+#define BLECNTR_PacketSetNextSlot                       BLEPLAT_CNTR_PacketSetNextSlot 
+#define BLECNTR_PacketSetNextTxMode                     BLEPLAT_CNTR_PacketSetNextTxMode 
+#define BLECNTR_PacketSetNsEn                           BLEPLAT_CNTR_PacketSetNsEn 
+#define BLECNTR_PacketSetPllTrig                        BLEPLAT_CNTR_PacketSetPllTrig 
+#define BLECNTR_PacketSetRxReady                        BLEPLAT_CNTR_PacketSetRxReady 
+#define BLECNTR_PacketSetTimeout                        BLEPLAT_CNTR_PacketSetTimeout 
+#define BLECNTR_PacketSetTimer2Active                   BLEPLAT_CNTR_PacketSetTimer2Active 
+#define BLECNTR_PacketSetTimerTrigDone                  BLEPLAT_CNTR_PacketSetTimerTrigDone 
+#define BLECNTR_PacketSetTimerTrigRcv                   BLEPLAT_CNTR_PacketSetTimerTrigRcv 
+#define BLECNTR_PacketSetTxReady                        BLEPLAT_CNTR_PacketSetTxReady 
+#define BLECNTR_SetRadioConfig                          BLEPLAT_CNTR_SetRadioConfig 
+#define BLECNTR_SetRcvLen                               BLEPLAT_CNTR_SetRcvLen 
+#define BLECNTR_SmCteOff                                BLEPLAT_CNTR_SmCteOff 
+#define BLECNTR_SmCteOn                                 BLEPLAT_CNTR_SmCteOn 
+#define BLECNTR_SmEnRadioConfig                         BLEPLAT_CNTR_SmEnRadioConfig 
+#define BLECNTR_SmEncOff                                BLEPLAT_CNTR_SmEncOff 
+#define BLECNTR_SmEncOn                                 BLEPLAT_CNTR_SmEncOn 
+#define BLECNTR_SmGetAccessAddr                         BLEPLAT_CNTR_SmGetAccessAddr 
+#define BLECNTR_SmGetChannelMap                         BLEPLAT_CNTR_SmGetChannelMap 
+#define BLECNTR_SmGetCteAntennaPatternLen               BLEPLAT_CNTR_SmGetCteAntennaPatternLen 
+#define BLECNTR_SmGetCteAodNaoa                         BLEPLAT_CNTR_SmGetCteAodNaoa 
+#define BLECNTR_SmGetCteSlotWidth                       BLEPLAT_CNTR_SmGetCteSlotWidth 
+#define BLECNTR_SmGetCteStatus                          BLEPLAT_CNTR_SmGetCteStatus 
+#define BLECNTR_SmGetCteTime                            BLEPLAT_CNTR_SmGetCteTime 
+#define BLECNTR_SmGetEncIvPtr                           BLEPLAT_CNTR_SmGetEncIvPtr 
+#define BLECNTR_SmGetEncKeyPtr                          BLEPLAT_CNTR_SmGetEncKeyPtr 
+#define BLECNTR_SmGetEncStatus                          BLEPLAT_CNTR_SmGetEncStatus 
+#define BLECNTR_SmGetHopIncr                            BLEPLAT_CNTR_SmGetHopIncr 
+#define BLECNTR_SmGetMode                               BLEPLAT_CNTR_SmGetMode 
+#define BLECNTR_SmGetPrevRxPacketDataPtr                BLEPLAT_CNTR_SmGetPrevRxPacketDataPtr 
+#define BLECNTR_SmGetPrevRxPacketPtr                    BLEPLAT_CNTR_SmGetPrevRxPacketPtr 
+#define BLECNTR_SmGetPrevTxPacketDataPtr                BLEPLAT_CNTR_SmGetPrevTxPacketDataPtr 
+#define BLECNTR_SmGetPrevTxPacketPtr                    BLEPLAT_CNTR_SmGetPrevTxPacketPtr 
+#define BLECNTR_SmGetRemapChan                          BLEPLAT_CNTR_SmGetRemapChan 
+#define BLECNTR_SmGetRxCount                            BLEPLAT_CNTR_SmGetRxCount 
+#define BLECNTR_SmGetRxPhy                              BLEPLAT_CNTR_SmGetRxPhy 
+#define BLECNTR_SmGetTxPacketPtr                        BLEPLAT_CNTR_SmGetTxPacketPtr 
+#define BLECNTR_SmGetTxPhy                              BLEPLAT_CNTR_SmGetTxPhy 
+#define BLECNTR_SmGetTxPwr                              BLEPLAT_CNTR_SmGetTxPwr 
+#define BLECNTR_SmGetUnmappedChan                       BLEPLAT_CNTR_SmGetUnmappedChan 
+#define BLECNTR_SmInitTo0                               BLEPLAT_CNTR_SmInitTo0 
+#define BLECNTR_SmSetAccessAddr                         BLEPLAT_CNTR_SmSetAccessAddr 
+#define BLECNTR_SmSetChannelMap                         BLEPLAT_CNTR_SmSetChannelMap 
+#define BLECNTR_SmSetCrcInit                            BLEPLAT_CNTR_SmSetCrcInit 
+#define BLECNTR_SmSetCteAntennaPatternLen               BLEPLAT_CNTR_SmSetCteAntennaPatternLen 
+#define BLECNTR_SmSetCteAntennaPatternPtr               BLEPLAT_CNTR_SmSetCteAntennaPatternPtr 
+#define BLECNTR_SmGetCteAntennaPatternPtr               BLEPLAT_CNTR_SmGetCteAntennaPatternPtr 
+#define BLECNTR_SmSetCteAoa                             BLEPLAT_CNTR_SmSetCteAoa 
+#define BLECNTR_SmSetCteAod                             BLEPLAT_CNTR_SmSetCteAod 
+#define BLECNTR_SmSetCteIqsamplesPtr                    BLEPLAT_CNTR_SmSetCteIqsamplesPtr 
+#define BLECNTR_SmSetCteMaxIqsamplesNumb                BLEPLAT_CNTR_SmSetCteMaxIqsamplesNumb 
+#define BLECNTR_SmSetCteSlotWidth                       BLEPLAT_CNTR_SmSetCteSlotWidth 
+#define BLECNTR_SmSetCteTime                            BLEPLAT_CNTR_SmSetCteTime 
+#define BLECNTR_SmSetDataLength                         BLEPLAT_CNTR_SmSetDataLength 
+#define BLECNTR_SmSetDataLengthExtnEn                   BLEPLAT_CNTR_SmSetDataLengthExtnEn 
+#define BLECNTR_SmSetHopIncr                            BLEPLAT_CNTR_SmSetHopIncr 
+#define BLECNTR_SmSetRemapChan                          BLEPLAT_CNTR_SmSetRemapChan 
+#define BLECNTR_SmSetRxCount                            BLEPLAT_CNTR_SmSetRxCount 
+#define BLECNTR_SmSetRxCountDirectionBit                BLEPLAT_CNTR_SmSetRxCountDirectionBit 
+#define BLECNTR_SmSetRxMode                             BLEPLAT_CNTR_SmSetRxMode 
+#define BLECNTR_SmSetRxPacketPtr                        BLEPLAT_CNTR_SmSetRxPacketPtr 
+#define BLECNTR_SmSetRxPhy                              BLEPLAT_CNTR_SmSetRxPhy 
+#define BLECNTR_SmSetTxCount                            BLEPLAT_CNTR_SmSetTxCount 
+#define BLECNTR_SmSetTxCountDirectionBit                BLEPLAT_CNTR_SmSetTxCountDirectionBit 
+#define BLECNTR_SmSetTxMode                             BLEPLAT_CNTR_SmSetTxMode 
+#define BLECNTR_SmSetTxPacketPtr                        BLEPLAT_CNTR_SmSetTxPacketPtr 
+#define BLECNTR_SmSetTxPhy                              BLEPLAT_CNTR_SmSetTxPhy 
+#define BLECNTR_SmSetTxPwr                              BLEPLAT_CNTR_SmSetTxPwr 
+#define BLECNTR_SmSetUnmappedChan                       BLEPLAT_CNTR_SmSetUnmappedChan 
+#define BLECNTR_SmToggleNesn                            BLEPLAT_CNTR_SmToggleNesn 
+#define BLECNTR_SmToggleSn                              BLEPLAT_CNTR_SmToggleSn 
+#define BLECNTR_StartEncrypt                            BLEPLAT_CNTR_StartEncrypt 
+#define BLECNTR_TimeDiff                                BLEPLAT_CNTR_TimeDiff 
+#define BLECNTR_DemodDelaySt                            BLEPLAT_CNTR_DemodDelaySt 
+#define BLECNTR_GeTimer2TimeoutForIfs                   BLEPLAT_CNTR_GeTimer2TimeoutForIfs 
+
+/**
+ * @}
  */
 
 /** @defgroup BLECNTR_Exported_Types Exported Types
  * @{
  */
 	
-/* Enumerated values used to report the RNG result status after a process */
-typedef enum
-{
-  BLECNTR_SUCCESS     =  0,
-  BLECNTR_ERROR,
-  BLECNTR_ERROR_TIMEOUT
-} BLECNTR_ResultStatus;
 
-
-typedef struct {
-    volatile uint32_t WORD0;
-    volatile uint32_t WORD1;
-    volatile uint32_t WORD2;
-    volatile uint32_t WORD3;
-    volatile uint32_t WORD4;
-} BLECNTR_TXRXPACK_TypeDef; 
-    
-typedef enum
-{
-    BLECNTR_TxRx = 0,
-    BLECNTR_RxTx,
-    BLECNTR_TxTx,
-    BLECNTR_RxRx
-} BLECNTR_Transaction;
 /**
  * @}
  */
@@ -116,13 +270,6 @@ typedef enum
  * @}
  */
 
-/** @defgroup BLECNTR_Exported_Macros           Exported Macros
- * @{
- */
-
-/**
- * @}
- */
 
 /** @defgroup BLECNTR_Exported_Functions        Exported Functions
  * @{
@@ -147,6 +294,7 @@ uint32_t BLECNTR_GetTimercapture(void);
 void BLECNTR_GlobDisableBlue(void);
 void BLECNTR_GlobEnableBlue(void);
 void BLECNTR_GlobEnableIntnoactivelerrorInt(void);
+void BLECNTR_GlobEnableTxRxSkipInt(void);
 void BLECNTR_GlobEnableOverrunAct2Int(void);
 uint8_t BLECNTR_GlobGetDefaultAntennaid(void);
 uint8_t BLECNTR_GlobGetWakeupinitdelay(void);
@@ -283,7 +431,6 @@ void BLECNTR_StartEncrypt(void);
 uint32_t BLECNTR_TimeDiff(uint32_t x, uint32_t y);
 uint8_t BLECNTR_DemodDelaySt(uint8_t RxPHY);
 uint32_t BLECNTR_GeTimer2TimeoutForIfs(uint32_t T_Ifs, BLECNTR_Transaction Transaction, BOOL Cal_Enabled);
-
 
 /**
   * @}

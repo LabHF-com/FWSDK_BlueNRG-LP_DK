@@ -232,6 +232,7 @@
                     <state>USER_BUTTON=BSP_PUSH1</state>
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_CUSTOM_CONF</state>
+                    <state>CONFIG_NUM_MAX_LINKS=3</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1116,10 +1117,10 @@
         <group>
             <name>CMSIS</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
             </file>
         </group>
         <group>
@@ -1213,9 +1214,6 @@
             <name>BLE_Stack</name>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\libbluenrg_lp_stack.a</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_cns_api_stubs.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_user_cfg.c</name>

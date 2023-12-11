@@ -1,8 +1,8 @@
-/******************** (C) COPYRIGHT 2020 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : BLE_Beacon_main.c
 * Author             : AMS - RF Application Team
-* Version            : V1.0.0
-* Date               : 8-June-2020
+* Version            : V1.1.0
+* Date               : 29-August-2022
 * Description        : Main file for beacon device
 ********************************************************************************
 * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -39,6 +39,7 @@
 #include "rng_manager.h"
 #include "aes_manager.h"
 #include "ble_controller.h"
+#include "miscutil.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -68,10 +69,11 @@
 
 /* Parameters for Direction Finding */
 #define CTE_LENGTH                  20
-#define CTE_TYPE                    0   /* 0: AoA, 1: AoD with 1 us slots, 2: AoD with 2 us slots */
+/* 0: AoA, 1: AoD with 1 us slots, 2: AoD with 2 us slots.
+  For AoD need to set MAX_NUM_CTE_ANTENNA_IDS to the maximum length of the pattern. */
+#define CTE_TYPE                    0   
 #define CTE_COUNT                   4
-#define SWITCHING_PATTERN_LENGTH    0 /* Ignored for AoA */
-#define ANTENNA_IDS                 NULL
+#define ANTENNA_IDS                 {0,1} /* Ignored for AoA */
 
 
 /* Private macro -------------------------------------------------------------*/
@@ -86,11 +88,11 @@
 /* This is the length of advertising data to be set for legacy advertising and
    periodic advertising.  It does not include the device name, which is sent
    only in extended advertising events. */
-#define SHORT_ADV_DATA_LENGTH    27
+#define SHORT_ADV_DATA_LENGTH    (27 + 3)
 
 static uint8_t adv_data[] = {
-  /* Advertising data: Flags AD Type not supported if broadcaster only */
-  /* 0x02, 0x01, 0x06, */
+  /* Advertising data: Flags AD Type */
+  0x02, 0x01, 0x06, 
   /* Advertising data: manufacturer specific data */
   26, //len
   AD_TYPE_MANUFACTURER_SPECIFIC_DATA,  //manufacturer type
@@ -171,6 +173,14 @@ void Device_Init(void)
   uint16_t appearance_char_handle;
   uint8_t address[CONFIG_DATA_PUBADDR_LEN] = {0x66,0x77,0x88,0xE1,0x80,0x02};
   
+#if (CTE_TYPE == 1) || (CTE_TYPE  == 2)
+  /* This function needs to be called if CTE type is set to AoD, to configure the GPIOs for antenna switching. */
+  aci_hal_set_antenna_switch_parameters(0x06,           /* ANTENNA_ID_1 and ANTENNA_ID_2 enabled */
+                                        1,              /* Left-shift ANTENNA ID signal by one bit to exclude ANTENNA_ID_0 (PB0 is used for UART). */
+                                        0x00,           /* Default antenna ID */
+                                        1);              /* RF_ACTIVITY signal enabled on PB7. */
+#endif
+  
   aci_hal_write_config_data(CONFIG_DATA_PUBADDR_OFFSET, CONFIG_DATA_PUBADDR_LEN, address);
   
   /* Set the TX Power to 0 dBm */
@@ -206,8 +216,8 @@ static void Start_Beaconing(void)
   
 #ifdef LEGACY_ADV
    
-  /* Set advertising configuration for legacy advertising in broadcast mode */  
-  ret = aci_gap_set_advertising_configuration(0, GAP_MODE_BROADCAST,
+  /* Set advertising configuration for legacy advertising  */  
+  ret = aci_gap_set_advertising_configuration(0, GAP_MODE_GENERAL_DISCOVERABLE,
                                               ADV_PROP_LEGACY,
                                               LEGACY_ADV_INTERVAL, LEGACY_ADV_INTERVAL,
                                               ADV_CH_ALL,
@@ -243,8 +253,8 @@ static void Start_Beaconing(void)
 #endif
   
 #ifdef EXTENDED_ADV
-  /* Set advertising configuration for extended advertising in broadcast mode */  
-  ret = aci_gap_set_advertising_configuration(1, GAP_MODE_BROADCAST,
+  /* Set advertising configuration for extended advertising */  
+  ret = aci_gap_set_advertising_configuration(1, GAP_MODE_GENERAL_DISCOVERABLE,
                                               ADV_PROP_NONE,
                                               EXT_ADV_INTERVAL, EXT_ADV_INTERVAL,
                                               ADV_CH_ALL,
@@ -296,8 +306,10 @@ static void Start_Beaconing(void)
     return;
   }
     
-#if CTE_TAG  
-  ret = hci_le_set_connectionless_cte_transmit_parameters(1, CTE_LENGTH, CTE_TYPE, CTE_COUNT, SWITCHING_PATTERN_LENGTH, ANTENNA_IDS);
+#if CTE_TAG   
+  uint8_t antenna_ids[] = ANTENNA_IDS;
+  
+  ret = hci_le_set_connectionless_cte_transmit_parameters(1, CTE_LENGTH, CTE_TYPE, CTE_COUNT, sizeof(antenna_ids), antenna_ids);
   if (ret != BLE_STATUS_SUCCESS)
   {
     PRINTF("Error in hci_le_set_connectionless_cte_transmit_parameters() 0x%02x\r\n", ret);
@@ -357,7 +369,16 @@ int main(void)
   BSP_PB_Init(USER_BUTTON, BUTTON_MODE_GPIO); 
 #endif /* CONFIG_OTA_USE_SERVICE_MANAGER */
   
-  printf("BlueNRG-LP BLE Beacon Application (version: %s)\r\n", BLE_BEACON_VERSION_STRING); 
+  printf("BlueNRG-X Bluetooth LE Beacon Application (version: %s)", BLE_BEACON_VERSION_STRING); 
+#if defined(CTE_TAG)
+  printf(", with CTE tag\r\n");
+#elif defined(PERIODIC_ADV)
+  printf(", with Periodic advertising\r\n");
+#elif defined (EXTENDED_ADV)
+  printf(", with Extended advertising (DEVICE_NAME_IN_ADV: %d)\r\n", DEVICE_NAME_IN_ADV);
+#else
+  printf("\r\n");
+#endif
  
   /* Start beaconing */
   Start_Beaconing();

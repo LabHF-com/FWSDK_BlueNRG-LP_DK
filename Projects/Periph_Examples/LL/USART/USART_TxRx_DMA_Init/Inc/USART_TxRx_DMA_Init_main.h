@@ -84,7 +84,6 @@ void USART_TransferError_Callback(void);
 
 
 
-
 #ifdef STEVAL_IDB011V1
   /**USART1 GPIO Configuration  
   PA9  AF0   ------> USART1_TX    
@@ -112,6 +111,8 @@ void USART_TransferError_Callback(void);
 #define USART1_RX_AF                            LL_GPIO_AF_0 
 #define LL_EnableClock_USART()                  LL_APB1_EnableClock(LL_APB1_PERIPH_USART)
 #endif /* STEVAL_IDB012V1 */
+
+
 
 #ifdef __cplusplus
 }

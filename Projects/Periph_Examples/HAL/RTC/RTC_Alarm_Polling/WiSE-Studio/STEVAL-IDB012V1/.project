@@ -57,14 +57,14 @@
     <locationURI>virtual:/virtual</locationURI>
     </link>
   <link>
-      <name>Application/User/rf_device_it.c</name>
-    <type>1</type>
-    <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_it.c</locationURI>
-    </link>
-  <link>
       <name>Application/User/rf_device_hal_msp.c</name>
     <type>1</type>
     <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_hal_msp.c</locationURI>
+    </link>
+  <link>
+      <name>Application/User/rf_device_it.c</name>
+    <type>1</type>
+    <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_it.c</locationURI>
     </link>
   <link>
       <name>Application/User/RTC_Alarm_Polling_main.c</name>
@@ -77,14 +77,14 @@
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_button.c</locationURI>
     </link>
   <link>
-      <name>Drivers/BSP/bluenrg_lp_evb_io.c</name>
-    <type>1</type>
-    <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_io.c</locationURI>
-    </link>
-  <link>
       <name>Drivers/BSP/bluenrg_lp_evb_com.c</name>
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_com.c</locationURI>
+    </link>
+  <link>
+      <name>Drivers/BSP/bluenrg_lp_evb_io.c</name>
+    <type>1</type>
+    <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_io.c</locationURI>
     </link>
   <link>
       <name>Drivers/BSP/bluenrg_lp_evb_led.c</name>
@@ -92,14 +92,14 @@
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_led.c</locationURI>
     </link>
   <link>
-      <name>Drivers/CMSIS/system_BlueNRG_LP.c</name>
-    <type>1</type>
-    <locationURI>PARENT-7-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</locationURI>
-    </link>
-  <link>
       <name>Drivers/CMSIS/startup_BlueNRG_LP.c</name>
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</locationURI>
+    </link>
+  <link>
+      <name>Drivers/CMSIS/system_BlueNRG_LP.c</name>
+    <type>1</type>
+    <locationURI>PARENT-7-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</locationURI>
     </link>
   <link>
       <name>Drivers/Peripherals_Drivers/rf_driver_hal.c</name>
@@ -185,11 +185,6 @@
       <name>Drivers/Peripherals_Drivers/rf_driver_hal_rcc_ex.c</name>
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/Peripherals_Drivers/Src/rf_driver_hal_rcc_ex.c</locationURI>
-    </link>
-  <link>
-      <name>Drivers/Peripherals_Drivers/rf_driver_hal_rng.c</name>
-    <type>1</type>
-    <locationURI>PARENT-7-PROJECT_LOC/Drivers/Peripherals_Drivers/Src/rf_driver_hal_rng.c</locationURI>
     </link>
   <link>
       <name>Drivers/Peripherals_Drivers/rf_driver_hal_rtc.c</name>

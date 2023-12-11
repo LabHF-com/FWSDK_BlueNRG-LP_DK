@@ -104,6 +104,7 @@ void TimerCaptureCompare_Callback(void);
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 #ifdef STEVAL_IDB011V1
       
 #define TIMx                                                    TIM1
@@ -123,7 +124,7 @@ void TimerCaptureCompare_Callback(void);
  
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                                                    TIM17
 #define LL_EnableClock_TIMx()                                   LL_APB0_EnableClock(LL_APB0_PERIPH_TIM17) 
@@ -139,8 +140,7 @@ void TimerCaptureCompare_Callback(void);
 #define TIMx_CH1_PORT                                           GPIOB
 #define LL_GPIO_SetAFPin_TIMx_CH1()                             LL_GPIO_SetAFPin_0_7(TIMx_CH1_PORT, TIMx_CH1_PIN, TIMx_CH1_AF);
 
-
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 

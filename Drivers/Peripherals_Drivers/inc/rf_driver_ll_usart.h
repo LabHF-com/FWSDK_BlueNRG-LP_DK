@@ -547,18 +547,18 @@ typedef struct
   * @brief  Compute USARTDIV value according to Peripheral Clock and
   *         expected Baud Rate in 8 bits sampling mode (32 bits value of USARTDIV is returned)
   * @param  __PRESCALER__ This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   * @param  __BAUDRATE__ Baud rate value to achieve
   * @retval USARTDIV value to be used for BRR register filling in OverSampling_8 case
   */
@@ -568,18 +568,18 @@ typedef struct
   * @brief  Compute USARTDIV value according to Peripheral Clock and
   *         expected Baud Rate in 16 bits sampling mode (32 bits value of USARTDIV is returned)
   * @param  __PRESCALER__ This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   * @param  __BAUDRATE__ Baud rate value to achieve
   * @retval USARTDIV value to be used for BRR register filling in OverSampling_16 case
   */
@@ -641,7 +641,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabled(USART_TypeDef *USARTx)
 
 /**
   * @brief  FIFO Mode Enable
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          FIFOEN        LL_USART_EnableFIFO
   * @param  USARTx USART Instance
@@ -654,7 +654,7 @@ __STATIC_INLINE void LL_USART_EnableFIFO(USART_TypeDef *USARTx)
 
 /**
   * @brief  FIFO Mode Disable
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          FIFOEN        LL_USART_DisableFIFO
   * @param  USARTx USART Instance
@@ -667,7 +667,7 @@ __STATIC_INLINE void LL_USART_DisableFIFO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if FIFO Mode is enabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          FIFOEN        LL_USART_IsEnabledFIFO
   * @param  USARTx USART Instance
@@ -680,17 +680,17 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledFIFO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure TX FIFO Threshold
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTCFG       LL_USART_SetTXFIFOThreshold
   * @param  USARTx USART Instance
   * @param  Threshold This parameter can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetTXFIFOThreshold(USART_TypeDef *USARTx, uint32_t Threshold)
@@ -700,17 +700,17 @@ __STATIC_INLINE void LL_USART_SetTXFIFOThreshold(USART_TypeDef *USARTx, uint32_t
 
 /**
   * @brief  Return TX FIFO Threshold Configuration
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTCFG       LL_USART_GetTXFIFOThreshold
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   */
 __STATIC_INLINE uint32_t LL_USART_GetTXFIFOThreshold(USART_TypeDef *USARTx)
 {
@@ -719,17 +719,17 @@ __STATIC_INLINE uint32_t LL_USART_GetTXFIFOThreshold(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure RX FIFO Threshold
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          RXFTCFG       LL_USART_SetRXFIFOThreshold
   * @param  USARTx USART Instance
   * @param  Threshold This parameter can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetRXFIFOThreshold(USART_TypeDef *USARTx, uint32_t Threshold)
@@ -739,17 +739,17 @@ __STATIC_INLINE void LL_USART_SetRXFIFOThreshold(USART_TypeDef *USARTx, uint32_t
 
 /**
   * @brief  Return RX FIFO Threshold Configuration
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          RXFTCFG       LL_USART_GetRXFIFOThreshold
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   */
 __STATIC_INLINE uint32_t LL_USART_GetRXFIFOThreshold(USART_TypeDef *USARTx)
 {
@@ -758,25 +758,25 @@ __STATIC_INLINE uint32_t LL_USART_GetRXFIFOThreshold(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure TX and RX FIFOs Threshold
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTCFG       LL_USART_ConfigFIFOsThreshold\n
   *         CR3          RXFTCFG       LL_USART_ConfigFIFOsThreshold
   * @param  USARTx USART Instance
   * @param  TXThreshold This parameter can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   * @param  RXThreshold This parameter can be one of the following values:
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_USART_FIFOTHRESHOLD_8_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_8
+  * @arg LL_USART_FIFOTHRESHOLD_1_4
+  * @arg LL_USART_FIFOTHRESHOLD_1_2
+  * @arg LL_USART_FIFOTHRESHOLD_3_4
+  * @arg LL_USART_FIFOTHRESHOLD_7_8
+  * @arg LL_USART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_USART_ConfigFIFOsThreshold(USART_TypeDef *USARTx, uint32_t TXThreshold, uint32_t RXThreshold)
@@ -835,10 +835,10 @@ __STATIC_INLINE void LL_USART_DisableDirectionTx(USART_TypeDef *USARTx)
   *         CR1          TE            LL_USART_SetTransferDirection
   * @param  USARTx USART Instance
   * @param  TransferDirection This parameter can be one of the following values:
-  *         @arg @ref LL_USART_DIRECTION_NONE
-  *         @arg @ref LL_USART_DIRECTION_RX
-  *         @arg @ref LL_USART_DIRECTION_TX
-  *         @arg @ref LL_USART_DIRECTION_TX_RX
+  * @arg LL_USART_DIRECTION_NONE
+  * @arg LL_USART_DIRECTION_RX
+  * @arg LL_USART_DIRECTION_TX
+  * @arg LL_USART_DIRECTION_TX_RX
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetTransferDirection(USART_TypeDef *USARTx, uint32_t TransferDirection)
@@ -852,10 +852,10 @@ __STATIC_INLINE void LL_USART_SetTransferDirection(USART_TypeDef *USARTx, uint32
   *         CR1          TE            LL_USART_GetTransferDirection
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_DIRECTION_NONE
-  *         @arg @ref LL_USART_DIRECTION_RX
-  *         @arg @ref LL_USART_DIRECTION_TX
-  *         @arg @ref LL_USART_DIRECTION_TX_RX
+  * @arg LL_USART_DIRECTION_NONE
+  * @arg LL_USART_DIRECTION_RX
+  * @arg LL_USART_DIRECTION_TX
+  * @arg LL_USART_DIRECTION_TX_RX
   */
 __STATIC_INLINE uint32_t LL_USART_GetTransferDirection(USART_TypeDef *USARTx)
 {
@@ -871,9 +871,9 @@ __STATIC_INLINE uint32_t LL_USART_GetTransferDirection(USART_TypeDef *USARTx)
   *         CR1          PCE           LL_USART_SetParity
   * @param  USARTx USART Instance
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PARITY_NONE
-  *         @arg @ref LL_USART_PARITY_EVEN
-  *         @arg @ref LL_USART_PARITY_ODD
+  * @arg LL_USART_PARITY_NONE
+  * @arg LL_USART_PARITY_EVEN
+  * @arg LL_USART_PARITY_ODD
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetParity(USART_TypeDef *USARTx, uint32_t Parity)
@@ -887,9 +887,9 @@ __STATIC_INLINE void LL_USART_SetParity(USART_TypeDef *USARTx, uint32_t Parity)
   *         CR1          PCE           LL_USART_GetParity
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_PARITY_NONE
-  *         @arg @ref LL_USART_PARITY_EVEN
-  *         @arg @ref LL_USART_PARITY_ODD
+  * @arg LL_USART_PARITY_NONE
+  * @arg LL_USART_PARITY_EVEN
+  * @arg LL_USART_PARITY_ODD
   */
 __STATIC_INLINE uint32_t LL_USART_GetParity(USART_TypeDef *USARTx)
 {
@@ -901,8 +901,8 @@ __STATIC_INLINE uint32_t LL_USART_GetParity(USART_TypeDef *USARTx)
   * @rmtoll CR1          WAKE          LL_USART_SetWakeUpMethod
   * @param  USARTx USART Instance
   * @param  Method This parameter can be one of the following values:
-  *         @arg @ref LL_USART_WAKEUP_IDLELINE
-  *         @arg @ref LL_USART_WAKEUP_ADDRESSMARK
+  * @arg LL_USART_WAKEUP_IDLELINE
+  * @arg LL_USART_WAKEUP_ADDRESSMARK
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetWakeUpMethod(USART_TypeDef *USARTx, uint32_t Method)
@@ -915,8 +915,8 @@ __STATIC_INLINE void LL_USART_SetWakeUpMethod(USART_TypeDef *USARTx, uint32_t Me
   * @rmtoll CR1          WAKE          LL_USART_GetWakeUpMethod
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_WAKEUP_IDLELINE
-  *         @arg @ref LL_USART_WAKEUP_ADDRESSMARK
+  * @arg LL_USART_WAKEUP_IDLELINE
+  * @arg LL_USART_WAKEUP_ADDRESSMARK
   */
 __STATIC_INLINE uint32_t LL_USART_GetWakeUpMethod(USART_TypeDef *USARTx)
 {
@@ -929,9 +929,9 @@ __STATIC_INLINE uint32_t LL_USART_GetWakeUpMethod(USART_TypeDef *USARTx)
   *         CR1          M1            LL_USART_SetDataWidth
   * @param  USARTx USART Instance
   * @param  DataWidth This parameter can be one of the following values:
-  *         @arg @ref LL_USART_DATAWIDTH_7B
-  *         @arg @ref LL_USART_DATAWIDTH_8B
-  *         @arg @ref LL_USART_DATAWIDTH_9B
+  * @arg LL_USART_DATAWIDTH_7B
+  * @arg LL_USART_DATAWIDTH_8B
+  * @arg LL_USART_DATAWIDTH_9B
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetDataWidth(USART_TypeDef *USARTx, uint32_t DataWidth)
@@ -945,9 +945,9 @@ __STATIC_INLINE void LL_USART_SetDataWidth(USART_TypeDef *USARTx, uint32_t DataW
   *         CR1          M1            LL_USART_GetDataWidth
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_DATAWIDTH_7B
-  *         @arg @ref LL_USART_DATAWIDTH_8B
-  *         @arg @ref LL_USART_DATAWIDTH_9B
+  * @arg LL_USART_DATAWIDTH_7B
+  * @arg LL_USART_DATAWIDTH_8B
+  * @arg LL_USART_DATAWIDTH_9B
   */
 __STATIC_INLINE uint32_t LL_USART_GetDataWidth(USART_TypeDef *USARTx)
 {
@@ -992,8 +992,8 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledMuteMode(USART_TypeDef *USARTx)
   * @rmtoll CR1          OVER8         LL_USART_SetOverSampling
   * @param  USARTx USART Instance
   * @param  OverSampling This parameter can be one of the following values:
-  *         @arg @ref LL_USART_OVERSAMPLING_16
-  *         @arg @ref LL_USART_OVERSAMPLING_8
+  * @arg LL_USART_OVERSAMPLING_16
+  * @arg LL_USART_OVERSAMPLING_8
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetOverSampling(USART_TypeDef *USARTx, uint32_t OverSampling)
@@ -1006,8 +1006,8 @@ __STATIC_INLINE void LL_USART_SetOverSampling(USART_TypeDef *USARTx, uint32_t Ov
   * @rmtoll CR1          OVER8         LL_USART_GetOverSampling
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_OVERSAMPLING_16
-  *         @arg @ref LL_USART_OVERSAMPLING_8
+  * @arg LL_USART_OVERSAMPLING_16
+  * @arg LL_USART_OVERSAMPLING_8
   */
 __STATIC_INLINE uint32_t LL_USART_GetOverSampling(USART_TypeDef *USARTx)
 {
@@ -1016,13 +1016,13 @@ __STATIC_INLINE uint32_t LL_USART_GetOverSampling(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure if Clock pulse of the last data bit is output to the SCLK pin or not
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          LBCL          LL_USART_SetLastClkPulseOutput
   * @param  USARTx USART Instance
   * @param  LastBitClockPulse This parameter can be one of the following values:
-  *         @arg @ref LL_USART_LASTCLKPULSE_NO_OUTPUT
-  *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_NO_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_OUTPUT
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetLastClkPulseOutput(USART_TypeDef *USARTx, uint32_t LastBitClockPulse)
@@ -1033,13 +1033,13 @@ __STATIC_INLINE void LL_USART_SetLastClkPulseOutput(USART_TypeDef *USARTx, uint3
 /**
   * @brief  Retrieve Clock pulse of the last data bit output configuration
   *         (Last bit Clock pulse output to the SCLK pin or not)
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          LBCL          LL_USART_GetLastClkPulseOutput
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_LASTCLKPULSE_NO_OUTPUT
-  *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_NO_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_OUTPUT
   */
 __STATIC_INLINE uint32_t LL_USART_GetLastClkPulseOutput(USART_TypeDef *USARTx)
 {
@@ -1048,13 +1048,13 @@ __STATIC_INLINE uint32_t LL_USART_GetLastClkPulseOutput(USART_TypeDef *USARTx)
 
 /**
   * @brief  Select the phase of the clock output on the SCLK pin in synchronous mode
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CPHA          LL_USART_SetClockPhase
   * @param  USARTx USART Instance
   * @param  ClockPhase This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PHASE_1EDGE
-  *         @arg @ref LL_USART_PHASE_2EDGE
+  * @arg LL_USART_PHASE_1EDGE
+  * @arg LL_USART_PHASE_2EDGE
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetClockPhase(USART_TypeDef *USARTx, uint32_t ClockPhase)
@@ -1064,13 +1064,13 @@ __STATIC_INLINE void LL_USART_SetClockPhase(USART_TypeDef *USARTx, uint32_t Cloc
 
 /**
   * @brief  Return phase of the clock output on the SCLK pin in synchronous mode
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CPHA          LL_USART_GetClockPhase
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_PHASE_1EDGE
-  *         @arg @ref LL_USART_PHASE_2EDGE
+  * @arg LL_USART_PHASE_1EDGE
+  * @arg LL_USART_PHASE_2EDGE
   */
 __STATIC_INLINE uint32_t LL_USART_GetClockPhase(USART_TypeDef *USARTx)
 {
@@ -1079,13 +1079,13 @@ __STATIC_INLINE uint32_t LL_USART_GetClockPhase(USART_TypeDef *USARTx)
 
 /**
   * @brief  Select the polarity of the clock output on the SCLK pin in synchronous mode
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CPOL          LL_USART_SetClockPolarity
   * @param  USARTx USART Instance
   * @param  ClockPolarity This parameter can be one of the following values:
-  *         @arg @ref LL_USART_POLARITY_LOW
-  *         @arg @ref LL_USART_POLARITY_HIGH
+  * @arg LL_USART_POLARITY_LOW
+  * @arg LL_USART_POLARITY_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetClockPolarity(USART_TypeDef *USARTx, uint32_t ClockPolarity)
@@ -1095,13 +1095,13 @@ __STATIC_INLINE void LL_USART_SetClockPolarity(USART_TypeDef *USARTx, uint32_t C
 
 /**
   * @brief  Return polarity of the clock output on the SCLK pin in synchronous mode
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CPOL          LL_USART_GetClockPolarity
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_POLARITY_LOW
-  *         @arg @ref LL_USART_POLARITY_HIGH
+  * @arg LL_USART_POLARITY_LOW
+  * @arg LL_USART_POLARITY_HIGH
   */
 __STATIC_INLINE uint32_t LL_USART_GetClockPolarity(USART_TypeDef *USARTx)
 {
@@ -1110,7 +1110,7 @@ __STATIC_INLINE uint32_t LL_USART_GetClockPolarity(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure Clock signal format (Phase Polarity and choice about output of last bit clock pulse)
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @note   Call of this function is equivalent to following function call sequence :
   *         - Clock Phase configuration using @ref LL_USART_SetClockPhase() function
@@ -1121,14 +1121,14 @@ __STATIC_INLINE uint32_t LL_USART_GetClockPolarity(USART_TypeDef *USARTx)
   *         CR2          LBCL          LL_USART_ConfigClock
   * @param  USARTx USART Instance
   * @param  Phase This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PHASE_1EDGE
-  *         @arg @ref LL_USART_PHASE_2EDGE
+  * @arg LL_USART_PHASE_1EDGE
+  * @arg LL_USART_PHASE_2EDGE
   * @param  Polarity This parameter can be one of the following values:
-  *         @arg @ref LL_USART_POLARITY_LOW
-  *         @arg @ref LL_USART_POLARITY_HIGH
+  * @arg LL_USART_POLARITY_LOW
+  * @arg LL_USART_POLARITY_HIGH
   * @param  LBCPOutput This parameter can be one of the following values:
-  *         @arg @ref LL_USART_LASTCLKPULSE_NO_OUTPUT
-  *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_NO_OUTPUT
+  * @arg LL_USART_LASTCLKPULSE_OUTPUT
   * @retval None
   */
 __STATIC_INLINE void LL_USART_ConfigClock(USART_TypeDef *USARTx, uint32_t Phase, uint32_t Polarity, uint32_t LBCPOutput)
@@ -1138,23 +1138,23 @@ __STATIC_INLINE void LL_USART_ConfigClock(USART_TypeDef *USARTx, uint32_t Phase,
 
 /**
   * @brief  Configure Clock source prescaler for baudrate generator and oversampling
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll PRESC        PRESCALER     LL_USART_SetPrescaler
   * @param  USARTx USART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetPrescaler(USART_TypeDef *USARTx, uint32_t PrescalerValue)
@@ -1164,23 +1164,23 @@ __STATIC_INLINE void LL_USART_SetPrescaler(USART_TypeDef *USARTx, uint32_t Presc
 
 /**
   * @brief  Retrieve the Clock source prescaler for baudrate generator and oversampling
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll PRESC        PRESCALER     LL_USART_GetPrescaler
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   */
 __STATIC_INLINE uint32_t LL_USART_GetPrescaler(USART_TypeDef *USARTx)
 {
@@ -1189,7 +1189,7 @@ __STATIC_INLINE uint32_t LL_USART_GetPrescaler(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Clock output on SCLK pin
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CLKEN         LL_USART_EnableSCLKOutput
   * @param  USARTx USART Instance
@@ -1202,7 +1202,7 @@ __STATIC_INLINE void LL_USART_EnableSCLKOutput(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Clock output on SCLK pin
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CLKEN         LL_USART_DisableSCLKOutput
   * @param  USARTx USART Instance
@@ -1215,7 +1215,7 @@ __STATIC_INLINE void LL_USART_DisableSCLKOutput(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if Clock output on SCLK pin is enabled
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @rmtoll CR2          CLKEN         LL_USART_IsEnabledSCLKOutput
   * @param  USARTx USART Instance
@@ -1231,10 +1231,10 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSCLKOutput(USART_TypeDef *USARTx)
   * @rmtoll CR2          STOP          LL_USART_SetStopBitsLength
   * @param  USARTx USART Instance
   * @param  StopBits This parameter can be one of the following values:
-  *         @arg @ref LL_USART_STOPBITS_0_5
-  *         @arg @ref LL_USART_STOPBITS_1
-  *         @arg @ref LL_USART_STOPBITS_1_5
-  *         @arg @ref LL_USART_STOPBITS_2
+  * @arg LL_USART_STOPBITS_0_5
+  * @arg LL_USART_STOPBITS_1
+  * @arg LL_USART_STOPBITS_1_5
+  * @arg LL_USART_STOPBITS_2
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetStopBitsLength(USART_TypeDef *USARTx, uint32_t StopBits)
@@ -1247,10 +1247,10 @@ __STATIC_INLINE void LL_USART_SetStopBitsLength(USART_TypeDef *USARTx, uint32_t 
   * @rmtoll CR2          STOP          LL_USART_GetStopBitsLength
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_STOPBITS_0_5
-  *         @arg @ref LL_USART_STOPBITS_1
-  *         @arg @ref LL_USART_STOPBITS_1_5
-  *         @arg @ref LL_USART_STOPBITS_2
+  * @arg LL_USART_STOPBITS_0_5
+  * @arg LL_USART_STOPBITS_1
+  * @arg LL_USART_STOPBITS_1_5
+  * @arg LL_USART_STOPBITS_2
   */
 __STATIC_INLINE uint32_t LL_USART_GetStopBitsLength(USART_TypeDef *USARTx)
 {
@@ -1270,18 +1270,18 @@ __STATIC_INLINE uint32_t LL_USART_GetStopBitsLength(USART_TypeDef *USARTx)
   *         CR2          STOP          LL_USART_ConfigCharacter
   * @param  USARTx USART Instance
   * @param  DataWidth This parameter can be one of the following values:
-  *         @arg @ref LL_USART_DATAWIDTH_7B
-  *         @arg @ref LL_USART_DATAWIDTH_8B
-  *         @arg @ref LL_USART_DATAWIDTH_9B
+  * @arg LL_USART_DATAWIDTH_7B
+  * @arg LL_USART_DATAWIDTH_8B
+  * @arg LL_USART_DATAWIDTH_9B
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PARITY_NONE
-  *         @arg @ref LL_USART_PARITY_EVEN
-  *         @arg @ref LL_USART_PARITY_ODD
+  * @arg LL_USART_PARITY_NONE
+  * @arg LL_USART_PARITY_EVEN
+  * @arg LL_USART_PARITY_ODD
   * @param  StopBits This parameter can be one of the following values:
-  *         @arg @ref LL_USART_STOPBITS_0_5
-  *         @arg @ref LL_USART_STOPBITS_1
-  *         @arg @ref LL_USART_STOPBITS_1_5
-  *         @arg @ref LL_USART_STOPBITS_2
+  * @arg LL_USART_STOPBITS_0_5
+  * @arg LL_USART_STOPBITS_1
+  * @arg LL_USART_STOPBITS_1_5
+  * @arg LL_USART_STOPBITS_2
   * @retval None
   */
 __STATIC_INLINE void LL_USART_ConfigCharacter(USART_TypeDef *USARTx, uint32_t DataWidth, uint32_t Parity,
@@ -1296,8 +1296,8 @@ __STATIC_INLINE void LL_USART_ConfigCharacter(USART_TypeDef *USARTx, uint32_t Da
   * @rmtoll CR2          SWAP          LL_USART_SetTXRXSwap
   * @param  USARTx USART Instance
   * @param  SwapConfig This parameter can be one of the following values:
-  *         @arg @ref LL_USART_TXRX_STANDARD
-  *         @arg @ref LL_USART_TXRX_SWAPPED
+  * @arg LL_USART_TXRX_STANDARD
+  * @arg LL_USART_TXRX_SWAPPED
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetTXRXSwap(USART_TypeDef *USARTx, uint32_t SwapConfig)
@@ -1310,8 +1310,8 @@ __STATIC_INLINE void LL_USART_SetTXRXSwap(USART_TypeDef *USARTx, uint32_t SwapCo
   * @rmtoll CR2          SWAP          LL_USART_GetTXRXSwap
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_TXRX_STANDARD
-  *         @arg @ref LL_USART_TXRX_SWAPPED
+  * @arg LL_USART_TXRX_STANDARD
+  * @arg LL_USART_TXRX_SWAPPED
   */
 __STATIC_INLINE uint32_t LL_USART_GetTXRXSwap(USART_TypeDef *USARTx)
 {
@@ -1323,8 +1323,8 @@ __STATIC_INLINE uint32_t LL_USART_GetTXRXSwap(USART_TypeDef *USARTx)
   * @rmtoll CR2          RXINV         LL_USART_SetRXPinLevel
   * @param  USARTx USART Instance
   * @param  PinInvMethod This parameter can be one of the following values:
-  *         @arg @ref LL_USART_RXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_USART_RXPIN_LEVEL_INVERTED
+  * @arg LL_USART_RXPIN_LEVEL_STANDARD
+  * @arg LL_USART_RXPIN_LEVEL_INVERTED
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetRXPinLevel(USART_TypeDef *USARTx, uint32_t PinInvMethod)
@@ -1337,8 +1337,8 @@ __STATIC_INLINE void LL_USART_SetRXPinLevel(USART_TypeDef *USARTx, uint32_t PinI
   * @rmtoll CR2          RXINV         LL_USART_GetRXPinLevel
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_RXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_USART_RXPIN_LEVEL_INVERTED
+  * @arg LL_USART_RXPIN_LEVEL_STANDARD
+  * @arg LL_USART_RXPIN_LEVEL_INVERTED
   */
 __STATIC_INLINE uint32_t LL_USART_GetRXPinLevel(USART_TypeDef *USARTx)
 {
@@ -1350,8 +1350,8 @@ __STATIC_INLINE uint32_t LL_USART_GetRXPinLevel(USART_TypeDef *USARTx)
   * @rmtoll CR2          TXINV         LL_USART_SetTXPinLevel
   * @param  USARTx USART Instance
   * @param  PinInvMethod This parameter can be one of the following values:
-  *         @arg @ref LL_USART_TXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_USART_TXPIN_LEVEL_INVERTED
+  * @arg LL_USART_TXPIN_LEVEL_STANDARD
+  * @arg LL_USART_TXPIN_LEVEL_INVERTED
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetTXPinLevel(USART_TypeDef *USARTx, uint32_t PinInvMethod)
@@ -1364,8 +1364,8 @@ __STATIC_INLINE void LL_USART_SetTXPinLevel(USART_TypeDef *USARTx, uint32_t PinI
   * @rmtoll CR2          TXINV         LL_USART_GetTXPinLevel
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_TXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_USART_TXPIN_LEVEL_INVERTED
+  * @arg LL_USART_TXPIN_LEVEL_STANDARD
+  * @arg LL_USART_TXPIN_LEVEL_INVERTED
   */
 __STATIC_INLINE uint32_t LL_USART_GetTXPinLevel(USART_TypeDef *USARTx)
 {
@@ -1379,8 +1379,8 @@ __STATIC_INLINE uint32_t LL_USART_GetTXPinLevel(USART_TypeDef *USARTx)
   * @rmtoll CR2          DATAINV       LL_USART_SetBinaryDataLogic
   * @param  USARTx USART Instance
   * @param  DataLogic This parameter can be one of the following values:
-  *         @arg @ref LL_USART_BINARY_LOGIC_POSITIVE
-  *         @arg @ref LL_USART_BINARY_LOGIC_NEGATIVE
+  * @arg LL_USART_BINARY_LOGIC_POSITIVE
+  * @arg LL_USART_BINARY_LOGIC_NEGATIVE
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetBinaryDataLogic(USART_TypeDef *USARTx, uint32_t DataLogic)
@@ -1393,8 +1393,8 @@ __STATIC_INLINE void LL_USART_SetBinaryDataLogic(USART_TypeDef *USARTx, uint32_t
   * @rmtoll CR2          DATAINV       LL_USART_GetBinaryDataLogic
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_BINARY_LOGIC_POSITIVE
-  *         @arg @ref LL_USART_BINARY_LOGIC_NEGATIVE
+  * @arg LL_USART_BINARY_LOGIC_POSITIVE
+  * @arg LL_USART_BINARY_LOGIC_NEGATIVE
   */
 __STATIC_INLINE uint32_t LL_USART_GetBinaryDataLogic(USART_TypeDef *USARTx)
 {
@@ -1408,8 +1408,8 @@ __STATIC_INLINE uint32_t LL_USART_GetBinaryDataLogic(USART_TypeDef *USARTx)
   * @rmtoll CR2          MSBFIRST      LL_USART_SetTransferBitOrder
   * @param  USARTx USART Instance
   * @param  BitOrder This parameter can be one of the following values:
-  *         @arg @ref LL_USART_BITORDER_LSBFIRST
-  *         @arg @ref LL_USART_BITORDER_MSBFIRST
+  * @arg LL_USART_BITORDER_LSBFIRST
+  * @arg LL_USART_BITORDER_MSBFIRST
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetTransferBitOrder(USART_TypeDef *USARTx, uint32_t BitOrder)
@@ -1424,8 +1424,8 @@ __STATIC_INLINE void LL_USART_SetTransferBitOrder(USART_TypeDef *USARTx, uint32_
   * @rmtoll CR2          MSBFIRST      LL_USART_GetTransferBitOrder
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_BITORDER_LSBFIRST
-  *         @arg @ref LL_USART_BITORDER_MSBFIRST
+  * @arg LL_USART_BITORDER_LSBFIRST
+  * @arg LL_USART_BITORDER_MSBFIRST
   */
 __STATIC_INLINE uint32_t LL_USART_GetTransferBitOrder(USART_TypeDef *USARTx)
 {
@@ -1478,10 +1478,10 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledAutoBaud(USART_TypeDef *USARTx)
   * @rmtoll CR2          ABRMODE       LL_USART_SetAutoBaudRateMode
   * @param  USARTx USART Instance
   * @param  AutoBaudRateMode This parameter can be one of the following values:
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_STARTBIT
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_FALLINGEDGE
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_7F_FRAME
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_55_FRAME
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_STARTBIT
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_FALLINGEDGE
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_7F_FRAME
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_55_FRAME
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetAutoBaudRateMode(USART_TypeDef *USARTx, uint32_t AutoBaudRateMode)
@@ -1496,10 +1496,10 @@ __STATIC_INLINE void LL_USART_SetAutoBaudRateMode(USART_TypeDef *USARTx, uint32_
   * @rmtoll CR2          ABRMODE       LL_USART_GetAutoBaudRateMode
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_STARTBIT
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_FALLINGEDGE
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_7F_FRAME
-  *         @arg @ref LL_USART_AUTOBAUD_DETECT_ON_55_FRAME
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_STARTBIT
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_FALLINGEDGE
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_7F_FRAME
+  * @arg LL_USART_AUTOBAUD_DETECT_ON_55_FRAME
   */
 __STATIC_INLINE uint32_t LL_USART_GetAutoBaudRateMode(USART_TypeDef *USARTx)
 {
@@ -1557,8 +1557,8 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledRxTimeout(USART_TypeDef *USARTx)
   *         CR2          ADDM7         LL_USART_ConfigNodeAddress
   * @param  USARTx USART Instance
   * @param  AddressLen This parameter can be one of the following values:
-  *         @arg @ref LL_USART_ADDRESS_DETECT_4B
-  *         @arg @ref LL_USART_ADDRESS_DETECT_7B
+  * @arg LL_USART_ADDRESS_DETECT_4B
+  * @arg LL_USART_ADDRESS_DETECT_7B
   * @param  NodeAddress 4 or 7 bit Address of the USART node.
   * @retval None
   */
@@ -1588,8 +1588,8 @@ __STATIC_INLINE uint32_t LL_USART_GetNodeAddress(USART_TypeDef *USARTx)
   * @rmtoll CR2          ADDM7         LL_USART_GetNodeAddressLen
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_ADDRESS_DETECT_4B
-  *         @arg @ref LL_USART_ADDRESS_DETECT_7B
+  * @arg LL_USART_ADDRESS_DETECT_4B
+  * @arg LL_USART_ADDRESS_DETECT_7B
   */
 __STATIC_INLINE uint32_t LL_USART_GetNodeAddressLen(USART_TypeDef *USARTx)
 {
@@ -1598,7 +1598,7 @@ __STATIC_INLINE uint32_t LL_USART_GetNodeAddressLen(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable RTS HW Flow Control
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          RTSE          LL_USART_EnableRTSHWFlowCtrl
   * @param  USARTx USART Instance
@@ -1611,7 +1611,7 @@ __STATIC_INLINE void LL_USART_EnableRTSHWFlowCtrl(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable RTS HW Flow Control
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          RTSE          LL_USART_DisableRTSHWFlowCtrl
   * @param  USARTx USART Instance
@@ -1624,7 +1624,7 @@ __STATIC_INLINE void LL_USART_DisableRTSHWFlowCtrl(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable CTS HW Flow Control
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          CTSE          LL_USART_EnableCTSHWFlowCtrl
   * @param  USARTx USART Instance
@@ -1637,7 +1637,7 @@ __STATIC_INLINE void LL_USART_EnableCTSHWFlowCtrl(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable CTS HW Flow Control
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          CTSE          LL_USART_DisableCTSHWFlowCtrl
   * @param  USARTx USART Instance
@@ -1650,16 +1650,16 @@ __STATIC_INLINE void LL_USART_DisableCTSHWFlowCtrl(USART_TypeDef *USARTx)
 
 /**
   * @brief  Configure HW Flow Control mode (both CTS and RTS)
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          RTSE          LL_USART_SetHWFlowCtrl\n
   *         CR3          CTSE          LL_USART_SetHWFlowCtrl
   * @param  USARTx USART Instance
   * @param  HardwareFlowControl This parameter can be one of the following values:
-  *         @arg @ref LL_USART_HWCONTROL_NONE
-  *         @arg @ref LL_USART_HWCONTROL_RTS
-  *         @arg @ref LL_USART_HWCONTROL_CTS
-  *         @arg @ref LL_USART_HWCONTROL_RTS_CTS
+  * @arg LL_USART_HWCONTROL_NONE
+  * @arg LL_USART_HWCONTROL_RTS
+  * @arg LL_USART_HWCONTROL_CTS
+  * @arg LL_USART_HWCONTROL_RTS_CTS
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetHWFlowCtrl(USART_TypeDef *USARTx, uint32_t HardwareFlowControl)
@@ -1669,16 +1669,16 @@ __STATIC_INLINE void LL_USART_SetHWFlowCtrl(USART_TypeDef *USARTx, uint32_t Hard
 
 /**
   * @brief  Return HW Flow Control configuration (both CTS and RTS)
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          RTSE          LL_USART_GetHWFlowCtrl\n
   *         CR3          CTSE          LL_USART_GetHWFlowCtrl
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_HWCONTROL_NONE
-  *         @arg @ref LL_USART_HWCONTROL_RTS
-  *         @arg @ref LL_USART_HWCONTROL_CTS
-  *         @arg @ref LL_USART_HWCONTROL_RTS_CTS
+  * @arg LL_USART_HWCONTROL_NONE
+  * @arg LL_USART_HWCONTROL_RTS
+  * @arg LL_USART_HWCONTROL_CTS
+  * @arg LL_USART_HWCONTROL_RTS_CTS
   */
 __STATIC_INLINE uint32_t LL_USART_GetHWFlowCtrl(USART_TypeDef *USARTx)
 {
@@ -1761,21 +1761,21 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledOverrunDetect(USART_TypeDef *USARTx)
   * @rmtoll BRR          BRR           LL_USART_SetBaudRate
   * @param  USARTx USART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   * @param  OverSampling This parameter can be one of the following values:
-  *         @arg @ref LL_USART_OVERSAMPLING_16
-  *         @arg @ref LL_USART_OVERSAMPLING_8
+  * @arg LL_USART_OVERSAMPLING_16
+  * @arg LL_USART_OVERSAMPLING_8
   * @param  BaudRate Baud Rate
   * @retval None
   */
@@ -1806,21 +1806,21 @@ __STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t Presca
   * @rmtoll BRR          BRR           LL_USART_GetBaudRate
   * @param  USARTx USART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_USART_PRESCALER_DIV1
-  *         @arg @ref LL_USART_PRESCALER_DIV2
-  *         @arg @ref LL_USART_PRESCALER_DIV4
-  *         @arg @ref LL_USART_PRESCALER_DIV6
-  *         @arg @ref LL_USART_PRESCALER_DIV8
-  *         @arg @ref LL_USART_PRESCALER_DIV10
-  *         @arg @ref LL_USART_PRESCALER_DIV12
-  *         @arg @ref LL_USART_PRESCALER_DIV16
-  *         @arg @ref LL_USART_PRESCALER_DIV32
-  *         @arg @ref LL_USART_PRESCALER_DIV64
-  *         @arg @ref LL_USART_PRESCALER_DIV128
-  *         @arg @ref LL_USART_PRESCALER_DIV256
+  * @arg LL_USART_PRESCALER_DIV1
+  * @arg LL_USART_PRESCALER_DIV2
+  * @arg LL_USART_PRESCALER_DIV4
+  * @arg LL_USART_PRESCALER_DIV6
+  * @arg LL_USART_PRESCALER_DIV8
+  * @arg LL_USART_PRESCALER_DIV10
+  * @arg LL_USART_PRESCALER_DIV12
+  * @arg LL_USART_PRESCALER_DIV16
+  * @arg LL_USART_PRESCALER_DIV32
+  * @arg LL_USART_PRESCALER_DIV64
+  * @arg LL_USART_PRESCALER_DIV128
+  * @arg LL_USART_PRESCALER_DIV256
   * @param  OverSampling This parameter can be one of the following values:
-  *         @arg @ref LL_USART_OVERSAMPLING_16
-  *         @arg @ref LL_USART_OVERSAMPLING_8
+  * @arg LL_USART_OVERSAMPLING_16
+  * @arg LL_USART_OVERSAMPLING_8
   * @retval Baud Rate
   */
 __STATIC_INLINE uint32_t LL_USART_GetBaudRate(USART_TypeDef *USARTx, uint32_t PrescalerValue, uint32_t OverSampling)
@@ -1953,8 +1953,8 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIrda(USART_TypeDef *USARTx)
   * @rmtoll CR3          IRLP          LL_USART_SetIrdaPowerMode
   * @param  USARTx USART Instance
   * @param  PowerMode This parameter can be one of the following values:
-  *         @arg @ref LL_USART_IRDA_POWER_NORMAL
-  *         @arg @ref LL_USART_IRDA_POWER_LOW
+  * @arg LL_USART_IRDA_POWER_NORMAL
+  * @arg LL_USART_IRDA_POWER_LOW
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetIrdaPowerMode(USART_TypeDef *USARTx, uint32_t PowerMode)
@@ -1969,8 +1969,8 @@ __STATIC_INLINE void LL_USART_SetIrdaPowerMode(USART_TypeDef *USARTx, uint32_t P
   * @rmtoll CR3          IRLP          LL_USART_GetIrdaPowerMode
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_IRDA_POWER_NORMAL
-  *         @arg @ref LL_USART_IRDA_POWER_LOW
+  * @arg LL_USART_IRDA_POWER_NORMAL
+  * @arg LL_USART_IRDA_POWER_LOW
   */
 __STATIC_INLINE uint32_t LL_USART_GetIrdaPowerMode(USART_TypeDef *USARTx)
 {
@@ -2016,7 +2016,7 @@ __STATIC_INLINE uint32_t LL_USART_GetIrdaPrescaler(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Smartcard NACK transmission
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          NACK          LL_USART_EnableSmartcardNACK
   * @param  USARTx USART Instance
@@ -2029,7 +2029,7 @@ __STATIC_INLINE void LL_USART_EnableSmartcardNACK(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Smartcard NACK transmission
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          NACK          LL_USART_DisableSmartcardNACK
   * @param  USARTx USART Instance
@@ -2042,7 +2042,7 @@ __STATIC_INLINE void LL_USART_DisableSmartcardNACK(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if Smartcard NACK transmission is enabled
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          NACK          LL_USART_IsEnabledSmartcardNACK
   * @param  USARTx USART Instance
@@ -2055,7 +2055,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcardNACK(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Smartcard mode
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          SCEN          LL_USART_EnableSmartcard
   * @param  USARTx USART Instance
@@ -2068,7 +2068,7 @@ __STATIC_INLINE void LL_USART_EnableSmartcard(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Smartcard mode
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          SCEN          LL_USART_DisableSmartcard
   * @param  USARTx USART Instance
@@ -2081,7 +2081,7 @@ __STATIC_INLINE void LL_USART_DisableSmartcard(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if Smartcard mode is enabled
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          SCEN          LL_USART_IsEnabledSmartcard
   * @param  USARTx USART Instance
@@ -2094,7 +2094,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcard(USART_TypeDef *USARTx)
 
 /**
   * @brief  Set Smartcard Auto-Retry Count value (SCARCNT[2:0] bits)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @note   This bit-field specifies the number of retries in transmit and receive, in Smartcard mode.
   *         In transmission mode, it specifies the number of automatic retransmission retries, before
@@ -2113,7 +2113,7 @@ __STATIC_INLINE void LL_USART_SetSmartcardAutoRetryCount(USART_TypeDef *USARTx, 
 
 /**
   * @brief  Return Smartcard Auto-Retry Count value (SCARCNT[2:0] bits)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          SCARCNT       LL_USART_GetSmartcardAutoRetryCount
   * @param  USARTx USART Instance
@@ -2127,7 +2127,7 @@ __STATIC_INLINE uint32_t LL_USART_GetSmartcardAutoRetryCount(USART_TypeDef *USAR
 /**
   * @brief  Set Smartcard prescaler value, used for dividing the USART clock
   *         source to provide the SMARTCARD Clock (5 bits value)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll GTPR         PSC           LL_USART_SetSmartcardPrescaler
   * @param  USARTx USART Instance
@@ -2142,7 +2142,7 @@ __STATIC_INLINE void LL_USART_SetSmartcardPrescaler(USART_TypeDef *USARTx, uint3
 /**
   * @brief  Return Smartcard prescaler value, used for dividing the USART clock
   *         source to provide the SMARTCARD Clock (5 bits value)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll GTPR         PSC           LL_USART_GetSmartcardPrescaler
   * @param  USARTx USART Instance
@@ -2156,7 +2156,7 @@ __STATIC_INLINE uint32_t LL_USART_GetSmartcardPrescaler(USART_TypeDef *USARTx)
 /**
   * @brief  Set Smartcard Guard time value, expressed in nb of baud clocks periods
   *         (GT[7:0] bits : Guard time value)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll GTPR         GT            LL_USART_SetSmartcardGuardTime
   * @param  USARTx USART Instance
@@ -2171,7 +2171,7 @@ __STATIC_INLINE void LL_USART_SetSmartcardGuardTime(USART_TypeDef *USARTx, uint3
 /**
   * @brief  Return Smartcard Guard time value, expressed in nb of baud clocks periods
   *         (GT[7:0] bits : Guard time value)
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll GTPR         GT            LL_USART_GetSmartcardGuardTime
   * @param  USARTx USART Instance
@@ -2192,7 +2192,7 @@ __STATIC_INLINE uint32_t LL_USART_GetSmartcardGuardTime(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Single Wire Half-Duplex mode
-  * @note   Macro @ref IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
   *         Half-Duplex mode is supported by the USARTx instance.
   * @rmtoll CR3          HDSEL         LL_USART_EnableHalfDuplex
   * @param  USARTx USART Instance
@@ -2205,7 +2205,7 @@ __STATIC_INLINE void LL_USART_EnableHalfDuplex(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Single Wire Half-Duplex mode
-  * @note   Macro @ref IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
   *         Half-Duplex mode is supported by the USARTx instance.
   * @rmtoll CR3          HDSEL         LL_USART_DisableHalfDuplex
   * @param  USARTx USART Instance
@@ -2218,7 +2218,7 @@ __STATIC_INLINE void LL_USART_DisableHalfDuplex(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if Single Wire Half-Duplex mode is enabled
-  * @note   Macro @ref IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
   *         Half-Duplex mode is supported by the USARTx instance.
   * @rmtoll CR3          HDSEL         LL_USART_IsEnabledHalfDuplex
   * @param  USARTx USART Instance
@@ -2238,7 +2238,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledHalfDuplex(USART_TypeDef *USARTx)
   */
 /**
   * @brief  Enable SPI Synchronous Slave mode
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll CR2          SLVEN         LL_USART_EnableSPISlave
   * @param  USARTx USART Instance
@@ -2251,7 +2251,7 @@ __STATIC_INLINE void LL_USART_EnableSPISlave(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable SPI Synchronous Slave mode
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll CR2          SLVEN         LL_USART_DisableSPISlave
   * @param  USARTx USART Instance
@@ -2264,7 +2264,7 @@ __STATIC_INLINE void LL_USART_DisableSPISlave(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if  SPI Synchronous Slave mode is enabled
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll CR2          SLVEN         LL_USART_IsEnabledSPISlave
   * @param  USARTx USART Instance
@@ -2277,7 +2277,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSPISlave(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable SPI Slave Selection using NSS input pin
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @note   SPI Slave Selection depends on NSS input pin
   *         (The slave is selected when NSS is low and deselected when NSS is high).
@@ -2292,7 +2292,7 @@ __STATIC_INLINE void LL_USART_EnableSPISlaveSelect(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable SPI Slave Selection using NSS input pin
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @note   SPI Slave will be always selected and NSS input pin will be ignored.
   * @rmtoll CR2          DIS_NSS       LL_USART_DisableSPISlaveSelect
@@ -2306,7 +2306,7 @@ __STATIC_INLINE void LL_USART_DisableSPISlaveSelect(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if  SPI Slave Selection depends on NSS input pin
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll CR2          DIS_NSS       LL_USART_IsEnabledSPISlaveSelect
   * @param  USARTx USART Instance
@@ -2327,13 +2327,13 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSPISlaveSelect(USART_TypeDef *USARTx)
 
 /**
   * @brief  Set LIN Break Detection Length
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LBDL          LL_USART_SetLINBrkDetectionLen
   * @param  USARTx USART Instance
   * @param  LINBDLength This parameter can be one of the following values:
-  *         @arg @ref LL_USART_LINBREAK_DETECT_10B
-  *         @arg @ref LL_USART_LINBREAK_DETECT_11B
+  * @arg LL_USART_LINBREAK_DETECT_10B
+  * @arg LL_USART_LINBREAK_DETECT_11B
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetLINBrkDetectionLen(USART_TypeDef *USARTx, uint32_t LINBDLength)
@@ -2343,13 +2343,13 @@ __STATIC_INLINE void LL_USART_SetLINBrkDetectionLen(USART_TypeDef *USARTx, uint3
 
 /**
   * @brief  Return LIN Break Detection Length
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LBDL          LL_USART_GetLINBrkDetectionLen
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_LINBREAK_DETECT_10B
-  *         @arg @ref LL_USART_LINBREAK_DETECT_11B
+  * @arg LL_USART_LINBREAK_DETECT_10B
+  * @arg LL_USART_LINBREAK_DETECT_11B
   */
 __STATIC_INLINE uint32_t LL_USART_GetLINBrkDetectionLen(USART_TypeDef *USARTx)
 {
@@ -2358,7 +2358,7 @@ __STATIC_INLINE uint32_t LL_USART_GetLINBrkDetectionLen(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable LIN mode
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LINEN         LL_USART_EnableLIN
   * @param  USARTx USART Instance
@@ -2371,7 +2371,7 @@ __STATIC_INLINE void LL_USART_EnableLIN(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable LIN mode
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LINEN         LL_USART_DisableLIN
   * @param  USARTx USART Instance
@@ -2384,7 +2384,7 @@ __STATIC_INLINE void LL_USART_DisableLIN(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if LIN mode is enabled
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LINEN         LL_USART_IsEnabledLIN
   * @param  USARTx USART Instance
@@ -2405,7 +2405,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledLIN(USART_TypeDef *USARTx)
 
 /**
   * @brief  Set DEDT (Driver Enable De-Assertion Time), Time value expressed on 5 bits ([4:0] bits).
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR1          DEDT          LL_USART_SetDEDeassertionTime
   * @param  USARTx USART Instance
@@ -2419,7 +2419,7 @@ __STATIC_INLINE void LL_USART_SetDEDeassertionTime(USART_TypeDef *USARTx, uint32
 
 /**
   * @brief  Return DEDT (Driver Enable De-Assertion Time)
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR1          DEDT          LL_USART_GetDEDeassertionTime
   * @param  USARTx USART Instance
@@ -2432,7 +2432,7 @@ __STATIC_INLINE uint32_t LL_USART_GetDEDeassertionTime(USART_TypeDef *USARTx)
 
 /**
   * @brief  Set DEAT (Driver Enable Assertion Time), Time value expressed on 5 bits ([4:0] bits).
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR1          DEAT          LL_USART_SetDEAssertionTime
   * @param  USARTx USART Instance
@@ -2446,7 +2446,7 @@ __STATIC_INLINE void LL_USART_SetDEAssertionTime(USART_TypeDef *USARTx, uint32_t
 
 /**
   * @brief  Return DEAT (Driver Enable Assertion Time)
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR1          DEAT          LL_USART_GetDEAssertionTime
   * @param  USARTx USART Instance
@@ -2459,7 +2459,7 @@ __STATIC_INLINE uint32_t LL_USART_GetDEAssertionTime(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Driver Enable (DE) Mode
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR3          DEM           LL_USART_EnableDEMode
   * @param  USARTx USART Instance
@@ -2472,7 +2472,7 @@ __STATIC_INLINE void LL_USART_EnableDEMode(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Driver Enable (DE) Mode
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR3          DEM           LL_USART_DisableDEMode
   * @param  USARTx USART Instance
@@ -2485,7 +2485,7 @@ __STATIC_INLINE void LL_USART_DisableDEMode(USART_TypeDef *USARTx)
 
 /**
   * @brief  Indicate if Driver Enable (DE) Mode is enabled
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR3          DEM           LL_USART_IsEnabledDEMode
   * @param  USARTx USART Instance
@@ -2498,13 +2498,13 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledDEMode(USART_TypeDef *USARTx)
 
 /**
   * @brief  Select Driver Enable Polarity
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR3          DEP           LL_USART_SetDESignalPolarity
   * @param  USARTx USART Instance
   * @param  Polarity This parameter can be one of the following values:
-  *         @arg @ref LL_USART_DE_POLARITY_HIGH
-  *         @arg @ref LL_USART_DE_POLARITY_LOW
+  * @arg LL_USART_DE_POLARITY_HIGH
+  * @arg LL_USART_DE_POLARITY_LOW
   * @retval None
   */
 __STATIC_INLINE void LL_USART_SetDESignalPolarity(USART_TypeDef *USARTx, uint32_t Polarity)
@@ -2514,13 +2514,13 @@ __STATIC_INLINE void LL_USART_SetDESignalPolarity(USART_TypeDef *USARTx, uint32_
 
 /**
   * @brief  Return Driver Enable Polarity
-  * @note   Macro @ref IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_DRIVER_ENABLE_INSTANCE(USARTx) can be used to check whether or not
   *         Driver Enable feature is supported by the USARTx instance.
   * @rmtoll CR3          DEP           LL_USART_GetDESignalPolarity
   * @param  USARTx USART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_USART_DE_POLARITY_HIGH
-  *         @arg @ref LL_USART_DE_POLARITY_LOW
+  * @arg LL_USART_DE_POLARITY_HIGH
+  * @arg LL_USART_DE_POLARITY_LOW
   */
 __STATIC_INLINE uint32_t LL_USART_GetDESignalPolarity(USART_TypeDef *USARTx)
 {
@@ -2577,7 +2577,7 @@ __STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx)
   *           - IREN bit in the USART_CR3 register,
   *           - HDSEL bit in the USART_CR3 register.
   *         This function also sets the USART in Synchronous mode.
-  * @note   Macro @ref IS_USART_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_USART_INSTANCE(USARTx) can be used to check whether or not
   *         Synchronous mode is supported by the USARTx instance.
   * @note   Call of this function is equivalent to following function call sequence :
   *         - Clear LINEN in CR2 using @ref LL_USART_DisableLIN() function
@@ -2615,7 +2615,7 @@ __STATIC_INLINE void LL_USART_ConfigSyncMode(USART_TypeDef *USARTx)
   *           - IREN bit in the USART_CR3 register,
   *           - HDSEL bit in the USART_CR3 register.
   *         This function also set the UART/USART in LIN mode.
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @note   Call of this function is equivalent to following function call sequence :
   *         - Clear CLKEN in CR2 using @ref LL_USART_DisableSCLKOutput() function
@@ -2655,7 +2655,7 @@ __STATIC_INLINE void LL_USART_ConfigLINMode(USART_TypeDef *USARTx)
   *           - SCEN bit in the USART_CR3 register,
   *           - IREN bit in the USART_CR3 register,
   *         This function also sets the UART/USART in Half Duplex mode.
-  * @note   Macro @ref IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HALFDUPLEX_INSTANCE(USARTx) can be used to check whether or not
   *         Half-Duplex mode is supported by the USARTx instance.
   * @note   Call of this function is equivalent to following function call sequence :
   *         - Clear LINEN in CR2 using @ref LL_USART_DisableLIN() function
@@ -2694,7 +2694,7 @@ __STATIC_INLINE void LL_USART_ConfigHalfDuplexMode(USART_TypeDef *USARTx)
   *         This function also configures Stop bits to 1.5 bits and
   *         sets the USART in Smartcard mode (SCEN bit).
   *         Clock Output is also enabled (CLKEN).
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @note   Call of this function is equivalent to following function call sequence :
   *         - Clear LINEN in CR2 using @ref LL_USART_DisableLIN() function
@@ -2872,7 +2872,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_IDLE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART Read Data Register or USART RX FIFO Not Empty Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          RXNE_RXFNE    LL_USART_IsActiveFlag_RXNE_RXFNE
   * @param  USARTx USART Instance
@@ -2899,7 +2899,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TC(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART Transmit Data Register Empty or USART TX FIFO Not Full Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          TXE_TXFNF     LL_USART_IsActiveFlag_TXE_TXFNF
   * @param  USARTx USART Instance
@@ -2912,7 +2912,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXE_TXFNF(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART LIN Break Detection Flag is set or not
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll ISR          LBDF          LL_USART_IsActiveFlag_LBD
   * @param  USARTx USART Instance
@@ -2925,7 +2925,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_LBD(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART CTS interrupt Flag is set or not
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll ISR          CTSIF         LL_USART_IsActiveFlag_nCTS
   * @param  USARTx USART Instance
@@ -2938,7 +2938,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_nCTS(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART CTS Flag is set or not
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll ISR          CTS           LL_USART_IsActiveFlag_CTS
   * @param  USARTx USART Instance
@@ -2962,7 +2962,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RTO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART End Of Block Flag is set or not
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll ISR          EOBF          LL_USART_IsActiveFlag_EOB
   * @param  USARTx USART Instance
@@ -2975,7 +2975,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_EOB(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the SPI Slave Underrun error flag is set or not
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll ISR          UDR           LL_USART_IsActiveFlag_UDR
   * @param  USARTx USART Instance
@@ -3080,7 +3080,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_REACK(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART TX FIFO Empty Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          TXFE          LL_USART_IsActiveFlag_TXFE
   * @param  USARTx USART Instance
@@ -3093,7 +3093,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXFE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART RX FIFO Full Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          RXFF          LL_USART_IsActiveFlag_RXFF
   * @param  USARTx USART Instance
@@ -3117,7 +3117,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TCBGT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART TX FIFO Threshold Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          TXFT          LL_USART_IsActiveFlag_TXFT
   * @param  USARTx USART Instance
@@ -3130,7 +3130,7 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXFT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART RX FIFO Threshold Flag is set or not
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ISR          RXFT          LL_USART_IsActiveFlag_RXFT
   * @param  USARTx USART Instance
@@ -3198,7 +3198,7 @@ __STATIC_INLINE void LL_USART_ClearFlag_IDLE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Clear TX FIFO Empty Flag
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll ICR          TXFECF        LL_USART_ClearFlag_TXFE
   * @param  USARTx USART Instance
@@ -3233,7 +3233,7 @@ __STATIC_INLINE void LL_USART_ClearFlag_TCBGT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Clear LIN Break Detection Flag
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll ICR          LBDCF         LL_USART_ClearFlag_LBD
   * @param  USARTx USART Instance
@@ -3246,7 +3246,7 @@ __STATIC_INLINE void LL_USART_ClearFlag_LBD(USART_TypeDef *USARTx)
 
 /**
   * @brief  Clear CTS Interrupt Flag
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll ICR          CTSCF         LL_USART_ClearFlag_nCTS
   * @param  USARTx USART Instance
@@ -3270,7 +3270,7 @@ __STATIC_INLINE void LL_USART_ClearFlag_RTO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Clear End Of Block Flag
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll ICR          EOBCF         LL_USART_ClearFlag_EOB
   * @param  USARTx USART Instance
@@ -3283,7 +3283,7 @@ __STATIC_INLINE void LL_USART_ClearFlag_EOB(USART_TypeDef *USARTx)
 
 /**
   * @brief  Clear SPI Slave Underrun Flag
-  * @note   Macro @ref IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_SPI_SLAVE_INSTANCE(USARTx) can be used to check whether or not
   *         SPI Slave mode feature is supported by the USARTx instance.
   * @rmtoll ICR          UDRCF         LL_USART_ClearFlag_UDR
   * @param  USARTx USART Instance
@@ -3329,7 +3329,7 @@ __STATIC_INLINE void LL_USART_EnableIT_IDLE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable RX Not Empty and RX FIFO Not Empty Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1        RXNEIE_RXFNEIE  LL_USART_EnableIT_RXNE_RXFNE
   * @param  USARTx USART Instance
@@ -3356,7 +3356,7 @@ __STATIC_INLINE void LL_USART_EnableIT_TC(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable TX Empty and TX FIFO Not Full Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1         TXEIE_TXFNFIE  LL_USART_EnableIT_TXE_TXFNF
   * @param  USARTx USART Instance
@@ -3402,7 +3402,7 @@ __STATIC_INLINE void LL_USART_EnableIT_RTO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable End Of Block Interrupt
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR1          EOBIE         LL_USART_EnableIT_EOB
   * @param  USARTx USART Instance
@@ -3415,7 +3415,7 @@ __STATIC_INLINE void LL_USART_EnableIT_EOB(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable TX FIFO Empty Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          TXFEIE        LL_USART_EnableIT_TXFE
   * @param  USARTx USART Instance
@@ -3439,7 +3439,7 @@ __STATIC_INLINE void LL_USART_EnableIT_RXFF(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable LIN Break Detection Interrupt
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LBDIE         LL_USART_EnableIT_LBD
   * @param  USARTx USART Instance
@@ -3467,7 +3467,7 @@ __STATIC_INLINE void LL_USART_EnableIT_ERROR(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable CTS Interrupt
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          CTSIE         LL_USART_EnableIT_CTS
   * @param  USARTx USART Instance
@@ -3480,7 +3480,7 @@ __STATIC_INLINE void LL_USART_EnableIT_CTS(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable TX FIFO Threshold Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTIE        LL_USART_EnableIT_TXFT
   * @param  USARTx USART Instance
@@ -3493,7 +3493,7 @@ __STATIC_INLINE void LL_USART_EnableIT_TXFT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable Smartcard Transmission Complete Before Guard Time Interrupt
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          TCBGTIE       LL_USART_EnableIT_TCBGT
   * @param  USARTx USART Instance
@@ -3506,7 +3506,7 @@ __STATIC_INLINE void LL_USART_EnableIT_TCBGT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Enable RX FIFO Threshold Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          RXFTIE        LL_USART_EnableIT_RXFT
   * @param  USARTx USART Instance
@@ -3533,7 +3533,7 @@ __STATIC_INLINE void LL_USART_DisableIT_IDLE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable RX Not Empty and RX FIFO Not Empty Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1        RXNEIE_RXFNEIE  LL_USART_DisableIT_RXNE_RXFNE
   * @param  USARTx USART Instance
@@ -3560,7 +3560,7 @@ __STATIC_INLINE void LL_USART_DisableIT_TC(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable TX Empty and TX FIFO Not Full Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1        TXEIE_TXFNFIE  LL_USART_DisableIT_TXE_TXFNF
   * @param  USARTx USART Instance
@@ -3606,7 +3606,7 @@ __STATIC_INLINE void LL_USART_DisableIT_RTO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable End Of Block Interrupt
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR1          EOBIE         LL_USART_DisableIT_EOB
   * @param  USARTx USART Instance
@@ -3619,7 +3619,7 @@ __STATIC_INLINE void LL_USART_DisableIT_EOB(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable TX FIFO Empty Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          TXFEIE        LL_USART_DisableIT_TXFE
   * @param  USARTx USART Instance
@@ -3632,7 +3632,7 @@ __STATIC_INLINE void LL_USART_DisableIT_TXFE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable RX FIFO Full Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          RXFFIE        LL_USART_DisableIT_RXFF
   * @param  USARTx USART Instance
@@ -3645,7 +3645,7 @@ __STATIC_INLINE void LL_USART_DisableIT_RXFF(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable LIN Break Detection Interrupt
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LBDIE         LL_USART_DisableIT_LBD
   * @param  USARTx USART Instance
@@ -3673,7 +3673,7 @@ __STATIC_INLINE void LL_USART_DisableIT_ERROR(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable CTS Interrupt
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          CTSIE         LL_USART_DisableIT_CTS
   * @param  USARTx USART Instance
@@ -3686,7 +3686,7 @@ __STATIC_INLINE void LL_USART_DisableIT_CTS(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable TX FIFO Threshold Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTIE        LL_USART_DisableIT_TXFT
   * @param  USARTx USART Instance
@@ -3699,7 +3699,7 @@ __STATIC_INLINE void LL_USART_DisableIT_TXFT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable Smartcard Transmission Complete Before Guard Time Interrupt
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          TCBGTIE       LL_USART_DisableIT_TCBGT
   * @param  USARTx USART Instance
@@ -3712,7 +3712,7 @@ __STATIC_INLINE void LL_USART_DisableIT_TCBGT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Disable RX FIFO Threshold Interrupt
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          RXFTIE        LL_USART_DisableIT_RXFT
   * @param  USARTx USART Instance
@@ -3739,7 +3739,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_IDLE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART RX Not Empty and USART RX FIFO Not Empty Interrupt is enabled or disabled.
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1        RXNEIE_RXFNEIE  LL_USART_IsEnabledIT_RXNE_RXFNE
   * @param  USARTx USART Instance
@@ -3766,7 +3766,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TC(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART TX Empty and USART TX FIFO Not Full Interrupt is enabled or disabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1         TXEIE_TXFNFIE  LL_USART_IsEnabledIT_TXE_TXFNF
   * @param  USARTx USART Instance
@@ -3812,7 +3812,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_RTO(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART End Of Block Interrupt is enabled or disabled.
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR1          EOBIE         LL_USART_IsEnabledIT_EOB
   * @param  USARTx USART Instance
@@ -3825,7 +3825,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_EOB(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART TX FIFO Empty Interrupt is enabled or disabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          TXFEIE        LL_USART_IsEnabledIT_TXFE
   * @param  USARTx USART Instance
@@ -3838,7 +3838,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TXFE(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART RX FIFO Full Interrupt is enabled or disabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR1          RXFFIE        LL_USART_IsEnabledIT_RXFF
   * @param  USARTx USART Instance
@@ -3851,7 +3851,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_RXFF(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART LIN Break Detection Interrupt is enabled or disabled.
-  * @note   Macro @ref IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_LIN_INSTANCE(USARTx) can be used to check whether or not
   *         LIN feature is supported by the USARTx instance.
   * @rmtoll CR2          LBDIE         LL_USART_IsEnabledIT_LBD
   * @param  USARTx USART Instance
@@ -3875,7 +3875,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_ERROR(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the USART CTS Interrupt is enabled or disabled.
-  * @note   Macro @ref IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_HWFLOW_INSTANCE(USARTx) can be used to check whether or not
   *         Hardware Flow control feature is supported by the USARTx instance.
   * @rmtoll CR3          CTSIE         LL_USART_IsEnabledIT_CTS
   * @param  USARTx USART Instance
@@ -3888,7 +3888,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_CTS(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if USART TX FIFO Threshold Interrupt is enabled or disabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          TXFTIE        LL_USART_IsEnabledIT_TXFT
   * @param  USARTx USART Instance
@@ -3901,7 +3901,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TXFT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if the Smartcard Transmission Complete Before Guard Time Interrupt is enabled or disabled.
-  * @note   Macro @ref IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_SMARTCARD_INSTANCE(USARTx) can be used to check whether or not
   *         Smartcard feature is supported by the USARTx instance.
   * @rmtoll CR3          TCBGTIE       LL_USART_IsEnabledIT_TCBGT
   * @param  USARTx USART Instance
@@ -3914,7 +3914,7 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TCBGT(USART_TypeDef *USARTx)
 
 /**
   * @brief  Check if USART RX FIFO Threshold Interrupt is enabled or disabled
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll CR3          RXFTIE        LL_USART_IsEnabledIT_RXFT
   * @param  USARTx USART Instance
@@ -4038,8 +4038,8 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledDMADeactOnRxErr(USART_TypeDef *USARTx
   * @rmtoll TDR          TDR           LL_USART_DMA_GetRegAddr
   * @param  USARTx USART Instance
   * @param  Direction This parameter can be one of the following values:
-  *         @arg @ref LL_USART_DMA_REG_DATA_TRANSMIT
-  *         @arg @ref LL_USART_DMA_REG_DATA_RECEIVE
+  * @arg LL_USART_DMA_REG_DATA_TRANSMIT
+  * @arg LL_USART_DMA_REG_DATA_RECEIVE
   * @retval Address of data register
   */
 __STATIC_INLINE uint32_t LL_USART_DMA_GetRegAddr(USART_TypeDef *USARTx, uint32_t Direction)
@@ -4159,7 +4159,7 @@ __STATIC_INLINE void LL_USART_RequestEnterMuteMode(USART_TypeDef *USARTx)
 
 /**
   * @brief  Request a Receive Data and FIFO flush
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @note   Allows to discard the received data without reading them, and avoid an overrun
   *         condition.
@@ -4174,7 +4174,7 @@ __STATIC_INLINE void LL_USART_RequestRxDataFlush(USART_TypeDef *USARTx)
 
 /**
   * @brief  Request a Transmit data and FIFO flush
-  * @note   Macro @ref IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
+  * @note   Macro IS_UART_FIFO_INSTANCE(USARTx) can be used to check whether or not
   *         FIFO mode feature is supported by the USARTx instance.
   * @rmtoll RQR          TXFRQ         LL_USART_RequestTxDataFlush
   * @param  USARTx USART Instance

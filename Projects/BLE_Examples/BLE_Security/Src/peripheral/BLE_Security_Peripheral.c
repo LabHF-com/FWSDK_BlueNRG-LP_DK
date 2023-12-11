@@ -466,6 +466,7 @@ void APP_Tick(void)
       else
       {
         PRINTF("aci_gap_configure_white_and_resolving_list() --> SUCCESS\r\n");
+        advertising_filter = ADV_WHITE_LIST_FOR_ALL; /* filter on whitelist */
       }
     }
     
@@ -474,9 +475,7 @@ void APP_Tick(void)
   }
   
   if (APP_FLAG(START_TERMINATE_LINK_FLAG))
-  {
-    advertising_filter = ADV_WHITE_LIST_FOR_ALL; /* filter on whitelist */
-    
+  {    
     ret = aci_gap_terminate(connection_handle,0x13);
     if (ret != BLE_STATUS_SUCCESS) {
       PRINTF("aci_gap_terminate() failed:0x%02x\r\n", ret);
@@ -613,9 +612,7 @@ void hci_disconnection_complete_event(uint8_t Status,
   APP_FLAG_SET(SET_CONNECTABLE);
   APP_FLAG_CLEAR(NOTIFICATIONS_ENABLED);
   APP_FLAG_CLEAR(TX_BUFFER_FULL);
-  PRINTF("Disconnection, Reason: 0x%02x\r\n",Reason); 
-
-  advertising_filter = ADV_WHITE_LIST_FOR_ALL; /* filter on whitelist */
+  PRINTF("Disconnection, Reason: 0x%02x\r\n",Reason);
 
 }/* end hci_disconnection_complete_event() */
 

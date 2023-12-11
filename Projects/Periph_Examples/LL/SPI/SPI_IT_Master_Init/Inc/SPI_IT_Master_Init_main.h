@@ -85,7 +85,7 @@ void SPI_MASTER_TransferError_Callback(void);
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 
@@ -112,6 +112,7 @@ void SPI_MASTER_TransferError_Callback(void);
 #define LED2_GPIO_PORT                          GPIOB
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
+
 
 
 
@@ -183,7 +184,7 @@ void SPI_MASTER_TransferError_Callback(void);
 #endif /* STEVAL_IDB011V1 */
 
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
     /** GPIO Configuration
     PB3/AF4    ------> SPI3_SCK
     PA8/AF3    ------> SPI3_MISO
@@ -208,7 +209,7 @@ void SPI_MASTER_TransferError_Callback(void);
 #define LL_DMAMUX_REQ_SPI_MASTER_TX             LL_DMAMUX_REQ_SPI3_TX
 #define LL_DMAMUX_REQ_SPI_MASTER_RX             LL_DMAMUX_REQ_SPI3_RX
 
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 

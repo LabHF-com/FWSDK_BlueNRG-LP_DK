@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : FLASH_EraseProgram_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -142,23 +144,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                STEVAL-IDB011V1                               |                                STEVAL-IDB011V2                               |                                STEVAL-IDB012V1                               |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |
-|     DL2    |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |
-|     DL3    |                            ON: program is running                            |                            ON: program is running                            |                            ON: program is running                            |
-|     DL4    |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |
-|     U5     |                       ON: errors after data programming                      |                       ON: errors after data programming                      |                       ON: errors after data programming                      |
+|  LED name  |                                STEVAL-IDB010V1                               |                                STEVAL-IDB011V1                               |                                STEVAL-IDB011V2                               |                                STEVAL-IDB012V1                               |                                STEVAL-IDB013V1                               |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |
+|     DL2    |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |  ON: no errors after data programming - Fast Blinking: wait for user action  |
+|     DL3    |                       ON: errors after data programming                      |                       ON: errors after data programming                      |                       ON: errors after data programming                      |                       ON: errors after data programming                      |                       ON: errors after data programming                      |
+|     DL4    |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |
+|     U5     |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |                                   Not Used                                   |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |
-------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   it is used to start application  |   it is used to start application  |   it is used to start application  |
-|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |
-|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |
+|   BUTTON name  |           STEVAL-IDB010V1          |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |           STEVAL-IDB013V1          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   it is used to start application  |   it is used to start application  |   it is used to start application  |   it is used to start application  |   it is used to start application  |
+|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
+|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LPS         |          Reset BlueNRG-LPS         |
 
 @endtable
 
@@ -212,13 +214,14 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
-#define FLASH_USER_START_ADDR   (FLASH_END_ADDR - FLASH_PAGE_SIZE + 1)   
-#define FLASH_USER_END_ADDR     (FLASH_END_ADDR + 1)
-#define DATA_32                 ((uint32_t)0x12345678)
+#define FLASH_USER_START_ADDR    (FLASH_END_ADDR - FLASH_PAGE_SIZE + 1)  
+#define FLASH_USER_END_ADDR      (FLASH_END_ADDR + 1)
+#define DATA_32                  ((uint32_t)0xABCDEF12)
 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 uint32_t FirstPage = 0, NbOfPages = 0;
 uint32_t Address = 0, PageError = 0;
 __IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
@@ -227,6 +230,7 @@ __IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
 static FLASH_EraseInitTypeDef EraseInitStruct;
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_GPIO_Init(void);
 static uint32_t GetPage(uint32_t Address);
 
@@ -239,7 +243,7 @@ static uint32_t GetPage(uint32_t Address);
 int main(void)
 {
   /* System initialization function */
-  if (SystemInit(SYSCLK_32M, RADIO_SYSCLK_NONE) != SUCCESS)
+  if (SystemInit(SYSCLK_64M, RADIO_SYSCLK_NONE) != SUCCESS)
   {
     /* Error during system clock configuration take appropriate action */
     while(1);
@@ -248,19 +252,18 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   
-  /* Initialize LED1, LED2 and LED3 */
-  BSP_LED_Init(BSP_LED1);
+  /* Initialize LEDs */
   BSP_LED_Init(BSP_LED2);
   BSP_LED_Init(BSP_LED3);
   
@@ -270,8 +273,10 @@ int main(void)
   /* Wait for User push-button (PUSH1) press to trigger random numbers generation */
   WaitForUserButtonPress();
   
+  Address = FLASH_USER_START_ADDR;
+  
   /* Get the 1st page to erase */
-  FirstPage = GetPage(FLASH_USER_START_ADDR);
+  FirstPage = GetPage(Address);
   
   /* Get the number of pages to erase from 1st page */
   NbOfPages = GetPage(FLASH_USER_END_ADDR) - FirstPage;
@@ -290,7 +295,7 @@ int main(void)
   printf("FLASH_USER_END_ADDR   0x%08X \n\r ", FLASH_USER_END_ADDR);
   printf("FirstPage               %d \n\r ", FirstPage);
   printf("NbOfPages               %d \n\r ", NbOfPages);
-
+  
   if (HAL_FLASHEx_Erase(&EraseInitStruct, &PageError) != HAL_OK)
   {
     /*
@@ -310,7 +315,6 @@ int main(void)
   /* Program the user Flash area word by word
   (area defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR) ***********/
   printf("Program the user Flash area word by word.\n\r");
-  Address = FLASH_USER_START_ADDR;
   
   while (Address < FLASH_USER_END_ADDR)
   {
@@ -355,12 +359,14 @@ int main(void)
     /* No error detected. Switch on LED2*/
     printf("No error detected.\n\r");
     BSP_LED_On(BSP_LED2);
+    printf("** Test successfully. ** \n\r\n\r");
   }
   else
   {
-    /* Error detected. Switch on LED1*/
+    /* Error detected. */
     printf("Error detected.\n\r");
-    BSP_LED_On(BSP_LED1);
+    BSP_LED_On(BSP_LED3);
+    Error_Handler();
   }
   
   /* Infinite loop */
@@ -389,16 +395,17 @@ void WaitForUserButtonPress(void)
 {
   printf("Wait for User push-button (PUSH1) press to start the application.\n\r");
   /* Wait for User push-button (PUSH1) press before starting the Communication */
-  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_RESET)
+  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_RESET && pressCToContinue == 0)
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(200);
   }
-  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_SET)
+  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_SET && pressCToContinue == 0)
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(200);
   }
+  pressCToContinue = 0;
   printf("PUSH1 pressed.\n\r");
 }
 
@@ -417,6 +424,18 @@ static uint32_t GetPage(uint32_t Addr)
     while(1);
   }
   return page;
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
 }
 
 /**

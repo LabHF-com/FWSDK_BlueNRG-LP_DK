@@ -43,18 +43,22 @@
 /* Additional number of memory blocks  to be added to the minimum */
 #define OPT_MBLOCKS_CONF		(38)
 
+/* Number of EATT channels */
+#define NUM_EATT_CHANNELS                           (0U)
+
 /* Set the number of memory block for packet allocation */
-#define MBLOCKS_COUNT           (BLE_STACK_MBLOCKS_CALC(MAX_ATT_MTU_CONF, NUM_LINKS) + OPT_MBLOCKS_CONF)
+#define MBLOCKS_COUNT            (BLE_STACK_MBLOCKS_CALC(MAX_ATT_MTU_CONF, NUM_LINKS, NUM_EATT_CHANNELS) + OPT_MBLOCKS_CONF)
 
 #define NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF              (MAX_NUM_SLAVES)
 
 /* RAM reserved to manage all the data stack according the number of links,
  * number of services, number of attributes and attribute value length
  */
-#define DYNAMIC_MEMORY_SIZE (BLE_STACK_TOTAL_BUFFER_SIZE(NUM_LINKS,NUM_GATT_ATTRIBUTES,NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,MBLOCKS_COUNT,\
+#define DYNAMIC_MEMORY_SIZE (BLE_STACK_TOTAL_BUFFER_SIZE(NUM_LINKS,NUM_EATT_CHANNELS,NUM_GATT_ATTRIBUTES,NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,MBLOCKS_COUNT,\
                                                          NUM_ADV_SETS_CONF,NUM_AUX_SCAN_SLOTS_CONF,WHITE_LIST_SIZE_LOG2_CONF,NUM_L2CAP_COCS_CONF,\
                                                          NUM_SYNC_SLOTS_CONF, MAX_NUM_CTE_ANTENNA_IDS, MAX_NUM_CTE_IQ_SAMPLES, \
-                                                         ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE)) 
+                                                         ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE))
+
 
 
 /* Maximum duration of the connection event */
@@ -96,6 +100,7 @@ extern uint8_t hot_table_radio_config[];
     .NumAttrRecords = NUM_GATT_ATTRIBUTES,                                      \
     .MaxNumOfClientProcs = NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,             \
     .NumOfLinks = NUM_LINKS,                                                    \
+    .NumOfEATTChannels = NUM_EATT_CHANNELS,                                     \
     .NumBlockCount = MBLOCKS_COUNT,                                             \
     .ATT_MTU = MAX_ATT_MTU_CONF,                                                \
     .MaxConnEventLength = MAX_CONN_EVENT_LENGTH_CONF,                           \

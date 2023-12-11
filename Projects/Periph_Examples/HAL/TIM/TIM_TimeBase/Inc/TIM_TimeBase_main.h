@@ -59,13 +59,13 @@ void Error_Handler(void);
 #define DisableClock_TIMx()             __HAL_RCC_TIM1_CLK_DISABLE()
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 #define TIMx                            TIM2
 #define TIMx_IRQn                       TIM2_IRQn
 #define TIMx_IRQHandler                 TIM2_IRQHandler
 #define EnableClock_TIMx()              __HAL_RCC_TIM2_CLK_ENABLE()
 #define DisableClock_TIMx()             __HAL_RCC_TIM2_CLK_DISABLE()
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 /* Compute the prescaler value to have TIMx counter clock equal to 10000 Hz */

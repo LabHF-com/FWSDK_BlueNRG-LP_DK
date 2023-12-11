@@ -58,7 +58,7 @@ extern "C" {
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 
@@ -100,6 +100,7 @@ void UserButton_Callback(void);
 
 
 
+
 #ifdef STEVAL_IDB011V1
   /**USART1 GPIO Configuration  
   PA9  AF0   ------> USART1_TX      
@@ -129,6 +130,7 @@ void UserButton_Callback(void);
 #define USART1_TX_AF                            LL_GPIO_AF_2
 #define LL_EnableClock_USART()                  LL_APB1_EnableClock(LL_APB1_PERIPH_USART)
 #endif /* STEVAL_IDB012V1 */
+
 
 #ifdef __cplusplus
 }

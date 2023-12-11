@@ -140,11 +140,8 @@ typedef struct
 #if defined(RCC_CIFR_LPURSTF)
 #define LL_RCC_CIFR_LPURSTRELF            RCC_CIFR_LPURSTF  /*!< LPUART Reset Release Interrupt Flag/Clear */
 #endif
-#if defined(RCC_CIFR_LCDRSTF)
-#define LL_RCC_CIFR_LCDRSTRELF            RCC_CIFR_LCDRSTF           /*!< LCD Reset Release Interrupt Flag/Clear   */
-#endif
-#if defined(RCC_CIFR_SCIRSTF)
-#define LL_RCC_CIFR_SCIRSTRELF            RCC_CIFR_SCIRSTF           /*!< SCI Reset Release Interrupt Flag/Clear   */
+#if defined(RCC_CIFR_LCSCRSTF)
+#define LL_RCC_CIFR_LCSCRSTRELF            RCC_CIFR_LCSCRSTF           /*!< LCSC Reset Release Interrupt Flag/Clear   */
 #endif
 /**
   * @}
@@ -500,14 +497,14 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetCapacitorTuning(void)
   * @brief  Set HSE current control
   * @rmtoll RFSWHSECR        GMC       LL_RCC_HSE_SetCurrentControl
   * @param  CurrentMax This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_0
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_1
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_2
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_3
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_4
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_5
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_6
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_7
+  * @arg LL_RCC_HSE_CURRENTMAX_0
+  * @arg LL_RCC_HSE_CURRENTMAX_1
+  * @arg LL_RCC_HSE_CURRENTMAX_2
+  * @arg LL_RCC_HSE_CURRENTMAX_3
+  * @arg LL_RCC_HSE_CURRENTMAX_4
+  * @arg LL_RCC_HSE_CURRENTMAX_5
+  * @arg LL_RCC_HSE_CURRENTMAX_6
+  * @arg LL_RCC_HSE_CURRENTMAX_7
   */
 __STATIC_INLINE void LL_RCC_HSE_SetCurrentControl(uint32_t CurrentMax)
 {
@@ -518,14 +515,14 @@ __STATIC_INLINE void LL_RCC_HSE_SetCurrentControl(uint32_t CurrentMax)
   * @brief  Get HSE current control
   * @rmtoll RFSWHSECR       GMC       LL_RCC_HSE_GetCurrentControl
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_0
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_1
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_2
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_3
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_4
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_5
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_6
-  *         @arg @ref LL_RCC_HSE_CURRENTMAX_7
+  * @arg LL_RCC_HSE_CURRENTMAX_0
+  * @arg LL_RCC_HSE_CURRENTMAX_1
+  * @arg LL_RCC_HSE_CURRENTMAX_2
+  * @arg LL_RCC_HSE_CURRENTMAX_3
+  * @arg LL_RCC_HSE_CURRENTMAX_4
+  * @arg LL_RCC_HSE_CURRENTMAX_5
+  * @arg LL_RCC_HSE_CURRENTMAX_6
+  * @arg LL_RCC_HSE_CURRENTMAX_7
   */
 __STATIC_INLINE uint32_t LL_RCC_HSE_GetCurrentControl(void)
 {
@@ -539,8 +536,8 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetCurrentControl(void)
   * @brief  Set HSE sense amplifier threshold
   * @rmtoll RFSWHSECR        SATRG       LL_RCC_HSE_SetSenseAmplifier
   * @param  SenseAmplifier This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_HSEAMPTHRESHOLD_1_2
-  *         @arg @ref LL_RCC_HSEAMPTHRESHOLD_3_4
+  * @arg LL_RCC_HSEAMPTHRESHOLD_1_2
+  * @arg LL_RCC_HSEAMPTHRESHOLD_3_4
   */
 __STATIC_INLINE void LL_RCC_HSE_SetSenseAmplifier(uint32_t SenseAmplifier)
 {
@@ -551,8 +548,8 @@ __STATIC_INLINE void LL_RCC_HSE_SetSenseAmplifier(uint32_t SenseAmplifier)
   * @brief  Get HSE current control
   * @rmtoll RFSWHSECR        SATRG       LL_RCC_HSE_GetSenseAmplifier
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_HSEAMPTHRESHOLD_1_2
-  *         @arg @ref LL_RCC_HSEAMPTHRESHOLD_3_4
+  * @arg LL_RCC_HSEAMPTHRESHOLD_1_2
+  * @arg LL_RCC_HSEAMPTHRESHOLD_3_4
   */
 __STATIC_INLINE uint32_t LL_RCC_HSE_GetSenseAmplifier(void)
 {
@@ -568,7 +565,7 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetSenseAmplifier(void)
   */
 __STATIC_INLINE void LL_RCC_HSE_SetStartupCurrent(uint32_t StartupCurrent)
 {
-  MODIFY_REG(RCC->RFSWHSECR, RCC_RFSWHSECR_ISTARTUP, StartupCurrent);
+  MODIFY_REG_FIELD(RCC->RFSWHSECR, RCC_RFSWHSECR_ISTARTUP, StartupCurrent);
 }
 
 /**
@@ -578,7 +575,7 @@ __STATIC_INLINE void LL_RCC_HSE_SetStartupCurrent(uint32_t StartupCurrent)
   */
 __STATIC_INLINE uint32_t LL_RCC_HSE_GetStartupCurrent(void)
 {
-  return (uint32_t)(READ_BIT(RCC->RFSWHSECR, RCC_RFSWHSECR_ISTARTUP));
+  return (uint32_t)(READ_REG_FIELD(RCC->RFSWHSECR, RCC_RFSWHSECR_ISTARTUP));
 }
 #endif
 #if defined(RCC_RFSWHSECR_AMPLTHRESH)
@@ -589,7 +586,7 @@ __STATIC_INLINE uint32_t LL_RCC_HSE_GetStartupCurrent(void)
   */
 __STATIC_INLINE void LL_RCC_HSE_SetAmplitudeThreshold(uint32_t AmplThr)
 {
-  MODIFY_REG(RCC->RFSWHSECR, RCC_RFSWHSECR_AMPLTHRESH, AmplThr);
+  MODIFY_REG_FIELD(RCC->RFSWHSECR, RCC_RFSWHSECR_AMPLTHRESH, AmplThr);
 }
 
 /**
@@ -599,7 +596,7 @@ __STATIC_INLINE void LL_RCC_HSE_SetAmplitudeThreshold(uint32_t AmplThr)
   */
 __STATIC_INLINE uint32_t LL_RCC_HSE_GetAmplitudeThreshold(void)
 {
-  return (uint32_t)(READ_BIT(RCC->RFSWHSECR, RCC_RFSWHSECR_AMPLTHRESH));
+  return (uint32_t)(READ_REG_FIELD(RCC->RFSWHSECR, RCC_RFSWHSECR_AMPLTHRESH));
 }
 #endif
 /**
@@ -717,9 +714,9 @@ __STATIC_INLINE uint32_t LL_RCC_Get_DIRECT_HSESEL_Status(void)
   * @brief  Configure Low speed clock selection
   * @rmtoll CFGR         CLKSLOWSEL       LL_RCC_LSCO_SetSource
   * @param  Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_LSE
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_LSI
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_HSI64M_DIV2048
+  * @arg LL_RCC_LSCO_CLKSOURCE_LSE
+  * @arg LL_RCC_LSCO_CLKSOURCE_LSI
+  * @arg LL_RCC_LSCO_CLKSOURCE_HSI64M_DIV2048
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_LSCO_SetSource(uint32_t Source)
@@ -731,9 +728,9 @@ __STATIC_INLINE void LL_RCC_LSCO_SetSource(uint32_t Source)
   * @brief  Get Low speed clock selection
   * @rmtoll CFGR         CLKSLOWSEL       LL_RCC_LSCO_GetSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_LSE
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_LSI
-  *         @arg @ref LL_RCC_LSCO_CLKSOURCE_HSI64M_DIV2048
+  * @arg LL_RCC_LSCO_CLKSOURCE_LSE
+  * @arg LL_RCC_LSCO_CLKSOURCE_LSI
+  * @arg LL_RCC_LSCO_CLKSOURCE_HSI64M_DIV2048
   */
 __STATIC_INLINE uint32_t LL_RCC_LSCO_GetSource(void)
 {
@@ -813,10 +810,10 @@ __STATIC_INLINE void LL_RCC_LSE_DisableBypass(void)
   * @note The oscillator is in Xtal mode when it is not in bypass mode.
   * @rmtoll CSSWCR         LSEDRV        LL_RCC_LSE_SetDriveCapability
   * @param  LSEDrive This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_LSEDRIVE_LOW
-  *         @arg @ref LL_RCC_LSEDRIVE_MEDIUMLOW
-  *         @arg @ref LL_RCC_LSEDRIVE_MEDIUMHIGH
-  *         @arg @ref LL_RCC_LSEDRIVE_HIGH
+  * @arg LL_RCC_LSEDRIVE_LOW
+  * @arg LL_RCC_LSEDRIVE_MEDIUMLOW
+  * @arg LL_RCC_LSEDRIVE_MEDIUMHIGH
+  * @arg LL_RCC_LSEDRIVE_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_LSE_SetDriveCapability(uint32_t LSEDrive)
@@ -828,10 +825,10 @@ __STATIC_INLINE void LL_RCC_LSE_SetDriveCapability(uint32_t LSEDrive)
   * @brief  Get LSE oscillator drive capability
   * @rmtoll CSSWCR         LSEDRV        LL_RCC_LSE_GetDriveCapability
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_LSEDRIVE_LOW
-  *         @arg @ref LL_RCC_LSEDRIVE_MEDIUMLOW
-  *         @arg @ref LL_RCC_LSEDRIVE_MEDIUMHIGH
-  *         @arg @ref LL_RCC_LSEDRIVE_HIGH
+  * @arg LL_RCC_LSEDRIVE_LOW
+  * @arg LL_RCC_LSEDRIVE_MEDIUMLOW
+  * @arg LL_RCC_LSEDRIVE_MEDIUMHIGH
+  * @arg LL_RCC_LSEDRIVE_HIGH
   */
 __STATIC_INLINE uint32_t LL_RCC_LSE_GetDriveCapability(void)
 {
@@ -959,8 +956,8 @@ __STATIC_INLINE uint32_t LL_RCC_LSI_IsTrimmed(void)
   * @brief  Configure the system clock source
   * @rmtoll CR         HSEON            LL_RCC_SetSysClkSource
   * @param  Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_SYS_HSI
-  *         @arg @ref LL_RCC_SYS_HSE
+  * @arg LL_RCC_SYS_HSI
+  * @arg LL_RCC_SYS_HSE
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetSysClkSource(uint32_t Source)
@@ -977,8 +974,8 @@ __STATIC_INLINE void LL_RCC_SetSysClkSource(uint32_t Source)
   * @brief  Get the system clock source
   * @rmtoll CR       HSEON      LL_RCC_GetSysClkSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_SYS_HSI
-  *         @arg @ref LL_RCC_SYS_HSE
+  * @arg LL_RCC_SYS_HSI
+  * @arg LL_RCC_SYS_HSE
   */
 __STATIC_INLINE uint32_t LL_RCC_GetSysClkSource(void)
 {
@@ -993,8 +990,8 @@ __STATIC_INLINE uint32_t LL_RCC_GetSysClkSource(void)
   * @brief  Set the RF clock source
   * @rmtoll APB2ENR         CLKBLEDIV          LL_RCC_SetRFClockSource
   * @param  Source This parameter can be one of the following values (RC64MPLL_DIV2=32MHz, RC64MPLL_DIV4=16MHz):
-  *         @arg @ref LL_RCC_RF_RC64MPLL_DIV2
-  *         @arg @ref LL_RCC_RF_RC64MPLL_DIV4
+  * @arg LL_RCC_RF_RC64MPLL_DIV2
+  * @arg LL_RCC_RF_RC64MPLL_DIV4
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetRFClockSource(uint32_t Source)
@@ -1006,8 +1003,8 @@ __STATIC_INLINE void LL_RCC_SetRFClockSource(uint32_t Source)
   * @brief  Get the RF clock source
   * @rmtoll APB2ENR         CLKBLEDIV          LL_RCC_GetRFClockSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_RF_RC64MPLL_DIV2
-  *         @arg @ref LL_RCC_RF_RC64MPLL_DIV4
+  * @arg LL_RCC_RF_RC64MPLL_DIV2
+  * @arg LL_RCC_RF_RC64MPLL_DIV4
   */
 __STATIC_INLINE uint32_t LL_RCC_GetRFClockSource(void)
 {
@@ -1038,8 +1035,8 @@ __STATIC_INLINE uint32_t LL_RCC_IsRFUnderReset(void)
   * @brief  Set SMPS prescaler
   * @rmtoll CFGR         SMPSDIV          LL_RCC_SetSMPSPrescaler
   * @param  Prescaler This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_SMPS_DIV_2
-  *         @arg @ref LL_RCC_SMPS_DIV_4
+  * @arg LL_RCC_SMPS_DIV_2
+  * @arg LL_RCC_SMPS_DIV_4
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetSMPSPrescaler(uint32_t Prescaler)
@@ -1051,8 +1048,8 @@ __STATIC_INLINE void LL_RCC_SetSMPSPrescaler(uint32_t Prescaler)
   * @brief  Get SMPS prescaler
   * @rmtoll CFGR         SMPSDIV          LL_RCC_GetSMPSPrescaler
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_SMPS_DIV_2
-  *         @arg @ref LL_RCC_SMPS_DIV_4
+  * @arg LL_RCC_SMPS_DIV_2
+  * @arg LL_RCC_SMPS_DIV_4
   */
 __STATIC_INLINE uint32_t LL_RCC_GetSMPSPrescaler(void)
 {
@@ -1072,8 +1069,8 @@ __STATIC_INLINE uint32_t LL_RCC_GetSMPSPrescaler(void)
   * @brief  Set LPUART Clock source
   * @rmtoll CFGR         LPUCLKSEL          LL_RCC_SetLPUARTClockSource
   * @param  Source this parameter can be one of the following values:
-  *         @arg @ref LL_RCC_LPUCLKSEL_16M
-  *         @arg @ref LL_RCC_LPUCLKSEL_LSE
+  * @arg LL_RCC_LPUCLKSEL_16M
+  * @arg LL_RCC_LPUCLKSEL_LSE
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetLPUARTClockSource(uint32_t source)
@@ -1085,8 +1082,8 @@ __STATIC_INLINE void LL_RCC_SetLPUARTClockSource(uint32_t source)
   * @brief  Get LPUART Clock source
   * @rmtoll CFGR         LPUCLKSEL          LL_RCC_GetLPUARTClockSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_LPUCLKSEL_16M
-  *         @arg @ref LL_RCC_LPUCLKSEL_LSE
+  * @arg LL_RCC_LPUCLKSEL_16M
+  * @arg LL_RCC_LPUCLKSEL_LSE
   */
 __STATIC_INLINE uint32_t LL_RCC_GetLPUARTClockSource(void)
 {
@@ -1107,21 +1104,21 @@ __STATIC_INLINE uint32_t LL_RCC_GetLPUARTClockSource(void)
   * @rmtoll CFGR         MCOSEL        LL_RCC_ConfigMCO\n
   *         CFGR         CCOPRE        LL_RCC_ConfigMCO
   * @param  MCO Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_MCOSOURCE_NOCLOCK
-  *         @arg @ref LL_RCC_MCOSOURCE_SYSCLK
-  *         @arg @ref LL_RCC_MCOSOURCE_HSI
-  *         @arg @ref LL_RCC_MCOSOURCE_RC64MPLL
-  *         @arg @ref LL_RCC_MCOSOURCE_HSE
-  *         @arg @ref LL_RCC_MCO1SOURCE_HSI64M_DIV2048
-  *         @arg @ref LL_RCC_MCOSOURCE_SMPS
-  *         @arg @ref LL_RCC_MCOSOURCE_ADC
+  * @arg LL_RCC_MCOSOURCE_NOCLOCK
+  * @arg LL_RCC_MCOSOURCE_SYSCLK
+  * @arg LL_RCC_MCOSOURCE_HSI
+  * @arg LL_RCC_MCOSOURCE_RC64MPLL
+  * @arg LL_RCC_MCOSOURCE_HSE
+  * @arg LL_RCC_MCO1SOURCE_HSI64M_DIV2048
+  * @arg LL_RCC_MCOSOURCE_SMPS
+  * @arg LL_RCC_MCOSOURCE_ADC
   * @param  MCO Prescaler This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_MCO_DIV_1
-  *         @arg @ref LL_RCC_MCO_DIV_2
-  *         @arg @ref LL_RCC_MCO_DIV_4
-  *         @arg @ref LL_RCC_MCO_DIV_8
-  *         @arg @ref LL_RCC_MCO_DIV_16
-  *         @arg @ref LL_RCC_MCO_DIV_32
+  * @arg LL_RCC_MCO_DIV_1
+  * @arg LL_RCC_MCO_DIV_2
+  * @arg LL_RCC_MCO_DIV_4
+  * @arg LL_RCC_MCO_DIV_8
+  * @arg LL_RCC_MCO_DIV_16
+  * @arg LL_RCC_MCO_DIV_32
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_ConfigMCO(uint32_t MCOSource, uint32_t MCOPrescaler)
@@ -1133,9 +1130,9 @@ __STATIC_INLINE void LL_RCC_ConfigMCO(uint32_t MCOSource, uint32_t MCOPrescaler)
   * @brief  Configure LSCOx
   * @rmtoll CFGR         LCOSEL        LL_RCC_ConfigLSCO
   * @param  LSCO Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_LSCOSOURCE_NOCLOCK
-  *         @arg @ref LL_RCC_LSCOSOURCE_LSI
-  *         @arg @ref LL_RCC_LSCOSOURCE_LSE
+  * @arg LL_RCC_LSCOSOURCE_NOCLOCK
+  * @arg LL_RCC_LSCOSOURCE_LSI
+  * @arg LL_RCC_LSCOSOURCE_LSE
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_ConfigLSCO(uint32_t LSCOSource)
@@ -1188,8 +1185,8 @@ __STATIC_INLINE uint32_t LL_RCC_LSCOinDeepStop_IsEnabled(void)
   * @brief  Configure SPI2I2S  clock source
   * @rmtoll CFGR        SPI2I2SCLKSEL      LL_RCC_SetSPI2I2SClockSource
   * @param  Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_SPI2_I2S_CLK16M
-  *         @arg @ref LL_RCC_SPI2_I2S_CLK32M
+  * @arg LL_RCC_SPI2_I2S_CLK16M
+  * @arg LL_RCC_SPI2_I2S_CLK32M
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetSPI2I2SClockSource(uint32_t Source)
@@ -1202,11 +1199,11 @@ __STATIC_INLINE void LL_RCC_SetSPI2I2SClockSource(uint32_t Source)
   * @brief  Configure SPI3I2S  clock source
   * @rmtoll CFGR        SPI3I2SCLKSEL      LL_RCC_SetSPI3I2SClockSource
   * @param  Source This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK16M
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK32M
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK64M
+  * @arg LL_RCC_SPI3_I2S_CLK16M
+  * @arg LL_RCC_SPI3_I2S_CLK32M
+  * @arg LL_RCC_SPI3_I2S_CLK64M
   * @retval None
-  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BLueNRG-LPS family
+  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BlueNRG-LPS family
   */
 __STATIC_INLINE void LL_RCC_SetSPI3I2SClockSource(uint32_t Source)
 {
@@ -1218,8 +1215,8 @@ __STATIC_INLINE void LL_RCC_SetSPI3I2SClockSource(uint32_t Source)
   * @brief  Get SPI2I2S clock source
   * @rmtoll CFGR        SPI2I2SCLKSEL    LL_RCC_GetSPI2I2SClockSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_SPI2_I2S_CLK16M
-  *         @arg @ref LL_RCC_SPI2_I2S_CLK32M
+  * @arg LL_RCC_SPI2_I2S_CLK16M
+  * @arg LL_RCC_SPI2_I2S_CLK32M
   */
   __STATIC_INLINE uint32_t LL_RCC_GetSPI2I2SClockSource(void)
 {
@@ -1231,10 +1228,10 @@ __STATIC_INLINE void LL_RCC_SetSPI3I2SClockSource(uint32_t Source)
   * @brief  Get SPI3I2S clock source
   * @rmtoll CFGR        SPI3I2SCLKSEL    LL_RCC_GetSPI3I2SClockSource
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK16M
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK32M
-  *         @arg @ref LL_RCC_SPI3_I2S_CLK64M
-  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BLueNRG-LPS family
+  * @arg LL_RCC_SPI3_I2S_CLK16M
+  * @arg LL_RCC_SPI3_I2S_CLK32M
+  * @arg LL_RCC_SPI3_I2S_CLK64M
+  * @note The LL_RCC_SPI3_I2S_CLK64M is valid for BlueNRG-LPS family
   */
   __STATIC_INLINE uint32_t LL_RCC_GetSPI3I2SClockSource(void)
 {
@@ -1285,13 +1282,13 @@ __STATIC_INLINE uint32_t LL_RCC_RC64MPLL_IsReady(void)
   * @brief  Set RC64MPLL prescaler
   * @rmtoll CFGR       CLKSYSDIV          LL_RCC_SetRC64MPLLPrescaler
   * @param  Prescaler This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_1
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_2
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_4
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_8
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_16
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_32
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_64
+  * @arg LL_RCC_RC64MPLL_DIV_1
+  * @arg LL_RCC_RC64MPLL_DIV_2
+  * @arg LL_RCC_RC64MPLL_DIV_4
+  * @arg LL_RCC_RC64MPLL_DIV_8
+  * @arg LL_RCC_RC64MPLL_DIV_16
+  * @arg LL_RCC_RC64MPLL_DIV_32
+  * @arg LL_RCC_RC64MPLL_DIV_64
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SetRC64MPLLPrescaler(uint32_t Prescaler)
@@ -1303,13 +1300,13 @@ __STATIC_INLINE void LL_RCC_SetRC64MPLLPrescaler(uint32_t Prescaler)
   * @brief  Get RC64MPLL prescaler
   * @rmtoll CFGR         CLKSYSDIV     LL_RCC_GetRC64MPLLPrescaler
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_1
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_2
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_4
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_8
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_16
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_32
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_64
+  * @arg LL_RCC_RC64MPLL_DIV_1
+  * @arg LL_RCC_RC64MPLL_DIV_2
+  * @arg LL_RCC_RC64MPLL_DIV_4
+  * @arg LL_RCC_RC64MPLL_DIV_8
+  * @arg LL_RCC_RC64MPLL_DIV_16
+  * @arg LL_RCC_RC64MPLL_DIV_32
+  * @arg LL_RCC_RC64MPLL_DIV_64
   */
 __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLPrescaler(void)
 {
@@ -1321,13 +1318,13 @@ __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLPrescaler(void)
   * @brief  Get System Clock Prescaler Status
   * @rmtoll CFGR         CLKSYSDIV_STATUS     LL_RCC_GetCLKSYSPrescalerStatus
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_1
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_2
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_4
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_8
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_16
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_32
-  *         @arg @ref LL_RCC_RC64MPLL_DIV_64
+  * @arg LL_RCC_RC64MPLL_DIV_1
+  * @arg LL_RCC_RC64MPLL_DIV_2
+  * @arg LL_RCC_RC64MPLL_DIV_4
+  * @arg LL_RCC_RC64MPLL_DIV_8
+  * @arg LL_RCC_RC64MPLL_DIV_16
+  * @arg LL_RCC_RC64MPLL_DIV_32
+  * @arg LL_RCC_RC64MPLL_DIV_64
   */
 __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLPrescalerStatus(void)
 {
@@ -1431,27 +1428,16 @@ __STATIC_INLINE void LL_RCC_ClearFlag_LPURSTREL(void)
 }
 #endif
 
-#if defined(RCC_CIFR_LCDRSTF)
-/**
-  * @brief  Clear LCD Reset Release interrupt flag
-  * @rmtoll CIFR         LCDRSTF       LL_RCC_ClearFlag_LCDRSTREL
-  * @retval None
-  */
-__STATIC_INLINE void LL_RCC_ClearFlag_LCDRSTREL(void)
-{
-  SET_BIT(RCC->CIFR, RCC_CIFR_LCDRSTF);
-}
-#endif
 
-#if defined(RCC_CIFR_SCIRSTF)
+#if defined(RCC_CIFR_LCSCRSTF)
 /**
-  * @brief  Clear SCI Reset Release interrupt flag
-  * @rmtoll CIFR         SCIRSTF       LL_RCC_ClearFlag_SCIRSTREL
+  * @brief  Clear LCSC Reset Release interrupt flag
+  * @rmtoll CIFR         LCSCRSTF       LL_RCC_ClearFlag_LCSCRSTREL
   * @retval None
   */
-__STATIC_INLINE void LL_RCC_ClearFlag_SCIRSTREL(void)
+__STATIC_INLINE void LL_RCC_ClearFlag_LCSCRSTREL(void)
 {
-  SET_BIT(RCC->CIFR, RCC_CIFR_SCIRSTF);
+  SET_BIT(RCC->CIFR, RCC_CIFR_LCSCRSTF);
 }
 #endif
 
@@ -1547,27 +1533,16 @@ __STATIC_INLINE uint32_t LL_RCC_IsActiveFlag_LPURSTREL(void)
 }
 #endif
 
-#if defined(RCC_CIFR_LCDRSTF)
-/**
-  * @brief  Check if LCD Reset Release flag interrupt occurred or not
-  * @rmtoll CIFR         LCDRSTF       LL_RCC_IsActiveFlag_LCDRSTREL
-  * @retval State of bit (1 or 0).
-  */
-__STATIC_INLINE uint32_t LL_RCC_IsActiveFlag_LCDRSTREL(void)
-{
-  return ((READ_BIT(RCC->CIFR, RCC_CIFR_LCDRSTF) == (RCC_CIFR_LCDRSTF)) ? 1UL : 0UL);
-}
-#endif
 
-#if defined(RCC_CIFR_SCIRSTF)
+#if defined(RCC_CIFR_LCSCRSTF)
 /**
-  * @brief  Check if SCI Reset Release flag interrupt occurred or not
-  * @rmtoll CIFR         SCIRSTF       LL_RCC_IsActiveFlag_SCIRSTREL
+  * @brief  Check if LCSC Reset Release flag interrupt occurred or not
+  * @rmtoll CIFR         LCSCRSTF       LL_RCC_IsActiveFlag_LCSCRSTREL
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_RCC_IsActiveFlag_SCIRSTREL(void)
+__STATIC_INLINE uint32_t LL_RCC_IsActiveFlag_LCSCRSTREL(void)
 {
-  return ((READ_BIT(RCC->CIFR, RCC_CIFR_SCIRSTF) == (RCC_CIFR_SCIRSTF)) ? 1UL : 0UL);
+  return ((READ_BIT(RCC->CIFR, RCC_CIFR_LCSCRSTF) == (RCC_CIFR_LCSCRSTF)) ? 1UL : 0UL);
 }
 #endif
 
@@ -1640,12 +1615,12 @@ __STATIC_INLINE void LL_RCC_ClearResetFlags(void)
   */
   
 /**
-  * @brief  Set RC64MPLL prescaler to switch the clock when the MR_BLE    is enabled
+  * @brief  Set RC64MPLL prescaler to switch the clock when the MR_BLE   is enabled
   * @rmtoll CSCMDR       CLKSYSDIV_REQ          LL_RCC_SwitchRC64MPLLPrescaler
   * @param  Prescaler This parameter can be one of the following values:
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_DIV_1
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_DIV_2
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_DIV_4
+  * @arg LL_RCC_RC64MPLL_SWITCH_DIV_1
+  * @arg LL_RCC_RC64MPLL_SWITCH_DIV_2
+  * @arg LL_RCC_RC64MPLL_SWITCH_DIV_4
   * @retval None
   */
 __STATIC_INLINE void LL_RCC_SwitchRC64MPLLPrescaler(uint32_t Prescaler)
@@ -1667,9 +1642,9 @@ __STATIC_INLINE void LL_RCC_RequestSwitchRC64MPLLClock(void)
   * @brief  Get RC64MPLL clock switch status
   * @rmtoll CSCMDR        STATUS      LL_RCC_HSE_GetCapacitorTuning
   * @retval The Clock switch status. Possible values are:
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_STATUS_IDLE
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_STATUS_ONGOING
-  *         @arg @ref LL_RCC_RC64MPLL_SWITCH_STATUS_DONE
+  * @arg LL_RCC_RC64MPLL_SWITCH_STATUS_IDLE
+  * @arg LL_RCC_RC64MPLL_SWITCH_STATUS_ONGOING
+  * @arg LL_RCC_RC64MPLL_SWITCH_STATUS_DONE
   */
 __STATIC_INLINE uint32_t LL_RCC_GetRC64MPLLSwitchStatus(void)
 {
@@ -1825,27 +1800,16 @@ __STATIC_INLINE void LL_RCC_EnableIT_LPURSTREL(void)
 }
 #endif
 
-#if defined(RCC_CIER_LCDRSTIE)
-/**
-  * @brief  Enable LCD Reset Release interrupt
-  * @rmtoll CIER         RCC_CIER_LCDRSTIE      LL_RCC_EnableIT_LCDRSTREL
-  * @retval None
-  */
-__STATIC_INLINE void LL_RCC_EnableIT_LCDRSTREL(void)
-{
-  SET_BIT(RCC->CIER, RCC_CIER_LCDRSTIE);
-}
-#endif
 
-#if defined(RCC_CIER_SCIRSTIE)
+#if defined(RCC_CIER_LCSCRSTIE)
 /**
-  * @brief  Enable SCI Reset Release interrupt
-  * @rmtoll CIER         RCC_CIER_SCIRSTIE      LL_RCC_EnableIT_SCIRSTREL
+  * @brief  Enable LCSC Reset Release interrupt
+  * @rmtoll CIER         RCC_CIER_LCSCRSTIE      LL_RCC_EnableIT_LCSCRSTREL
   * @retval None
   */
-__STATIC_INLINE void LL_RCC_EnableIT_SCIRSTREL(void)
+__STATIC_INLINE void LL_RCC_EnableIT_LCSCRSTREL(void)
 {
-  SET_BIT(RCC->CIER, RCC_CIER_SCIRSTIE);
+  SET_BIT(RCC->CIER, RCC_CIER_LCSCRSTIE);
 }
 #endif
 
@@ -1941,27 +1905,16 @@ __STATIC_INLINE void LL_RCC_DisableIT_LPURSTREL(void)
 }
 #endif
 
-#if defined(RCC_CIER_LCDRSTIE)
-/**
-  * @brief  Disable LCD Reset Release interrupt
-  * @rmtoll CIER         RCC_CIER_LCDRSTIE      LL_RCC_DisableIT_LCDRSTREL
-  * @retval None
-  */
-__STATIC_INLINE void LL_RCC_DisableIT_LCDRSTREL(void)
-{
-  CLEAR_BIT(RCC->CIER, RCC_CIER_LCDRSTIE);
-}
-#endif
 
-#if defined(RCC_CIER_SCIRSTIE)
+#if defined(RCC_CIER_LCSCRSTIE)
 /**
-  * @brief  Disable SCI Reset Release interrupt
-  * @rmtoll CIER         RCC_CIER_SCIRSTIE      LL_RCC_DisableIT_SCIRSTREL
+  * @brief  Disable LCSC Reset Release interrupt
+  * @rmtoll CIER         RCC_CIER_LCSCRSTIE      LL_RCC_DisableIT_LCSCRSTREL
   * @retval None
   */
-__STATIC_INLINE void LL_RCC_DisableIT_SCIRSTREL(void)
+__STATIC_INLINE void LL_RCC_DisableIT_LCSCRSTREL(void)
 {
-  CLEAR_BIT(RCC->CIER, RCC_CIER_SCIRSTIE);
+  CLEAR_BIT(RCC->CIER, RCC_CIER_LCSCRSTIE);
 }
 #endif
 
@@ -2057,27 +2010,16 @@ __STATIC_INLINE uint32_t LL_RCC_IsEnabledIT_LPURSTREL(void)
 }
 #endif
 
-#if defined(RCC_CIER_LCDRSTIE)
-/**
-  * @brief  Checks if LCD Reset Release interrupt source is enabled or disabled.
-  * @rmtoll CIER         RCC_CIER_LCDRSTIE      LL_RCC_IsEnabledIT_LCDRSTREL
-  * @retval None
-  */
-__STATIC_INLINE uint32_t LL_RCC_IsEnabledIT_LCDRSTREL(void)
-{
-  return ((READ_BIT(RCC->CIER, RCC_CIER_LCDRSTIE) == (RCC_CIER_LCDRSTIE)) ? 1UL : 0UL);
-}
-#endif
 
-#if defined(RCC_CIER_SCIRSTIE)
+#if defined(RCC_CIER_LCSCRSTIE)
 /**
-  * @brief  Checks if SCI Reset Release interrupt source is enabled or disabled.
-  * @rmtoll CIER         RCC_CIER_SCIRSTIE      LL_RCC_IsEnabledIT_SCIRSTREL
+  * @brief  Checks if LCSC Reset Release interrupt source is enabled or disabled.
+  * @rmtoll CIER         RCC_CIER_LCSCRSTIE      LL_RCC_IsEnabledIT_LCSCRSTREL
   * @retval None
   */
-__STATIC_INLINE uint32_t LL_RCC_IsEnabledIT_SCIRSTREL(void)
+__STATIC_INLINE uint32_t LL_RCC_IsEnabledIT_LCSCRSTREL(void)
 {
-  return ((READ_BIT(RCC->CIER, RCC_CIER_SCIRSTIE) == (RCC_CIER_SCIRSTIE)) ? 1UL : 0UL);
+  return ((READ_BIT(RCC->CIER, RCC_CIER_LCSCRSTIE) == (RCC_CIER_LCSCRSTIE)) ? 1UL : 0UL);
 }
 #endif
 

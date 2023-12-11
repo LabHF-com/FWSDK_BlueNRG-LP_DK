@@ -911,22 +911,22 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   * @param  __HANDLE__ specifies the UART Handle.
   * @param  __INTERRUPT__ specifies the UART interrupt source to enable.
   *          This parameter can be one of the following values:
-  *            @arg @ref UART_IT_RXFF  RXFIFO Full interrupt
-  *            @arg @ref UART_IT_TXFE  TXFIFO Empty interrupt
-  *            @arg @ref UART_IT_RXFT  RXFIFO threshold interrupt
-  *            @arg @ref UART_IT_TXFT  TXFIFO threshold interrupt
-  *            @arg @ref UART_IT_CM    Character match interrupt
-  *            @arg @ref UART_IT_CTS   CTS change interrupt
-  *            @arg @ref UART_IT_LBD   LIN Break detection interrupt
-  *            @arg @ref UART_IT_TXE   Transmit Data Register empty interrupt
-  *            @arg @ref UART_IT_TXFNF TX FIFO not full interrupt
-  *            @arg @ref UART_IT_TC    Transmission complete interrupt
-  *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
-  *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
-  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
-  *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
-  *            @arg @ref UART_IT_PE    Parity Error interrupt
-  *            @arg @ref UART_IT_ERR   Error interrupt (frame error, noise error, overrun error)
+  *            @arg UART_IT_RXFF  RXFIFO Full interrupt
+  *            @arg UART_IT_TXFE  TXFIFO Empty interrupt
+  *            @arg UART_IT_RXFT  RXFIFO threshold interrupt
+  *            @arg UART_IT_TXFT  TXFIFO threshold interrupt
+  *            @arg UART_IT_CM    Character match interrupt
+  *            @arg UART_IT_CTS   CTS change interrupt
+  *            @arg UART_IT_LBD   LIN Break detection interrupt
+  *            @arg UART_IT_TXE   Transmit Data Register empty interrupt
+  *            @arg UART_IT_TXFNF TX FIFO not full interrupt
+  *            @arg UART_IT_TC    Transmission complete interrupt
+  *            @arg UART_IT_RXNE  Receive Data register not empty interrupt
+  *            @arg UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg UART_IT_RTO   Receive Timeout interrupt
+  *            @arg UART_IT_IDLE  Idle line detection interrupt
+  *            @arg UART_IT_PE    Parity Error interrupt
+  *            @arg UART_IT_ERR   Error interrupt (frame error, noise error, overrun error)
   * @retval None
   */
 #define __HAL_UART_ENABLE_IT(__HANDLE__, __INTERRUPT__)   (((((uint8_t)(__INTERRUPT__)) >> 5U) == 1U)? ((__HANDLE__)->Instance->CR1 |= (1U << ((__INTERRUPT__) & UART_IT_MASK))): \
@@ -938,22 +938,22 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   * @param  __HANDLE__ specifies the UART Handle.
   * @param  __INTERRUPT__ specifies the UART interrupt source to disable.
   *          This parameter can be one of the following values:
-  *            @arg @ref UART_IT_RXFF  RXFIFO Full interrupt
-  *            @arg @ref UART_IT_TXFE  TXFIFO Empty interrupt
-  *            @arg @ref UART_IT_RXFT  RXFIFO threshold interrupt
-  *            @arg @ref UART_IT_TXFT  TXFIFO threshold interrupt
-  *            @arg @ref UART_IT_CM    Character match interrupt
-  *            @arg @ref UART_IT_CTS   CTS change interrupt
-  *            @arg @ref UART_IT_LBD   LIN Break detection interrupt
-  *            @arg @ref UART_IT_TXE   Transmit Data Register empty interrupt
-  *            @arg @ref UART_IT_TXFNF TX FIFO not full interrupt
-  *            @arg @ref UART_IT_TC    Transmission complete interrupt
-  *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
-  *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
-  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
-  *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
-  *            @arg @ref UART_IT_PE    Parity Error interrupt
-  *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
+  *            @arg UART_IT_RXFF  RXFIFO Full interrupt
+  *            @arg UART_IT_TXFE  TXFIFO Empty interrupt
+  *            @arg UART_IT_RXFT  RXFIFO threshold interrupt
+  *            @arg UART_IT_TXFT  TXFIFO threshold interrupt
+  *            @arg UART_IT_CM    Character match interrupt
+  *            @arg UART_IT_CTS   CTS change interrupt
+  *            @arg UART_IT_LBD   LIN Break detection interrupt
+  *            @arg UART_IT_TXE   Transmit Data Register empty interrupt
+  *            @arg UART_IT_TXFNF TX FIFO not full interrupt
+  *            @arg UART_IT_TC    Transmission complete interrupt
+  *            @arg UART_IT_RXNE  Receive Data register not empty interrupt
+  *            @arg UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg UART_IT_RTO   Receive Timeout interrupt
+  *            @arg UART_IT_IDLE  Idle line detection interrupt
+  *            @arg UART_IT_PE    Parity Error interrupt
+  *            @arg UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
   * @retval None
   */
 #define __HAL_UART_DISABLE_IT(__HANDLE__, __INTERRUPT__)  (((((uint8_t)(__INTERRUPT__)) >> 5U) == 1U)? ((__HANDLE__)->Instance->CR1 &= ~ (1U << ((__INTERRUPT__) & UART_IT_MASK))): \
@@ -964,22 +964,22 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   * @param  __HANDLE__ specifies the UART Handle.
   * @param  __INTERRUPT__ specifies the UART interrupt to check.
   *          This parameter can be one of the following values:
-  *            @arg @ref UART_IT_RXFF  RXFIFO Full interrupt
-  *            @arg @ref UART_IT_TXFE  TXFIFO Empty interrupt
-  *            @arg @ref UART_IT_RXFT  RXFIFO threshold interrupt
-  *            @arg @ref UART_IT_TXFT  TXFIFO threshold interrupt
-  *            @arg @ref UART_IT_CM    Character match interrupt
-  *            @arg @ref UART_IT_CTS   CTS change interrupt
-  *            @arg @ref UART_IT_LBD   LIN Break detection interrupt
-  *            @arg @ref UART_IT_TXE   Transmit Data Register empty interrupt
-  *            @arg @ref UART_IT_TXFNF TX FIFO not full interrupt
-  *            @arg @ref UART_IT_TC    Transmission complete interrupt
-  *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
-  *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
-  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
-  *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
-  *            @arg @ref UART_IT_PE    Parity Error interrupt
-  *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
+  *            @arg UART_IT_RXFF  RXFIFO Full interrupt
+  *            @arg UART_IT_TXFE  TXFIFO Empty interrupt
+  *            @arg UART_IT_RXFT  RXFIFO threshold interrupt
+  *            @arg UART_IT_TXFT  TXFIFO threshold interrupt
+  *            @arg UART_IT_CM    Character match interrupt
+  *            @arg UART_IT_CTS   CTS change interrupt
+  *            @arg UART_IT_LBD   LIN Break detection interrupt
+  *            @arg UART_IT_TXE   Transmit Data Register empty interrupt
+  *            @arg UART_IT_TXFNF TX FIFO not full interrupt
+  *            @arg UART_IT_TC    Transmission complete interrupt
+  *            @arg UART_IT_RXNE  Receive Data register not empty interrupt
+  *            @arg UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg UART_IT_RTO   Receive Timeout interrupt
+  *            @arg UART_IT_IDLE  Idle line detection interrupt
+  *            @arg UART_IT_PE    Parity Error interrupt
+  *            @arg UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
   * @retval The new state of __INTERRUPT__ (SET or RESET).
   */
 #define __HAL_UART_GET_IT(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->ISR & (1U << ((__INTERRUPT__)>> 8U))) != RESET) ? SET : RESET)
@@ -988,22 +988,22 @@ typedef  void (*pUART_CallbackTypeDef)(UART_HandleTypeDef *huart);  /*!< pointer
   * @param  __HANDLE__ specifies the UART Handle.
   * @param  __INTERRUPT__ specifies the UART interrupt source to check.
   *          This parameter can be one of the following values:
-  *            @arg @ref UART_IT_RXFF  RXFIFO Full interrupt
-  *            @arg @ref UART_IT_TXFE  TXFIFO Empty interrupt
-  *            @arg @ref UART_IT_RXFT  RXFIFO threshold interrupt
-  *            @arg @ref UART_IT_TXFT  TXFIFO threshold interrupt
-  *            @arg @ref UART_IT_CM    Character match interrupt
-  *            @arg @ref UART_IT_CTS   CTS change interrupt
-  *            @arg @ref UART_IT_LBD   LIN Break detection interrupt
-  *            @arg @ref UART_IT_TXE   Transmit Data Register empty interrupt
-  *            @arg @ref UART_IT_TXFNF TX FIFO not full interrupt
-  *            @arg @ref UART_IT_TC    Transmission complete interrupt
-  *            @arg @ref UART_IT_RXNE  Receive Data register not empty interrupt
-  *            @arg @ref UART_IT_RXFNE RXFIFO not empty interrupt
-  *            @arg @ref UART_IT_RTO   Receive Timeout interrupt
-  *            @arg @ref UART_IT_IDLE  Idle line detection interrupt
-  *            @arg @ref UART_IT_PE    Parity Error interrupt
-  *            @arg @ref UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
+  *            @arg UART_IT_RXFF  RXFIFO Full interrupt
+  *            @arg UART_IT_TXFE  TXFIFO Empty interrupt
+  *            @arg UART_IT_RXFT  RXFIFO threshold interrupt
+  *            @arg UART_IT_TXFT  TXFIFO threshold interrupt
+  *            @arg UART_IT_CM    Character match interrupt
+  *            @arg UART_IT_CTS   CTS change interrupt
+  *            @arg UART_IT_LBD   LIN Break detection interrupt
+  *            @arg UART_IT_TXE   Transmit Data Register empty interrupt
+  *            @arg UART_IT_TXFNF TX FIFO not full interrupt
+  *            @arg UART_IT_TC    Transmission complete interrupt
+  *            @arg UART_IT_RXNE  Receive Data register not empty interrupt
+  *            @arg UART_IT_RXFNE RXFIFO not empty interrupt
+  *            @arg UART_IT_RTO   Receive Timeout interrupt
+  *            @arg UART_IT_IDLE  Idle line detection interrupt
+  *            @arg UART_IT_PE    Parity Error interrupt
+  *            @arg UART_IT_ERR   Error interrupt (Frame error, noise error, overrun error)
   * @retval The new state of __INTERRUPT__ (SET or RESET).
   */
 #define __HAL_UART_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((((((uint8_t)(__INTERRUPT__)) >> 5U) == 1U) ? (__HANDLE__)->Instance->CR1 : \

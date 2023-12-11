@@ -156,7 +156,7 @@ PKAMGR_ResultStatus PKAMGR_Unlock(void);
  *         by using a specific random seed, that shall be passed to the PKA (this is not the current case,
  *         because the BLEPS library does not request to use a specific random seed).
  */
-PKAMGR_ResultStatus PKAMGR_StartP256PublicKeyGeneration(PKAMGR_funcCB funcCB);
+PKAMGR_ResultStatus PKAMGR_StartP256PublicKeyGeneration(const uint32_t *private_key, PKAMGR_funcCB funcCB);
 
 
 /**
@@ -183,9 +183,9 @@ PKAMGR_ResultStatus PKAMGR_StartP256PublicKeyGeneration(PKAMGR_funcCB funcCB);
  * @todo   Verify if PKA v7c is capable of verifying input parameters before starting the requested operation,
  *         or if the input parameters validity shall be checked through raw comparisons like in current implementaton.
  */
-PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(uint32_t *secretKey, 
-                                                               uint32_t *publicKey, 
-                                                               PKAMGR_funcCB funcCB);
+PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(const uint32_t *secretKey, 
+                                                    const uint32_t *publicKey, 
+                                                    PKAMGR_funcCB funcCB);
 
 /**
  * @}

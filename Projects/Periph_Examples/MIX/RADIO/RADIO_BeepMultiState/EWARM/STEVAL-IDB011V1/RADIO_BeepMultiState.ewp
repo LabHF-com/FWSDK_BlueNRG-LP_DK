@@ -1059,19 +1059,19 @@
             </file>
         </group>
     </group>
-    <group>
-        <name>Doc</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\readme.txt</name>
-        </file>
-    </group>
+
     <group>
         <name>Drivers</name>
         <group>
+
             <name>BSP</name>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_led.c</name>
             </file>
+			<file>
+				<name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</name>
+
+			</file>
         </group>
         <group>
             <name>CMSIS</name>

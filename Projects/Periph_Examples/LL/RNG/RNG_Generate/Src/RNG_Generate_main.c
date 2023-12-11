@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : RNG_Generate_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\\Projects\\Periph_Examples\\LL\\RNG\\RNG_Generate\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\RNG_Generate.eww</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\RNG\\RNG_Generate\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\RNG_Generate.eww</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -96,7 +98,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -141,23 +143,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                           STEVAL-IDB011V1                          |                           STEVAL-IDB011V2                          |                           STEVAL-IDB012V1                          |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                              Not Used                              |                              Not Used                              |                              Not Used                              |
-|     DL2    |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |
-|     DL3    |                              Not Used                              |                              Not Used                              |                              Not Used                              |
-|     DL4    |                              Not Used                              |                              Not Used                              |                              Not Used                              |
-|     U5     |                              Not Used                              |                              Not Used                              |                              Not Used                              |
+|  LED name  |                           STEVAL-IDB010V1                          |                           STEVAL-IDB011V1                          |                           STEVAL-IDB011V2                          |                           STEVAL-IDB012V1                          |                           STEVAL-IDB013V1                          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |
+|     DL2    |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |   ON: OK - Fast blinking: wait User action - Slow blinking: error  |
+|     DL3    |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |
+|     DL4    |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |
+|     U5     |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |                              Not Used                              |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |
-------------------------------------------------------------------------------------------------
-|      PUSH1     |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |
-|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |
-|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |
+|   BUTTON name  |     STEVAL-IDB010V1    |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |     STEVAL-IDB013V1    |
+----------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |
+|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |        Not Used        |        Not Used        |
+|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LPS   |    Reset BlueNRG-LPS   |
 
 @endtable
 
@@ -224,7 +226,6 @@ __IO uint8_t ubButtonPress = 0;
 __IO uint16_t aRandom16bit[NB_OF_GENERATED_RANDOM_NUMBERS];
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_GPIO_Init(void);
 static void MX_RNG_Init(void);
@@ -251,19 +252,17 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(Process_InputData);
   
+  printf("** Application started **\n\r");
+  
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -278,12 +277,6 @@ int main(void)
     /* Generate Random Numbers series */
     RandomNumbersGeneration();
   }
-}
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
 }
 
 
@@ -335,7 +328,7 @@ static void MX_GPIO_Init(void)
   LL_EXTI_Init(&EXTI_InitStruct);
   
   /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
   
   /* Configure NVIC for SysTick_IRQn */
@@ -454,7 +447,6 @@ void WaitForUserButtonPress(void)
   /* Turn LED2 off */
   LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
 }
-
 
 
 /******************************************************************************/

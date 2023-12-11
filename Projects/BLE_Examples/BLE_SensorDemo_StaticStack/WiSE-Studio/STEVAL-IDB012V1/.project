@@ -62,7 +62,7 @@
     <locationURI>virtual:/virtual</locationURI>
     </link>
   <link>
-      <name>Middlewares/BLE_Stack</name>
+      <name>Middlewares/BLE_StaticStack</name>
     <type>2</type>
     <locationURI>virtual:/virtual</locationURI>
     </link>
@@ -242,19 +242,19 @@
     <locationURI>PARENT-3-PROJECT_LOC/BLE_SensorDemo/Src/SensorDemo_main.c</locationURI>
     </link>
   <link>
-      <name>Middlewares/BLE_Stack/bluenrg_lp_stack_init_if.c</name>
+      <name>Middlewares/BLE_StaticStack/bluenrg_lp_stack_init_if.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static_stack/bluenrg_lp_stack_init_if.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static/bluenrg_lp_stack_init_if.c</locationURI>
     </link>
   <link>
-      <name>Middlewares/BLE_Stack/libbluenrg_lps_static_stack_basic.a</name>
+      <name>Middlewares/BLE_StaticStack/liblps_stack_basic.a</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_basic.a</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_basic.a</locationURI>
     </link>
   <link>
-      <name>Middlewares/BLE_Stack/libbluenrg_lps_static_stack_rstmngr_basic.a</name>
+      <name>Middlewares/BLE_StaticStack/liblps_stack_rstmngr_basic.a</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_rstmngr_basic.a</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_rstmngr_basic.a</locationURI>
     </link>
   <link>
       <name>Middlewares/Hal/blue_unit_conversion.s</name>
@@ -275,16 +275,6 @@
       <name>Middlewares/Hal/gp_timer.c</name>
     <type>1</type>
     <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/hal/Src/gp_timer.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/Hal/hal_miscutil.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/hal/Src/hal_miscutil.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/Hal/miscutil.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/hal/Src/miscutil.c</locationURI>
     </link>
   <link>
       <name>Middlewares/Hal/osal.c</name>

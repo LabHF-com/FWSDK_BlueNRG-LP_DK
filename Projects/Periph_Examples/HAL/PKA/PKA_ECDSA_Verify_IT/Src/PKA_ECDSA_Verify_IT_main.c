@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_ECDSA_Verify_IT_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -23,7 +23,7 @@
   To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
   -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
   -# Open the KEIL project
- <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\HAL\PKA\\PKA_ECDSA_Verify_IT\\MDK-ARM\\{STEVAL-IDB012V1}\\PKA_ECDSA_Verify_IT.uvprojx</tt>
+ <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\HAL\\PKA\\PKA_ECDSA_Verify_IT\\MDK-ARM\\{STEVAL-IDB012V1}\\PKA_ECDSA_Verify_IT.uvprojx</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild all target files. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -58,6 +58,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -139,23 +140,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                  STEVAL-IDB012V1                 |
------------------------------------------------------------------
-|     DL1    |                     Not Used                     |
-|     DL2    |  ON: successful sequence - Slow blinking: error  |
-|     DL3    |                     Not Used                     |
-|     DL4    |                     Not Used                     |
-|     U5     |                     Not Used                     |
+|  LED name  |                  STEVAL-IDB012V1                 |                  STEVAL-IDB013V1                 |
+---------------------------------------------------------------------------------------------------------------------
+|     DL1    |                     Not Used                     |                     Not Used                     |
+|     DL2    |  ON: successful sequence - Slow blinking: error  |  ON: successful sequence - Slow blinking: error  |
+|     DL3    |                     Not Used                     |                     Not Used                     |
+|     DL4    |                     Not Used                     |                     Not Used                     |
+|     U5     |                     Not Used                     |                     Not Used                     |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |    STEVAL-IDB012V1   |
------------------------------------------
-|      PUSH1     |       Not Used       |
-|      PUSH2     |       Not Used       |
-|      RESET     |   Reset BlueNRG-LPS  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -203,11 +204,13 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 PKA_HandleTypeDef hpka;
 PKA_ECDSAVerifInTypeDef in = {0};
 __IO uint32_t operationComplete = 0;
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 void SystemClock_Config(void);
 static void MX_PKA_Init(void);
 
@@ -229,13 +232,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
  
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
 
   /* Configure LED2 */
   BSP_LED_Init(BSP_LED2);
@@ -345,10 +348,21 @@ void HAL_PKA_ErrorCallback(PKA_HandleTypeDef *hpka)
   Error_Handler();
 }
 
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
+}
+
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+* @brief  This function is executed in case of error occurrence.
+* @retval None
+*/
 void Error_Handler(void)
 {
   /* User can add his own implementation to report the HAL error return state */

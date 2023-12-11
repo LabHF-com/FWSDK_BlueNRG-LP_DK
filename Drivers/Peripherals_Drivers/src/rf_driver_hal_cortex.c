@@ -114,7 +114,7 @@
   * @brief  Sets the priority of an interrupt.
   * @param IRQn External interrupt number .
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to BlueNRG_LP.h file)
+  *         (For the complete device IRQ Channels list, please refer to device header file)
   * @param Priority The preemption priority for the IRQn channel.
   *         This parameter can be a value between 0 and 3.
   *         A lower priority value indicates a higher priority
@@ -134,7 +134,7 @@ void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t Priority)
   * @brief  Enable a device specific interrupt in the NVIC interrupt controller.
   * @param  IRQn External interrupt number.
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval None
   */
 void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)
@@ -150,7 +150,7 @@ void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)
   * @brief  Disable a device specific interrupt in the NVIC interrupt controller.
   * @param  IRQn External interrupt number.
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval None
   */
 void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)
@@ -207,7 +207,7 @@ uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
   * @brief  Get the priority of an interrupt.
   * @param IRQn External interrupt number.
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval None
   */
 uint32_t HAL_NVIC_GetPriority(IRQn_Type IRQn)
@@ -220,7 +220,7 @@ uint32_t HAL_NVIC_GetPriority(IRQn_Type IRQn)
   * @brief  Set Pending bit of an external interrupt.
   * @param  IRQn External interrupt number
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval None
   */
 void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn)
@@ -237,7 +237,7 @@ void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn)
   *         and return the pending bit for the specified interrupt).
   * @param  IRQn External interrupt number.
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval status: - 0  Interrupt status is not pending.
   *                 - 1  Interrupt status is pending.
   */
@@ -254,7 +254,7 @@ uint32_t HAL_NVIC_GetPendingIRQ(IRQn_Type IRQn)
   * @brief  Clear the pending bit of an external interrupt.
   * @param  IRQn External interrupt number.
   *         This parameter can be an enumerator of IRQn_Type enumeration
-  *         (For the complete BlueNRG_LP Devices IRQ Channels list, please refer to the appropriate CMSIS device file (BlueNRG_LP.h))
+  *         (For the complete device IRQ Channels list, please refer to the appropriate CMSIS device file)
   * @retval None
   */
 void HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn)

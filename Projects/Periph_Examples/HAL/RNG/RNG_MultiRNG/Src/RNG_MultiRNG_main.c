@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : RNG_MultiRNG_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -96,7 +98,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V(1-2}|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -141,23 +143,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                        STEVAL-IDB011V1                       |                        STEVAL-IDB011V2                       |                        STEVAL-IDB012V1                       |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                           Not Used                           |                           Not Used                           |                           Not Used                           |
-|     DL2    |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |
-|     DL3    |                           Not Used                           |                           Not Used                           |                           Not Used                           |
-|     DL4    |                           Not Used                           |                           Not Used                           |                           Not Used                           |
-|     U5     |                           Not Used                           |                           Not Used                           |                           Not Used                           |
+|  LED name  |                        STEVAL-IDB010V1                       |                        STEVAL-IDB011V1                       |                        STEVAL-IDB011V2                       |                        STEVAL-IDB012V1                       |                        STEVAL-IDB013V1                       |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |
+|     DL2    |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |   Fast blinking: wait for user action; Slow blinking: error  |
+|     DL3    |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |
+|     DL4    |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |
+|     U5     |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |                           Not Used                           |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |
-------------------------------------------------------------------------------------------------
-|      PUSH1     |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |
-|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |
-|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |
+|   BUTTON name  |     STEVAL-IDB010V1    |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |     STEVAL-IDB013V1    |
+----------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |  Start RNG generation  |
+|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |        Not Used        |        Not Used        |
+|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LPS   |    Reset BlueNRG-LPS   |
 
 @endtable
 
@@ -208,6 +210,7 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 RNG_HandleTypeDef hrng;
 
 /* Used for storing 8 Random 32bit Numbers */
@@ -215,6 +218,7 @@ uint32_t aRandom[8];
 __IO uint8_t    ubUserButtonClickEvent = RESET;  /* Event detection: Set after User Button interrupt */
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_RNG_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
@@ -237,13 +241,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();  
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize LED Error on board */
   BSP_LED_Init(BSP_LED2);
@@ -276,7 +280,7 @@ int main(void)
     }
     else
     {
-      printf("Value of generated random number: %#X\n\r", aRandom[counter]);
+      printf("Value of generated random number: %#08X\n\r", aRandom[counter]);
     }
   }
   
@@ -320,6 +324,18 @@ void HAL_GPIO_EXTI_Callback(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
   {
     /* Set variable to report push button event to main program */
     ubUserButtonClickEvent = SET;
+  }
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
   }
 }
 

@@ -95,9 +95,14 @@
 #define MCO2_PIN              GPIO_PIN_11
 
 #define __MCO3_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE()
+
+#if defined(CONFIG_DEVICE_BLUENRG_LP) 
 #define MCO3_GPIO_PORT        GPIOB
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define MCO3_PIN              GPIO_PIN_15
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define MCO3_GPIO_PORT        GPIOB
+#define MCO3_PIN              GPIO_PIN_14
 #endif
 
 #define __COUNTOF(_A_)   (sizeof(_A_) / sizeof(*(_A_)))

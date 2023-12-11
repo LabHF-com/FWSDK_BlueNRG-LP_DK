@@ -75,7 +75,7 @@ void Error_Handler(void);
 #define DMA_REQUEST_I2Cx_RX                             DMA_REQUEST_I2C2_RX
 #endif /* STEVAL_IDB011V1 */
 
-#if defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB012V1)
 #define I2Cx                                            I2C1
 #define I2Cx_SCL_PORT                                   GPIOB   
 #define I2Cx_SCL_PIN                                    GPIO_PIN_6
@@ -91,7 +91,7 @@ void Error_Handler(void);
 #define I2Cx_IRQHandler                                 I2C1_IRQHandler
 #define DMA_REQUEST_I2Cx_TX                             DMA_REQUEST_I2C1_TX
 #define DMA_REQUEST_I2Cx_RX                             DMA_REQUEST_I2C1_RX
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 

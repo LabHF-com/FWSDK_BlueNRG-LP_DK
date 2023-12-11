@@ -42,7 +42,7 @@
 #endif
 #include "hal_miscutil.h"
 
-/** @addtogroup BlueNRGLP_StdPeriph_Examples LL Peripheral Examples
+/** @addtogroup StdPeriph_Examples LL Peripheral Examples
   * @{
   */
 

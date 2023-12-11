@@ -228,8 +228,8 @@
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
                     <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
-                    <state>RESET_MANAGER_SIZE=0x27800</state>
-                    <state>BLE_STACK_FULL_CONF</state>
+                    <state>RESET_MANAGER_SIZE=0x28000</state>
+                    <state>BLE_STACK_CUSTOM_CONF</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -374,7 +374,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -705,7 +705,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lp_static_stack.a"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblp_stack.a"</postbuild>
             </data>
         </settings>
         <settings>
@@ -761,7 +761,7 @@
                 </option>
                 <option>
                     <name>IlinkConfigDefines</name>
-                    <state>MEMORY_FLASH_APP_SIZE=0x27800</state>
+                    <state>MEMORY_FLASH_APP_SIZE=0x28000</state>
                 </option>
                 <option>
                     <name>IlinkMapFile</name>
@@ -1456,7 +1456,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1787,7 +1787,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lp_static_stack_basic.a"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblp_stack_basic.a"</postbuild>
             </data>
         </settings>
         <settings>
@@ -2391,8 +2391,8 @@
                     <state>CONFIG_DEVICE_BLUENRG_LP</state>
                     <state>SUPPRESS_CONFIG_HW_WARNINGS</state>
                     <state>STEVAL_IDB011V1</state>
-                    <state>RESET_MANAGER_SIZE=0x27800</state>
-                    <state>BLE_STACK_FULL_CONF</state>
+                    <state>RESET_MANAGER_SIZE=0x28000</state>
+                    <state>BLE_STACK_CUSTOM_CONF</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -2537,7 +2537,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2868,7 +2868,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lp_static_stack_rstmngr.a"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblp_stack_rstmngr.a"</postbuild>
             </data>
         </settings>
         <settings>
@@ -2924,7 +2924,7 @@
                 </option>
                 <option>
                     <name>IlinkConfigDefines</name>
-                    <state>MEMORY_FLASH_APP_SIZE=0x27800</state>
+                    <state>MEMORY_FLASH_APP_SIZE=0x28000</state>
                 </option>
                 <option>
                     <name>IlinkMapFile</name>
@@ -3619,7 +3619,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -3950,7 +3950,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <prebuild></prebuild>
-                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lp_static_stack_rstmngr_basic.a"</postbuild>
+                <postbuild>"$PROJ_DIR$\..\..\..\..\..\Utility\create_sym_lib.exe" --symbols "$PROJ_DIR$\..\..\sym_export.txt" --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks "$TARGET_PATH$" "$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblp_stack_rstmngr_basic.a"</postbuild>
             </data>
         </settings>
         <settings>

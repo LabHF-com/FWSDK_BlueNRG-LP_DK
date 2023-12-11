@@ -134,7 +134,7 @@ extern "C" {
 #define __HAL_RCC_SPI_MASTER_CLK_DISABLE        __HAL_RCC_SPI3_CLK_DISABLE
 #define SPI_MASTER_IRQn                         SPI3_IRQn
 #define SPI_MASTER_IRQHandler                   SPI3_IRQHandler
-#endif  /* defined(STEVAL_IDB012V1) */
+#endif /* STEVAL_IDB012V1   */
 
   
 /* Exported functions prototypes ---------------------------------------------*/

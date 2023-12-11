@@ -29,6 +29,10 @@
 #define AUTO_TOGGLE_LED          1
 #define WRITE_INTERVAL_MS        300
 
+#if !defined(ENABLE_LOW_POWER_MODE) && defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define ENABLE_LOW_POWER_MODE 1
+#endif
+
 uint8_t RC_DeviceInit(void);
 void APP_Tick(void);
 

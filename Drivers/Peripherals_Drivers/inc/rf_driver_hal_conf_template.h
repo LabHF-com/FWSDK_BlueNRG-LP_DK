@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    rf_driver_hal_conf.h
+  * @file    rf_driver_hal_conf_template.h
   * @author  RF Application Team
   * @brief   HAL configuration file.
   ******************************************************************************

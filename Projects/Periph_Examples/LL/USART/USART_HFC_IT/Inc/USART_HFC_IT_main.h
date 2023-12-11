@@ -91,6 +91,7 @@ void Error_Callback(void);
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 /* Define used to enable time-out management*/
 #define USE_TIMEOUT       0
 
@@ -148,6 +149,8 @@ void Error_Callback(void);
 #define USART1_RTS_PORT                         GPIOB
 #define USART1_RTS_AF                           LL_GPIO_AF_0
 #endif /* STEVAL_IDB012V1 */
+
+
 
 
 #ifdef __cplusplus

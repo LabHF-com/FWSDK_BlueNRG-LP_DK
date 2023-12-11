@@ -36,9 +36,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "rng_manager.h"
-#include "rf_driver_ll_rng.h"
-#include "rf_driver_ll_bus.h"
-
+#include "compiler.h"
 
 /** @defgroup RNG_Manager  RNG MANAGER
 * @{
@@ -104,23 +102,6 @@ WEAK_FUNCTION(RNGMGR_ResultStatus RNGMGR_Deinit(void))
   /* NOTE : This function should not be modified, the callback is implemented 
   in the dedicated board file */
 }
-
-WEAK_FUNCTION(RNGMGR_ResultStatus RNGMGR_NewSecretKey(uint32_t* buffer))
-{
-  return RNGMGR_SUCCESS;
-  
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
-
-WEAK_FUNCTION(RNGMGR_ResultStatus  RNGMGR_GetRandom16(uint32_t* buffer, uint8_t isr))
-{
-  return RNGMGR_SUCCESS;
-  
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
-
 
 /**
 * @}

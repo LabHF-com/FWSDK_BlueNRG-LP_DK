@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : I2C_DMA_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\\Projects\\Periph_Examples\\HAL\\I2C\\I2C_DMA\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\I2C_DMA.eww</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\HAL\\I2C\\I2C_DMA\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\I2C_DMA.eww</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -143,28 +145,28 @@
 
 * \section LEDs_description LEDs description
 @table
-|            |                                                                                                                   Master_board                                                                                                                    |||                                                           Slave_board                                                           |||
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  LED name  |                                 STEVAL-IDB011V1                                |                                 STEVAL-IDB011V2                                |                                 STEVAL-IDB012V1                                |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |              STEVAL-IDB012V1             |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     DL2    |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON: the reception process is complete  |   ON: the reception process is complete  |   ON: the reception process is complete  |
-|     DL3    |                                    ON: error                                   |                                    ON: error                                   |                                    ON: error                                   |                 ON: error                |                 ON: error                |                 ON: error                |
-|     DL4    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     U5     |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|            |                                                                                                                                                                                                    Master_board                                                                                                                                                                                                     |||||                                                                                                      Slave_board                                                                                                      |||||
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LED name  |                                 STEVAL-IDB010V1                                |                                 STEVAL-IDB011V1                                |                                 STEVAL-IDB011V2                                |                                 STEVAL-IDB012V1                                |                                 STEVAL-IDB013V1                                |              STEVAL-IDB010V1             |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |              STEVAL-IDB012V1             |              STEVAL-IDB013V1             |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     DL2    |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON:the transmission process is complete - Blinking: waiting for User action  |   ON: the reception process is complete  |   ON: the reception process is complete  |   ON: the reception process is complete  |   ON: the reception process is complete  |   ON: the reception process is complete  |
+|     DL3    |                                    ON: error                                   |                                    ON: error                                   |                                    ON: error                                   |                                    ON: error                                   |                                    ON: error                                   |                 ON: error                |                 ON: error                |                 ON: error                |                 ON: error                |                 ON: error                |
+|     DL4    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     U5     |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|                |                                                 Master_board                                                  |||                          Slave_board                          |||
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|   BUTTON name  |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|                |                                                                                      Master_board                                                                                       |||||                                                 Slave_board                                                 |||||
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|   BUTTON name  |           STEVAL-IDB010V1          |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |           STEVAL-IDB013V1          |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LPS         |          Reset BlueNRG-LPS         |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -245,6 +247,7 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 I2C_HandleTypeDef hi2cx;
 DMA_HandleTypeDef hdma_i2cx_tx;
 DMA_HandleTypeDef hdma_i2cx_rx;
@@ -256,11 +259,10 @@ uint8_t aTxBuffer[] = " ****I2C_TwoBoards communication based on DMA****  ****I2
 uint8_t aRxBuffer[RXBUFFERSIZE];
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_I2Cx_Init(void);
-
-/* Private function prototypes -----------------------------------------------*/
 static uint16_t Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
 
 /* Private user code ---------------------------------------------------------*/
@@ -281,13 +283,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -306,8 +308,8 @@ int main(void)
   
   /* Infinite loop */
   /* Wait for User push-button (PUSH1) press before starting the Communication */
-  printf("Wait for User push-button (PUSH1) press before starting the Communication.\n\r");
-  while (BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET)
+  printf("Wait for User push-button (PUSH1) press or enter 'c'/'C' character.\n\r");
+  while((BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET) && (pressCToContinue == 0))
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(100);
@@ -348,8 +350,8 @@ int main(void)
   while(HAL_I2C_GetError(&hi2cx) == HAL_I2C_ERROR_AF);
   
   /* Wait for User push-button (PUSH1) press before starting the Communication */
-  printf("Wait for User push-button (PUSH1) press before starting the Communication.\n\r");
-  while (BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET)
+  printf("Wait for User push-button (PUSH1) press or enter 'c'/'C' character.\n\r");
+  while((BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET) && (pressCToContinue == 0))
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(100);
@@ -498,7 +500,7 @@ static void MX_DMA_Init(void)
   
   /* DMA interrupt init */
   /* DMA_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY );
   HAL_NVIC_EnableIRQ(DMA_IRQn);
 }
 
@@ -597,6 +599,18 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *I2cHandle)
     
     /* Turn on LED3 */
     BSP_LED_On(BSP_LED3);
+  }
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
   }
 }
 

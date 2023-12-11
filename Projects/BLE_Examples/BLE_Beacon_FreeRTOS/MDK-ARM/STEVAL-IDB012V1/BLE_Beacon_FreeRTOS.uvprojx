@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -328,14 +328,14 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
-            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_CUSTOM_CONF LEGACY_ADV SAVE_CONTEXT_ON_CSTACK=0</Define>
+              <MiscControls>-fshort-enums</MiscControls>
+            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_CUSTOM_CONF LEGACY_ADV SAVE_CONTEXT_ON_CSTACK=0 CONFIG_NUM_MAX_LINKS=3</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\include;..\..\..\..\..\Middlewares\ST\FreeRTOS\Source\portable\GCC\ARM_CM0;..\..\..\..\..\Middlewares\ST\FreeRTOS\BlueNRG;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
@@ -586,11 +586,6 @@
             <FileType>1</FileType>
             <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Src/stack_user_cfg.c</FilePath>
             </File>
-          <File>
-              <FileName>stack_cns_api_stubs.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_cns_api_stubs.c</FilePath>
-            </File>
           </Files>
         </Group>
       <Group>
@@ -710,21 +705,6 @@
               <FileName>pka_manager_bluenrg_lps.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Middlewares/ST/PKAMGR/Src/pka_manager_bluenrg_lps.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-      <Group>
-          <GroupName>Middlewares/Profiles</GroupName>
-        <Files>
-            <File>
-              <FileName>gap_profile.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/BLE_Application/Profiles/Src/gap_profile.c</FilePath>
-            </File>
-          <File>
-              <FileName>gatt_profile.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/BLE_Application/Profiles/Src/gatt_profile.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -235,6 +235,7 @@
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>BSP_UART_BAUDRATE=921600</state>
         <state>PROFILE_ROLE=ROLE_CENTRAL</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -1319,6 +1320,7 @@
         <state>BLE_STACK_BASIC_CONF</state>
         <state>BSP_UART_BAUDRATE=921600</state>
         <state>PROFILE_ROLE=ROLE_PERIPHERAL</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -2201,10 +2203,10 @@
   <group>
       <name>CMSIS</name>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
       </file>
     </group>
   <group>
@@ -2282,9 +2284,6 @@
         <name>$PROJ_DIR$/../../Src/BLE_Sync_main.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../Src/rf_device_it.c</name>
-      </file>
-    <file>
         <name>$PROJ_DIR$/../../Src/gatt_db.c</name>
       </file>
     <file>
@@ -2316,6 +2315,9 @@
       <excluded>
           <configuration>Master</configuration>
         </excluded>
+      </file>
+    <file>
+        <name>$PROJ_DIR$/../../Src/rf_device_it.c</name>
       </file>
     </group>
   </group>

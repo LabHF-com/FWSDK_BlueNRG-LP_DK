@@ -1,38 +1,201 @@
-/**
-******************************************************************************
-* @file    LL/USART/USART_Tx_IT_Init/Src/USART_SPI_Mode_MasterOnly_main.c
-* @author  RF Application Team
-* @brief   This example describes how to send bytes over USART IP using
-*          the USART LL API.
-*          Peripheral initialization done using LL unitary services functions.
-******************************************************************************
-* @attention
-*
-* <h2><center>&copy; COPYRIGHT(c) 2020 STMicroelectronics</center></h2>
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*   1. Redistributions of source code must retain the above copyright notice,
-*      this list of conditions and the following disclaimer.
-*   2. Redistributions in binary form must reproduce the above copyright notice,
-*      this list of conditions and the following disclaimer in the documentation
-*      and/or other materials provided with the distribution.
-*   3. Neither the name of STMicroelectronics nor the names of its contributors
-*      may be used to endorse or promote products derived from this software
-*      without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
+
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
+* File Name          : USART_SPI_Mode_MasterOnly_main.c
+* Author             : RF Application Team
+* Version            : 1.0.0
+* Date               : 04-March-2019
+* Description        : Code demonstrating the USART functionality
+********************************************************************************
+* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
 *******************************************************************************/
+
+/**
+ * @file  USART_SPI_Mode_MasterOnly/USART_SPI_Mode_MasterOnly_main.c
+ * @brief This example shows how to configure GPIO and USART peripheral to send characters
+ * asynchronously to HyperTerminal (PC) in Interrupt mode.
+ *
+
+* \section KEIL_project KEIL project
+  To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
+  -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
+  -# Open the KEIL project
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\USART\\USART_SPI_Mode_MasterOnly\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\USART_SPI_Mode_MasterOnly.uvprojx</tt>
+  -# Select desired configuration to build
+  -# Select Project->Rebuild all target files. This will recompile and link the entire application
+  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
+  -# Select Project->Download to download the related binary image.
+  -# Alternatively, open the BlueNRG-LP Flasher utility and download the built binary image.
+
+* \section IAR_project IAR project
+  To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
+  -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
+  -# Open the IAR project
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\USART\\USART_SPI_Mode_MasterOnly\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\USART_SPI_Mode_MasterOnly.eww</tt>
+  -# Select desired configuration to build
+  -# Select Project->Rebuild All. This will recompile and link the entire application
+  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
+  -# Select Project->Download and Debug to download the related binary image.
+  -# Alternatively, open the Flasher utility and download the built binary image.
+
+* \section WISE_project WiSE-Studio project
+  To use the project with WiSE-Studio IDE (GCC toolchain), please follow the instructions below:
+  -# Open the WiSE-Studio IDE
+  -# Select File, Import, Existing Projects into Workspace
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\USART\\USART_SPI_Mode_MasterOnly\\WiSE-Studio\\{STEVAL-IDB011V1|STEVAL-IDB012V1}</tt> 
+  -# Select desired configuration to build
+  -# Select Project->Build Project. This will recompile and link the entire application
+  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
+  -# Select Run->Run/Debug to download the related binary image.
+  -# Alternatively, open the Flasher utility and download the built binary image.
+
+* \subsection Project_configurations Project configurations
+- \c USART_SPI_Mode_MasterOnly - Release configuration
+
+
+* \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
+- \c STEVAL-IDB011V1
+- \c STEVAL-IDB011V2
+- \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
+
+
+
+* \section Power_settings Power configuration settings
+@table
+
+==========================================================================================================
+|                                         STEVAL-IDB01xV1                                                |
+----------------------------------------------------------------------------------------------------------
+| Jumper name | Description                                                                |
+| JP2         |                                                                            |
+----------------------------------------------------------------------------------------------------------
+| USB         | USB supply power                                                            |
+| BAT         | The supply voltage must be provided through battery pins.                   |
+
+
+@endtable
+
+* \section Jumper_settings Jumper settings
+@table
+
+========================================================================================================================================================================================
+|                                                                             STEVAL-IDB01xV1                                                                                          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Jumper name |                                                                Description                                                                                             |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+| JP1         | It provides the voltage to the BlueNRG-LP circuit. It must be fitted. It can be used for current measurements of the BlueNRG-LP device.                                |          
+| JP2         | It is a switch between two power domains. BAT position: to provide power from battery holder; USB position: to provide power from USB connector.                       |
+| JP3         | It connects the BLE_SWCLK pin of the BlueNRG-LP with the SWCLK pin of the USB_CMSISDAP. It must be fitted.                                                             |          
+| JP4         | It connects the BLE_SWDIO pin of the BlueNRG-LP with the SWDIO pin of the USB_CMSISDAP. It must be fitted.                                                             |
+| JP5         | It connects the BLE_RSTN pin of the BlueNRG-LP with the rest of the board (the USB_CMSISDAP and RESET push button). It must be fitted.                                 |
+
+
+@endtable 
+
+* \section Pin_settings Pin settings
+@table
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
+--------------------------------------------------------
+|     A1     |        SPI CS       |       SPI CS       |
+|     A11    |       Not Used      |      Not Used      |
+|     A12    |       Not Used      |        N.A.        |
+|     A13    |       Not Used      |        N.A.        |
+|     A14    |       Not Used      |        N.A.        |
+|     A15    |       Not Used      |        N.A.        |
+|     A4     |       Not Used      |        N.A.        |
+|     A5     |       Not Used      |        N.A.        |
+|     A6     |       Not Used      |        N.A.        |
+|     A7     |       Not Used      |        N.A.        |
+|     A8     |       SPI MOSI      |      Not Used      |
+|     A9     |       SPI MISO      |      Not Used      |
+|     B0     |       Not Used      |      USART RX      |
+|     B14    |       Not Used      |      Not Used      |
+|     B2     |       Not Used      |      Not Used      |
+|     B3     |       Not Used      |      Not Used      |
+|     B4     |       Not Used      |        DL2         |
+|     B5     |       Not Used      |      Not Used      |
+|     B7     |       Not Used      |      Not Used      |
+|     B8     |       SPI CLK       |        N.A.        |
+|     B9     |       Not Used      |        N.A.        |
+|     A0     |         N.A.        |      Not Used      |
+|     A10    |         N.A.        |      Not Used      |
+|     B1     |         N.A.        |      Not Used      |
+|     B6     |         N.A.        |      Not Used      |
+|     B15    |         N.A.        |      Not Used      |
+|     GND    |       Not Used      |      Not Used      |
+|     RST    |       Not Used      |      Not Used      |
+|    VBAT    |       Not Used      |      Not Used      |
+@endtable 
+
+
+
+* \section LEDs_description LEDs description
+@table
+|  LED name  |                     STEVAL-IDB010V1                    |                     STEVAL-IDB011V1                    |                     STEVAL-IDB011V2                    |                     STEVAL-IDB012V1                    |                     STEVAL-IDB013V1                    |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|     DL2    |                        Not Used                        |                        Not Used                        |                        Not Used                        |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |
+|     DL3    |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |                        Not Used                        |                        Not Used                        |
+|     DL4    |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|     U5     |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+
+@endtable
+
+
+* \section Buttons_description Buttons description
+@table
+|   BUTTON name  |             STEVAL-IDB010V1            |             STEVAL-IDB011V1            |             STEVAL-IDB011V2            |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   new transmission of complete buffer  |   new transmission of complete buffer  |   new transmission of complete buffer  |   new transmission of complete buffer  |   new transmission of complete buffer  |
+|      PUSH2     |                Not Used                |                Not Used                |                Not Used                |                Not Used                |                Not Used                |
+|      RESET     |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LPS           |            Reset BlueNRG-LPS           |
+
+@endtable
+
+* \section Usage Usage
+
+This example shows how to configure GPIO and USART peripheral to send characters synchronously to the LL SPI SPI_IT_Slave_Init in Interrupt mode.
+This example is based on BLUENRG_LP USART LL API. 
+
+In case of errors, LED3 is blinking (1sec period).
+
+To test this SPI Master application was been used the LL/SPI/SPI_IT_Slave_Init Example with the SPI configured  as SPI1 and the data size set to 8bit.
+On press on push button , USART TX Empty interrupt is enabled.
+It is mandatory add to the slave application the follows define in the main.h file:
+#define CONFIG_DATASIZE_8BIT  1
+#define USE_SPI1_PINS         1
+
+
+Connect Masrer and Slave :
+- SPI CLK  (USART CK) with SPI Slave SCK
+- SPI MISO (USART RX) with SPI Slave MISO
+- SPI MOSI (USART TX) with SPI Slave MOSI
+- SPI CS (Output pin) with SPI Slave CS
+
+| MASTER STEVAL-IDB011V1 | SLAVE STEVAL-IDB011V1 |
+|   USART Pin/Signal     |     SPI Pin/Signal    | 
+|        PB8 / CK        |       PA13 / SCK      |
+|        PA8 / RX        |       PA14 / MISO     |
+|        PA9 / TX        |       PB14 / MOSI     |
+|        PA1 / CS        |       PA11 / CS       |
+
+  When the SPI slave shows on COM the waiting message for receiving data, press the PUSH1 button of the master board. The master application doesn't show meaning messsage on COM. LED3 is turned on in case of the transmission is completed. The master COM is used to virtualize the SPI. The SPI Slave show a success message in case of well received message.
+  The aRxBuffer contains the received string also for Master and Slave application.
+
+In order to make the program work, you must do the following:
+ - Launch serial communication SW on PC
+ - Flash the project in the Board
+ - Press the RESET button
+
+
+**/
+   
 /* Includes ------------------------------------------------------------------*/
 #include "USART_SPI_Mode_MasterOnly_main.h"
 
@@ -51,7 +214,6 @@ const uint8_t aStringToSend[] = "**** SPI_IT communication **** SPI_IT communica
 uint8_t ubSizeToSend = sizeof(aStringToSend);
 
 /* Private function prototypes */
-static void LL_Init(void);
 static void MX_USART_Init(void);
 void WaitForUserButtonPress(void);
 
@@ -68,16 +230,11 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of LEDs */
   BSP_LED_Init(BSP_LED3);
@@ -113,12 +270,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
 * @brief  Wait for User push-button (PUSH1) press to start transfer.
@@ -191,7 +342,7 @@ static void MX_USART_Init(void)
   LL_GPIO_ResetOutputPin(USART1_RX_PORT, USART1_RX_PIN);
     
   /* USART1 interrupt Init */
-  NVIC_SetPriority(USART1_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USART1_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USART1_IRQn);
   
   USART_ClockInitStruct.ClockOutput = LL_USART_CLOCK_ENABLE;
@@ -226,7 +377,6 @@ static void MX_USART_Init(void)
   /* Enable Error interrupts */
   LL_USART_EnableIT_ERROR(USART1);
 }
-
 
 
 /******************************************************************************/

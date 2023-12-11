@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_ModularExp_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,6 +59,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,7 +96,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |    STEVAL-IDB012V1  |
+|  PIN name  |   STEVAL-IDB012V1   |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -140,23 +141,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |             STEVAL-IDB012V1            |
--------------------------------------------------------
-|     DL1    |                Not Used                |
-|     DL2    |   On: success; Slowly blinking: error  |
-|     DL3    |                Not Used                |
-|     DL4    |                Not Used                |
-|     U5     |                Not Used                |
+|  LED name  |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+-------------------------------------------------------------------------------------------------
+|     DL1    |                Not Used                |                Not Used                |
+|     DL2    |   On: success; Slowly blinking: error  |   On: success; Slowly blinking: error  |
+|     DL3    |                Not Used                |                Not Used                |
+|     DL4    |                Not Used                |                Not Used                |
+|     U5     |                Not Used                |                Not Used                |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB012V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -213,7 +214,6 @@ __IO uint32_t endOfProcess = 0;
 uint8_t buffer[256] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 void LED_Init(void);
@@ -242,11 +242,12 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -263,12 +264,14 @@ int main(void)
   /* Launch the computation in interrupt mode */
   LL_PKA_Start(PKA);
   
+  printf("** Launch the computation in interrupt mode: **\n\r");
+  
   /* Wait for the interrupt callback */
   while(endOfProcess != 1);
   endOfProcess = 0;
   
   /* Retreive the result and output buffer */
-  PKA_Memcpy_u32_to_u8(buffer, &PKA_RAM->RAM[PKA_MODULAR_EXP_OUT_SM_ALGO_ACC1], rsa_pub_2048_modulus_len / 4);
+  PKA_Memcpy_u32_to_u8(buffer, &PKA_RAM->RAM[PKA_MODULAR_EXP_OUT_SM_ALGO_ACC1], rsa_pub_2048_modulus_len / 4);  
   
   /* Compare to expected results */
   result = Buffercmp(buffer, ciphertext_bin, ciphertext_bin_len);
@@ -285,15 +288,18 @@ int main(void)
   /* Launch the computation in interrupt mode */
   LL_PKA_Start(PKA);
   
+  printf("** Launch the computation in interrupt mode: **\n\r");
+  
   /* Wait for the interrupt callback */
   while(endOfProcess != 1);
   endOfProcess = 0;
-  
+ 
   /* Retreive the result and output buffer */
-  PKA_Memcpy_u32_to_u8(buffer, &PKA_RAM->RAM[PKA_MODULAR_EXP_OUT_SM_ALGO_ACC1], rsa_pub_2048_modulus_len / 4);
+  PKA_Memcpy_u32_to_u8(buffer, &PKA_RAM->RAM[PKA_MODULAR_EXP_OUT_SM_ALGO_ACC1], rsa_pub_2048_modulus_len / 4);  
+
   
   /* Compare to expected results */
-  result = Buffercmp(buffer, plaintext_bin, plaintext_bin_len);
+  result = Buffercmp((uint8_t* )buffer, (uint8_t* )plaintext_bin, plaintext_bin_len);
   if (result != 0)
   {
     printf("ECDSA signature generation in interrupt mode: fail");
@@ -310,12 +316,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
 * @brief PKA Initialization Function
@@ -330,7 +330,7 @@ static void MX_PKA_Init(void)
   /* Configure NVIC for PKA interrupts */
   /*   Set priority for PKA_IRQn */
   /*   Enable PKA_IRQn */
-  NVIC_SetPriority(PKA_IRQn, 0);  
+  NVIC_SetPriority(PKA_IRQn, IRQ_LOW_PRIORITY );  
   NVIC_EnableIRQ(PKA_IRQn);
   
   LL_PKA_EnableIT_ADDRERR(PKA);
@@ -388,6 +388,7 @@ void PKA_load_ciphering_parameter(void)
   /* Move the modulus to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_MODULAR_EXP_IN_MODULUS], rsa_pub_2048_modulus, rsa_pub_2048_modulus_len);
   PKA_RAM->RAM[PKA_MODULAR_EXP_IN_MODULUS + rsa_pub_2048_modulus_len / 4] = 0;
+  
 }
 
 /**
@@ -397,6 +398,7 @@ void PKA_load_ciphering_parameter(void)
 */
 void PKA_load_unciphering_parameter(void)
 {
+  
   /* Get the number of bit per operand */
   PKA_RAM->RAM[PKA_MODULAR_EXP_IN_OP_NB_BITS] = rsa_pub_2048_modulus_len*8;
   
@@ -405,15 +407,19 @@ void PKA_load_unciphering_parameter(void)
   
   /* Move the input parameters pOp1 to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_MODULAR_EXP_IN_EXPONENT_BASE], ciphertext_bin, rsa_pub_2048_modulus_len);
+  /* Add an extra word to zero */
   PKA_RAM->RAM[PKA_MODULAR_EXP_IN_EXPONENT_BASE + rsa_pub_2048_modulus_len / 4] = 0;
   
   /* Move the exponent to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_MODULAR_EXP_IN_EXPONENT], rsa_priv_2048_privateExponent, rsa_priv_2048_privateExponent_len);
+  /* Add an extra word to zero */
   PKA_RAM->RAM[PKA_MODULAR_EXP_IN_EXPONENT + rsa_priv_2048_privateExponent_len / 4] = 0;
   
   /* Move the modulus to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_MODULAR_EXP_IN_MODULUS], rsa_priv_2048_modulus, rsa_pub_2048_modulus_len);
+  /* Add an extra word to zero */
   PKA_RAM->RAM[PKA_MODULAR_EXP_IN_MODULUS + rsa_pub_2048_modulus_len / 4] = 0;
+
 }
 
 void PKA_ERROR_callback(void)

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_ECC_Sign_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,6 +58,7 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 
@@ -96,7 +97,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |
+|  PIN name  | STEVAL-IDB011V{1-2} |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -141,23 +142,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                  STEVAL-IDB011V1                 |                  STEVAL-IDB011V2                 |
----------------------------------------------------------------------------------------------------------------------
-|     DL1    |                     Not Used                     |                     Not Used                     |
-|     DL2    |  ON: successful sequence - Slow blinking: error  |  ON: successful sequence - Slow blinking: error  |
-|     DL3    |                     Not Used                     |                     Not Used                     |
-|     DL4    |                     Not Used                     |                     Not Used                     |
-|     U5     |                     Not Used                     |                     Not Used                     |
+|  LED name  |                  STEVAL-IDB010V1                 |                  STEVAL-IDB011V1                 |                  STEVAL-IDB011V2                 |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                     Not Used                     |                     Not Used                     |                     Not Used                     |
+|     DL2    |  ON: successful sequence - Slow blinking: error  |  ON: successful sequence - Slow blinking: error  |  ON: successful sequence - Slow blinking: error  |
+|     DL3    |                     Not Used                     |                     Not Used                     |                     Not Used                     |
+|     DL4    |                     Not Used                     |                     Not Used                     |                     Not Used                     |
+|     U5     |                     Not Used                     |                     Not Used                     |                     Not Used                     |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
--------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
 
 @endtable
 
@@ -212,7 +213,6 @@ uint8_t SBuffer[32] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
 void PrintBuffer(uint32_t* pBuffer, uint32_t BufferLength);
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 static void MX_RNG_Init(void);
@@ -279,19 +279,16 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
    
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
  
   printf("\t\tPKA_ECC_Sign\n\r\n\r");
   
@@ -453,12 +450,6 @@ void PrintBuffer(uint32_t* pBuffer, uint32_t BufferLength)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
 * @brief PKA Initialization Function
@@ -473,7 +464,7 @@ static void MX_PKA_Init(void)
   /* Configure NVIC for PKA interrupts */
   /*   Set priority for PKA_IRQn */
   /*   Enable PKA_IRQn */
-  NVIC_SetPriority(PKA_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(PKA_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(PKA_IRQn);  
 }
 

@@ -62,7 +62,7 @@
 #define DEBUG_GPIO_CLK_ENABLE()      LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)   /* Enable the peripheral clock of GPIOB */
 #define DEBUG_GPIO_PORT              GPIOB
 #define DEBUG_TEST_1_PIN             LL_GPIO_PIN_4
-#define DEBUG_TEST_2_PIN             LL_GPIO_PIN_5
+#define DEBUG_TEST_2_PIN             LL_GPIO_PIN_7
 #endif
 
 /* Exported constants --------------------------------------------------------*/
@@ -90,6 +90,7 @@ void UART_Cmd(FunctionalState state);
 
 #ifdef SPI_INTERFACE
 void SPI_Slave_Configuration(void);
+void SPI_FIFO_Flush(void);
 #endif
 
 #ifndef NO_DMA

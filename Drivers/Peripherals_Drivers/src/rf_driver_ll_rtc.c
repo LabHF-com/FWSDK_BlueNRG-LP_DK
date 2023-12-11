@@ -249,8 +249,8 @@ void LL_RTC_StructInit(LL_RTC_InitTypeDef *RTC_InitStruct)
   * @brief  Set the RTC current time.
   * @param  RTCx RTC Instance
   * @param  RTC_Format This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_FORMAT_BIN
-  *         @arg @ref LL_RTC_FORMAT_BCD
+  * @arg LL_RTC_FORMAT_BIN
+  * @arg LL_RTC_FORMAT_BCD
   * @param  RTC_TimeStruct pointer to a RTC_TimeTypeDef structure that contains
   *                        the time configuration information for the RTC.
   * @retval An ErrorStatus enumeration value:
@@ -352,8 +352,8 @@ void LL_RTC_TIME_StructInit(LL_RTC_TimeTypeDef *RTC_TimeStruct)
   * @brief  Set the RTC current date.
   * @param  RTCx RTC Instance
   * @param  RTC_Format This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_FORMAT_BIN
-  *         @arg @ref LL_RTC_FORMAT_BCD
+  * @arg LL_RTC_FORMAT_BIN
+  * @arg LL_RTC_FORMAT_BCD
   * @param RTC_DateStruct pointer to a RTC_DateTypeDef structure that contains
   *                         the date configuration information for the RTC.
   * @retval An ErrorStatus enumeration value:
@@ -442,8 +442,8 @@ void LL_RTC_DATE_StructInit(LL_RTC_DateTypeDef *RTC_DateStruct)
   *         is disabled (Use @ref LL_RTC_ALMA_Disable function).
   * @param  RTCx RTC Instance
   * @param  RTC_Format This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_FORMAT_BIN
-  *         @arg @ref LL_RTC_FORMAT_BCD
+  * @arg LL_RTC_FORMAT_BIN
+  * @arg LL_RTC_FORMAT_BCD
   * @param  RTC_AlarmStruct pointer to a @ref LL_RTC_AlarmTypeDef structure that
   *                         contains the alarm configuration parameters.
   * @retval An ErrorStatus enumeration value:

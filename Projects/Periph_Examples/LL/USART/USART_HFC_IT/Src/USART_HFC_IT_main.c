@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : USART_HFC_IT_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -148,24 +150,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                        STEVAL-IDB011V1                                       |                                        STEVAL-IDB011V2                                       |                                        STEVAL-IDB012V1                                       |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     DL2    |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |
-|     DL3    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     DL4    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     U5     |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|  LED name  |                                        STEVAL-IDB010V1                                       |                                        STEVAL-IDB011V1                                       |                                        STEVAL-IDB011V2                                       |                                        STEVAL-IDB012V1                                       |                                        STEVAL-IDB013V1                                       |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     DL2    |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |   ON: OK - Toggle: Specific value is received from the HyperTerminal - Slow blinking: error  |
+|     DL3    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     DL4    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     U5     |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |
-------------------------------------------------------------------------------------------------
-|      PUSH1     |   Start communication  |   Start communication  |   Start communication  |
-|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |
-|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |
+|   BUTTON name  |     STEVAL-IDB010V1    |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |     STEVAL-IDB012V1    |     STEVAL-IDB013V1    |
+----------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   Start communication  |   Start communication  |   Start communication  |   Start communication  |   Start communication  |
+|      PUSH2     |        Not Used        |        Not Used        |        Not Used        |        Not Used        |        Not Used        |
+|      RESET     |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LP    |    Reset BlueNRG-LPS   |    Reset BlueNRG-LPS   |
 
 @endtable
 
@@ -190,7 +192,7 @@ Received character is echoed on Tx line.
 In case of errors, LED2 is blinking (1sec period).
 
 BlueNRG_LP-EVB Set-up. Connect:
-STEVAL-IDB011V{1|2}:
+STEVAL-IDB011V{1-2}:
   PA9--> TX   (FTDI Yellow)
   PA8--> RX   (FTDI Orange)  
   PB3--> CTS  (FTDI Green)
@@ -231,7 +233,6 @@ const uint8_t aStringToSend[] = "USART LL API Example : TX RX in IT mode\r\nConf
 uint8_t ubSizeToSend = sizeof(aStringToSend);
 
 /* Private function prototypes */
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_USART_Init(void);
 void LED_On(void);
@@ -252,11 +253,8 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -282,12 +280,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
 * @brief USART1 Initialization Function
@@ -335,7 +327,7 @@ static void MX_USART_Init(void)
   LL_GPIO_Init(USART1_RTS_PORT, &GPIO_InitStruct);
   
   /* USART1 interrupt Init */
-  NVIC_SetPriority(USART1_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USART1_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USART1_IRQn);
   
   USART_InitStruct.PrescalerValue = LL_USART_PRESCALER_DIV1;

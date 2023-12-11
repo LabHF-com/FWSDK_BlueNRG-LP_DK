@@ -20,6 +20,8 @@
 #define NOTIFICATIONS      1
 #define WRITE_COMMANDS     2
 
+#if (CONNECTION_ENABLED == 1) && (BLESTACK_CONTROLLER_ONLY == 0)
+
 struct {
   uint8_t  Enable; // OFF, NOTIFICATIONS or WRITE_COMMANDS
   uint8_t  tx_buffer_full;
@@ -227,9 +229,8 @@ static void SendNotificationBurst(void)
   
   while(ret == BLE_STATUS_SUCCESS){
     
-  //TBR Replace with new API
-  ret = aci_gatt_srv_notify(TXBurstData.Connection_Handle, TXBurstData.Handle + 1, 0,  TXBurstData.Value_Length, (uint8_t *)Value);
-  if(ret == BLE_STATUS_SUCCESS){
+    ret = aci_gatt_srv_notify(TXBurstData.Connection_Handle, TXBurstData.Handle + 1, 0,  TXBurstData.Value_Length, (uint8_t *)Value);
+    if(ret == BLE_STATUS_SUCCESS){
       (*pSeqNum)++;
     }
   }
@@ -254,9 +255,8 @@ static void SendWriteCommandBurst(void)
   
   while(ret == BLE_STATUS_SUCCESS){
  
-   //TBR Replace with new API
-   ret = aci_gatt_clt_write_without_resp(TXBurstData.Connection_Handle, TXBurstData.Handle,
-                                      TXBurstData.Value_Length, (uint8_t *)Value);
+    ret = aci_gatt_clt_write_without_resp(TXBurstData.Connection_Handle, TXBurstData.Handle,
+                                          TXBurstData.Value_Length, (uint8_t *)Value);
     if(ret == BLE_STATUS_SUCCESS){
       (*pSeqNum)++;
     }
@@ -303,3 +303,31 @@ int aci_gatt_tx_pool_available_event_preprocess(uint16_t Connection_Handle,
 {
   return BURST_BufferAvailableNotify();
 }
+
+#else
+
+int aci_gatt_srv_attribute_modified_event_preprocess(uint16_t Connection_Handle,
+                                                     uint16_t Attr_Handle,
+                                                     uint16_t Attr_Data_Length,
+                                                     uint8_t Attr_Data[])
+{
+  return 0;
+}
+
+int aci_gatt_clt_notification_event_preprocess(uint16_t Connection_Handle,
+                                               uint16_t Attribute_Handle,
+                                               uint16_t Attribute_Value_Length,
+                                               uint8_t Attribute_Value[])
+{
+  return 0;
+}
+
+int aci_gatt_tx_pool_available_event_preprocess(uint16_t Connection_Handle,
+                                                uint16_t Available_Buffers)
+{
+  return 0;
+}
+
+void BURST_Tick(void){}
+
+#endif

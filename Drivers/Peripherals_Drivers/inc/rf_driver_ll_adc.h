@@ -693,6 +693,13 @@ typedef struct
 #define ADC_CALIB_ADDRESS_VINMX_1V2      (0x10001E04)
 #define ADC_CALIB_ADDRESS_VINDIFF_1V2    (0x10001E00)
 
+
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+/* Calibration point for the temperature sensor for not trimmed BlueNRG-LPS devices (for preliminary samples) */
+#define ESTIMATED_C30  (2524)
+#define ESTIMATED_TCK  (300)
+#endif
+
 /**
   * @}
   */
@@ -755,8 +762,8 @@ typedef struct
   * @rmtoll CONF     ADC_CONT_1V2       LL_ADC_InputSamplingMode
   * @param  ADCx ADC instance
   * @param  SamplingMode This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLING_AT_START
-  *         @arg @ref LL_ADC_SAMPLING_AT_END
+  * @arg LL_ADC_SAMPLING_AT_START
+  * @arg LL_ADC_SAMPLING_AT_END
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_InputSamplingMode(ADC_TypeDef *ADCx, uint32_t SamplingMode)
@@ -769,8 +776,8 @@ __STATIC_INLINE void LL_ADC_InputSamplingMode(ADC_TypeDef *ADCx, uint32_t Sampli
   * @rmtoll CONF     ADC_CONT_1V2       LL_ADC_GetInputSamplingMode
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLING_AT_START
-  *         @arg @ref LL_ADC_SAMPLING_AT_END
+  * @arg LL_ADC_SAMPLING_AT_START
+  * @arg LL_ADC_SAMPLING_AT_END
   */
 __STATIC_INLINE uint32_t LL_ADC_GetInputSamplingMode(ADC_TypeDef *ADCx)
 {
@@ -858,8 +865,8 @@ __STATIC_INLINE uint32_t LL_ADC_IsInvertOutputBitSingleNegModeEnabled(ADC_TypeDe
   * @rmtoll CONF     OVR_DF_CFG       LL_ADC_SetOverrunDF
   * @param  ADCx ADC instance
   * @param  Overrun This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_NEW_DATA_IS_LOST
-  *         @arg @ref LL_ADC_NEW_DATA_IS_KEPT
+  * @arg LL_ADC_NEW_DATA_IS_LOST
+  * @arg LL_ADC_NEW_DATA_IS_KEPT
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetOverrunDF(ADC_TypeDef *ADCx, uint32_t Overrun)
@@ -875,8 +882,8 @@ __STATIC_INLINE void LL_ADC_SetOverrunDF(ADC_TypeDef *ADCx, uint32_t Overrun)
   * @rmtoll CONF     OVR_DF_CFG       LL_ADC_GetOverrunDF
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_NEW_DATA_IS_LOST
-  *         @arg @ref LL_ADC_NEW_DATA_IS_KEPT
+  * @arg LL_ADC_NEW_DATA_IS_LOST
+  * @arg LL_ADC_NEW_DATA_IS_KEPT
   */
 __STATIC_INLINE uint32_t LL_ADC_GetOverrunDF(ADC_TypeDef *ADCx)
 {
@@ -893,8 +900,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetOverrunDF(ADC_TypeDef *ADCx)
   * @rmtoll CONF     OVR_DS_CFG       LL_ADC_SetOverrunDS
   * @param  ADCx ADC instance
   * @param  Overrun This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_NEW_DATA_IS_LOST
-  *         @arg @ref LL_ADC_NEW_DATA_IS_KEPT
+  * @arg LL_ADC_NEW_DATA_IS_LOST
+  * @arg LL_ADC_NEW_DATA_IS_KEPT
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetOverrunDS(ADC_TypeDef *ADCx, uint32_t Overrun)
@@ -910,8 +917,8 @@ __STATIC_INLINE void LL_ADC_SetOverrunDS(ADC_TypeDef *ADCx, uint32_t Overrun)
   * @rmtoll CONF     OVR_DS_CFG       LL_ADC_GetOverrunDS
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_NEW_DATA_IS_LOST
-  *         @arg @ref LL_ADC_NEW_DATA_IS_KEPT
+  * @arg LL_ADC_NEW_DATA_IS_LOST
+  * @arg LL_ADC_NEW_DATA_IS_KEPT
   */
 __STATIC_INLINE uint32_t LL_ADC_GetOverrunDS(ADC_TypeDef *ADCx)
 {
@@ -998,19 +1005,19 @@ __STATIC_INLINE uint32_t LL_ADC_IsDMAModeDSEnabled(ADC_TypeDef *ADCx)
   * @rmtoll CONF     SAMPLE_RATE_MSB   LL_ADC_SetSampleRate
   * @param  ADCx ADC instance
   * @param  SampleRateMsb This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_0
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_1
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_2
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_3
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_4
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_5
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_6
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_7
+  * @arg LL_ADC_SAMPLE_RATE_MSB_0
+  * @arg LL_ADC_SAMPLE_RATE_MSB_1
+  * @arg LL_ADC_SAMPLE_RATE_MSB_2
+  * @arg LL_ADC_SAMPLE_RATE_MSB_3
+  * @arg LL_ADC_SAMPLE_RATE_MSB_4
+  * @arg LL_ADC_SAMPLE_RATE_MSB_5
+  * @arg LL_ADC_SAMPLE_RATE_MSB_6
+  * @arg LL_ADC_SAMPLE_RATE_MSB_7
   * @param  SampleRate This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_0
-  *         @arg @ref LL_ADC_SAMPLE_RATE_1
-  *         @arg @ref LL_ADC_SAMPLE_RATE_2
-  *         @arg @ref LL_ADC_SAMPLE_RATE_3
+  * @arg LL_ADC_SAMPLE_RATE_0
+  * @arg LL_ADC_SAMPLE_RATE_1
+  * @arg LL_ADC_SAMPLE_RATE_2
+  * @arg LL_ADC_SAMPLE_RATE_3
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetSampleRate(ADC_TypeDef *ADCx, uint32_t SampleRateMsb, uint32_t SampleRate)
@@ -1025,10 +1032,10 @@ __STATIC_INLINE void LL_ADC_SetSampleRate(ADC_TypeDef *ADCx, uint32_t SampleRate
   * @rmtoll CONF     SAMPLE_RATE       LL_ADC_GetSampleRate
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_0
-  *         @arg @ref LL_ADC_SAMPLE_RATE_1
-  *         @arg @ref LL_ADC_SAMPLE_RATE_2
-  *         @arg @ref LL_ADC_SAMPLE_RATE_3
+  * @arg LL_ADC_SAMPLE_RATE_0
+  * @arg LL_ADC_SAMPLE_RATE_1
+  * @arg LL_ADC_SAMPLE_RATE_2
+  * @arg LL_ADC_SAMPLE_RATE_3
   */
 __STATIC_INLINE uint32_t LL_ADC_GetSampleRate(ADC_TypeDef *ADCx)
 {
@@ -1040,14 +1047,14 @@ __STATIC_INLINE uint32_t LL_ADC_GetSampleRate(ADC_TypeDef *ADCx)
   * @rmtoll CONF     SAMPLE_RATE_MSB   LL_ADC_GetSampleRate
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_0
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_1
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_2
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_3
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_4
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_5
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_6
-  *         @arg @ref LL_ADC_SAMPLE_RATE_MSB_7
+  * @arg LL_ADC_SAMPLE_RATE_MSB_0
+  * @arg LL_ADC_SAMPLE_RATE_MSB_1
+  * @arg LL_ADC_SAMPLE_RATE_MSB_2
+  * @arg LL_ADC_SAMPLE_RATE_MSB_3
+  * @arg LL_ADC_SAMPLE_RATE_MSB_4
+  * @arg LL_ADC_SAMPLE_RATE_MSB_5
+  * @arg LL_ADC_SAMPLE_RATE_MSB_6
+  * @arg LL_ADC_SAMPLE_RATE_MSB_7
   */
 __STATIC_INLINE uint32_t LL_ADC_GetSampleRateMsb(ADC_TypeDef *ADCx)
 {
@@ -1060,10 +1067,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetSampleRateMsb(ADC_TypeDef *ADCx)
   * @rmtoll CONF     SAMPLE_RATE       LL_ADC_SetSampleRate
   * @param  ADCx ADC instance
   * @param  SampleRate This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_16
-  *         @arg @ref LL_ADC_SAMPLE_RATE_20
-  *         @arg @ref LL_ADC_SAMPLE_RATE_24
-  *         @arg @ref LL_ADC_SAMPLE_RATE_28
+  * @arg LL_ADC_SAMPLE_RATE_16
+  * @arg LL_ADC_SAMPLE_RATE_20
+  * @arg LL_ADC_SAMPLE_RATE_24
+  * @arg LL_ADC_SAMPLE_RATE_28
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetSampleRate(ADC_TypeDef *ADCx, uint32_t SampleRate)
@@ -1077,10 +1084,10 @@ __STATIC_INLINE void LL_ADC_SetSampleRate(ADC_TypeDef *ADCx, uint32_t SampleRate
   * @rmtoll CONF     SAMPLE_RATE       LL_ADC_GetSampleRate
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_SAMPLE_RATE_16
-  *         @arg @ref LL_ADC_SAMPLE_RATE_20
-  *         @arg @ref LL_ADC_SAMPLE_RATE_24
-  *         @arg @ref LL_ADC_SAMPLE_RATE_28
+  * @arg LL_ADC_SAMPLE_RATE_16
+  * @arg LL_ADC_SAMPLE_RATE_20
+  * @arg LL_ADC_SAMPLE_RATE_24
+  * @arg LL_ADC_SAMPLE_RATE_28
   */
 __STATIC_INLINE uint32_t LL_ADC_GetSampleRate(ADC_TypeDef *ADCx)
 {
@@ -1094,9 +1101,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetSampleRate(ADC_TypeDef *ADCx)
   * @rmtoll CONF     OP_MODE       LL_ADC_SetADCMode
   * @param  ADCx ADC instance
   * @param  OperationMode This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_OP_MODE_AUDIO
-  *         @arg @ref LL_ADC_OP_MODE_ADC
-  *         @arg @ref LL_ADC_OP_MODE_FULL
+  * @arg LL_ADC_OP_MODE_AUDIO
+  * @arg LL_ADC_OP_MODE_ADC
+  * @arg LL_ADC_OP_MODE_FULL
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetADCMode(ADC_TypeDef *ADCx, uint32_t OperationMode)
@@ -1112,9 +1119,9 @@ __STATIC_INLINE void LL_ADC_SetADCMode(ADC_TypeDef *ADCx, uint32_t OperationMode
   * @rmtoll CONF     OP_MODE       LL_ADC_GetADCMode
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_OP_MODE_AUDIO
-  *         @arg @ref LL_ADC_OP_MODE_ADC
-  *         @arg @ref LL_ADC_OP_MODE_FULL
+  * @arg LL_ADC_OP_MODE_AUDIO
+  * @arg LL_ADC_OP_MODE_ADC
+  * @arg LL_ADC_OP_MODE_FULL
   */
 __STATIC_INLINE uint32_t LL_ADC_GetADCMode(ADC_TypeDef *ADCx)
 {
@@ -1175,22 +1182,22 @@ __STATIC_INLINE uint32_t LL_ADC_IsSyncADCStartWithSMPSPulseEnabled(ADC_TypeDef *
   * @rmtoll CONF     SEQ_LEN       LL_ADC_SetSequenceLength
   * @param  ADCx ADC instance
   * @param  SequenceLength This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_SEQ_LEN_01
-  *         @arg @ref LL_ADC_SEQ_LEN_02
-  *         @arg @ref LL_ADC_SEQ_LEN_03
-  *         @arg @ref LL_ADC_SEQ_LEN_04
-  *         @arg @ref LL_ADC_SEQ_LEN_05
-  *         @arg @ref LL_ADC_SEQ_LEN_06
-  *         @arg @ref LL_ADC_SEQ_LEN_07
-  *         @arg @ref LL_ADC_SEQ_LEN_08
-  *         @arg @ref LL_ADC_SEQ_LEN_09
-  *         @arg @ref LL_ADC_SEQ_LEN_10
-  *         @arg @ref LL_ADC_SEQ_LEN_11
-  *         @arg @ref LL_ADC_SEQ_LEN_12
-  *         @arg @ref LL_ADC_SEQ_LEN_13
-  *         @arg @ref LL_ADC_SEQ_LEN_14
-  *         @arg @ref LL_ADC_SEQ_LEN_15
-  *         @arg @ref LL_ADC_SEQ_LEN_16
+  * @arg LL_ADC_SEQ_LEN_01
+  * @arg LL_ADC_SEQ_LEN_02
+  * @arg LL_ADC_SEQ_LEN_03
+  * @arg LL_ADC_SEQ_LEN_04
+  * @arg LL_ADC_SEQ_LEN_05
+  * @arg LL_ADC_SEQ_LEN_06
+  * @arg LL_ADC_SEQ_LEN_07
+  * @arg LL_ADC_SEQ_LEN_08
+  * @arg LL_ADC_SEQ_LEN_09
+  * @arg LL_ADC_SEQ_LEN_10
+  * @arg LL_ADC_SEQ_LEN_11
+  * @arg LL_ADC_SEQ_LEN_12
+  * @arg LL_ADC_SEQ_LEN_13
+  * @arg LL_ADC_SEQ_LEN_14
+  * @arg LL_ADC_SEQ_LEN_15
+  * @arg LL_ADC_SEQ_LEN_16
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetSequenceLength(ADC_TypeDef *ADCx, uint32_t SequenceLength)
@@ -1204,22 +1211,22 @@ __STATIC_INLINE void LL_ADC_SetSequenceLength(ADC_TypeDef *ADCx, uint32_t Sequen
   * @rmtoll CONF     SEQ_LEN       LL_ADC_GetSequenceLength
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_SEQ_LEN_01
-  *         @arg @ref LL_ADC_SEQ_LEN_02
-  *         @arg @ref LL_ADC_SEQ_LEN_03
-  *         @arg @ref LL_ADC_SEQ_LEN_04
-  *         @arg @ref LL_ADC_SEQ_LEN_05
-  *         @arg @ref LL_ADC_SEQ_LEN_06
-  *         @arg @ref LL_ADC_SEQ_LEN_07
-  *         @arg @ref LL_ADC_SEQ_LEN_08
-  *         @arg @ref LL_ADC_SEQ_LEN_09
-  *         @arg @ref LL_ADC_SEQ_LEN_10
-  *         @arg @ref LL_ADC_SEQ_LEN_11
-  *         @arg @ref LL_ADC_SEQ_LEN_12
-  *         @arg @ref LL_ADC_SEQ_LEN_13
-  *         @arg @ref LL_ADC_SEQ_LEN_14
-  *         @arg @ref LL_ADC_SEQ_LEN_15
-  *         @arg @ref LL_ADC_SEQ_LEN_16
+  * @arg LL_ADC_SEQ_LEN_01
+  * @arg LL_ADC_SEQ_LEN_02
+  * @arg LL_ADC_SEQ_LEN_03
+  * @arg LL_ADC_SEQ_LEN_04
+  * @arg LL_ADC_SEQ_LEN_05
+  * @arg LL_ADC_SEQ_LEN_06
+  * @arg LL_ADC_SEQ_LEN_07
+  * @arg LL_ADC_SEQ_LEN_08
+  * @arg LL_ADC_SEQ_LEN_09
+  * @arg LL_ADC_SEQ_LEN_10
+  * @arg LL_ADC_SEQ_LEN_11
+  * @arg LL_ADC_SEQ_LEN_12
+  * @arg LL_ADC_SEQ_LEN_13
+  * @arg LL_ADC_SEQ_LEN_14
+  * @arg LL_ADC_SEQ_LEN_15
+  * @arg LL_ADC_SEQ_LEN_16
   */
 __STATIC_INLINE uint32_t LL_ADC_GetSequenceLength(ADC_TypeDef *ADCx)
 {
@@ -1521,8 +1528,8 @@ __STATIC_INLINE uint32_t LL_ADC_IsOccasionalConversionModeOngoing(ADC_TypeDef *A
   * @rmtoll OCM_CTRL     OCM_SRC       LL_ADC_SetOccasionalConversionSource
   * @param  ADCx ADC instance
   * @param  Source This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_OCM_SRC_VBAT
-  *         @arg @ref LL_ADC_OCM_SRC_TEMP
+  * @arg LL_ADC_OCM_SRC_VBAT
+  * @arg LL_ADC_OCM_SRC_TEMP
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetOccasionalConversionSource(ADC_TypeDef *ADCx, uint32_t Source)
@@ -1538,8 +1545,8 @@ __STATIC_INLINE void LL_ADC_SetOccasionalConversionSource(ADC_TypeDef *ADCx, uin
   * @rmtoll OCM_CTRL     OCM_SRC       LL_ADC_GetOccasionalConversionSource
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_OCM_SRC_VBAT
-  *         @arg @ref LL_ADC_OCM_SRC_TEMP
+  * @arg LL_ADC_OCM_SRC_VBAT
+  * @arg LL_ADC_OCM_SRC_TEMP
   */
 __STATIC_INLINE uint32_t LL_ADC_GetOccasionalConversionSource(ADC_TypeDef *ADCx)
 {
@@ -1562,25 +1569,25 @@ __STATIC_INLINE uint32_t LL_ADC_GetOccasionalConversionSource(ADC_TypeDef *ADCx)
   * @brief  Configure the voltage bias and the gain for the PGA used in the ADC microphone mode.
   * @param  ADCx ADC instance
   * @param  Bias This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_BIAS_050_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_055_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_060_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_065_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_070_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_075_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_080_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_090_BAT
+  * @arg LL_ADC_PGA_BIAS_050_BAT
+  * @arg LL_ADC_PGA_BIAS_055_BAT
+  * @arg LL_ADC_PGA_BIAS_060_BAT
+  * @arg LL_ADC_PGA_BIAS_065_BAT
+  * @arg LL_ADC_PGA_BIAS_070_BAT
+  * @arg LL_ADC_PGA_BIAS_075_BAT
+  * @arg LL_ADC_PGA_BIAS_080_BAT
+  * @arg LL_ADC_PGA_BIAS_090_BAT
   * @param  Gain This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_GAIN_06_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_09_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_12_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_15_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_18_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_21_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_24_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_27_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_30_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_33_DB
+  * @arg LL_ADC_PGA_GAIN_06_DB
+  * @arg LL_ADC_PGA_GAIN_09_DB
+  * @arg LL_ADC_PGA_GAIN_12_DB
+  * @arg LL_ADC_PGA_GAIN_15_DB
+  * @arg LL_ADC_PGA_GAIN_18_DB
+  * @arg LL_ADC_PGA_GAIN_21_DB
+  * @arg LL_ADC_PGA_GAIN_24_DB
+  * @arg LL_ADC_PGA_GAIN_27_DB
+  * @arg LL_ADC_PGA_GAIN_30_DB
+  * @arg LL_ADC_PGA_GAIN_33_DB
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_ConfigureMicrophonePGA(ADC_TypeDef *ADCx, uint32_t Bias, uint32_t Gain)
@@ -1594,14 +1601,14 @@ __STATIC_INLINE void LL_ADC_ConfigureMicrophonePGA(ADC_TypeDef *ADCx, uint32_t B
   * @rmtoll PGA_CONF     PGA_BIAS       LL_ADC_SetMicrophonePGABias
   * @param  ADCx ADC instance
   * @param  Bias This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_BIAS_050_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_055_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_060_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_065_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_070_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_075_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_080_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_090_BAT
+  * @arg LL_ADC_PGA_BIAS_050_BAT
+  * @arg LL_ADC_PGA_BIAS_055_BAT
+  * @arg LL_ADC_PGA_BIAS_060_BAT
+  * @arg LL_ADC_PGA_BIAS_065_BAT
+  * @arg LL_ADC_PGA_BIAS_070_BAT
+  * @arg LL_ADC_PGA_BIAS_075_BAT
+  * @arg LL_ADC_PGA_BIAS_080_BAT
+  * @arg LL_ADC_PGA_BIAS_090_BAT
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetMicrophonePGABias(ADC_TypeDef *ADCx, uint32_t Bias)
@@ -1615,14 +1622,14 @@ __STATIC_INLINE void LL_ADC_SetMicrophonePGABias(ADC_TypeDef *ADCx, uint32_t Bia
   * @rmtoll PGA_CONF     PGA_BIAS       LL_ADC_GetMicrophonePGABias
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_BIAS_050_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_055_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_060_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_065_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_070_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_075_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_080_BAT
-  *         @arg @ref LL_ADC_PGA_BIAS_090_BAT
+  * @arg LL_ADC_PGA_BIAS_050_BAT
+  * @arg LL_ADC_PGA_BIAS_055_BAT
+  * @arg LL_ADC_PGA_BIAS_060_BAT
+  * @arg LL_ADC_PGA_BIAS_065_BAT
+  * @arg LL_ADC_PGA_BIAS_070_BAT
+  * @arg LL_ADC_PGA_BIAS_075_BAT
+  * @arg LL_ADC_PGA_BIAS_080_BAT
+  * @arg LL_ADC_PGA_BIAS_090_BAT
   */
 __STATIC_INLINE uint32_t LL_ADC_GetMicrophonePGABias(ADC_TypeDef *ADCx)
 {
@@ -1637,16 +1644,16 @@ __STATIC_INLINE uint32_t LL_ADC_GetMicrophonePGABias(ADC_TypeDef *ADCx)
   * @rmtoll PGA_CONF     PGA_GAIN       LL_ADC_SetMicrophonePGAGain
   * @param  ADCx ADC instance
   * @param  Gain This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_GAIN_06_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_09_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_12_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_15_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_18_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_21_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_24_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_27_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_30_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_33_DB
+  * @arg LL_ADC_PGA_GAIN_06_DB
+  * @arg LL_ADC_PGA_GAIN_09_DB
+  * @arg LL_ADC_PGA_GAIN_12_DB
+  * @arg LL_ADC_PGA_GAIN_15_DB
+  * @arg LL_ADC_PGA_GAIN_18_DB
+  * @arg LL_ADC_PGA_GAIN_21_DB
+  * @arg LL_ADC_PGA_GAIN_24_DB
+  * @arg LL_ADC_PGA_GAIN_27_DB
+  * @arg LL_ADC_PGA_GAIN_30_DB
+  * @arg LL_ADC_PGA_GAIN_33_DB
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetMicrophonePGAGain(ADC_TypeDef *ADCx, uint32_t Gain)
@@ -1661,16 +1668,16 @@ __STATIC_INLINE void LL_ADC_SetMicrophonePGAGain(ADC_TypeDef *ADCx, uint32_t Gai
   * @rmtoll PGA_CONF     PGA_GAIN       LL_ADC_GetMicrophonePGAGain
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_PGA_GAIN_06_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_09_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_12_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_15_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_18_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_21_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_24_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_27_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_30_DB
-  *         @arg @ref LL_ADC_PGA_GAIN_33_DB
+  * @arg LL_ADC_PGA_GAIN_06_DB
+  * @arg LL_ADC_PGA_GAIN_09_DB
+  * @arg LL_ADC_PGA_GAIN_12_DB
+  * @arg LL_ADC_PGA_GAIN_15_DB
+  * @arg LL_ADC_PGA_GAIN_18_DB
+  * @arg LL_ADC_PGA_GAIN_21_DB
+  * @arg LL_ADC_PGA_GAIN_24_DB
+  * @arg LL_ADC_PGA_GAIN_27_DB
+  * @arg LL_ADC_PGA_GAIN_30_DB
+  * @arg LL_ADC_PGA_GAIN_33_DB
   */
 __STATIC_INLINE uint32_t LL_ADC_GetMicrophonePGAGain(ADC_TypeDef *ADCx)
 {
@@ -1692,9 +1699,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetMicrophonePGAGain(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_0       LL_ADC_SetVoltageRangeSingleVinm0
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm0(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1708,9 +1715,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm0(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_0       LL_ADC_GetVoltageRangeSingleVinm0
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm0(ADC_TypeDef *ADCx)
 {
@@ -1723,9 +1730,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm0(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_0       LL_ADC_SetVoltageRangeDiffVinp0Vinm0
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp0Vinm0(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1739,9 +1746,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp0Vinm0(ADC_TypeDef *ADCx, uin
   * @rmtoll SWITCH     SE_VIN_0       LL_ADC_GetVoltageRangeDiffVinp0Vinm0
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp0Vinm0(ADC_TypeDef *ADCx)
 {
@@ -1754,9 +1761,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp0Vinm0(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_1       LL_ADC_SetVoltageRangeSingleVinm1
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm1(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1770,9 +1777,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm1(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_1       LL_ADC_GetVoltageRangeSingleVinm1
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm1(ADC_TypeDef *ADCx)
 {
@@ -1785,9 +1792,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm1(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_1       LL_ADC_SetVoltageRangeDiffVinp1Vinm1
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp1Vinm1(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1801,9 +1808,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp1Vinm1(ADC_TypeDef *ADCx, uin
   * @rmtoll SWITCH     SE_VIN_1       LL_ADC_GetVoltageRangeDiffVinp1Vinm1
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp1Vinm1(ADC_TypeDef *ADCx)
 {
@@ -1816,9 +1823,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp1Vinm1(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_2       LL_ADC_SetVoltageRangeSingleVinm2
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm2(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1832,9 +1839,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm2(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_2       LL_ADC_GetVoltageRangeSingleVinm2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm2(ADC_TypeDef *ADCx)
 {
@@ -1847,9 +1854,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm2(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_2       LL_ADC_SetVoltageRangeDiffVinp2Vinm2
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp2Vinm2(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1863,9 +1870,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp2Vinm2(ADC_TypeDef *ADCx, uin
   * @rmtoll SWITCH     SE_VIN_2       LL_ADC_GetVoltageRangeDiffVinp2Vinm2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp2Vinm2(ADC_TypeDef *ADCx)
 {
@@ -1878,9 +1885,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp2Vinm2(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_3       LL_ADC_SetVoltageRangeSingleVinm3
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm3(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1894,9 +1901,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinm3(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_3       LL_ADC_GetVoltageRangeSingleVinm3
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm3(ADC_TypeDef *ADCx)
 {
@@ -1909,9 +1916,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinm3(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_3       LL_ADC_SetVoltageRangeDiffVinp3Vinm3
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp3Vinm3(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1925,9 +1932,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeDiffVinp3Vinm3(ADC_TypeDef *ADCx, uin
   * @rmtoll SWITCH     SE_VIN_3       LL_ADC_GetVoltageRangeDiffVinp3Vinm3
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp3Vinm3(ADC_TypeDef *ADCx)
 {
@@ -1940,9 +1947,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeDiffVinp3Vinm3(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_4       LL_ADC_SetVoltageRangeSingleVinp0
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp0(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1956,9 +1963,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp0(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_4       LL_ADC_GetVoltageRangeSingleVinp0
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp0(ADC_TypeDef *ADCx)
 {
@@ -1971,9 +1978,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp0(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_5       LL_ADC_SetVoltageRangeSingleVinp1
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp1(ADC_TypeDef *ADCx, uint32_t Range)
@@ -1987,9 +1994,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp1(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_5       LL_ADC_GetVoltageRangeSingleVinp1
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp1(ADC_TypeDef *ADCx)
 {
@@ -2002,9 +2009,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp1(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_6       LL_ADC_SetVoltageRangeSingleVinp2
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp2(ADC_TypeDef *ADCx, uint32_t Range)
@@ -2018,9 +2025,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp2(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_6       LL_ADC_GetVoltageRangeSingleVinp2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp2(ADC_TypeDef *ADCx)
 {
@@ -2033,9 +2040,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp2(ADC_TypeDef *ADCx)
   * @rmtoll SWITCH     SE_VIN_7       LL_ADC_SetVoltageRangeSingleVinp3
   * @param  ADCx ADC instance
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp3(ADC_TypeDef *ADCx, uint32_t Range)
@@ -2049,9 +2056,9 @@ __STATIC_INLINE void LL_ADC_SetVoltageRangeSingleVinp3(ADC_TypeDef *ADCx, uint32
   * @rmtoll SWITCH     SE_VIN_7       LL_ADC_GetVoltageRangeSingleVinp3
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   */
 __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp3(ADC_TypeDef *ADCx)
 {
@@ -2075,8 +2082,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetVoltageRangeSingleVinp3(ADC_TypeDef *ADCx)
   * @rmtoll DF_CONF     DF_HALF_D_EN       LL_ADC_SetDFInputDynamic
   * @param  ADCx ADC instance
   * @param  Dynamic This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DF_DYN_RANGE_FULL
-  *         @arg @ref LL_ADC_DF_DYN_RANGE_HALF
+  * @arg LL_ADC_DF_DYN_RANGE_FULL
+  * @arg LL_ADC_DF_DYN_RANGE_HALF
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetDFInputDynamic(ADC_TypeDef *ADCx, uint32_t Dynamic)
@@ -2091,8 +2098,8 @@ __STATIC_INLINE void LL_ADC_SetDFInputDynamic(ADC_TypeDef *ADCx, uint32_t Dynami
   * @rmtoll DF_CONF     DF_HALF_D_EN       LL_ADC_GetDFInputDynamic
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DF_DYN_RANGE_FULL
-  *         @arg @ref LL_ADC_DF_DYN_RANGE_HALF
+  * @arg LL_ADC_DF_DYN_RANGE_FULL
+  * @arg LL_ADC_DF_DYN_RANGE_HALF
   */
 __STATIC_INLINE uint32_t LL_ADC_GetDFInputDynamic(ADC_TypeDef *ADCx)
 {
@@ -2145,8 +2152,8 @@ __STATIC_INLINE uint32_t LL_ADC_IsDFHighPassFilterEnabled(ADC_TypeDef *ADCx)
   * @rmtoll DF_CONF     DF_MICROL_RN       LL_ADC_SetMicrophoneChannel
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DF_MIC_CH_LEFT
-  *         @arg @ref LL_ADC_DF_MIC_CH_RIGHT
+  * @arg LL_ADC_DF_MIC_CH_LEFT
+  * @arg LL_ADC_DF_MIC_CH_RIGHT
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetMicrophoneChannel(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2160,8 +2167,8 @@ __STATIC_INLINE void LL_ADC_SetMicrophoneChannel(ADC_TypeDef *ADCx, uint32_t Cha
   * @rmtoll DF_CONF     DF_MICROL_RN       LL_ADC_GetMicrophoneChannel
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DF_MIC_CH_LEFT
-  *         @arg @ref LL_ADC_DF_MIC_CH_RIGHT
+  * @arg LL_ADC_DF_MIC_CH_LEFT
+  * @arg LL_ADC_DF_MIC_CH_RIGHT
   */
 __STATIC_INLINE uint32_t LL_ADC_GetMicrophoneChannel(ADC_TypeDef *ADCx)
 {
@@ -2179,22 +2186,22 @@ __STATIC_INLINE uint32_t LL_ADC_GetMicrophoneChannel(ADC_TypeDef *ADCx)
   * @rmtoll DF_CONF     PDM_RATE       LL_ADC_SetPDMRate
   * @param  ADCx ADC instance
   * @param  Divider This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_PDM_DIV_10
-  *         @arg @ref LL_ADC_PDM_DIV_11
-  *         @arg @ref LL_ADC_PDM_DIV_12
-  *         @arg @ref LL_ADC_PDM_DIV_13
-  *         @arg @ref LL_ADC_PDM_DIV_14
-  *         @arg @ref LL_ADC_PDM_DIV_15
-  *         @arg @ref LL_ADC_PDM_DIV_16
-  *         @arg @ref LL_ADC_PDM_DIV_17
-  *         @arg @ref LL_ADC_PDM_DIV_18
-  *         @arg @ref LL_ADC_PDM_DIV_19
-  *         @arg @ref LL_ADC_PDM_DIV_20
-  *         @arg @ref LL_ADC_PDM_DIV_21
-  *         @arg @ref LL_ADC_PDM_DIV_22
-  *         @arg @ref LL_ADC_PDM_DIV_23
-  *         @arg @ref LL_ADC_PDM_DIV_24
-  *         @arg @ref LL_ADC_PDM_DIV_25
+  * @arg LL_ADC_PDM_DIV_10
+  * @arg LL_ADC_PDM_DIV_11
+  * @arg LL_ADC_PDM_DIV_12
+  * @arg LL_ADC_PDM_DIV_13
+  * @arg LL_ADC_PDM_DIV_14
+  * @arg LL_ADC_PDM_DIV_15
+  * @arg LL_ADC_PDM_DIV_16
+  * @arg LL_ADC_PDM_DIV_17
+  * @arg LL_ADC_PDM_DIV_18
+  * @arg LL_ADC_PDM_DIV_19
+  * @arg LL_ADC_PDM_DIV_20
+  * @arg LL_ADC_PDM_DIV_21
+  * @arg LL_ADC_PDM_DIV_22
+  * @arg LL_ADC_PDM_DIV_23
+  * @arg LL_ADC_PDM_DIV_24
+  * @arg LL_ADC_PDM_DIV_25
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetPDMRate(ADC_TypeDef *ADCx, uint32_t Divider)
@@ -2212,22 +2219,22 @@ __STATIC_INLINE void LL_ADC_SetPDMRate(ADC_TypeDef *ADCx, uint32_t Divider)
   * @rmtoll DF_CONF     PDM_RATE       LL_ADC_GetPDMRate
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_PDM_DIV_10
-  *         @arg @ref LL_ADC_PDM_DIV_11
-  *         @arg @ref LL_ADC_PDM_DIV_12
-  *         @arg @ref LL_ADC_PDM_DIV_13
-  *         @arg @ref LL_ADC_PDM_DIV_14
-  *         @arg @ref LL_ADC_PDM_DIV_15
-  *         @arg @ref LL_ADC_PDM_DIV_16
-  *         @arg @ref LL_ADC_PDM_DIV_17
-  *         @arg @ref LL_ADC_PDM_DIV_18
-  *         @arg @ref LL_ADC_PDM_DIV_19
-  *         @arg @ref LL_ADC_PDM_DIV_20
-  *         @arg @ref LL_ADC_PDM_DIV_21
-  *         @arg @ref LL_ADC_PDM_DIV_22
-  *         @arg @ref LL_ADC_PDM_DIV_23
-  *         @arg @ref LL_ADC_PDM_DIV_24
-  *         @arg @ref LL_ADC_PDM_DIV_25
+  * @arg LL_ADC_PDM_DIV_10
+  * @arg LL_ADC_PDM_DIV_11
+  * @arg LL_ADC_PDM_DIV_12
+  * @arg LL_ADC_PDM_DIV_13
+  * @arg LL_ADC_PDM_DIV_14
+  * @arg LL_ADC_PDM_DIV_15
+  * @arg LL_ADC_PDM_DIV_16
+  * @arg LL_ADC_PDM_DIV_17
+  * @arg LL_ADC_PDM_DIV_18
+  * @arg LL_ADC_PDM_DIV_19
+  * @arg LL_ADC_PDM_DIV_20
+  * @arg LL_ADC_PDM_DIV_21
+  * @arg LL_ADC_PDM_DIV_22
+  * @arg LL_ADC_PDM_DIV_23
+  * @arg LL_ADC_PDM_DIV_24
+  * @arg LL_ADC_PDM_DIV_25
   */
 __STATIC_INLINE uint32_t LL_ADC_GetPDMRate(ADC_TypeDef *ADCx)
 {
@@ -2241,8 +2248,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetPDMRate(ADC_TypeDef *ADCx)
   * @rmtoll DF_CONF     DF_O_S2U       LL_ADC_SetDataOutputFormat
   * @param  ADCx ADC instance
   * @param  Format This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DATA_FRMT_SIGNED
-  *         @arg @ref LL_ADC_DATA_FRMT_UNSIGNED
+  * @arg LL_ADC_DATA_FRMT_SIGNED
+  * @arg LL_ADC_DATA_FRMT_UNSIGNED
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetDataOutputFormat(ADC_TypeDef *ADCx, uint32_t Format)
@@ -2256,8 +2263,8 @@ __STATIC_INLINE void LL_ADC_SetDataOutputFormat(ADC_TypeDef *ADCx, uint32_t Form
   * @rmtoll DF_CONF     DF_O_S2U       LL_ADC_GetDataOutputFormat
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DATA_FRMT_SIGNED
-  *         @arg @ref LL_ADC_DATA_FRMT_UNSIGNED
+  * @arg LL_ADC_DATA_FRMT_SIGNED
+  * @arg LL_ADC_DATA_FRMT_UNSIGNED
   */
 __STATIC_INLINE uint32_t LL_ADC_GetDataOutputFormat(ADC_TypeDef *ADCx)
 {
@@ -2271,8 +2278,8 @@ __STATIC_INLINE uint32_t LL_ADC_GetDataOutputFormat(ADC_TypeDef *ADCx)
   * @rmtoll DF_CONF     DF_I_S2U       LL_ADC_SetDataInputFormat
   * @param  ADCx ADC instance
   * @param  Format This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DATA_FRMT_SIGNED
-  *         @arg @ref LL_ADC_DATA_FRMT_UNSIGNED
+  * @arg LL_ADC_DATA_FRMT_SIGNED
+  * @arg LL_ADC_DATA_FRMT_UNSIGNED
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetDataInputFormat(ADC_TypeDef *ADCx, uint32_t Format)
@@ -2286,8 +2293,8 @@ __STATIC_INLINE void LL_ADC_SetDataInputFormat(ADC_TypeDef *ADCx, uint32_t Forma
   * @rmtoll DF_CONF     DF_I_S2U       LL_ADC_GetDataInputFormat
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DATA_FRMT_SIGNED
-  *         @arg @ref LL_ADC_DATA_FRMT_UNSIGNED
+  * @arg LL_ADC_DATA_FRMT_SIGNED
+  * @arg LL_ADC_DATA_FRMT_UNSIGNED
   */
 __STATIC_INLINE uint32_t LL_ADC_GetDataInputFormat(ADC_TypeDef *ADCx)
 {
@@ -2344,8 +2351,8 @@ __STATIC_INLINE uint32_t LL_ADC_IsFractionalInterpolatorEnabled(ADC_TypeDef *ADC
   * @rmtoll DF_CONF     DF_CIC_DHF       LL_ADC_SetCICDecimatorFactor
   * @param  ADCx ADC instance
   * @param  Factor This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CIC_DECIMATOR_FACTOR_HALF
-  *         @arg @ref LL_ADC_CIC_DECIMATOR_FACTOR_INTEGER
+  * @arg LL_ADC_CIC_DECIMATOR_FACTOR_HALF
+  * @arg LL_ADC_CIC_DECIMATOR_FACTOR_INTEGER
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCICDecimatorFactor(ADC_TypeDef *ADCx, uint32_t Factor)
@@ -2359,8 +2366,8 @@ __STATIC_INLINE void LL_ADC_SetCICDecimatorFactor(ADC_TypeDef *ADCx, uint32_t Fa
   * @rmtoll DF_CONF     DF_CIC_DHF       LL_ADC_GetCICDecimatorFactor
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CIC_DECIMATOR_FACTOR_HALF
-  *         @arg @ref LL_ADC_CIC_DECIMATOR_FACTOR_INTEGER
+  * @arg LL_ADC_CIC_DECIMATOR_FACTOR_HALF
+  * @arg LL_ADC_CIC_DECIMATOR_FACTOR_INTEGER
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCICDecimatorFactor(ADC_TypeDef *ADCx)
 {
@@ -2375,15 +2382,15 @@ __STATIC_INLINE uint32_t LL_ADC_GetCICDecimatorFactor(ADC_TypeDef *ADCx)
   * @note   Different parameters for digital microphone and analog microphone.
   * @param  ADCx ADC instance
   * @param  Frequency This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_47619_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_44440_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_22220_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_15873_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_7936_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_47619_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_44440_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_22220_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_15873_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_7936_HZ
   *
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_200000_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_15873_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_7936_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_200000_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_15873_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_7936_HZ
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetMicrophoneOutputDatarate(ADC_TypeDef *ADCx, uint32_t Frequency)
@@ -2397,15 +2404,15 @@ __STATIC_INLINE void LL_ADC_SetMicrophoneOutputDatarate(ADC_TypeDef *ADCx, uint3
   * @rmtoll DF_CONF     DF_CIC_DEC_FACTOR       LL_ADC_GetMicrophoneOutputDatarate
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_47619_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_44440_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_22220_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_15873_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_DIG_7936_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_47619_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_44440_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_22220_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_15873_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_DIG_7936_HZ
   *
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_200000_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_15873_HZ
-  *         @arg @ref LL_ADC_OUTPUT_FREQ_MIC_ANA_7936_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_200000_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_15873_HZ
+  * @arg LL_ADC_OUTPUT_FREQ_MIC_ANA_7936_HZ
   */
 __STATIC_INLINE uint32_t LL_ADC_GetMicrophoneOutputDatarate(ADC_TypeDef *ADCx)
 {
@@ -2426,20 +2433,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetMicrophoneOutputDatarate(ADC_TypeDef *ADCx)
   * @brief  Configure the width (in bit) and the ratio of the output data from the Down Sampler.
   * @param  ADCx ADC instance
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT (default)
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT (default)
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @param  Ratio This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_RATIO_01 (no down sampling, default)
-  *         @arg @ref LL_ADC_DS_RATIO_02
-  *         @arg @ref LL_ADC_DS_RATIO_04
-  *         @arg @ref LL_ADC_DS_RATIO_08
-  *         @arg @ref LL_ADC_DS_RATIO_16
-  *         @arg @ref LL_ADC_DS_RATIO_32
-  *         @arg @ref LL_ADC_DS_RATIO_64
-  *         @arg @ref LL_ADC_DS_RATIO_128
+  * @arg LL_ADC_DS_RATIO_01 (no down sampling, default)
+  * @arg LL_ADC_DS_RATIO_02
+  * @arg LL_ADC_DS_RATIO_04
+  * @arg LL_ADC_DS_RATIO_08
+  * @arg LL_ADC_DS_RATIO_16
+  * @arg LL_ADC_DS_RATIO_32
+  * @arg LL_ADC_DS_RATIO_64
+  * @arg LL_ADC_DS_RATIO_128
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_ConfigureDSDataOutput(ADC_TypeDef *ADCx, uint32_t Width, uint32_t Ratio)
@@ -2452,11 +2459,11 @@ __STATIC_INLINE void LL_ADC_ConfigureDSDataOutput(ADC_TypeDef *ADCx, uint32_t Wi
   * @rmtoll DS_CONF     DS_WIDTH       LL_ADC_SetDSDataOutputWidth
   * @param  ADCx ADC instance
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT (default)
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT (default)
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetDSDataOutputWidth(ADC_TypeDef *ADCx, uint32_t Width)
@@ -2470,11 +2477,11 @@ __STATIC_INLINE void LL_ADC_SetDSDataOutputWidth(ADC_TypeDef *ADCx, uint32_t Wid
   * @rmtoll DS_CONF     DS_WIDTH       LL_ADC_GetDSDataOutputWidth
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT (default)
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT (default)
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   */
 __STATIC_INLINE uint32_t LL_ADC_GetDSDataOutputWidth(ADC_TypeDef *ADCx)
 {
@@ -2487,14 +2494,14 @@ __STATIC_INLINE uint32_t LL_ADC_GetDSDataOutputWidth(ADC_TypeDef *ADCx)
   * @rmtoll DS_CONF     DS_RATIO       LL_ADC_SetDSDataOutputRatio
   * @param  ADCx ADC instance
   * @param  Ratio This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_RATIO_01 (no down sampling, default)
-  *         @arg @ref LL_ADC_DS_RATIO_02
-  *         @arg @ref LL_ADC_DS_RATIO_04
-  *         @arg @ref LL_ADC_DS_RATIO_08
-  *         @arg @ref LL_ADC_DS_RATIO_16
-  *         @arg @ref LL_ADC_DS_RATIO_32
-  *         @arg @ref LL_ADC_DS_RATIO_64
-  *         @arg @ref LL_ADC_DS_RATIO_128
+  * @arg LL_ADC_DS_RATIO_01 (no down sampling, default)
+  * @arg LL_ADC_DS_RATIO_02
+  * @arg LL_ADC_DS_RATIO_04
+  * @arg LL_ADC_DS_RATIO_08
+  * @arg LL_ADC_DS_RATIO_16
+  * @arg LL_ADC_DS_RATIO_32
+  * @arg LL_ADC_DS_RATIO_64
+  * @arg LL_ADC_DS_RATIO_128
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetDSDataOutputRatio(ADC_TypeDef *ADCx, uint32_t Ratio)
@@ -2508,14 +2515,14 @@ __STATIC_INLINE void LL_ADC_SetDSDataOutputRatio(ADC_TypeDef *ADCx, uint32_t Rat
   * @rmtoll DS_CONF     DS_RATIO       LL_ADC_GetDSDataOutputRatio
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_DS_RATIO_01 (no down sampling, default)
-  *         @arg @ref LL_ADC_DS_RATIO_02
-  *         @arg @ref LL_ADC_DS_RATIO_04
-  *         @arg @ref LL_ADC_DS_RATIO_08
-  *         @arg @ref LL_ADC_DS_RATIO_16
-  *         @arg @ref LL_ADC_DS_RATIO_32
-  *         @arg @ref LL_ADC_DS_RATIO_64
-  *         @arg @ref LL_ADC_DS_RATIO_128
+  * @arg LL_ADC_DS_RATIO_01 (no down sampling, default)
+  * @arg LL_ADC_DS_RATIO_02
+  * @arg LL_ADC_DS_RATIO_04
+  * @arg LL_ADC_DS_RATIO_08
+  * @arg LL_ADC_DS_RATIO_16
+  * @arg LL_ADC_DS_RATIO_32
+  * @arg LL_ADC_DS_RATIO_64
+  * @arg LL_ADC_DS_RATIO_128
   */
 __STATIC_INLINE uint32_t LL_ADC_GetDSDataOutputRatio(ADC_TypeDef *ADCx)
 {
@@ -2539,20 +2546,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetDSDataOutputRatio(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ0       LL_ADC_SetChannelSeq0
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CHL_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CHL_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CHL_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CHL_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq0(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2566,20 +2573,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq0(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ0       LL_ADC_GetChannelSeq0
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq0(ADC_TypeDef *ADCx)
 {
@@ -2592,20 +2599,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq0(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ1       LL_ADC_SetChannelSeq1
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq1(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2619,20 +2626,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq1(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ1       LL_ADC_GetChannelSeq1
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq1(ADC_TypeDef *ADCx)
 {
@@ -2645,20 +2652,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq1(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ2       LL_ADC_SetChannelSeq2
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq2(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2672,20 +2679,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq2(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ2       LL_ADC_GetChannelSeq2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq2(ADC_TypeDef *ADCx)
 {
@@ -2698,20 +2705,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq2(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ3       LL_ADC_SetChannelSeq3
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq3(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2725,20 +2732,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq3(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ3       LL_ADC_GetChannelSeq3
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq3(ADC_TypeDef *ADCx)
 {
@@ -2751,20 +2758,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq3(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ4       LL_ADC_SetChannelSeq4
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq4(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2778,20 +2785,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq4(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ4       LL_ADC_GetChannelSeq4
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq4(ADC_TypeDef *ADCx)
 {
@@ -2804,20 +2811,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq4(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ5       LL_ADC_SetChannelSeq5
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq5(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2831,20 +2838,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq5(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ5       LL_ADC_GetChannelSeq5
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq5(ADC_TypeDef *ADCx)
 {
@@ -2857,20 +2864,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq5(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ6       LL_ADC_SetChannelSeq6
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq6(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2884,20 +2891,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq6(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ6       LL_ADC_GetChannelSeq6
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq6(ADC_TypeDef *ADCx)
 {
@@ -2910,20 +2917,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq6(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_1     SEQ7       LL_ADC_SetChannelSeq7
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq7(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2937,20 +2944,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq7(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_1     SEQ7       LL_ADC_GetChannelSeq7
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq7(ADC_TypeDef *ADCx)
 {
@@ -2963,20 +2970,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq7(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ8       LL_ADC_SetChannelSeq8
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq8(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -2990,20 +2997,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq8(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ8       LL_ADC_GetChannelSeq8
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq8(ADC_TypeDef *ADCx)
 {
@@ -3016,20 +3023,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq8(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ9       LL_ADC_SetChannelSeq9
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq9(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3043,20 +3050,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq9(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ9       LL_ADC_GetChannelSeq9
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq9(ADC_TypeDef *ADCx)
 {
@@ -3069,20 +3076,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq9(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ10       LL_ADC_SetChannelSeq10
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq10(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3096,20 +3103,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq10(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ10       LL_ADC_GetChannelSeq10
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq10(ADC_TypeDef *ADCx)
 {
@@ -3122,20 +3129,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq10(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ11       LL_ADC_SetChannelSeq11
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq11(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3149,20 +3156,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq11(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ11       LL_ADC_GetChannelSeq11
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq11(ADC_TypeDef *ADCx)
 {
@@ -3175,20 +3182,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq11(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ12       LL_ADC_SetChannelSeq12
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq12(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3202,20 +3209,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq12(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ12       LL_ADC_GetChannelSeq12
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq12(ADC_TypeDef *ADCx)
 {
@@ -3228,20 +3235,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq12(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ13       LL_ADC_SetChannelSeq13
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq13(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3255,20 +3262,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq13(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ13       LL_ADC_GetChannelSeq13
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq13(ADC_TypeDef *ADCx)
 {
@@ -3281,20 +3288,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq13(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ14       LL_ADC_SetChannelSeq14
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq14(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3308,20 +3315,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq14(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ14       LL_ADC_GetChannelSeq14
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq14(ADC_TypeDef *ADCx)
 {
@@ -3334,20 +3341,20 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq14(ADC_TypeDef *ADCx)
   * @rmtoll SEQ_2     SEQ15       LL_ADC_SetChannelSeq15
   * @param  ADCx ADC instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetChannelSeq15(ADC_TypeDef *ADCx, uint32_t Channel)
@@ -3361,20 +3368,20 @@ __STATIC_INLINE void LL_ADC_SetChannelSeq15(ADC_TypeDef *ADCx, uint32_t Channel)
   * @rmtoll SEQ_2     SEQ15       LL_ADC_GetChannelSeq15
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
-  *         @arg @ref LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
-  *         @arg @ref LL_ADC_CH_BATTERY_LEVEL_DETECTOR
-  *         @arg @ref LL_ADC_CH_TEMPERATURE_SENSOR
+  * @arg LL_ADC_CH_VINM0_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM1_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM2_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINM3_TO_SINGLE_NEGATIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP1_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP2_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP3_TO_SINGLE_POSITIVE_INPUT
+  * @arg LL_ADC_CH_VINP0_VINM0_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP1_VINM1_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP2_VINM2_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_VINP3_VINM3_TO_DIFF_INPUT
+  * @arg LL_ADC_CH_BATTERY_LEVEL_DETECTOR
+  * @arg LL_ADC_CH_TEMPERATURE_SENSOR
   */
 __STATIC_INLINE uint32_t LL_ADC_GetChannelSeq15(ADC_TypeDef *ADCx)
 {
@@ -3694,10 +3701,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPoint4Offset(ADC_TypeDef *ADCx)
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN8       LL_ADC_SetCalibPointForDiff3V6
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForDiff3V6(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3712,10 +3719,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForDiff3V6(ADC_TypeDef *ADCx, uint32_t 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN8       LL_ADC_GetCalibPointForDiff3V6
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff3V6(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3728,10 +3735,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff3V6(ADC_TypeDef *ADCx, uint3
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN7       LL_ADC_SetCalibPointForSinglePos3V6
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos3V6(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3746,10 +3753,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos3V6(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN7       LL_ADC_GetCalibPointForSinglePos3V6
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos3V6(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3763,10 +3770,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos3V6(ADC_TypeDef *ADCx, 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN6       LL_ADC_SetCalibPointForSingleNeg3V6
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg3V6(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3782,10 +3789,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg3V6(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN6       LL_ADC_GetCalibPointForSingleNeg3V6
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg3V6(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3798,10 +3805,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg3V6(ADC_TypeDef *ADCx, 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN5       LL_ADC_SetCalibPointForDiff2V4
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForDiff2V4(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3816,10 +3823,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForDiff2V4(ADC_TypeDef *ADCx, uint32_t 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN5       LL_ADC_GetCalibPointForDiff2V4
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff2V4(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3832,10 +3839,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff2V4(ADC_TypeDef *ADCx, uint3
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN4       LL_ADC_SetCalibPointForSinglePos2V4
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos2V4(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3850,10 +3857,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos2V4(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN4       LL_ADC_GetCalibPointForSinglePos2V4
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos2V4(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3866,10 +3873,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos2V4(ADC_TypeDef *ADCx, 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN3       LL_ADC_SetCalibPointForSingleNeg2V4
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg2V4(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3884,10 +3891,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg2V4(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN3       LL_ADC_GetCalibPointForSingleNeg2V4
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg2V4(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3900,10 +3907,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg2V4(ADC_TypeDef *ADCx, 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN2       LL_ADC_SetCalibPointForDiff1V2
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForDiff1V2(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3918,10 +3925,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForDiff1V2(ADC_TypeDef *ADCx, uint32_t 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN2       LL_ADC_GetCalibPointForDiff1V2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff1V2(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3935,10 +3942,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForDiff1V2(ADC_TypeDef *ADCx, uint3
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN1       LL_ADC_SetCalibPointForSinglePos1V2
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos1V2(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3954,10 +3961,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSinglePos1V2(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN1       LL_ADC_GetCalibPointForSinglePos1V2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos1V2(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -3970,10 +3977,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSinglePos1V2(ADC_TypeDef *ADCx, 
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN0       LL_ADC_SetCalibPointForSingleNeg1V2
   * @param  ADCx ADC instance
   * @param  Point This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg1V2(ADC_TypeDef *ADCx, uint32_t Point)
@@ -3988,10 +3995,10 @@ __STATIC_INLINE void LL_ADC_SetCalibPointForSingleNeg1V2(ADC_TypeDef *ADCx, uint
   * @rmtoll COMP_SEL     ADC_COMP_SEL_OFFSET_GAIN0       LL_ADC_GetCalibPointForSingleNeg1V2
   * @param  ADCx ADC instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_ADC_CALIB_POINT_1
-  *         @arg @ref LL_ADC_CALIB_POINT_2
-  *         @arg @ref LL_ADC_CALIB_POINT_3
-  *         @arg @ref LL_ADC_CALIB_POINT_4
+  * @arg LL_ADC_CALIB_POINT_1
+  * @arg LL_ADC_CALIB_POINT_2
+  * @arg LL_ADC_CALIB_POINT_3
+  * @arg LL_ADC_CALIB_POINT_4
   */
 __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg1V2(ADC_TypeDef *ADCx, uint32_t InputMode)
 {
@@ -4015,9 +4022,9 @@ __STATIC_INLINE uint32_t LL_ADC_GetCalibPointForSingleNeg1V2(ADC_TypeDef *ADCx, 
   * @rmtoll LL_ADC_ConfigureWDGThresholds
   * @param  Millivolt The voltage threshold for the ADC watchdog in mV.
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval Returned 12-bit value to be used as ADC watchdog threshold.
   */
 __STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdSinglOrBatt(uint32_t Millivolt, uint32_t Range)
@@ -4030,12 +4037,12 @@ __STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdSinglOrBatt(u
   * @rmtoll LL_ADC_ConfigureWDGThresholds
   * @param  Millivolt The voltage threshold for the ADC watchdog in mV.
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @retval Returned 12-bit value to be used as ADC watchdog threshold.
   */
-__STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdDiff(uint32_t Millivolt, uint32_t Range)
+__STATIC_INLINE uint16_t LL_ADC_ConvertVoltageToCodeForWDGThresholdDiff(int32_t Millivolt, uint32_t Range)
 {
   return (uint16_t)(((Millivolt + 1200 * Range) * 2048) / (1200 * Range) );
 }
@@ -4109,22 +4116,22 @@ __STATIC_INLINE uint32_t LL_ADC_GetWDGThresholdHigh(ADC_TypeDef *ADCx)
   * @rmtoll WD_CONF     AWD_CHX       LL_ADC_SetWDGInputChannels
   * @param  ADCx ADC instance
   * @param  ChannelMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_ADC_WDG_CH_VINM0_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM1_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM2_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM3_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_MICROM_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VBAT_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_GND_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VDDA_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINP0_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP1_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP2_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP3_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_MICROP_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_TEMP_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_GND_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VDDA_TO_POS
+  * @arg LL_ADC_WDG_CH_VINM0_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM1_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM2_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM3_TO_NEG
+  * @arg LL_ADC_WDG_CH_MICROM_TO_NEG
+  * @arg LL_ADC_WDG_CH_VBAT_TO_NEG
+  * @arg LL_ADC_WDG_CH_GND_TO_NEG
+  * @arg LL_ADC_WDG_CH_VDDA_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINP0_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP1_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP2_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP3_TO_POS
+  * @arg LL_ADC_WDG_CH_MICROP_TO_POS
+  * @arg LL_ADC_WDG_CH_TEMP_TO_POS
+  * @arg LL_ADC_WDG_CH_GND_TO_POS
+  * @arg LL_ADC_WDG_CH_VDDA_TO_POS
   * @retval None
   */
 __STATIC_INLINE void LL_ADC_SetWDGInputChannels(ADC_TypeDef *ADCx, uint32_t ChannelMask)
@@ -4139,22 +4146,22 @@ __STATIC_INLINE void LL_ADC_SetWDGInputChannels(ADC_TypeDef *ADCx, uint32_t Chan
   * @rmtoll WD_CONF     AWD_CHX       LL_ADC_GetWDGInputChannels
   * @param  ADCx ADC instance
   * @retval Returned value can be a combination of the following values:
-  *         @arg @ref LL_ADC_WDG_CH_VINM0_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM1_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM2_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINM3_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_MICROM_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VBAT_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_GND_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VDDA_TO_NEG
-  *         @arg @ref LL_ADC_WDG_CH_VINP0_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP1_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP2_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VINP3_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_MICROP_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_TEMP_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_GND_TO_POS
-  *         @arg @ref LL_ADC_WDG_CH_VDDA_TO_POS
+  * @arg LL_ADC_WDG_CH_VINM0_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM1_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM2_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINM3_TO_NEG
+  * @arg LL_ADC_WDG_CH_MICROM_TO_NEG
+  * @arg LL_ADC_WDG_CH_VBAT_TO_NEG
+  * @arg LL_ADC_WDG_CH_GND_TO_NEG
+  * @arg LL_ADC_WDG_CH_VDDA_TO_NEG
+  * @arg LL_ADC_WDG_CH_VINP0_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP1_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP2_TO_POS
+  * @arg LL_ADC_WDG_CH_VINP3_TO_POS
+  * @arg LL_ADC_WDG_CH_MICROP_TO_POS
+  * @arg LL_ADC_WDG_CH_TEMP_TO_POS
+  * @arg LL_ADC_WDG_CH_GND_TO_POS
+  * @arg LL_ADC_WDG_CH_VDDA_TO_POS
   */
 __STATIC_INLINE uint32_t LL_ADC_GetWDGInputChannels(ADC_TypeDef *ADCx)
 {
@@ -4237,13 +4244,13 @@ __STATIC_INLINE uint32_t LL_ADC_GetOutputDataRegDF(ADC_TypeDef *ADCx)
   * @param  ADCx ADC instance
   * @retval All the status flags of the register IRQ_STATUS. 
   *         The value is a combination of the following values:
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRFL
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDF
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDS
-  *         @arg @ref LL_ADC_IRQ_FLAG_AWD
-  *         @arg @ref LL_ADC_IRQ_FLAG_EOS
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODF
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODS
+  * @arg LL_ADC_IRQ_FLAG_OVRFL
+  * @arg LL_ADC_IRQ_FLAG_OVRDF
+  * @arg LL_ADC_IRQ_FLAG_OVRDS
+  * @arg LL_ADC_IRQ_FLAG_AWD
+  * @arg LL_ADC_IRQ_FLAG_EOS
+  * @arg LL_ADC_IRQ_FLAG_EODF
+  * @arg LL_ADC_IRQ_FLAG_EODS
   */
 __STATIC_INLINE uint32_t LL_ADC_GetActiveFlags(ADC_TypeDef *ADCx)
 {
@@ -4259,13 +4266,13 @@ __STATIC_INLINE uint32_t LL_ADC_GetActiveFlags(ADC_TypeDef *ADCx)
   * @brief  Clear all the flags status.
   * @param  ADCx ADC instance
   * @param  FlagsMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRFL
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDF
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDS
-  *         @arg @ref LL_ADC_IRQ_FLAG_AWD
-  *         @arg @ref LL_ADC_IRQ_FLAG_EOS
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODF
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODS
+  * @arg LL_ADC_IRQ_FLAG_OVRFL
+  * @arg LL_ADC_IRQ_FLAG_OVRDF
+  * @arg LL_ADC_IRQ_FLAG_OVRDS
+  * @arg LL_ADC_IRQ_FLAG_AWD
+  * @arg LL_ADC_IRQ_FLAG_EOS
+  * @arg LL_ADC_IRQ_FLAG_EODF
+  * @arg LL_ADC_IRQ_FLAG_EODS
   * @retval None.
   */
 __STATIC_INLINE void LL_ADC_ClearActiveFlags(ADC_TypeDef *ADCx, uint32_t FlagsMask)
@@ -4278,13 +4285,13 @@ __STATIC_INLINE void LL_ADC_ClearActiveFlags(ADC_TypeDef *ADCx, uint32_t FlagsMa
   * @brief  Get if the flags status is set.
   * @param  ADCx ADC instance
   * @param  FlagsMask This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRFL
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDF
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDS
-  *         @arg @ref LL_ADC_IRQ_FLAG_AWD
-  *         @arg @ref LL_ADC_IRQ_FLAG_EOS
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODF
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODS
+  * @arg LL_ADC_IRQ_FLAG_OVRFL
+  * @arg LL_ADC_IRQ_FLAG_OVRDF
+  * @arg LL_ADC_IRQ_FLAG_OVRDS
+  * @arg LL_ADC_IRQ_FLAG_AWD
+  * @arg LL_ADC_IRQ_FLAG_EOS
+  * @arg LL_ADC_IRQ_FLAG_EODF
+  * @arg LL_ADC_IRQ_FLAG_EODS
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_ADC_IsActiveFlag(ADC_TypeDef *ADCx, uint32_t Flag)
@@ -4479,12 +4486,12 @@ __STATIC_INLINE void LL_ADC_ClearFlag_EODS(ADC_TypeDef *ADCx)
   * @brief  Enable the interrupts according to the interrupt mask passed as parameter.
   * @param  ADCx ADC instance
   * @param  IrqMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_ADC_IRQ_EN_OVRFL
-  *         @arg @ref LL_ADC_IRQ_EN_OVRDS
-  *         @arg @ref LL_ADC_IRQ_EN_AWD
-  *         @arg @ref LL_ADC_IRQ_EN_EOS
-  *         @arg @ref LL_ADC_IRQ_EN_EODF
-  *         @arg @ref LL_ADC_IRQ_EN_EODS
+  * @arg LL_ADC_IRQ_EN_OVRFL
+  * @arg LL_ADC_IRQ_EN_OVRDS
+  * @arg LL_ADC_IRQ_EN_AWD
+  * @arg LL_ADC_IRQ_EN_EOS
+  * @arg LL_ADC_IRQ_EN_EODF
+  * @arg LL_ADC_IRQ_EN_EODS
   * @retval None.
   */
 __STATIC_INLINE void LL_ADC_EnableIT(ADC_TypeDef *ADCx, uint32_t IrqMask)
@@ -4497,12 +4504,12 @@ __STATIC_INLINE void LL_ADC_EnableIT(ADC_TypeDef *ADCx, uint32_t IrqMask)
   * @brief  Disable the interrupts according to the interrupt mask passed as parameter.
   * @param  ADCx ADC instance
   * @param  IrqMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_ADC_IRQ_EN_OVRFL
-  *         @arg @ref LL_ADC_IRQ_EN_OVRDS
-  *         @arg @ref LL_ADC_IRQ_EN_AWD
-  *         @arg @ref LL_ADC_IRQ_EN_EOS
-  *         @arg @ref LL_ADC_IRQ_EN_EODF
-  *         @arg @ref LL_ADC_IRQ_EN_EODS
+  * @arg LL_ADC_IRQ_EN_OVRFL
+  * @arg LL_ADC_IRQ_EN_OVRDS
+  * @arg LL_ADC_IRQ_EN_AWD
+  * @arg LL_ADC_IRQ_EN_EOS
+  * @arg LL_ADC_IRQ_EN_EODF
+  * @arg LL_ADC_IRQ_EN_EODS
   * @retval None.
   */
 __STATIC_INLINE void LL_ADC_DisableIT(ADC_TypeDef *ADCx, uint32_t IrqMask)
@@ -4515,13 +4522,13 @@ __STATIC_INLINE void LL_ADC_DisableIT(ADC_TypeDef *ADCx, uint32_t IrqMask)
   * @brief  Get if the specific flag is enabled or not.
   * @param  ADCx ADC instance
   * @param  FlagsMask This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRFL
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDF
-  *         @arg @ref LL_ADC_IRQ_FLAG_OVRDS
-  *         @arg @ref LL_ADC_IRQ_FLAG_AWD
-  *         @arg @ref LL_ADC_IRQ_FLAG_EOS
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODF
-  *         @arg @ref LL_ADC_IRQ_FLAG_EODS
+  * @arg LL_ADC_IRQ_FLAG_OVRFL
+  * @arg LL_ADC_IRQ_FLAG_OVRDF
+  * @arg LL_ADC_IRQ_FLAG_OVRDS
+  * @arg LL_ADC_IRQ_FLAG_AWD
+  * @arg LL_ADC_IRQ_FLAG_EOS
+  * @arg LL_ADC_IRQ_FLAG_EODF
+  * @arg LL_ADC_IRQ_FLAG_EODS
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_ADC_IsEnabledIT(ADC_TypeDef *ADCx, uint32_t Flag)
@@ -5279,15 +5286,15 @@ __STATIC_INLINE int8_t LL_ADC_GET_CALIB_OFFSET_FOR_VINDIFF_1V2(void)
   * @param  ADCx ADC instance
   * @param  RawValue Output value from register DATAOUT
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @retval Returned value is an unsigned 32-bit value.
   */
 #ifndef BLE_ADC_OUTPUT_FLOAT
@@ -5320,15 +5327,15 @@ __STATIC_INLINE float LL_ADC_GetADCConvertedValueSingle(ADC_TypeDef *ADCx, uint1
   * @param  ADCx ADC instance
   * @param  RawValue Output value from register DATAOUT
   * @param  Range This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_VIN_RANGE_1V2
-  *         @arg @ref LL_ADC_VIN_RANGE_2V4
-  *         @arg @ref LL_ADC_VIN_RANGE_3V6
+  * @arg LL_ADC_VIN_RANGE_1V2
+  * @arg LL_ADC_VIN_RANGE_2V4
+  * @arg LL_ADC_VIN_RANGE_3V6
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @retval Returned value is a signed 32-bit value.
   */
 #ifndef BLE_ADC_OUTPUT_FLOAT
@@ -5362,11 +5369,11 @@ __STATIC_INLINE float LL_ADC_GetADCConvertedValueDiff(ADC_TypeDef *ADCx, uint16_
   * @param  ADCx ADC instance
   * @param  RawValue Output value from register DATAOUT
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @retval Returned value is an unsigned 32-bit value.
   */
 #ifndef BLE_ADC_OUTPUT_FLOAT
@@ -5388,11 +5395,11 @@ __STATIC_INLINE float LL_ADC_GetADCConvertedValueBatt(ADC_TypeDef *ADCx, uint16_
   * @param  ADCx ADC instance
   * @param  RawValue Output value from register DATAOUT
   * @param  Width This parameter can be one of the following values:
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_12_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_13_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_14_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_15_BIT
-  *         @arg @ref LL_ADC_DS_DATA_WIDTH_16_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_12_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_13_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_14_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_15_BIT
+  * @arg LL_ADC_DS_DATA_WIDTH_16_BIT
   * @retval Returned value is a signed 32-bit value representing the temperaure value in Celsius degree.
   */
 #ifndef BLE_ADC_OUTPUT_FLOAT
@@ -5436,8 +5443,14 @@ __STATIC_INLINE int32_t LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint1
 {
   int32_t c30 = *(uint32_t*)0x10001E60;
   int32_t tck = *(uint32_t*)0x10001E5C;
-
-  return ((RawValue >> Width) + (tck - c30));
+  
+  /* If the calibration point is null because the device is not trimmed (preliminary samples) */
+  if(c30==0xFFFFFFFF) {
+    c30 = ESTIMATED_C30;
+    tck = ESTIMATED_TCK;
+  }
+  
+  return (((RawValue >> Width) + (tck - c30)) * 10);
 }
 #endif
 
@@ -5452,7 +5465,6 @@ __STATIC_INLINE int32_t LL_ADC_GetADCConvertedValueTemp(ADC_TypeDef *ADCx, uint1
   */
 
 /* De-initialization of ADC instance, ADC group regular and ADC group injected */
-/* (availability of ADC group injected depends on BlueNRG_LP families) */
 ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx);
 
 /* Initialization of some features of ADC instance */

@@ -1060,12 +1060,7 @@
             </file>
         </group>
     </group>
-    <group>
-        <name>Doc</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\readme.txt</name>
-        </file>
-    </group>
+
     <group>
         <name>Drivers</name>
         <group>
@@ -1093,12 +1088,6 @@
         </group>
         <group>
             <name>Peripherals_Drivers</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_adc.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_dma.c</name>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_ll_exti.c</name>
             </file>

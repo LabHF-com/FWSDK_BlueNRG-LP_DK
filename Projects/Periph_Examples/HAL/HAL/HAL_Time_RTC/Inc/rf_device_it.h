@@ -39,9 +39,7 @@ void SysTick_IRQHandler(void);
 /* Private variables ---------------------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 void GPIOA_IRQHandler(void);
-#endif
 void RTC_IRQHandler(void);
 
 /* Private variables ---------------------------------------------------------*/

@@ -68,7 +68,8 @@ void Error_Handler(void);
 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
+
 #define TIMx                       TIM2
 #define TIMx_IRQn                  TIM2_IRQn
 #define TIMx_IRQHandler            TIM2_IRQHandler
@@ -80,7 +81,9 @@ void Error_Handler(void);
 #define TIMx_CH2_PIN               GPIO_PIN_5
 #define TIMx_CH2_AF                GPIO_AF4_TIM2
 #define TIMx_CH2_PORT              GPIOB
-#endif /* STEVAL_IDB012V1 */
+
+#endif /* STEVAL_IDB012V1   */
+
 
 
 #ifdef __cplusplus

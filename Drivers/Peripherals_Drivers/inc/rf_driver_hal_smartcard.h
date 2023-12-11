@@ -811,7 +811,7 @@ typedef  void (*pSMARTCARD_CallbackTypeDef)(SMARTCARD_HandleTypeDef *hsmartcard)
   */
 
 /** @brief  Check the Baud rate range.
-  * @note   The maximum Baud Rate is derived from the maximum clock on BlueNRG-LP (16 MHz)
+  * @note   The maximum Baud Rate is derived from the maximum clock (16 MHz)
   *         divided by the oversampling used on the SMARTCARD (i.e. 16).
   * @param  __BAUDRATE__ Baud rate set by the configuration function.
   * @retval Test result (TRUE or FALSE)

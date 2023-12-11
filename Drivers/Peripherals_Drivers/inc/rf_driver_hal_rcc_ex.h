@@ -54,7 +54,7 @@ extern "C" {
                ((((__SELECTION__) & RCC_PERIPHCLK_RF)   == RCC_PERIPHCLK_RF)       || \
                 (((__SELECTION__) & RCC_PERIPHCLK_SPI2_I2S) == RCC_PERIPHCLK_SPI2_I2S)     || \
                 (((__SELECTION__) & RCC_PERIPHCLK_SPI3_I2S) == RCC_PERIPHCLK_SPI3_I2S))
-#elif defined(CONFIG_DEVICE_BLUENRG_LPS)            
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define IS_RCC_PERIPHCLOCK(__SELECTION__)  \
                ((((__SELECTION__) & RCC_PERIPHCLK_RF)   == RCC_PERIPHCLK_RF)       || \
                 (((__SELECTION__) & RCC_PERIPHCLK_SPI3_I2S) == RCC_PERIPHCLK_SPI3_I2S))
@@ -221,10 +221,10 @@ typedef struct
   * @brief  Macro to configure the LSCO clock.
   * @param  __LSCOCLKSOURCE__ specifies the LSCO clock source.
   *          This parameter can be one of the following values:
-  *            @arg @ref RCC_LSCOSOURCE_NOCLOCK          LSCO output disabled
-  *            @arg @ref RCC_LSCOSOURCE_LSI_LPMU         Internal LPMU slow clock source as LSCO source
-  *            @arg @ref RCC_LSCOSOURCE_LSI              LSI clock selected as LSCO source
-  *            @arg @ref RCC_LSCOSOURCE_LSE              LSE clock selected as LSCO sourcee
+  *            @arg RCC_LSCOSOURCE_NOCLOCK          LSCO output disabled
+  *            @arg RCC_LSCOSOURCE_LSI_LPMU         Internal LPMU slow clock source as LSCO source
+  *            @arg RCC_LSCOSOURCE_LSI              LSI clock selected as LSCO source
+  *            @arg RCC_LSCOSOURCE_LSE              LSE clock selected as LSCO sourcee
   */
 #define __HAL_RCC_LSCO_CONFIG(__LSCOCLKSOURCE__)  LL_RCC_ConfigLSCO((__LSCOCLKSOURCE__))
 
@@ -251,9 +251,9 @@ typedef struct
 /** @brief  Macro to configure the SMPS ADC ANA clock DIV prescaler.
   * @param  __SMPS_ADC_ANA_DIV__ specifies the SMPS ADC ANA div prescaler.
   *         This parameter can be one of the following values:
-  *            @arg @ref RCC_SMPS_ADC_ANADIV1     SMPS and ADC clock division 1 (ADC/SMPS source clock is 32 MHz)
-  *            @arg @ref RCC_SMPS_ADC_ANADIV2     SMPS and ADC clock division 2 (ADC/SMPS source clock is 16 MHz)
-  *            @arg @ref RCC_SMPS_ADC_ANADIV4     SMPS and ADC clock division 4 (ADC/SMPS source clock is  8 MHz)
+  *            @arg RCC_SMPS_ADC_ANADIV1     SMPS and ADC clock division 1 (ADC/SMPS source clock is 32 MHz)
+  *            @arg RCC_SMPS_ADC_ANADIV2     SMPS and ADC clock division 2 (ADC/SMPS source clock is 16 MHz)
+  *            @arg RCC_SMPS_ADC_ANADIV4     SMPS and ADC clock division 4 (ADC/SMPS source clock is  8 MHz)
   *
   * @retval None
   */
@@ -262,10 +262,10 @@ typedef struct
 
 /** @brief  Macro to get the SMPS ADC ANA clock DIV prescaler.
   * @retval SMPS ADC ANA div prescaler.
-  *         This parameter can be one of the following values:
-  *            @arg @ref RCC_SMPS_ADC_ANADIV1     SMPS and ADC clock division 1 (ADC/SMPS source clock is 32 MHz)
-  *            @arg @ref RCC_SMPS_ADC_ANADIV2     SMPS and ADC clock division 2 (ADC/SMPS source clock is 16 MHz)
-  *            @arg @ref RCC_SMPS_ADC_ANADIV4     SMPS and ADC clock division 4 (ADC/SMPS source clock is  8 MHz)
+  *         The returned values can be one of the following values:
+  *            @arg RCC_SMPS_ADC_ANADIV1     SMPS and ADC clock division 1 (ADC/SMPS source clock is 32 MHz)
+  *            @arg RCC_SMPS_ADC_ANADIV2     SMPS and ADC clock division 2 (ADC/SMPS source clock is 16 MHz)
+  *            @arg RCC_SMPS_ADC_ANADIV4     SMPS and ADC clock division 4 (ADC/SMPS source clock is  8 MHz)
   */
 #define __HAL_RCC_GET_SMPS_ADC_ANA_DIV_CONFIG() LL_RCC_GetSMPS_ANADIV_Prescaler()
 

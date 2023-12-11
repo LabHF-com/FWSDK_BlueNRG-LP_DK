@@ -41,7 +41,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
@@ -53,7 +53,7 @@ void HAL_MspInit(void)
 void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(huart->Instance==USARTx_INSTANCE)
+  if(huart->Instance==USARTx)
   {
     /* Peripheral clock enable */
     EnableClock_USART();
@@ -109,8 +109,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     __HAL_LINKDMA(huart,hdmatx,hdma_usart1_tx);
 
-    /* USARTx_INSTANCE interrupt Init */
-    HAL_NVIC_SetPriority(USARTx_IRQn, IRQ_HIGH_PRIORITY);
+    /* USARTx interrupt Init */
+    HAL_NVIC_SetPriority(USARTx_IRQn, IRQ_LOW_PRIORITY );
     HAL_NVIC_EnableIRQ(USARTx_IRQn);
   }
 }
@@ -123,7 +123,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 */
 void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 {
-  if(huart->Instance==USARTx_INSTANCE)
+  if(huart->Instance==USARTx)
   {
     /* Reset peripherals */
     __HAL_RCC_USART_FORCE_RESET();
@@ -138,7 +138,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     HAL_GPIO_DeInit(USARTx_TX_PORT, USARTx_TX_PIN);
     HAL_GPIO_DeInit(USARTx_RX_PORT, USARTx_RX_PIN);
 
-    /* USARTx_INSTANCE interrupt DeInit */
+    /* USARTx interrupt DeInit */
     HAL_NVIC_DisableIRQ(USARTx_IRQn);
   }
 }

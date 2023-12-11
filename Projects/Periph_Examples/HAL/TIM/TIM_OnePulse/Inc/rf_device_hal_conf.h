@@ -214,9 +214,11 @@
   #include "rf_driver_hal_rcc.h"
 #endif /* HAL_RCC_MODULE_ENABLED */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #ifdef HAL_RNG_MODULE_ENABLED
   #include "rf_driver_hal_rng.h"
 #endif /* HAL_RNG_MODULE_ENABLED */
+#endif
     
 #ifdef HAL_RTC_MODULE_ENABLED
  #include "rf_driver_hal_rtc.h"

@@ -44,9 +44,7 @@
 #include "nvm_db_conf.h"
 #include "bleplat.h"
 #include "bluenrg_lp_stack.h"
-#include "link_layer.h"
-
-void BLEPLAT_Init(void);
+#include "ble_const.h"
 
 /** @defgroup NVM_UpperLayer  NVM Upper layer
  * @{
@@ -142,7 +140,7 @@ uint8_t NVMDB_TimeCheck(int32_t time)
  * @{
  */
 
-void BLEPLAT_Init(void)
+void BLEPLAT_NvmInit(void)
 {
   NVMDB_Init();
 
@@ -151,15 +149,15 @@ void BLEPLAT_Init(void)
   curr_handle_p = &sec_gatt_db_h;
 }
 
-bleplat_nvm_status BLEPLAT_NvmAdd( bleplat_nvm_record_type type,
-                           const uint8_t* data,
-                           uint16_t size,
-                           const uint8_t* extra_data,
-                           uint16_t extra_size )
+BLEPLAT_NvmStatusTypeDef BLEPLAT_NvmAdd(BLEPLAT_NvmRecordTypeDef Type,
+                                        const uint8_t* pData,
+                                        uint16_t Size,
+                                        const uint8_t* pExtraData,
+                                        uint16_t ExtraSize)
 {
   NVMDB_status_t ret;
 
-  if(type == BLEPLAT_NVM_TYPE_DEVICE_ID)
+  if(Type == BLEPLAT_NVM_REC_DEVICE_ID)
   {
     curr_handle_p = &device_id_db_h;
   }
@@ -170,7 +168,7 @@ bleplat_nvm_status BLEPLAT_NvmAdd( bleplat_nvm_record_type type,
 
   DEBUG_GPIO2_HIGH();
 
-  ret = NVMDB_AppendRecord(curr_handle_p, type, size, data, extra_size, extra_data);
+  ret = NVMDB_AppendRecord(curr_handle_p, Type, Size, pData, ExtraSize, pExtraData);
 
   DEBUG_GPIO2_LOW();
 
@@ -187,17 +185,17 @@ bleplat_nvm_status BLEPLAT_NvmAdd( bleplat_nvm_record_type type,
   return BLEPLAT_BUSY;
 }
 
-bleplat_nvm_status BLEPLAT_NvmGet( bleplat_nvm_record_mode mode,
-                           bleplat_nvm_record_type type,
-                           uint16_t offset,
-                           uint8_t* data,
-                           uint16_t size )
+BLEPLAT_NvmStatusTypeDef BLEPLAT_NvmGet(BLEPLAT_NvmSeekModeTypeDef Mode,
+                                        BLEPLAT_NvmRecordTypeDef Type,
+                                        uint16_t Offset,
+                                        uint8_t* pData,
+                                        uint16_t Size)
 {
   NVMDB_RecordSizeType size_out;
   NVMDB_status_t ret;
   NVMDB_IdType db_id;
 
-  if(type == BLEPLAT_NVM_TYPE_DEVICE_ID)
+  if(Type == BLEPLAT_NVM_REC_DEVICE_ID)
   {
     curr_handle_p = &device_id_db_h;
     db_id = 1;
@@ -208,17 +206,17 @@ bleplat_nvm_status BLEPLAT_NvmGet( bleplat_nvm_record_mode mode,
     db_id = 0;
   }
 
-  if(mode == BLEPLAT_NVM_CURRENT)
+  if(Mode == BLEPLAT_NVM_CURRENT)
   {
-    ret = NVMDB_ReadCurrentRecord(curr_handle_p, offset, data, size, &size_out);
+    ret = NVMDB_ReadCurrentRecord(curr_handle_p, Offset, pData, Size, &size_out);
   }
   else
   {
-    if(mode == BLEPLAT_NVM_FIRST)
+    if(Mode == BLEPLAT_NVM_FIRST)
     {
       NVMDB_HandleInit(db_id, curr_handle_p);
     }
-    ret = NVMDB_ReadNextRecord(curr_handle_p, type, offset, data, size, &size_out);
+    ret = NVMDB_ReadNextRecord(curr_handle_p, Type, Offset, pData, Size, &size_out);
   }
 
   if(ret == NVMDB_STATUS_OK)
@@ -234,11 +232,11 @@ bleplat_nvm_status BLEPLAT_NvmGet( bleplat_nvm_record_mode mode,
   return BLEPLAT_BUSY;
 }
 
-int BLEPLAT_NvmCompare(uint16_t offset, const uint8_t *data, uint16_t size)
+int BLEPLAT_NvmCompare(uint16_t Offset, const uint8_t* pData, uint16_t Size)
 {
   int ret;
 
-  ret = NVMDB_CompareCurrentRecord(curr_handle_p, offset, data, size);
+  ret = NVMDB_CompareCurrentRecord(curr_handle_p, Offset, pData, Size);
 
   if(ret == 0)
   {
@@ -246,7 +244,7 @@ int BLEPLAT_NvmCompare(uint16_t offset, const uint8_t *data, uint16_t size)
   }
   else if(ret < 0)
   {
-    return size;
+    return Size;
   }
   else
   {
@@ -254,10 +252,10 @@ int BLEPLAT_NvmCompare(uint16_t offset, const uint8_t *data, uint16_t size)
   }
 }
 
-void BLEPLAT_NvmDiscard(bleplat_nvm_record_mode mode)
+void BLEPLAT_NvmDiscard(BLEPLAT_NvmSeekModeTypeDef Mode)
 {
   DEBUG_GPIO2_HIGH();
-  if(mode == BLEPLAT_NVM_CURRENT)
+  if(Mode == BLEPLAT_NVM_CURRENT)
   {
     if(curr_handle_p == &device_id_db_h) // Do not allow to erase device ID data.
     {
@@ -265,7 +263,7 @@ void BLEPLAT_NvmDiscard(bleplat_nvm_record_mode mode)
     }
     NVMDB_DeleteRecord(curr_handle_p);
   }
-  else if(mode == BLEPLAT_NVM_ALL)
+  else if(Mode == BLEPLAT_NVM_ALL)
   {
 
     NVMDB_Erase(SEC_GATT_BD);

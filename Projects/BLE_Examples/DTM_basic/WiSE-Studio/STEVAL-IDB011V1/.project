@@ -272,56 +272,6 @@
     <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Library/libbluenrg_lp_stack.a</locationURI>
     </link>
   <link>
-      <name>Middlewares/BLE_Stack/stack_2mc_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_2mc_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_cos_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_cos_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_cte_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_cte_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_dle_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_dle_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_eas_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_eas_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_mas_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_mas_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_pas_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_pas_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_pcl_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_pcl_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_pri_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_pri_api_stubs.c</locationURI>
-    </link>
-  <link>
-      <name>Middlewares/BLE_Stack/stack_sec_api_stubs.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_sec_api_stubs.c</locationURI>
-    </link>
-  <link>
       <name>Middlewares/BLE_Stack/stack_user_cfg.c</name>
     <type>1</type>
     <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/Bluetooth_LE/Src/stack_user_cfg.c</locationURI>
@@ -417,9 +367,9 @@
     <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/BLE_Application/Profiles/Src/gatt_profile.c</locationURI>
     </link>
   <link>
-      <name>Middlewares/Queued_Write/att_pwrq.c</name>
+      <name>Middlewares/Queued_Write/eatt_pwrq.c</name>
     <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/BLE_Application/Queued_Write/Src/att_pwrq.c</locationURI>
+    <locationURI>PARENT-5-PROJECT_LOC/Middlewares/ST/BLE_Application/Queued_Write/Src/eatt_pwrq.c</locationURI>
     </link>
   <link>
       <name>Middlewares/RNG/rng_manager.c</name>

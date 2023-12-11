@@ -421,14 +421,14 @@ typedef struct
   * @rmtoll CCR          EN            LL_DMA_EnableChannel
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_EnableChannel(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -441,14 +441,14 @@ __STATIC_INLINE void LL_DMA_EnableChannel(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          EN            LL_DMA_DisableChannel
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_DisableChannel(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -461,14 +461,14 @@ __STATIC_INLINE void LL_DMA_DisableChannel(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          EN            LL_DMA_IsEnabledChannel
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMA_IsEnabledChannel(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -489,22 +489,22 @@ __STATIC_INLINE uint32_t LL_DMA_IsEnabledChannel(DMA_TypeDef *DMAx, uint32_t Cha
   *         CCR          PL            LL_DMA_ConfigTransfer
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  Configuration This parameter must be a combination of all the following values:
-  *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY or @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH or @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
-  *         @arg @ref LL_DMA_MODE_NORMAL or @ref LL_DMA_MODE_CIRCULAR
-  *         @arg @ref LL_DMA_PERIPH_INCREMENT or @ref LL_DMA_PERIPH_NOINCREMENT
-  *         @arg @ref LL_DMA_MEMORY_INCREMENT or @ref LL_DMA_MEMORY_NOINCREMENT
-  *         @arg @ref LL_DMA_PDATAALIGN_BYTE or @ref LL_DMA_PDATAALIGN_HALFWORD or @ref LL_DMA_PDATAALIGN_WORD
-  *         @arg @ref LL_DMA_MDATAALIGN_BYTE or @ref LL_DMA_MDATAALIGN_HALFWORD or @ref LL_DMA_MDATAALIGN_WORD
-  *         @arg @ref LL_DMA_PRIORITY_LOW or @ref LL_DMA_PRIORITY_MEDIUM or @ref LL_DMA_PRIORITY_HIGH or @ref LL_DMA_PRIORITY_VERYHIGH
+  * @arg LL_DMA_DIRECTION_PERIPH_TO_MEMORY or LL_DMA_DIRECTION_MEMORY_TO_PERIPH or LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+  * @arg LL_DMA_MODE_NORMAL or LL_DMA_MODE_CIRCULAR
+  * @arg LL_DMA_PERIPH_INCREMENT or LL_DMA_PERIPH_NOINCREMENT
+  * @arg LL_DMA_MEMORY_INCREMENT or LL_DMA_MEMORY_NOINCREMENT
+  * @arg LL_DMA_PDATAALIGN_BYTE or LL_DMA_PDATAALIGN_HALFWORD or LL_DMA_PDATAALIGN_WORD
+  * @arg LL_DMA_MDATAALIGN_BYTE or LL_DMA_MDATAALIGN_HALFWORD or LL_DMA_MDATAALIGN_WORD
+  * @arg LL_DMA_PRIORITY_LOW or LL_DMA_PRIORITY_MEDIUM or LL_DMA_PRIORITY_HIGH or LL_DMA_PRIORITY_VERYHIGH
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_ConfigTransfer(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Configuration)
@@ -520,18 +520,18 @@ __STATIC_INLINE void LL_DMA_ConfigTransfer(DMA_TypeDef *DMAx, uint32_t Channel, 
   *         CCR          MEM2MEM       LL_DMA_SetDataTransferDirection
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  Direction This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_PERIPH_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_PERIPH
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_MEMORY
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetDataTransferDirection(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Direction)
@@ -546,18 +546,18 @@ __STATIC_INLINE void LL_DMA_SetDataTransferDirection(DMA_TypeDef *DMAx, uint32_t
   *         CCR          MEM2MEM       LL_DMA_GetDataTransferDirection
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_PERIPH_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_PERIPH
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_MEMORY
   */
 __STATIC_INLINE uint32_t LL_DMA_GetDataTransferDirection(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -572,17 +572,17 @@ __STATIC_INLINE uint32_t LL_DMA_GetDataTransferDirection(DMA_TypeDef *DMAx, uint
   * @rmtoll CCR          CIRC          LL_DMA_SetMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_MODE_NORMAL
-  *         @arg @ref LL_DMA_MODE_CIRCULAR
+  * @arg LL_DMA_MODE_NORMAL
+  * @arg LL_DMA_MODE_CIRCULAR
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetMode(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Mode)
@@ -596,17 +596,17 @@ __STATIC_INLINE void LL_DMA_SetMode(DMA_TypeDef *DMAx, uint32_t Channel, uint32_
   * @rmtoll CCR          CIRC          LL_DMA_GetMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_MODE_NORMAL
-  *         @arg @ref LL_DMA_MODE_CIRCULAR
+  * @arg LL_DMA_MODE_NORMAL
+  * @arg LL_DMA_MODE_CIRCULAR
   */
 __STATIC_INLINE uint32_t LL_DMA_GetMode(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -619,17 +619,17 @@ __STATIC_INLINE uint32_t LL_DMA_GetMode(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          PINC          LL_DMA_SetPeriphIncMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  PeriphOrM2MSrcIncMode This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_PERIPH_INCREMENT
-  *         @arg @ref LL_DMA_PERIPH_NOINCREMENT
+  * @arg LL_DMA_PERIPH_INCREMENT
+  * @arg LL_DMA_PERIPH_NOINCREMENT
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetPeriphIncMode(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t PeriphOrM2MSrcIncMode)
@@ -643,17 +643,17 @@ __STATIC_INLINE void LL_DMA_SetPeriphIncMode(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CCR          PINC          LL_DMA_GetPeriphIncMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_PERIPH_INCREMENT
-  *         @arg @ref LL_DMA_PERIPH_NOINCREMENT
+  * @arg LL_DMA_PERIPH_INCREMENT
+  * @arg LL_DMA_PERIPH_NOINCREMENT
   */
 __STATIC_INLINE uint32_t LL_DMA_GetPeriphIncMode(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -666,17 +666,17 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphIncMode(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CCR          MINC          LL_DMA_SetMemoryIncMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  MemoryOrM2MDstIncMode This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_MEMORY_INCREMENT
-  *         @arg @ref LL_DMA_MEMORY_NOINCREMENT
+  * @arg LL_DMA_MEMORY_INCREMENT
+  * @arg LL_DMA_MEMORY_NOINCREMENT
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetMemoryIncMode(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t MemoryOrM2MDstIncMode)
@@ -690,17 +690,17 @@ __STATIC_INLINE void LL_DMA_SetMemoryIncMode(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CCR          MINC          LL_DMA_GetMemoryIncMode
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_MEMORY_INCREMENT
-  *         @arg @ref LL_DMA_MEMORY_NOINCREMENT
+  * @arg LL_DMA_MEMORY_INCREMENT
+  * @arg LL_DMA_MEMORY_NOINCREMENT
   */
 __STATIC_INLINE uint32_t LL_DMA_GetMemoryIncMode(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -713,18 +713,18 @@ __STATIC_INLINE uint32_t LL_DMA_GetMemoryIncMode(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CCR          PSIZE         LL_DMA_SetPeriphSize
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  PeriphOrM2MSrcDataSize This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_PDATAALIGN_BYTE
-  *         @arg @ref LL_DMA_PDATAALIGN_HALFWORD
-  *         @arg @ref LL_DMA_PDATAALIGN_WORD
+  * @arg LL_DMA_PDATAALIGN_BYTE
+  * @arg LL_DMA_PDATAALIGN_HALFWORD
+  * @arg LL_DMA_PDATAALIGN_WORD
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetPeriphSize(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t PeriphOrM2MSrcDataSize)
@@ -738,18 +738,18 @@ __STATIC_INLINE void LL_DMA_SetPeriphSize(DMA_TypeDef *DMAx, uint32_t Channel, u
   * @rmtoll CCR          PSIZE         LL_DMA_GetPeriphSize
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_PDATAALIGN_BYTE
-  *         @arg @ref LL_DMA_PDATAALIGN_HALFWORD
-  *         @arg @ref LL_DMA_PDATAALIGN_WORD
+  * @arg LL_DMA_PDATAALIGN_BYTE
+  * @arg LL_DMA_PDATAALIGN_HALFWORD
+  * @arg LL_DMA_PDATAALIGN_WORD
   */
 __STATIC_INLINE uint32_t LL_DMA_GetPeriphSize(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -762,18 +762,18 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphSize(DMA_TypeDef *DMAx, uint32_t Channe
   * @rmtoll CCR          MSIZE         LL_DMA_SetMemorySize
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  MemoryOrM2MDstDataSize This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_MDATAALIGN_BYTE
-  *         @arg @ref LL_DMA_MDATAALIGN_HALFWORD
-  *         @arg @ref LL_DMA_MDATAALIGN_WORD
+  * @arg LL_DMA_MDATAALIGN_BYTE
+  * @arg LL_DMA_MDATAALIGN_HALFWORD
+  * @arg LL_DMA_MDATAALIGN_WORD
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetMemorySize(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t MemoryOrM2MDstDataSize)
@@ -787,18 +787,18 @@ __STATIC_INLINE void LL_DMA_SetMemorySize(DMA_TypeDef *DMAx, uint32_t Channel, u
   * @rmtoll CCR          MSIZE         LL_DMA_GetMemorySize
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_MDATAALIGN_BYTE
-  *         @arg @ref LL_DMA_MDATAALIGN_HALFWORD
-  *         @arg @ref LL_DMA_MDATAALIGN_WORD
+  * @arg LL_DMA_MDATAALIGN_BYTE
+  * @arg LL_DMA_MDATAALIGN_HALFWORD
+  * @arg LL_DMA_MDATAALIGN_WORD
   */
 __STATIC_INLINE uint32_t LL_DMA_GetMemorySize(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -811,19 +811,19 @@ __STATIC_INLINE uint32_t LL_DMA_GetMemorySize(DMA_TypeDef *DMAx, uint32_t Channe
   * @rmtoll CCR          PL            LL_DMA_SetChannelPriorityLevel
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  Priority This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_PRIORITY_LOW
-  *         @arg @ref LL_DMA_PRIORITY_MEDIUM
-  *         @arg @ref LL_DMA_PRIORITY_HIGH
-  *         @arg @ref LL_DMA_PRIORITY_VERYHIGH
+  * @arg LL_DMA_PRIORITY_LOW
+  * @arg LL_DMA_PRIORITY_MEDIUM
+  * @arg LL_DMA_PRIORITY_HIGH
+  * @arg LL_DMA_PRIORITY_VERYHIGH
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetChannelPriorityLevel(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Priority)
@@ -837,19 +837,19 @@ __STATIC_INLINE void LL_DMA_SetChannelPriorityLevel(DMA_TypeDef *DMAx, uint32_t 
   * @rmtoll CCR          PL            LL_DMA_GetChannelPriorityLevel
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMA_PRIORITY_LOW
-  *         @arg @ref LL_DMA_PRIORITY_MEDIUM
-  *         @arg @ref LL_DMA_PRIORITY_HIGH
-  *         @arg @ref LL_DMA_PRIORITY_VERYHIGH
+  * @arg LL_DMA_PRIORITY_LOW
+  * @arg LL_DMA_PRIORITY_MEDIUM
+  * @arg LL_DMA_PRIORITY_HIGH
+  * @arg LL_DMA_PRIORITY_VERYHIGH
   */
 __STATIC_INLINE uint32_t LL_DMA_GetChannelPriorityLevel(DMA_TypeDef *DMAx, uint32_t Channel)
 {
@@ -864,14 +864,14 @@ __STATIC_INLINE uint32_t LL_DMA_GetChannelPriorityLevel(DMA_TypeDef *DMAx, uint3
   * @rmtoll CNDTR        NDT           LL_DMA_SetDataLength
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  NbData Between Min_Data = 0 and Max_Data = 0x0000FFFF
   * @retval None
   */
@@ -888,14 +888,14 @@ __STATIC_INLINE void LL_DMA_SetDataLength(DMA_TypeDef *DMAx, uint32_t Channel, u
   * @rmtoll CNDTR        NDT           LL_DMA_GetDataLength
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_DMA_GetDataLength(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -912,20 +912,20 @@ __STATIC_INLINE uint32_t LL_DMA_GetDataLength(DMA_TypeDef *DMAx, uint32_t Channe
   *         CMAR         MA            LL_DMA_ConfigAddresses
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  SrcAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @param  DstAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @param  Direction This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_DIRECTION_PERIPH_TO_MEMORY
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_PERIPH
-  *         @arg @ref LL_DMA_DIRECTION_MEMORY_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_PERIPH_TO_MEMORY
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_PERIPH
+  * @arg LL_DMA_DIRECTION_MEMORY_TO_MEMORY
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_ConfigAddresses(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t SrcAddress,
@@ -952,14 +952,14 @@ __STATIC_INLINE void LL_DMA_ConfigAddresses(DMA_TypeDef *DMAx, uint32_t Channel,
   * @rmtoll CMAR         MA            LL_DMA_SetMemoryAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  MemoryAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @retval None
   */
@@ -975,14 +975,14 @@ __STATIC_INLINE void LL_DMA_SetMemoryAddress(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CPAR         PA            LL_DMA_SetPeriphAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  PeriphAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @retval None
   */
@@ -997,14 +997,14 @@ __STATIC_INLINE void LL_DMA_SetPeriphAddress(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CMAR         MA            LL_DMA_GetMemoryAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_DMA_GetMemoryAddress(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1018,14 +1018,14 @@ __STATIC_INLINE uint32_t LL_DMA_GetMemoryAddress(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CPAR         PA            LL_DMA_GetPeriphAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_DMA_GetPeriphAddress(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1040,14 +1040,14 @@ __STATIC_INLINE uint32_t LL_DMA_GetPeriphAddress(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CPAR         PA            LL_DMA_SetM2MSrcAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  MemoryAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @retval None
   */
@@ -1063,14 +1063,14 @@ __STATIC_INLINE void LL_DMA_SetM2MSrcAddress(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CMAR         MA            LL_DMA_SetM2MDstAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  MemoryAddress Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   * @retval None
   */
@@ -1085,14 +1085,14 @@ __STATIC_INLINE void LL_DMA_SetM2MDstAddress(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CPAR         PA            LL_DMA_GetM2MSrcAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_DMA_GetM2MSrcAddress(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1106,14 +1106,14 @@ __STATIC_INLINE uint32_t LL_DMA_GetM2MSrcAddress(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CMAR         MA            LL_DMA_GetM2MDstAddress
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Between Min_Data = 0 and Max_Data = 0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_DMA_GetM2MDstAddress(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1127,20 +1127,20 @@ __STATIC_INLINE uint32_t LL_DMA_GetM2MDstAddress(DMA_TypeDef *DMAx, uint32_t Cha
   * @rmtoll CxCR         DMAREQ_ID     LL_DMA_SetPeriphRequest
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  Request This parameter can be a value of @ref DMAMUX_LL_EC_REQUEST
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_SetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel, uint32_t Request)
 {
-  MODIFY_REG(__LL_DMA_INSTANCE_TO_DMAMUX_CCR(DMAx, Channel - 1U)->CCR, DMAMUX_CxCR_DMAREQ_ID, Request);
+  MODIFY_REG(__LL_DMA_INSTANCE_TO_DMAMUX_CCR(DMAx, Channel - 1U)->CxCR, DMAMUX_CxCR_DMAREQ_ID, Request);
 }
 
 /**
@@ -1149,19 +1149,19 @@ __STATIC_INLINE void LL_DMA_SetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel
   * @rmtoll CxCR         DMAREQ_ID     LL_DMA_GetPeriphRequest
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval Returned This parameter can be a value of @ref DMAMUX_LL_EC_REQUEST
   */
 __STATIC_INLINE uint32_t LL_DMA_GetPeriphRequest(DMA_TypeDef *DMAx, uint32_t Channel)
 {
-  return (READ_BIT(__LL_DMA_INSTANCE_TO_DMAMUX_CCR(DMAx, Channel - 1U)->CCR, DMAMUX_CxCR_DMAREQ_ID));
+  return (READ_BIT(__LL_DMA_INSTANCE_TO_DMAMUX_CCR(DMAx, Channel - 1U)->CxCR, DMAMUX_CxCR_DMAREQ_ID));
 }
 
 /**
@@ -1888,14 +1888,14 @@ __STATIC_INLINE void LL_DMA_ClearFlag_TE8(DMA_TypeDef *DMAx)
   * @rmtoll CCR          TCIE          LL_DMA_EnableIT_TC
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_EnableIT_TC(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1908,14 +1908,14 @@ __STATIC_INLINE void LL_DMA_EnableIT_TC(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          HTIE          LL_DMA_EnableIT_HT
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_EnableIT_HT(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1928,14 +1928,14 @@ __STATIC_INLINE void LL_DMA_EnableIT_HT(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          TEIE          LL_DMA_EnableIT_TE
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_EnableIT_TE(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1948,14 +1948,14 @@ __STATIC_INLINE void LL_DMA_EnableIT_TE(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          TCIE          LL_DMA_DisableIT_TC
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_DisableIT_TC(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1968,14 +1968,14 @@ __STATIC_INLINE void LL_DMA_DisableIT_TC(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          HTIE          LL_DMA_DisableIT_HT
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_DisableIT_HT(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -1988,14 +1988,14 @@ __STATIC_INLINE void LL_DMA_DisableIT_HT(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          TEIE          LL_DMA_DisableIT_TE
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval None
   */
 __STATIC_INLINE void LL_DMA_DisableIT_TE(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -2008,14 +2008,14 @@ __STATIC_INLINE void LL_DMA_DisableIT_TE(DMA_TypeDef *DMAx, uint32_t Channel)
   * @rmtoll CCR          TCIE          LL_DMA_IsEnabledIT_TC
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TC(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -2029,14 +2029,14 @@ __STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TC(DMA_TypeDef *DMAx, uint32_t Chann
   * @rmtoll CCR          HTIE          LL_DMA_IsEnabledIT_HT
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_HT(DMA_TypeDef *DMAx, uint32_t Channel)
@@ -2050,14 +2050,14 @@ __STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_HT(DMA_TypeDef *DMAx, uint32_t Chann
   * @rmtoll CCR          TEIE          LL_DMA_IsEnabledIT_TE
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMA_IsEnabledIT_TE(DMA_TypeDef *DMAx, uint32_t Channel)

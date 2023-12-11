@@ -45,10 +45,10 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
   
   /* SVCall_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SVCall_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SVCall_IRQn, IRQ_LOW_PRIORITY );
 }
 
 

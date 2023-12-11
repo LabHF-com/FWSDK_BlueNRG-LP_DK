@@ -78,7 +78,7 @@ typedef  PACKED(struct) devConfigS  {
 
 
 #define UPDATER_BUF_SIZE        ((uint16_t)64)
-#define UPDATER_VERSION         ((uint8_t)10)
+#define UPDATER_VERSION         ((uint8_t)12)
 #define BLUEFLAG_FAILED_OP      ((uint8_t)0x4A)
 
 #define CMD_UPDATER_REBOOT              ((uint8_t)0x21)
@@ -408,8 +408,8 @@ uint32_t flashWrite(uint32_t address, uint8_t *data,
     LL_FLASH_ClearFlag(FLASH, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
     
     // Load the flash address to write
-    FLASH->ADDRESS = (uint16_t)((address + (index*FLASH_WORD_LEN*FLASH_BURST_DATA)) >> 2);
-    
+    FLASH->ADDRESS = ((((address + (index*FLASH_WORD_LEN*FLASH_BURST_DATA)) - LL_FLASH_START_ADDR) >> 2) & LL_FLASH_SIZE_MASK);
+
     // Prepare and load the data to flash
     FLASH->DATA0 = LE_TO_HOST_32(data);
     data += 4;
@@ -450,7 +450,7 @@ uint32_t flashWrite(uint32_t address, uint8_t *data,
     LL_FLASH_ClearFlag(FLASH, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
     
     // Load the flash address to write
-    FLASH->ADDRESS = (uint16_t)((address + index) >> 2);
+    FLASH->ADDRESS = ((((address + index) - LL_FLASH_START_ADDR) >> 2) & LL_FLASH_SIZE_MASK);
     
     // Prepare and load the data to flash
     FLASH->DATA0 = LE_TO_HOST_32(flash_word);
@@ -477,7 +477,7 @@ uint32_t flashErase(uint32_t eraseType, uint32_t address)
   LL_FLASH_ClearFlag(FLASH, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
   
   // Load the flash address to erase
-  FLASH->ADDRESS = (uint16_t)(address >> 2);
+  FLASH->ADDRESS = (((address - LL_FLASH_START_ADDR) >> 2) & LL_FLASH_SIZE_MASK);
   
   // Flash erase command
   FLASH->COMMAND = command;

@@ -62,6 +62,27 @@ static const ble_gatt_val_buffer_def_t gatt_client_supp_feature_val_buff = {
  */
 
 /**
+ *@defgroup Server Supported Feature Characteristic value.
+ *@{
+ */
+/**
+ * The following buffer store the Server Supported Feature characteristic
+ * value, as described in 7.4 SERVER SUPPORTED FEATURES - BLUETOOTH CORE
+ * SPECIFICATION Version 5.2 | Vol 3, Part G page 1605.
+ * The assigned bits are reported in Table 7.11: Server Supported Features
+ * bit assignments.
+ */
+static uint8_t gatt_server_supp_feature_buff = 0U;
+
+static const ble_gatt_val_buffer_def_t gatt_server_supp_feature_val_buff = {
+    .buffer_len = BLE_GATT_SRV_SUPPORTED_FEATURES_VAL_LEN,
+    .buffer_p = &gatt_server_supp_feature_buff,
+};
+/**
+ *@}
+ */
+
+/**
  * Service Changed CCCD.
  */
 BLE_GATT_SRV_CCCD_DECLARE(gatt_chr_srv_changed,
@@ -93,20 +114,34 @@ static const ble_gatt_chr_def_t gatt_chrs[] = {
         .properties = BLE_GATT_SRV_CHAR_PROP_READ,
         .permissions = BLE_GATT_SRV_PERM_NONE,
         .uuid = BLE_UUID_INIT_16(BLE_GATT_SRV_DB_HASH_CHR_UUID),
+    },
+    {
+        /**< Server Supported Feature Characteristic. */
+        .properties = BLE_GATT_SRV_CHAR_PROP_READ,
+        .permissions = BLE_GATT_SRV_PERM_NONE,
+        .uuid = BLE_UUID_INIT_16(BLE_GATT_SRV_SUPPORTED_FEATURES_CHR_UUID),
+        .val_buffer_p = (ble_gatt_val_buffer_def_t *)&gatt_server_supp_feature_val_buff,
     }
 };
 
-static const ble_gatt_srv_def_t gatt_srvc = {
+static ble_gatt_srv_def_t gatt_srvc = {
     .type = BLE_GATT_SRV_PRIMARY_SRV_TYPE,
     .uuid = BLE_UUID_INIT_16(BLE_GATT_SRV_GATT_SERVICE_UUID),
     .chrs = {
         .chrs_p = (ble_gatt_chr_def_t *)gatt_chrs,
-        .chr_count = 3U,
+        .chr_count = 4U,
     },
 };
 
-tBleStatus Gatt_profile_init()
+tBleStatus Gatt_profile_init(uint8_t supported_feature)
 {
+    gatt_server_supp_feature_buff = supported_feature;
+    if (supported_feature == 0U)
+    {
+        /** Disable Server Supported Feature Characteristic */
+        gatt_srvc.chrs.chr_count = 3U;
+    }
+
     return aci_gatt_srv_add_service((ble_gatt_srv_def_t *)&gatt_srvc);
 }
 
@@ -176,4 +211,8 @@ ble_gatt_srv_def_t *Gatt_profile_get_service_definition_p(void)
     return (ble_gatt_srv_def_t *)&gatt_srvc;
 }
 
+uint8_t Gatt_profile_get_supported_feature(void)
+{
+    return gatt_server_supp_feature_buff;
+}
 /******************* (C) COPYRIGHT 2020 STMicroelectronics *****END OF FILE****/

@@ -222,13 +222,19 @@ static uint8_t DTM_SmpsTrimConfig(uint8_t smps_config)
     hsi_calib         = ((*(volatile uint32_t*)TRIMMING_LOCATION) & HSI_TRIM_Msk) >> HSI_TRIM_Pos;
     eng_lsi_bw_flag   = TRUE;
   } else {
-    main_regulator    = 0x08;
-    smps_out_voltage  = 0x03;
 #ifdef CONFIG_DEVICE_BLUENRG_LP
+    main_regulator    = 0x08;
     lsi_lpmu          = 0x08;
-#endif
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    main_regulator    = 0x0A;
+    hsi_calib         = 0x1F;
+    lsi_bw            = 8;
+    eng_lsi_bw_flag   = TRUE;
+#endif
+    smps_out_voltage  = 0x03;
   }
   
   /* Set HSI Calibration Trimming value */
@@ -267,33 +273,44 @@ static uint8_t DTM_SmpsTrimConfig(uint8_t smps_config)
 static uint8_t DTM_LSConfig(uint8_t ls_config)
 {
   uint8_t ret_val=SUCCESS;
-  
-  SystemTimer_TimeoutConfig(16000000, 300, TRUE);
-  
+    
   if(ls_config == LS_SOURCE_XTAL) {
     LL_PWR_SetNoPullB(LL_PWR_PUPD_IO12|LL_PWR_PUPD_IO13);
     LL_RCC_LSCO_SetSource(LL_RCC_LSCO_CLKSOURCE_LSE);
-    LL_RCC_LSE_Enable();
-    while (LL_RCC_LSE_IsReady() == 0U)
+    
+    /* Set LSE oscillator drive capability */
+    LL_RCC_LSE_SetDriveCapability(LL_RCC_LSEDRIVE_HIGH);
+    
+    LL_RCC_LSI_Disable();
+    
+    /* Need to explicitly disable LSE to make LSERDY flag go to 0 even without
+    POR, in case it was enabled. */
+    LL_RCC_LSE_Disable();  
+    if(SystemReadyWait(300, LL_RCC_LSE_IsReady, 0) == FALSE)
     {
-      if (SystemTimer_TimeoutExpired()) 
-      {
-        ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
-        break;
-      }
+      ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
+    }
+    
+    LL_RCC_LSE_Enable();
+    if(SystemReadyWait(300, LL_RCC_LSE_IsReady, 1) == FALSE)
+    {
+      ret_val = SYSTEM_CONFIG_LSE_READY_ERROR;
     }    
   }
   else if(ls_config == LS_SOURCE_RO) {
-    LL_RCC_LSCO_SetSource(LL_RCC_LSCO_CLKSOURCE_LSI);
-    LL_RCC_LSI_Enable();
-    while (LL_RCC_LSI_IsReady() == 0U)
+    LL_RCC_LSI_Disable();
+    if(SystemReadyWait(300, LL_RCC_LSI_IsReady, 0) == FALSE)
     {
-      if (SystemTimer_TimeoutExpired())
-      {
-        ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
-        break;
-      }
-    }        
+      ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+    }  
+    LL_RCC_LSE_Disable();
+    LL_RCC_LSCO_SetSource(LL_RCC_LSCO_CLKSOURCE_LSI);
+    
+    LL_RCC_LSI_Enable();
+    if(SystemReadyWait(300, LL_RCC_LSI_IsReady, 1) == FALSE)
+    {
+      ret_val = SYSTEM_CONFIG_LSI_READY_ERROR;
+    }     
   }
   else {
     while(1);
@@ -347,10 +364,7 @@ void DTM_SystemInit(void)
   /* The first 256 bytes are for stacklib_stored_device_id_data */
   dev_config_addr = (uint8_t *) (FLASH_ADDRESS_STACK_DEV_ID_DATA + 0x100);
   memcpy(&deviceConfig, dev_config_addr, sizeof(deviceConfig));
-  
-  /* Set LSE oscillator drive capability */
-  LL_RCC_LSE_SetDriveCapability(LL_RCC_LSEDRIVE_HIGH);
-  
+    
 #ifdef CONFIG_HW_LS_XTAL
   deviceConfig.LS_source = LS_SOURCE_XTAL;
   deviceConfig.SCA = 100;
@@ -378,16 +392,20 @@ void DTM_SystemInit(void)
   /* Store in RAM the AppBase information */
   RAM_VR.AppBase = (uint32_t) (__vector_table);
 
-#ifdef CONFIG_DEVICE_BLUENRG_LP
-  /* Enable all the RAM banks in retention during DEEPSTOP */
-  LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_1|LL_PWR_RAMRET_2|LL_PWR_RAMRET_3);
-#endif /* CONFIG_DEVICE_BLUENRG_LP */
-	
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
   /* Enable all the RAM banks in retention during DEEPSTOP */
   LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_1);
-#endif /* CONFIG_DEVICE_BLUENRG_LPS */
-  
+#if defined(LL_PWR_RAMRET_2)
+  LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_2);
+#endif
+#if defined(LL_PWR_RAMRET_3)
+  LL_PWR_EnableRAMBankRet(LL_PWR_RAMRET_3);
+#endif
+
+#if defined(PWR_CR2_GPIORET)
+      /* Disable the GPIO retention in DEEPSTOP configuration */
+      LL_PWR_DisableGPIORET();
+#endif
+      
   /* HW SMPS and HW Trimming value Configuration */
   DTM_SmpsTrimConfig(deviceConfig.SMPS_management);
 
@@ -413,11 +431,23 @@ void DTM_SystemInit(void)
 #endif
   LL_RCC_HSE_SetCurrentControl(LL_RCC_HSE_CURRENTMAX_3);
   
+#if (USE_SYSCLK_32M == 1) && (CONTROLLER_BIS_ENABLED == 0)
+
+  /* System Clock Configuration */
+  SystemClockConfig(SYSCLK_32M);
+
+  /* Radio Clock Configuration */
+  RadioClockConfig(BLE_SYSCLK_16M, SYSCLK_32M);
+
+#else
+
   /* System Clock Configuration */
   SystemClockConfig(SYSCLK_64M);
 
   /* Radio Clock Configuration */
   RadioClockConfig(BLE_SYSCLK_32M, SYSCLK_64M);
+
+#endif
   
   /* Set all the IRQ priority with a default value */
   setInterruptPriority();
@@ -483,9 +513,11 @@ void DTM_StackInit(void)
   dm_init(ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF, aci_gatt_adv_nwk_buffer);
   
   aci_adv_nwk_init();
-  
+
+#if (BLESTACK_CONTROLLER_ONLY == 0)  
   ACI_gatt_nwk_init(ACI_ATT_QUEUED_WRITE_SIZE_CONF);
   
   aci_l2cap_nwk_init();
+#endif
 }
 

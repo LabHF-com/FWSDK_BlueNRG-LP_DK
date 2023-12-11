@@ -73,33 +73,35 @@
 #endif /* STEVAL_IDB012V1 */
 
 
+
 #ifdef STEVAL_IDB011V1
-#define LPUART_TX_PORT 						GPIOB
-#define LPUART_TX_PIN						LL_GPIO_PIN_4
-#define LPUART_TX_AF						LL_GPIO_AF_0
+#define LPUART_TX_PORT                                          GPIOB
+#define LPUART_TX_PIN                                           LL_GPIO_PIN_4
+#define LPUART_TX_AF                                            LL_GPIO_AF_0
 #define LL_GPIO_SetAFPin_LPUART_TX()                            LL_GPIO_SetAFPin_0_7(LPUART_TX_PORT, LPUART_TX_PIN, LPUART_TX_AF)
-#define LPUART_RX_PORT 						GPIOB
-#define LPUART_RX_PIN						LL_GPIO_PIN_5
-#define LPUART_RX_AF						LL_GPIO_AF_0
+#define LPUART_RX_PORT                                          GPIOB
+#define LPUART_RX_PIN                                           LL_GPIO_PIN_5
+#define LPUART_RX_AF                                            LL_GPIO_AF_0
 #define LL_GPIO_SetAFPin_LPUART_RX()                            LL_GPIO_SetAFPin_0_7(LPUART_RX_PORT, LPUART_RX_PIN, LPUART_RX_AF)
 #define LL_EnableClock_LPUART()                                 LL_APB1_EnableClock(LL_APB1_PERIPH_LPUART)
 #define LL_EnableClock_LPUART_TX_PORT()                         LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #define LL_EnableClock_LPUART_RX_PORT()                         LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
-#define LPUART_TX_PORT 						GPIOB
-#define LPUART_TX_PIN						LL_GPIO_PIN_4
-#define LPUART_TX_AF						LL_GPIO_AF_0
+#if defined(STEVAL_IDB012V1)
+
+#define LPUART_TX_PORT                                          GPIOB
+#define LPUART_TX_PIN                                           LL_GPIO_PIN_4
+#define LPUART_TX_AF                                            LL_GPIO_AF_0
 #define LL_GPIO_SetAFPin_LPUART_TX()                            LL_GPIO_SetAFPin_0_7(LPUART_TX_PORT, LPUART_TX_PIN, LPUART_TX_AF)
-#define LPUART_RX_PORT 						GPIOB
-#define LPUART_RX_PIN						LL_GPIO_PIN_5
-#define LPUART_RX_AF						LL_GPIO_AF_0
+#define LPUART_RX_PORT                                          GPIOB
+#define LPUART_RX_PIN                                           LL_GPIO_PIN_5
+#define LPUART_RX_AF                                            LL_GPIO_AF_0
 #define LL_GPIO_SetAFPin_LPUART_RX()                            LL_GPIO_SetAFPin_0_7(LPUART_RX_PORT, LPUART_RX_PIN, LPUART_RX_AF)
 #define LL_EnableClock_LPUART()                                 LL_APB1_EnableClock(LL_APB1_PERIPH_LPUART)
 #define LL_EnableClock_LPUART_TX_PORT()                         LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #define LL_EnableClock_LPUART_RX_PORT()                         LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1  STEVAL_IDB012V1 */
 /**
   * @brief Toggle periods for various blinking modes
   */

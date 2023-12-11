@@ -1079,12 +1079,7 @@
             </file>
         </group>
     </group>
-    <group>
-        <name>Doc</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\readme.txt</name>
-        </file>
-    </group>
+
     <group>
         <name>Drivers</name>
         <group>

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : SPI_IT_Master_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       SPI1 NSS      |      SPI3 MOSI     |
@@ -142,23 +144,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                                              STEVAL-IDB011V1                                                             |                                                              STEVAL-IDB011V2                                                             |                                                              STEVAL-IDB012V1                                                             |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
-|     DL2    |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |
-|     DL3    |                                                                 ON: error                                                                |                                                                 ON: error                                                                |                                                                 ON: error                                                                |
-|     DL4    |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
-|     U5     |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
+|  LED name  |                                                              STEVAL-IDB010V1                                                             |                                                              STEVAL-IDB011V1                                                             |                                                              STEVAL-IDB011V2                                                             |                                                              STEVAL-IDB012V1                                                             |                                                              STEVAL-IDB013V1                                                             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
+|     DL2    |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |  Fast blinking: waiting User push-button (PUSH1) to be pressed - ON: transmission process is complete and reception process is complete  |
+|     DL3    |                                                                 ON: error                                                                |                                                                 ON: error                                                                |                                                                 ON: error                                                                |                                                                 ON: error                                                                |                                                                 ON: error                                                                |
+|     DL4    |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
+|     U5     |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |                                                                 Not Used                                                                 |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |
-------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |  Start the communication through IT  |  Start the communication through IT  |  Start the communication through IT  |
-|      PUSH2     |               Not Used               |               Not Used               |               Not Used               |
-|      RESET     |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |
+|   BUTTON name  |            STEVAL-IDB010V1           |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |            STEVAL-IDB013V1           |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |  Start the communication through IT  |  Start the communication through IT  |  Start the communication through IT  |  Start the communication through IT  |  Start the communication through IT  |
+|      PUSH2     |               Not Used               |               Not Used               |               Not Used               |               Not Used               |               Not Used               |
+|      RESET     |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LPS          |           Reset BlueNRG-LPS          |
 
 @endtable
 
@@ -240,6 +242,7 @@ enum {
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 SPI_HandleTypeDef hspiMaster;
 
 #if defined( CONFIG_DATASIZE_16BIT )
@@ -263,10 +266,9 @@ __attribute((aligned(4))) uint8_t aRxBuffer[sizeof(aTxBuffer)];
 __IO uint32_t wTransferState = TRANSFER_WAIT;
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_GPIO_Init(void);
 static void MX_SPI_MASTER_Init(void);
-
-/* Private function prototypes -----------------------------------------------*/
 static uint16_t Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t BufferLength);
 
 /* Private user code ---------------------------------------------------------*/
@@ -287,13 +289,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -314,9 +316,9 @@ int main(void)
   /* Configure User push-button (PUSH1) button */
   BSP_PB_Init(BSP_PUSH1,BUTTON_MODE_GPIO);
   /* Wait for User push-button (PUSH1) press before starting the Communication */
-  printf("Wait for User push-button (PUSH1) press before starting the Communication.\n\r");
+  printf("Wait for User push-button (PUSH1) press or enter 'c'/'C' character.\n\r");
   
-  while (BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET)
+  while((BSP_PB_GetState(BSP_PUSH1) == GPIO_PIN_RESET) && (pressCToContinue == 0))
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(200);
@@ -356,6 +358,7 @@ int main(void)
     else
     {
       printf("OK\n\r");
+      printf("** Test successfully. ** \n\r\n\r");
     }
     break;
     default : 
@@ -462,10 +465,21 @@ static uint16_t Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t BufferL
   return 0;
 }
 
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
+}
+
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+* @brief  This function is executed in case of error occurrence.
+* @retval None
+*/
 void Error_Handler(void)
 {
   /* User can add his own implementation to report the HAL error return state */

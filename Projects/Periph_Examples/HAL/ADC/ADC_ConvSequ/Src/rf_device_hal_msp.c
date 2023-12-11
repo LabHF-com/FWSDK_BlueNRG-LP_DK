@@ -19,7 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_hal.h"
-#include "ADC_DMA_main.h"
+#include "ADC_ConvSequ_main.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -44,8 +44,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY);
 }
 
 

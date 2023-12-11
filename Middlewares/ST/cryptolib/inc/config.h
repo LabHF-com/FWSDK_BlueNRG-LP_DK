@@ -276,19 +276,15 @@ int32_t STM32_GetCryptoLibrarySettings(STM32CryptoLibVer_TypeDef * LibVersion);
     */
 
 #define INCLUDE_ECB      ((uint16_t)0x0001) /*!< AES high level functions for ECB mode are included in the library */
-#if 0
 #define INCLUDE_CBC      ((uint16_t)0x0002) /*!< AES high level functions for CBC mode are included in the library */
-#define INCLUDE_CTR      ((uint16_t)0x0004) /*!< AES high level functions for CTR mode are included in the library */
-#define INCLUDE_GCM      ((uint16_t)0x0008) /*!< AES high level functions for GCM mode are included in the library */
-#define INCLUDE_KEY_WRAP ((uint16_t)0x0010) /*!< AES-KWRAP is included in the library                              */
-#endif
+//#define INCLUDE_CTR      ((uint16_t)0x0004) /*!< AES high level functions for CTR mode are included in the library */
+//#define INCLUDE_GCM      ((uint16_t)0x0008) /*!< AES high level functions for GCM mode are included in the library */
+//#define INCLUDE_KEY_WRAP ((uint16_t)0x0010) /*!< AES-KWRAP is included in the library                              */
 //#define INCLUDE_CCM      ((uint16_t)0x0020) /*!< AES-CCM is included in the library                                */
 #define INCLUDE_CMAC     ((uint16_t)0x0040) /*!< AES-CMAC is included in the library                               */
-#if 0
-#define INCLUDE_XTS      ((uint16_t)0x0080) /*!< AES-XTS  is included in the library                               */
-#define INCLUDE_OFB      ((uint16_t)0x0100) /*!< AES-OFB  is included in the library                               */
-#define INCLUDE_CFB      ((uint16_t)0x0200) /*!< AES-CFB  is included in the library                               */
-#endif
+//#define INCLUDE_XTS      ((uint16_t)0x0080) /*!< AES-XTS  is included in the library                               */
+//#define INCLUDE_OFB      ((uint16_t)0x0100) /*!< AES-OFB  is included in the library                               */
+//#define INCLUDE_CFB      ((uint16_t)0x0200) /*!< AES-CFB  is included in the library                               */
 
   /**
     * @}    End of SymKeyModesConf

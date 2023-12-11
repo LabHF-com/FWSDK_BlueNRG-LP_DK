@@ -110,7 +110,7 @@ void BSP_PUSH2_IRQHandler(void)
       /* Add the SW no bounce */
       debounce_last = debounce_count;
       /* Handle user button press in dedicated function */
-     BSP_LED_Toggle(BSP_LED_RED);
+      BSP_LED_Toggle(BSP_LED_RED);
     }
   }
 }

@@ -43,7 +43,7 @@
 
 /* Process all commands in cache till there is time to do it. */
 #define PROCESS_CACHE_AT_ONCE   1
-#define NVM_CACHE               1
+#define NVM_CACHE               0
 
 /** @defgroup NVM_Manager  NVM Manager
  * @{
@@ -407,6 +407,7 @@ static NVMDB_status_t NVMDB_get_info(NVMDB_info *info)
 
   info->valid_records = 0;
   info->invalid_records = 0;
+  info->free_space = 0;
   info->locked = FALSE;
 
   while(1)
@@ -895,9 +896,12 @@ static void ErasePage(uint32_t address, uint8_t num_pages)
 }
 
 // TODO: Handle size not multiple of 4.
+/* This function also erases the page if needed. */
 static void WriteBufferToFlash(uint32_t address, uint32_t *data, uint32_t size)
 {
-  if(memcmp((uint8_t *)address, data, size) == 0)
+  /* Check if we are writing the same data in entire pages.
+     If size is less than a page size, we need to erase the page to clean it. */
+  if((size % PAGE_SIZE) == 0 && memcmp((uint8_t *)address, data, size) == 0)
   {
     return;
   }
@@ -2073,14 +2077,14 @@ NVMDB_status_t NVMDB_Erase(NVMDB_IdType NVMDB_id)
       // we have space in cache for this operation before starting erasing.
       return SchedulePageEraseOperation(NVMDB_id, page_num_start, num_pages);
     }
-
-    NVMDB_get_info(&DBInfo[NVMDB_id]);
     
 #else
     
     NVMDB_FLASH_ERASE_PAGE(page_num_start, num_pages);
     
 #endif
+    
+    NVMDB_get_info(&DBInfo[NVMDB_id]);
 
     return NVMDB_STATUS_OK;
   }
@@ -2089,8 +2093,6 @@ NVMDB_status_t NVMDB_Erase(NVMDB_IdType NVMDB_id)
   {
 
     status = EraseSmallDB(NVMDB_id, smallDBContainer_p);
-    
-#if NVM_CACHE
 
     if(status == NVMDB_STATUS_OK)
     {
@@ -2099,15 +2101,18 @@ NVMDB_status_t NVMDB_Erase(NVMDB_IdType NVMDB_id)
       for(int i = 0; i < smallDBContainer_p->num_db; i++)
       {
         NVMDB_IdType id = smallDBContainer_p->dbs[i].id;
+#if NVM_CACHE
         RemoveCacheOp(id);
+#endif
         NVMDB_get_info(&DBInfo[id]);
       }
     }
     else if(status == NVMDB_STATUS_NOT_ENOUGH_TIME)
     {
+#if NVM_CACHE
       return ScheduleSmallDBEraseOperation(NVMDB_id, smallDBContainer_p);
-    }
 #endif
+    }
 
     return status;
   }

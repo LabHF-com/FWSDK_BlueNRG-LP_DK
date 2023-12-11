@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_PointCheck_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,6 +59,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,7 +96,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |    STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB012V1 |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -140,23 +141,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |             STEVAL-IDB012V1            |
--------------------------------------------------------
-|     DL1    |                Not Used                |
-|     DL2    |   On: success; Slowly blinking: error  |
-|     DL3    |                Not Used                |
-|     DL4    |                Not Used                |
-|     U5     |                Not Used                |
+|  LED name  |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+-------------------------------------------------------------------------------------------------
+|     DL1    |                Not Used                |                Not Used                |
+|     DL2    |   On: success; Slowly blinking: error  |   On: success; Slowly blinking: error  |
+|     DL3    |                Not Used                |                Not Used                |
+|     DL4    |                Not Used                |                Not Used                |
+|     U5     |                Not Used                |                Not Used                |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB012V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -208,9 +209,22 @@ __IO uint32_t endOfProcess = 0;
 uint8_t RBuffer[32] = {0};
 uint8_t SBuffer[32] = {0};
 
-static volatile int state = 0x0;
-static volatile int errorCode = 0;
-static uint32_t PKAStartPoint[16] = { 0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U, 0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};
+int state = 0x0;
+uint32_t errorCode[] = {0,0};
+static uint32_t PKAStartPoint[16] = { 0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U, 
+0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};
+
+static const uint32_t P256_number_bits_mod[2] =
+{
+  256,
+  0
+};
+
+static const uint32_t P256_coefficient_a_sign[2] =
+{
+  1,
+  0
+};
 
 static const uint32_t P256_gfp[8] =
 {
@@ -250,37 +264,32 @@ static const uint32_t P256_b[8] =
 };
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 void LED_On(void);
 void LED_Blinking(uint32_t Period);
-__IO uint32_t *PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], uint32_t n);
-uint8_t *PKA_Memcpy_u32_to_u8(uint8_t dst[], __IO const uint32_t src[], uint32_t n);
-void LL_PKA_WriteSingleInput( uint32_t index, uint32_t word );
-void LL_PKA_WriteOperand( uint32_t index, int size, const uint32_t* in );
-void LL_PKA_ReadResult( uint32_t index, int size, uint32_t* out );
-uint32_t LL_PKA_ReadSingleOutput( uint32_t index );
+void printInfo(uint32_t indexPKARAM, uint32_t dim);
 
 /* Private user code ---------------------------------------------------------*/
 
 /**
-* @brief  The application entry point.
+* @brief The application entry point.
 * @retval int
 */
 int main(void)
-{  
+{ 
   /* System initialization function */
   if (SystemInit(SYSCLK_16M, RADIO_SYSCLK_NONE) != SUCCESS) {
     /* Error during system clock configuration take appropriate action */
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
+  LL_Init1msTick(SystemCoreClock);
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -288,37 +297,37 @@ int main(void)
   
   LL_PKA_SetMode(PKA, LL_PKA_MODE_POINT_CHECK );
   
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  
   /* Set the muber of bits of p */
-  LL_PKA_WriteSingleInput( 1, 256 );
-
+  LL_PKA_WriteSingleInput( PKA_POINT_CHECK_IN_MOD_NB_BITS, P256_number_bits_mod[0] );
+  printInfo(PKA_POINT_CHECK_IN_MOD_NB_BITS, 1);
+  
   /* Set the coefficient a sign */
-  LL_PKA_WriteSingleInput( 2, 1 );
-
+  LL_PKA_WriteSingleInput( PKA_POINT_CHECK_IN_A_COEFF_SIGN, P256_coefficient_a_sign[0] );
+  printInfo(PKA_POINT_CHECK_IN_A_COEFF_SIGN, 1);
+  
   /* Set the coefficient |a| */
-  LL_PKA_WriteOperand( 3, 8, P256_a );
-
+  LL_PKA_WriteOperand( PKA_POINT_CHECK_IN_A_COEFF, 8, P256_a );
+  printInfo(PKA_POINT_CHECK_IN_A_COEFF, 9);
+  
   /* Set the coefficient |b| */
-  LL_PKA_WriteOperand( 255, 8, P256_b );
+  LL_PKA_WriteOperand( PKA_POINT_CHECK_IN_B_COEFF, 8, P256_b );
+  printInfo(PKA_POINT_CHECK_IN_B_COEFF, 9);
   
   /* Set the modulus value p */
-  LL_PKA_WriteOperand( 24, 8, P256_gfp );
-
-#if 1   /* PKAStartPoint is used for the test */
+  LL_PKA_WriteOperand( PKA_POINT_CHECK_IN_MOD_GF, 8, P256_gfp );
+  printInfo(PKA_POINT_CHECK_IN_MOD_GF, 9);
   
   /* Set the point coordinate x */
-  LL_PKA_WriteOperand( 87, 8, (uint32_t*)&PKAStartPoint[0] );
+  LL_PKA_WriteOperand( PKA_POINT_CHECK_IN_INITIAL_POINT_X, 8, (uint32_t*)&PKAStartPoint[0] );
   /* Set the point coordinate y */
-  LL_PKA_WriteOperand( 108, 8, (uint32_t*)&PKAStartPoint[8] );
+  LL_PKA_WriteOperand( PKA_POINT_CHECK_IN_INITIAL_POINT_Y, 8, (uint32_t*)&PKAStartPoint[8] );
+  printInfo(PKA_POINT_CHECK_IN_INITIAL_POINT_X, 9);
+  printInfo(PKA_POINT_CHECK_IN_INITIAL_POINT_Y, 9);
   
-#else /* Expected_Point_A used for the test */
+#endif 
   
-  /* Set the point coordinate x */
-  LL_PKA_WriteOperand( 87, 8, (uint32_t*)&Expected_Point_A[0] );
-  /* Set the point coordinate y */
-  LL_PKA_WriteOperand( 108, 8, (uint32_t*)&Expected_Point_A[8] );
-  
-#endif
-
   while(LL_PKA_IsActiveFlag_BUSY(PKA));
   
   /* Launch the computation in interrupt mode */
@@ -328,17 +337,25 @@ int main(void)
   while(endOfProcess != 1);
   
   /* Retreive the result and output buffer */
-  errorCode = LL_PKA_ReadSingleOutput(0);
-  if( errorCode == 0)
+  
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  errorCode[0] = LL_PKA_ReadSingleOutput(PKA_POINT_CHECK_OUT_ERROR);
+  printInfo(PKA_POINT_CHECK_OUT_ERROR, 1);
+  if( errorCode[0] == 0x0)
   {
     /* Error is equal to 0 if the point satisfies the curve equation. */
     printf("The point satisfies the curve equation.\n\r");
     LED_On();
     printf("** Test successfully. ** \n\r\n\r");
   }
-  /* Error is equal to 1 if the point is not on the curve.  */
+  else
+  {
+    printf("** Test fail **\n\r");
+  }
+#endif
+  /* Error is equal to 1 if the point is not on the curve. */
   /* The location storing Error is set equal to 2 at the beginning of the computation, 
-     so if Error is equal to 2 at the end of the operation then it means that a fault has altered the execution of the operation. */
+  so if Error is equal to 2 at the end of the operation then it means that a fault has altered the execution of the operation. */
   
   /* Infinite loop */
   while (1)
@@ -346,11 +363,15 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
+void printInfo(uint32_t indexPKARAM, uint32_t dim)
 {
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  uint32_t ramAddress = 0;
+  for(int i=indexPKARAM;i<(indexPKARAM+dim);i++)
+  {
+    ramAddress = PKA_RAM_BASE + ( i << 2);
+    printf("0x%08X PKA_RAM[%d] = 0x%08X \n\r", ramAddress, i, PKA_RAM->RAM[i]);
+  }
+  printf("\n\r");
 }
 
 /**
@@ -364,9 +385,9 @@ static void MX_PKA_Init(void)
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA);
   
   /* Configure NVIC for PKA interrupts */
-  /*   Set priority for PKA_IRQn */
-  /*   Enable PKA_IRQn */
-  NVIC_SetPriority(PKA_IRQn, IRQ_MED_PRIORITY);  
+  /* Set priority for PKA_IRQn */
+  /* Enable PKA_IRQn */
+  NVIC_SetPriority(PKA_IRQn, IRQ_MED_PRIORITY);
   NVIC_EnableIRQ(PKA_IRQn);
   
   LL_PKA_Enable(PKA);
@@ -376,20 +397,20 @@ static void MX_PKA_Init(void)
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+* @brief GPIO Initialization Function
+* @param None
+* @retval None
+*/
 static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
+  
   /* GPIO Ports Clock Enable */
   LED2_GPIO_CLK_ENABLE();
-
-  /*  Set several pins to low level on dedicated gpio port */
+  
+  /* Set several pins to low level on dedicated gpio port */
   LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
-
+  
   /* Configure GPIO for LED */
   GPIO_InitStruct.Pin = LED2_PIN;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
@@ -402,7 +423,7 @@ static void MX_GPIO_Init(void)
 void PKA_ERROR_callback(void)
 {
   state++;
-  //LED_Blinking(LED_BLINK_ERROR);
+  LED_Blinking(LED_BLINK_ERROR);
 }
 
 void PKA_PROCEND_callback(void)
@@ -411,65 +432,26 @@ void PKA_PROCEND_callback(void)
   endOfProcess = 1;
 }
 
-/**
-* @brief  Copy uint8_t array to uint32_t array to fit PKA number representation.
-* @param  dst Pointer to destination
-* @param  src Pointer to source
-* @param  n Number of u32 to be handled
-* @retval dst
-*/
-__IO uint32_t *PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], uint32_t n)
-{
-  const uint32_t *ptrSrc = (const uint32_t *) src;
-  
-  if (dst != 0)
-  {
-    for (uint32_t index = 0; index < n / 4; index++)
-    {
-      dst[index] = __REV(ptrSrc[n / 4 - index - 1]);
-    }
-  }
-  return dst;
-}
+
 
 /**
-* @brief  Copy uint32_t array to uint8_t array to fit PKA number representation.
-* @param  dst Pointer to destination
-* @param  src Pointer to source
-* @param  n Number of u8 to be handled (must be multiple of 4)
-* @retval dst
-*/
-uint8_t *PKA_Memcpy_u32_to_u8(uint8_t dst[], __IO const uint32_t src[], uint32_t n)
-{
-  uint32_t *ptrDst = (uint32_t *) dst;
-  if (dst != 0)
-  {
-    for (uint32_t index = 0; index < n; index++)
-    {
-      ptrDst[n - index - 1] = __REV(src[index]);
-    }
-  }
-  return dst;
-}
-
-/**
-* @brief  Turn-on LED2.
-* @param  None
+* @brief Turn-on LED2.
+* @param None
 * @retval None
 */
 void LED_On(void)
 {
   /* Turn LED2 on */
-  LL_GPIO_ResetOutputPin(LED2_GPIO_PORT, LED2_PIN); 
+  LL_GPIO_ResetOutputPin(LED2_GPIO_PORT, LED2_PIN);
 }
 
 /**
-* @brief  Set LED2 to Blinking mode for an infinite loop (toggle period based on value provided as input parameter).
-* @param  Period : Period of time (in ms) between each toggling of LED
-*   This parameter can be user defined values. Pre-defined values used in that example are :
-*     @arg LED_BLINK_FAST : Fast Blinking
-*     @arg LED_BLINK_SLOW : Slow Blinking
-*     @arg LED_BLINK_ERROR : Error specific Blinking
+* @brief Set LED2 to Blinking mode for an infinite loop (toggle period based on value provided as input parameter).
+* @param Period : Period of time (in ms) between each toggling of LED
+* This parameter can be user defined values. Pre-defined values used in that example are :
+* @arg LED_BLINK_FAST : Fast Blinking
+* @arg LED_BLINK_SLOW : Slow Blinking
+* @arg LED_BLINK_ERROR : Error specific Blinking
 * @retval None
 */
 void LED_Blinking(uint32_t Period)
@@ -477,13 +459,13 @@ void LED_Blinking(uint32_t Period)
   /* Toggle LED2 in an infinite loop */
   while (1)
   {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN); 
+    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
     LL_mDelay(Period);
   }
 }
 
 /**
-* @brief  This function is executed in case of error occurrence.
+* @brief This function is executed in case of error occurrence.
 * @retval None
 */
 void Error_Handler(void)
@@ -492,12 +474,12 @@ void Error_Handler(void)
   while(1);
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-* @brief  Reports the name of the source file and the source line number
-*         where the assert_param error has occurred.
-* @param  file: pointer to the source file name
-* @param  line: assert_param error line source number
+* @brief Reports the name of the source file and the source line number
+* where the assert_param error has occurred.
+* @param file: pointer to the source file name
+* @param line: assert_param error line source number
 * @retval None
 */
 void assert_failed(uint8_t *file, uint32_t line)

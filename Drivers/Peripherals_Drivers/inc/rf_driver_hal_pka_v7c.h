@@ -326,6 +326,12 @@ typedef struct
   * @brief PKA Interrupt definition
   * @{
   */
+#ifdef PKA_CR_FAULTERRORCODEIE
+#define PKA_IT_FAULTERRORCODE                     PKA_CR_FAULTERRORCODEIE
+#endif
+#ifdef PKA_CR_FAULTFSMIE
+#define PKA_IT_FAULTFSM                           PKA_CR_FAULTFSMIE
+#endif
 #define PKA_IT_PROCEND                            PKA_CR_PROCENDIE
 #define PKA_IT_ADDRERR                            PKA_CR_ADDRERRIE
 #define PKA_IT_RAMERR                             PKA_CR_RAMERRIE
@@ -337,6 +343,12 @@ typedef struct
 /** @defgroup PKA_Flag_definition PKA Flag definition
   * @{
   */
+#ifdef PKA_SR_FAULTERRORCODEF
+#define PKA_FLAG_FAULTERRORCODE                   PKA_SR_FAULTERRORCODEF
+#endif
+#ifdef PKA_FLAG_FAULTFSMF
+#define PKA_FLAG_FAULTFSM                         PKA_SR_FAULTFSMF
+#endif
 #define PKA_FLAG_PROCEND                          PKA_SR_PROCENDF
 #define PKA_FLAG_ADDRERR                          PKA_SR_ADDRERRF
 #define PKA_FLAG_RAMERR                           PKA_SR_RAMERRF
@@ -373,6 +385,8 @@ typedef struct
   * @param  __HANDLE__ specifies the PKA Handle
   * @param  __INTERRUPT__ specifies the interrupt source to enable.
   *        This parameter can be one of the following values:
+  *            @arg @ref PKA_IT_FAULTERRORCODE Fault Error code enable
+  *            @arg @ref PKA_IT_FAULTFSM Fault FSM enable 
   *            @arg @ref PKA_IT_PROCEND End Of Operation interrupt enable
   *            @arg @ref PKA_IT_ADDRERR Address error interrupt enable
   *            @arg @ref PKA_IT_RAMERR RAM error interrupt enable
@@ -384,9 +398,11 @@ typedef struct
   * @param  __HANDLE__ specifies the PKA Handle
   * @param  __INTERRUPT__ specifies the interrupt source to disable.
   *        This parameter can be one of the following values:
-  *            @arg @ref PKA_IT_PROCEND End Of Operation interrupt enable
-  *            @arg @ref PKA_IT_ADDRERR Address error interrupt enable
-  *            @arg @ref PKA_IT_RAMERR RAM error interrupt enable
+  *            @arg @ref PKA_IT_FAULTERRORCODE Fault Error code disable
+  *            @arg @ref PKA_IT_FAULTFSM Fault FSM disable 
+  *            @arg @ref PKA_IT_PROCEND End Of Operation interrupt disable
+  *            @arg @ref PKA_IT_ADDRERR Address error interrupt disable
+  *            @arg @ref PKA_IT_RAMERR RAM error interrupt disable
   * @retval None
   */
 #define __HAL_PKA_DISABLE_IT(__HANDLE__, __INTERRUPT__)         ((__HANDLE__)->Instance->CR &= (~(__INTERRUPT__)))
@@ -395,9 +411,11 @@ typedef struct
   * @param  __HANDLE__ specifies the PKA Handle
   * @param  __INTERRUPT__ specifies the PKA interrupt source to check.
   *        This parameter can be one of the following values:
-  *            @arg @ref PKA_IT_PROCEND End Of Operation interrupt enable
-  *            @arg @ref PKA_IT_ADDRERR Address error interrupt enable
-  *            @arg @ref PKA_IT_RAMERR RAM error interrupt enable
+  *            @arg @ref PKA_IT_FAULTERRORCODE Fault Error code
+  *            @arg @ref PKA_IT_FAULTFSM Fault FSM 
+  *            @arg @ref PKA_IT_PROCEND End Of Operation interrupt
+  *            @arg @ref PKA_IT_ADDRERR Address error interrupt 
+  *            @arg @ref PKA_IT_RAMERR RAM error interrupt 
   * @retval The new state of __INTERRUPT__ (SET or RESET)
   */
 #define __HAL_PKA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)      ((((__HANDLE__)->Instance->CR & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
@@ -406,6 +424,8 @@ typedef struct
   * @param  __HANDLE__ specifies the PKA Handle
   * @param  __FLAG__ specifies the flag to check.
   *        This parameter can be one of the following values:
+  *            @arg @ref PKA_FLAG_FAULTERRORCODE Fault Error code
+  *            @arg @ref PKA_FLAG_FAULTFSM Fault FSM 
   *            @arg @ref PKA_FLAG_PROCEND End Of Operation
   *            @arg @ref PKA_FLAG_ADDRERR Address error
   *            @arg @ref PKA_FLAG_RAMERR RAM error
@@ -417,6 +437,8 @@ typedef struct
   * @param  __HANDLE__ specifies the PKA Handle
   * @param  __FLAG__ specifies the flag to clear.
   *          This parameter can be any combination of the following values:
+  *            @arg @ref PKA_FLAG_FAULTERRORCODE Fault Error code
+  *            @arg @ref PKA_FLAG_FAULTFSM Fault FSM   
   *            @arg @ref PKA_FLAG_PROCEND End Of Operation
   *            @arg @ref PKA_FLAG_ADDRERR Address error
   *            @arg @ref PKA_FLAG_RAMERR RAM error

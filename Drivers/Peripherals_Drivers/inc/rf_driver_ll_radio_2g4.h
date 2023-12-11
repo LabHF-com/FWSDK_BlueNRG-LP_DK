@@ -27,12 +27,8 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
-#endif
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "system_BlueNRG_LP.h"
-#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -68,7 +64,7 @@
 
     
 /* Hot table size */
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define HOT_TABLE_SIZE 37
 #else
 #define HOT_TABLE_SIZE 31
@@ -152,6 +148,9 @@
 #define GLOBAL_WORD5_INTNOACTIVELERROR_Pos                                 (23UL)
 #define GLOBAL_WORD5_INTNOACTIVELERROR_Msk                                 (0x800000UL)
 #define GLOBAL_WORD5_INTNOACTIVELERROR                                     GLOBAL_WORD5_INTNOACTIVELERROR_Msk
+#define GLOBAL_WORD5_INTTXRXSKIP_Pos                                       (29UL)
+#define GLOBAL_WORD5_INTTXRXSKIP_Msk                                       (0x20000000UL)
+#define GLOBAL_WORD5_INTTXRXSKIP                                           GLOBAL_WORD5_INTTXRXSKIP_Msk
 #define GLOBAL_WORD5_INTACTIVE2ERR_Pos                                     (30UL)
 #define GLOBAL_WORD5_INTACTIVE2ERR_Msk                                     (0x40000000UL)
 #define GLOBAL_WORD5_INTACTIVE2ERR                                         GLOBAL_WORD5_INTACTIVE2ERR_Msk
@@ -186,7 +185,7 @@
 #define GLOBAL_BYTE23_INTACTIVE2ERR_Msk                                    (0x40)
 #define GLOBAL_BYTE23_INTCONFIGERROR_Msk                                   (0x80)
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define GLOBAL_BYTE24_DEFAULTANTENNAID_Msk                                 (0x7F)
 #endif
 
@@ -222,7 +221,7 @@
 #define STATEMACH_WORD0_TXPHY_Pos                                          (24UL)
 #define STATEMACH_WORD0_TXPHY_Msk                                          (0x7000000UL)
 #define STATEMACH_WORD0_TXPHY                                              STATEMACH_WORD0_TXPHY_Msk
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define STATEMACH_WORD0_CTEDISABLE_Pos                                     (27UL)
 #define STATEMACH_WORD0_CTEDISABLE_Msk                                     (0x8000000UL)
 #define STATEMACH_WORD0_CTEDISABLE                                         STATEMACH_WORD0_CTEDISABLE_Msk
@@ -281,7 +280,7 @@
 #define STATEMACH_WORDE_ENCRYPTIV_0_31_Pos                                 (0UL)
 #define STATEMACH_WORDE_ENCRYPTIV_0_31_Msk                                 (0xffffffffUL)
 #define STATEMACH_WORDE_ENCRYPTIV_0_31                                     STATEMACH_WORDE_ENCRYPTIV_0_31_Msk
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define STATEMACH_WORD14_AOD_NAOA_Pos                                      (0UL)
 #define STATEMACH_WORD14_AOD_NAOA_Msk                                      (0x1UL)
 #define STATEMACH_WORD14_AOD_NAOA                                          STATEMACH_WORD14_AOD_NAOA_Msk
@@ -323,7 +322,7 @@
 
 #define STATEMACH_BYTE3_TXPHY_Msk                                          (0x07)
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define STATEMACH_BYTE3_CTEDISABLE_Msk                                     (0x08)
 #endif
 
@@ -340,7 +339,7 @@
 #define STATEMACH_BYTE35_INTRXOVERFLOWERROR_Msk                            (0x40)
 #define STATEMACH_BYTE35_RXDEBUGCRC_Msk                                    (0x80)
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define STATEMACH_BYTE80_AOD_NAOA_Msk                                      (0x01)
 #define STATEMACH_BYTE80_CTESLOTWIDTH_Msk                                  (0x02)
 #define STATEMACH_BYTE80_AOD_CTETIME_Msk                                   (0x7C)
@@ -368,7 +367,7 @@
 #define TXRXPACK_WORD1_SUPPENA_Msk                                        (0x8UL)
 #define TXRXPACK_WORD1_SUPPENA                                            TXRXPACK_WORD1_SUPPENA_Msk
 #endif
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Pos                           (3UL)
 #define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Msk                           (0x8UL)
 #define TXRXPACK_WORD1_CTEANDSAMPLINGENABLE                               TXRXPACK_WORD1_CTEANDSAMPLINGENABLE_Msk
@@ -434,7 +433,7 @@
 #define TXRXPACK_BYTE4_CALREQ_Msk                                          (0x01)
 #define TXRXPACK_BYTE4_CHANALGO2SEL_Msk                                    (0x02)
 #define TXRXPACK_BYTE4_KEEPSEMAREQ_Msk                                     (0x04)
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define TXRXPACK_BYTE4_CTEANDSAMPLINGENABLE_Msk                            (0x08)
 #else
 #define TXRXPACK_BYTE4_SUPPENA_Msk                                         (0x08)
@@ -451,7 +450,7 @@
 #define TXRXPACK_BYTE5_DISABLEWHITENING_Msk                                (0x10)
 #define TXRXPACK_BYTE5_TESTPACKET_Msk                                      (0x20)
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define TXRXPACK_BYTE5_RTTPACKET_Msk                                       (0x40)
 #define TXRXPACK_BYTE5_SQTEPACKET_Msk                                      (0x80)
 #endif
@@ -585,7 +584,7 @@ typedef struct {
 /**
   * @brief Radio Link State Machine Word oriented description
   */
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 typedef struct {
     volatile uint32_t  WORD0;
     volatile uint32_t  WORD1;
@@ -642,7 +641,7 @@ typedef struct {
 /**
   * @brief Radio TxRxPack Word oriented description
   */
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 typedef struct {
     volatile uint32_t WORD0;
     volatile uint32_t WORD1;
@@ -661,7 +660,7 @@ typedef struct {
 #endif
    
    
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
   
 /**
   * @brief Radio Global State Machine description
@@ -1363,6 +1362,39 @@ __STATIC_INLINE uint32_t LL_RADIO_NoActiveLErrorInterrupt_IsEnabled()
 
 /**
   * @brief  RADIO Enable
+  * @rmtoll WORD5          INTTXRXSKIP            LL_RADIO_TxRxSkipInterrupt_Enable
+  * @param  
+  * @retval None
+  */
+__STATIC_INLINE void LL_RADIO_TxRxSkipInterrupt_Enable()
+{
+  SET_BIT(blueglobWord->WORD5, GLOBAL_WORD5_INTTXRXSKIP);
+}
+
+/**
+  * @brief  RADIO Disable
+  * @rmtoll WORD5          INTTXRXSKIP            LL_RADIO_TxRxSkipInterrupt_Disable
+  * @param  
+  * @retval None
+  */
+__STATIC_INLINE void LL_RADIO_TxRxSkipInterrupt_Disable()
+{
+  CLEAR_BIT(blueglobWord->WORD5, GLOBAL_WORD5_INTTXRXSKIP);
+}
+
+/**
+  * @brief  Indicate if INTTXRXSKIP is enabled
+  * @rmtoll WORD5          INTTXRXSKIP            LL_RADIO_TxRxSkipInterrupt_IsEnabled  
+  * @param  
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_RADIO_TxRxSkipInterrupt_IsEnabled()
+{
+  return ((READ_BIT(blueglobWord->WORD5, GLOBAL_WORD5_INTTXRXSKIP) == (GLOBAL_WORD5_INTTXRXSKIP)) ? 1U : 0U);
+}
+
+/**
+  * @brief  RADIO Enable
   * @rmtoll WORD5          INTACTIVE2ERR            LL_RADIO_Active2ErrorInterrupt_Enable
   * @param  
   * @retval None
@@ -1990,6 +2022,40 @@ __STATIC_INLINE uint32_t LL_RADIO_GetMaximumReceiveLength(uint8_t stateMachineNo
 {
   return (uint32_t)(READ_BIT((bluedataWord+stateMachineNo)->WORDA, STATEMACH_WORDA_MAXRECEIVEDLENGTH) >> STATEMACH_WORDA_MAXRECEIVEDLENGTH_Pos);
 }
+
+#ifdef STATEMACH_WORDB_TXHP
+/**
+  * @brief  Tx High Power enable
+  * @rmtoll WORDB          TXHP            LL_RADIO_TxHp_Enable 
+  * @retval
+  */
+__STATIC_INLINE void LL_RADIO_TxHp_Enable(uint8_t stateMachineNo)
+{
+  SET_BIT((bluedataWord+stateMachineNo)->WORDB, STATEMACH_WORDB_TXHP);
+}
+
+/**
+  * @brief  Tx High Power disable
+  * @rmtoll WORDB          TXHP            LL_RADIO_TxHp_Disable 
+  * @retval
+  */
+__STATIC_INLINE void LL_RADIO_TxHp_Disable(uint8_t stateMachineNo)
+{
+  CLEAR_BIT((bluedataWord+stateMachineNo)->WORDB, STATEMACH_WORDB_TXHP);
+}
+
+/**
+  * @brief  Indicate if Tx High Power is enabled
+  * @rmtoll WORDB          TXHP            LL_RADIO_TxHp_IsEnabled
+  * @param
+  * @retval State of bit (1 or 0).
+  */
+__STATIC_INLINE uint32_t LL_RADIO_TxHp_IsEnabled(uint8_t stateMachineNo)
+{
+  return ((READ_BIT((bluedataWord+stateMachineNo)->WORDB, STATEMACH_WORDB_TXHP) == (STATEMACH_WORDB_TXHP)) ? 1U : 0U);
+}
+
+#endif
 
 /**
   * @brief  

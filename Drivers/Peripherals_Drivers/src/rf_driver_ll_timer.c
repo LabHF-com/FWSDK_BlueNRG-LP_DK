@@ -89,6 +89,7 @@ typedef struct timer_context_s {
   uint8_t tim12_delay_mt;
   uint8_t last_setup_time; /**setup time of last timer programmed*/
   uint8_t calibration_data_available; /**Flag to signal if a new calibration data is available or not*/
+  uint32_t last_anchor_mt;
 } TIMER_ContextType; 
 
 /**
@@ -203,7 +204,10 @@ static uint32_t us_to_systime(uint32_t time)
  */
 static uint32_t us_to_machinetime(uint32_t time)
 {
-  return blue_unit_conversion(us_to_systime(time),TIMER_Context.freq1, MULT64_THR_FREQ);
+  uint64_t tmp = (uint64_t)TIMER_Context.freq*(uint64_t)time*(uint64_t)3U;
+  uint32_t time_mt = ((tmp + (1<<26))>>27) & TIMER_MAX_VALUE;
+  
+  return time_mt;
 }
 
 static uint64_t get_system_time_and_machine(TIMER_ContextType *context, uint32_t *current_machine_time)
@@ -302,6 +306,8 @@ void TIMER_Init(TIMER_InitType* TIMER_InitStruct)
 {
   TIMER_Context.hs_startup_time = TIMER_InitStruct->XTAL_StartupTime;
   uint8_t tx_delay_start = (blueglob->TXDELAYSTART*125/1000)+1;
+  
+  while(WAKEUP->ABSOLUTE_TIME < 0x10);
   
   if (TIMER_InitStruct->TIMER_PeriodicCalibration || TIMER_InitStruct->TIMER_InitialCalibration) {
     /* Make sure any pending calibration is over */
@@ -487,17 +493,18 @@ uint64_t TIMER_GetFutureSysTime(uint32_t time)
 }
 
 /**
- * @brief   Return the system time referred to the absolute machine time passed as parameter.
+ * @brief   Return the system time referred to the absolute machine time passed as parameter and the current system time.
  * @param   time: Absolute machine time in the past
+ * @param [out] Current System time
  * @warning User should guarantee that call to this function are performed in a non-interruptible context.
  * @return  STU value 
  */
-uint64_t TIMER_GetPastSysTime(uint32_t time)
+uint64_t TIMER_GetPastSysTime(uint32_t time, uint64_t *current_system_time)
 {
   uint32_t delta_systime, current_machine_time;
-  uint64_t current_system_time = get_system_time_and_machine(&TIMER_Context, &current_machine_time);
+  *current_system_time = get_system_time_and_machine(&TIMER_Context, &current_machine_time);
   delta_systime = blue_unit_conversion(TIME_DIFF(current_machine_time, time), TIMER_Context.period1, MULT64_THR_PERIOD);
-  return current_system_time-delta_systime;
+  return (*current_system_time-delta_systime);
 }
 
 /**
@@ -682,7 +689,7 @@ uint32_t TIMER_SetRadioHostWakeupTime(uint32_t delay, BOOL* share)
  */
 uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req)
 {
-  uint32_t current_time, delay, radio_init_delay, device_delay, relTimeout;
+  uint32_t current_time, delay, radio_init_delay, device_delay, rel_timeout, rel_timeout_mt;
   /*choose the 2nd init duration. Check the event_type and cal. request*/
   if(event_type == TX)
   {
@@ -712,14 +719,15 @@ uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req
   } 
   
   /* At this point, it is care of the upper layers to guarantee that the timeout represents an absolute time in the future */
-  relTimeout = timeout - (uint32_t)get_system_time_and_machine(&TIMER_Context,&current_time);
+  rel_timeout = timeout - (uint32_t)get_system_time_and_machine(&TIMER_Context,&current_time);
+
+  rel_timeout_mt =  blue_unit_conversion(rel_timeout, TIMER_Context.freq1, MULT64_THR_FREQ);
+  
   /*Check if the timeout is beyond the wakeup time offset. Then program either the WakeUp timer or the Timer1*/
-  if (relTimeout > (device_delay + TIMER_Context.hs_startup_time + MARGIN_EXT))
+  if (rel_timeout > (device_delay + TIMER_Context.hs_startup_time + MARGIN_EXT))
   {
     /*The timeout is after the wakeup_time_offset, So it is ok to program the wakeup timer*/
-    delay = blue_unit_conversion(relTimeout, TIMER_Context.freq1, MULT64_THR_FREQ) \
-                                                             - blueglob->WAKEUPINITDELAY \
-                                                             - radio_init_delay;
+    delay = rel_timeout_mt - blueglob->WAKEUPINITDELAY - radio_init_delay;
     WAKEUP->BLUE_WAKEUP_TIME = ((current_time + delay) & TIMER_MAX_VALUE);
     TIMER_BLUE_SET_REQ_MODE(0);
     TIMER_DISABLE_TIMER12;
@@ -728,13 +736,13 @@ uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req
   }
   else
   {
-    delay = blue_unit_conversion(relTimeout , TIMER_Context.freq1, MULT64_THR_FREQ) \
-                                                            - TIMER_Context.tim12_delay_mt \
-                                                            - radio_init_delay;
+    delay = rel_timeout_mt - TIMER_Context.tim12_delay_mt - radio_init_delay;
     TIMER_SET_TIMER1((current_time + delay) & TIMER_MAX_VALUE);
     TIMER_DISABLE_WAKEUP_TIMER;
     radio_init_delay += TIMER_Context.tim12_delay_mt;
   }
+  
+  TIMER_Context.last_anchor_mt = (current_time + rel_timeout_mt) & TIMER_MAX_VALUE;
   
 #if HOST_WAKEUP_FIX_ENABLE
   blueglob->BYTE4 |= 1<<7;
@@ -749,6 +757,63 @@ uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req
     return 1;
   }
   TIMER_Context.last_setup_time = blue_unit_conversion(radio_init_delay, TIMER_Context.period1, MULT64_THR_PERIOD);
+  return 0;
+}
+
+uint8_t TIMER_SetRadioTimerRelativeUsValue(uint32_t rel_timeout_us, BOOL event_type, BOOL cal_req)
+{
+  uint32_t event_time, radio_init_delay, abs_timeout_mt, current_machine_time;
+  
+  /*choose the 2nd init duration. Check the event_type and cal. request*/
+  if(event_type == TX)
+  {
+    if(cal_req)
+    {
+      radio_init_delay = TIMER_Context.tx_cal_delay;
+    }
+    else
+    {
+      radio_init_delay = TIMER_Context.tx_no_cal_delay; 
+    }
+  }
+  else
+  {
+    if(cal_req)
+    {
+      radio_init_delay = TIMER_Context.rx_cal_delay;
+    }
+    else
+    {
+      radio_init_delay = TIMER_Context.rx_no_cal_delay; 
+    }
+  } 
+  
+  abs_timeout_mt =  TIMER_Context.last_anchor_mt + us_to_machinetime(rel_timeout_us);
+  
+  event_time = (abs_timeout_mt - TIMER_Context.tim12_delay_mt - radio_init_delay) & TIMER_MAX_VALUE;
+  
+  current_machine_time = WAKEUP->ABSOLUTE_TIME;
+  
+  if((event_time - current_machine_time) > 0x80000000)
+  {
+      /* Requested time is in the past, return error */
+      return 1;
+  }
+  
+  TIMER_SET_TIMER1(event_time);
+  TIMER_DISABLE_WAKEUP_TIMER;
+  
+#if HOST_WAKEUP_FIX_ENABLE
+  blueglob->BYTE4 |= 1<<7;
+  blueglob->BYTE22 = 0xF0;
+  blueglob->BYTE23 = 0xFF;
+#endif
+
+  TIMER_Context.last_anchor_mt = abs_timeout_mt & TIMER_MAX_VALUE;
+
+  radio_init_delay += TIMER_Context.tim12_delay_mt;
+  TIMER_Context.last_setup_time = blue_unit_conversion(radio_init_delay, TIMER_Context.period1, MULT64_THR_PERIOD);
+
   return 0;
 }
 
@@ -788,11 +853,12 @@ void TIMER_Disable_CPU_WKUP(void)
 
 /**
  * @brief  Return timer capture register value in STU.
+ * @param[out] Current System Time 
  * @return STU value 
  */
-uint64_t TIMER_GetAnchorPoint(void)
+uint64_t TIMER_GetAnchorPoint(uint64_t *current_system_time)
 {
-  return TIMER_GetPastSysTime(BLUE->TIMERCAPTUREREG);
+  return TIMER_GetPastSysTime(BLUE->TIMERCAPTUREREG, current_system_time);
 }
 
 /**

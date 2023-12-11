@@ -46,10 +46,15 @@ typedef uint8_t tBleStatus;
 #define BLE_ERROR_KEY_MISSING                       ((tBleStatus)(0x06))
 #define BLE_ERROR_MEMORY_CAPACITY_EXCEEDED          ((tBleStatus)(0x07))
 #define BLE_ERROR_CONNECTION_TIMEOUT                ((tBleStatus)(0x08))
+#define BLE_ERROR_CONN_LIMIT                        ((tBleStatus)(0x09))
 
 #define BLE_ERROR_CONNECTION_ALREADY_EXISTS         ((tBleStatus)(0x0B))
 #define BLE_ERROR_COMMAND_DISALLOWED                ((tBleStatus)(0x0C))
 
+#define BLE_ERROR_CONN_REJECT_DUE_TO_LIMITED_RESOURCES ((tBleStatus)(0x0D))    
+
+#define BLE_CONNECTION_ACCEPT_TIMEOUT_EXCEEDED      ((tBleStatus)(0x10))
+     
 #define BLE_ERROR_UNSUPPORTED_FEATURE               ((tBleStatus)(0x11))
 
 #define BLE_ERROR_INVALID_HCI_CMD_PARAMS            ((tBleStatus)(0x12))
@@ -72,15 +77,21 @@ typedef uint8_t tBleStatus;
 
 #define BLE_ERROR_LMP_PDU_NOT_ALLOWED               ((tBleStatus)(0x24))
 
+#define BLE_ERROR_ENC_MODE_NOT_ACCEPTABLE           ((tBleStatus)(0x25))       
+
 #define BLE_ERROR_INSTANT_PASSED                    ((tBleStatus)(0x28))
 
-#define BLE_ERROR_DIFFERENT_TRANSACTION_COLLISION   ((tBleStatus)(0x2A))     
+#define BLE_ERROR_DIFFERENT_TRANSACTION_COLLISION   ((tBleStatus)(0x2A))
+
+#define BLE_ERROR_CHANNEL_ASSESSMENT_NOT_SUPPORTED  ((tBleStatus)(0x2E)) 
 
 #define BLE_ERROR_PARAMETER_OUT_OF_RANGE            ((tBleStatus)(0x30))
 
 #define BLE_ERROR_HOST_BUSY_PAIRING                 ((tBleStatus)(0x38))
 
 #define BLE_ERROR_CONTROLLER_BUSY                   ((tBleStatus)(0x3A))
+
+#define BLE_ERROR_UNACCEPTABLE_CONNECTION_PARAMS    ((tBleStatus)(0x3B))
 
 #define BLE_ERROR_DIRECTED_ADVERTISING_TIMEOUT      ((tBleStatus)(0x3C))
 
@@ -114,7 +125,7 @@ typedef uint8_t tBleStatus;
  * @brief The Connection Identifier does not exist.
  * Temporary remapped to corresponding Controller Error.
  */
-#define BLE_STATUS_UNKNOWN_CONNECTION_ID    ((tBleStatus)(0x80))
+#define BLE_STATUS_UNKNOWN_CONNECTION_ID    ((tBleStatus)(BLE_ERROR_UNKNOWN_CONNECTION_ID))
 
 /**
  * @brief The Host failed while performing the requested operation.
@@ -124,7 +135,8 @@ typedef uint8_t tBleStatus;
 /**
  * @brief Invalid parameters passed at Host layer.
  */
-#define BLE_STATUS_INVALID_PARAMS           ((tBleStatus)(0x82))
+#define BLE_STATUS_INVALID_PARAMS           ((tBleStatus)(BLE_ERROR_INVALID_HCI_CMD_PARAMS))
+
 
 /**
  * @brief The Host is already processing another request received in advance.
@@ -142,7 +154,8 @@ typedef uint8_t tBleStatus;
 /**
  * @brief The requested operation cannot be performed by the Host in the current status.
  */
-#define BLE_STATUS_NOT_ALLOWED              ((tBleStatus)(0x85))
+#define BLE_STATUS_NOT_ALLOWED              ((tBleStatus)(BLE_ERROR_COMMAND_DISALLOWED))
+
 
 /**
  * @brief The requested operation violates the logic of the called layer/function or
@@ -167,7 +180,7 @@ typedef uint8_t tBleStatus;
 /** 
  * @brief A NULL poiter was passed as function parameter
  */
-#define BLE_STATUS_NULL_PARAM               ((tBleStatus)(0x89))
+#define BLE_STATUS_NULL_PARAM               ((tBleStatus)(BLE_ERROR_INVALID_HCI_CMD_PARAMS))
 
 /**
 *@}
@@ -234,6 +247,12 @@ typedef uint8_t tBleStatus;
  * @brief The encryption key size used for encrypting the link is insufficient\n
  */
 #define BLE_INSUFFICIENT_ENC_KEYSIZE        ((tBleStatus)(0xB6))
+
+/**
+ * @brief The security database is temporarily unaccessible because the
+ *        underlying physical NVM module is busy with other operations.
+ */
+#define BLE_STATUS_SEC_DB_BUSY              ((tBleStatus)(0xB7))
 
 /**
 *@}
@@ -309,6 +328,8 @@ typedef uint8_t tBleStatus;
 /**
 *@}
 */
+
+#define BLE_STATUS_TIMEOUT                 ((tBleStatus)(0xFF))
      
 
 #endif

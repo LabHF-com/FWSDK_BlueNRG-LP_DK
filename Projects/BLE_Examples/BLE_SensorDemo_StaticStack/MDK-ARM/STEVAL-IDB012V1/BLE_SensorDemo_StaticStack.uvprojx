@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -328,13 +328,13 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF CONFIG_NUM_MAX_LINKS=1</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\..\BLE_SensorDemo\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
@@ -564,22 +564,22 @@
           </Files>
         </Group>
       <Group>
-          <GroupName>Middlewares/BLE_Stack</GroupName>
+          <GroupName>Middlewares/BLE_StaticStack</GroupName>
         <Files>
             <File>
               <FileName>bluenrg_lp_stack_init_if.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/bluenrg_lp_stack_init_if.c</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/bluenrg_lp_stack_init_if.c</FilePath>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_basic.a</FileName>
+              <FileName>liblps_stack_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_basic.a</FilePath>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_rstmngr_basic.a</FileName>
+              <FileName>liblps_stack_rstmngr_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_rstmngr_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_rstmngr_basic.a</FilePath>
             <FileOption>
                 <CommonProperty>
                   <IncludeInBuild>0</IncludeInBuild>
@@ -610,16 +610,6 @@
               <FileName>gp_timer.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Middlewares/ST/hal/Src/gp_timer.c</FilePath>
-            </File>
-          <File>
-              <FileName>hal_miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/hal_miscutil.c</FilePath>
-            </File>
-          <File>
-              <FileName>miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/miscutil.c</FilePath>
             </File>
           <File>
               <FileName>osal.c</FileName>
@@ -660,7 +650,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -974,13 +964,13 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF CONFIG_SW_OTA_DATA_LENGTH_EXT CONFIG_OTA_LOWER RESET_MANAGER_SIZE=0x18000 CONFIG_NUM_MAX_LINKS=1</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\..\BLE_SensorDemo\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
@@ -1210,17 +1200,17 @@
           </Files>
         </Group>
       <Group>
-          <GroupName>Middlewares/BLE_Stack</GroupName>
+          <GroupName>Middlewares/BLE_StaticStack</GroupName>
         <Files>
             <File>
               <FileName>bluenrg_lp_stack_init_if.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/bluenrg_lp_stack_init_if.c</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/bluenrg_lp_stack_init_if.c</FilePath>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_basic.a</FileName>
+              <FileName>liblps_stack_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_basic.a</FilePath>
             <FileOption>
                 <CommonProperty>
                   <IncludeInBuild>0</IncludeInBuild>
@@ -1228,9 +1218,9 @@
               </FileOption>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_rstmngr_basic.a</FileName>
+              <FileName>liblps_stack_rstmngr_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_rstmngr_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_rstmngr_basic.a</FilePath>
             </File>
           </Files>
         </Group>
@@ -1256,16 +1246,6 @@
               <FileName>gp_timer.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Middlewares/ST/hal/Src/gp_timer.c</FilePath>
-            </File>
-          <File>
-              <FileName>hal_miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/hal_miscutil.c</FilePath>
-            </File>
-          <File>
-              <FileName>miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/miscutil.c</FilePath>
             </File>
           <File>
               <FileName>osal.c</FileName>
@@ -1301,7 +1281,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -1615,13 +1595,13 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
             <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF CONFIG_SW_OTA_DATA_LENGTH_EXT CONFIG_OTA_HIGHER RESET_MANAGER_SIZE=0x18000 CONFIG_NUM_MAX_LINKS=1</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\..\BLE_SensorDemo\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
@@ -1851,17 +1831,17 @@
           </Files>
         </Group>
       <Group>
-          <GroupName>Middlewares/BLE_Stack</GroupName>
+          <GroupName>Middlewares/BLE_StaticStack</GroupName>
         <Files>
             <File>
               <FileName>bluenrg_lp_stack_init_if.c</FileName>
             <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/bluenrg_lp_stack_init_if.c</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/bluenrg_lp_stack_init_if.c</FilePath>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_basic.a</FileName>
+              <FileName>liblps_stack_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_basic.a</FilePath>
             <FileOption>
                 <CommonProperty>
                   <IncludeInBuild>0</IncludeInBuild>
@@ -1869,9 +1849,9 @@
               </FileOption>
             </File>
           <File>
-              <FileName>libbluenrg_lps_static_stack_rstmngr_basic.a</FileName>
+              <FileName>liblps_stack_rstmngr_basic.a</FileName>
             <FileType>4</FileType>
-            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack/libbluenrg_lps_static_stack_rstmngr_basic.a</FilePath>
+            <FilePath>../../../../../Middlewares/ST/Bluetooth_LE/Library/static/liblps_stack_rstmngr_basic.a</FilePath>
             </File>
           </Files>
         </Group>
@@ -1897,16 +1877,6 @@
               <FileName>gp_timer.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Middlewares/ST/hal/Src/gp_timer.c</FilePath>
-            </File>
-          <File>
-              <FileName>hal_miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/hal_miscutil.c</FilePath>
-            </File>
-          <File>
-              <FileName>miscutil.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Middlewares/ST/hal/Src/miscutil.c</FilePath>
             </File>
           <File>
               <FileName>osal.c</FileName>

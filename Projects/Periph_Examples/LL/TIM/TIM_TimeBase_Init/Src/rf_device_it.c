@@ -134,7 +134,6 @@ void USER_BUTTON_IRQHandler(void)
 }
 
 
-
 /**
   * @brief This function handles TIMx update interrupt and TIMx6 global interrupt.
   */

@@ -99,7 +99,7 @@ extern "C" {
 
 #endif  /* defined(STEVAL_IDB011V1) */
 
-#if defined(STEVAL_IDB012V1)  
+#if defined(STEVAL_IDB012V1)
     /** GPIO Configuration
     PB3/AF4    ------> SPI3_SCK
     PA8/AF3    ------> SPI3_MISO
@@ -121,7 +121,7 @@ extern "C" {
 #define __HAL_RCC_SPI_SLAVE_CLK_DISABLE        __HAL_RCC_SPI3_CLK_DISABLE
 #define SPI_SLAVE_IRQn                         SPI3_IRQn  
 #define SPI_SLAVE_IRQHandler                   SPI3_IRQHandler 
-#endif  /* defined(STEVAL_IDB012V1) */
+#endif  /* STEVAL_IDB012V1   */
   
 
 

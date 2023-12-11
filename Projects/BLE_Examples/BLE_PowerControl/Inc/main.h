@@ -36,6 +36,10 @@
 #define PATHLOSS_MID_LED_INTERVAL_MS   250
 #define PATHLOSS_HIGH_LED_INTERVAL_MS  500
 
+#if !defined(ENABLE_LOW_POWER_MODE) && defined(CONFIG_DEVICE_BLUENRG_LPS)
+#define ENABLE_LOW_POWER_MODE 1
+#endif
+
 uint8_t ProfileInit(void);
 void APP_Tick(void);
 

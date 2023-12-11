@@ -37,11 +37,6 @@
     <locationURI>virtual:/virtual</locationURI>
     </link>
   <link>
-      <name>Doc</name>
-    <type>2</type>
-    <locationURI>virtual:/virtual</locationURI>
-    </link>
-  <link>
       <name>Drivers</name>
     <type>2</type>
     <locationURI>virtual:/virtual</locationURI>
@@ -72,11 +67,6 @@
     <locationURI>PARENT-2-PROJECT_LOC/Src/BSP_Com_main.c</locationURI>
     </link>
   <link>
-      <name>Doc/readme.txt</name>
-    <type>1</type>
-    <locationURI>PARENT-2-PROJECT_LOC/readme.txt</locationURI>
-    </link>
-  <link>
       <name>Drivers/BSP/bluenrg_lp_evb_io.c</name>
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Src/bluenrg_lp_evb_io.c</locationURI>
@@ -100,11 +90,6 @@
       <name>Drivers/CMSIS/startup_BlueNRG_LP.c</name>
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</locationURI>
-    </link>
-  <link>
-      <name>Drivers/Peripherals_Drivers/rf_driver_ll_adc.c</name>
-    <type>1</type>
-    <locationURI>PARENT-7-PROJECT_LOC/Drivers/Peripherals_Drivers/Src/rf_driver_ll_adc.c</locationURI>
     </link>
   <link>
       <name>Drivers/Peripherals_Drivers/rf_driver_ll_dma.c</name>

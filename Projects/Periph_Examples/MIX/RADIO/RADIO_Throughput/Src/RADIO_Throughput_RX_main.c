@@ -106,13 +106,13 @@ uint8_t RxCallback(ActionPacket* p, ActionPacket* next)
  if((p->status & BLUE_STATUSREG_PREVTRANSMIT) == 0){
 
   if((p->status & BLUE_INTERRUPT1REG_RCVOK) != 0) {
-    BSP_LED_Toggle(BSP_LED1);
+    BSP_LED_Toggle(BSP_LED3);
   }
   else if( ((p->status & BLUE_INTERRUPT1REG_RCVTIMEOUT) != 0) || ((p->status & BLUE_INTERRUPT1REG_RCVCRCERR) != 0) ){
     BSP_LED_Toggle(BSP_LED2);
     ret = BIDIRECTIONAL_RX_Sequence(channel, receivedData, sendAckData, RX_TIMEOUT, MAX_LL_PACKET_LENGTH, RxCallback);
     if(ret != SUCCESS_0) {
-      BSP_LED_On(BSP_LED1);
+      BSP_LED_On(BSP_LED3);
       BSP_LED_On(BSP_LED2);
       while(1);
     }
@@ -122,7 +122,7 @@ uint8_t RxCallback(ActionPacket* p, ActionPacket* next)
   else if((p->status & BLUE_INTERRUPT1REG_DONE) != 0) {
     ret = BIDIRECTIONAL_RX_Sequence(channel, receivedData, sendAckData, RX_TIMEOUT, MAX_LL_PACKET_LENGTH, RxCallback);
     if(ret != SUCCESS_0) {
-      BSP_LED_On(BSP_LED1);
+      BSP_LED_On(BSP_LED3);
       BSP_LED_On(BSP_LED2);
       while(1);
     }
@@ -203,7 +203,7 @@ int main(void)
   }
 
   /* Configure the LEDs */
-  BSP_LED_Init(BSP_LED1);
+  BSP_LED_Init(BSP_LED3);
   BSP_LED_Init(BSP_LED2);
     
   BSP_COM_Init(NULL);
@@ -219,7 +219,7 @@ int main(void)
   RADIO_SetBackToBackTime(100);
   ret = HAL_RADIO_ReceivePacketWithAck(channel, RX_WAKEUP_TIME, receivedData, sendAckData, RX_TIMEOUT, MAX_LL_PACKET_LENGTH, RxCallback);
   if(ret != SUCCESS_0) {
-    BSP_LED_On(BSP_LED1);
+    BSP_LED_On(BSP_LED3);
     BSP_LED_On(BSP_LED2);
     while(1);
   }   

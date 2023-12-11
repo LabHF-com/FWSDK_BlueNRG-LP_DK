@@ -33,12 +33,12 @@
 #define TIMx_IRQn                                               TIM1_IRQn
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 #define TIMx                                                    TIM2
 #define LL_EnableClock_TIMx()                                   LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2);
 #define TIMx_IRQHandler                                         TIM2_IRQHandler
 #define TIMx_IRQn                                               TIM2_IRQn
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/

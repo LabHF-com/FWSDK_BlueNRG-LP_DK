@@ -1074,10 +1074,10 @@
         <group>
             <name>User</name>
             <file>
-                <name>$PROJ_DIR$\..\..\Src\rf_device_it.c</name>
+                <name>$PROJ_DIR$\..\..\Src\rf_device_hal_msp.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\Src\rf_device_hal_msp.c</name>
+                <name>$PROJ_DIR$\..\..\Src\rf_device_it.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Src\RTC_Alarm_main.c</name>
@@ -1092,10 +1092,11 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_button.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_io.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_com.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_com.c</name>            </file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_io.c</name>
+            </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\BSP\Src\bluenrg_lp_evb_led.c</name>
             </file>
@@ -1103,10 +1104,10 @@
         <group>
             <name>CMSIS</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\startup_BlueNRG_LP.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Source\system_BlueNRG_LP.c</name>
             </file>
         </group>
         <group>
@@ -1161,9 +1162,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_rcc_ex.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_rng.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Src\rf_driver_hal_rtc.c</name>

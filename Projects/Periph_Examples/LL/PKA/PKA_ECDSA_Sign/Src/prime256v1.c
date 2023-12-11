@@ -23,6 +23,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "PKA_ECDSA_Sign_main.h"
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+    
 __ALIGNED(4) const uint8_t prime256v1_Prime[] = {
 /*0x00,*/ 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x01, 
           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -95,4 +97,6 @@ __ALIGNED(4) const uint8_t prime256v1_Seed[] = {
 };
 const uint32_t prime256v1_Seed_len = 20;
 
+ 
+#endif
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : DMA_RAMToRAM_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,9 +59,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -99,7 +101,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -144,24 +146,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |
---------------------------------------------------------------------------------------------------------
-|     DL1    |          Not Used          |          Not Used          |          Not Used          |
-|     DL2    |  ON: transfer is complete  |  ON: transfer is complete  |  ON: transfer is complete  |
-|     DL3    |          ON: error         |          ON: error         |          ON: error         |
-|     DL4    |          Not Used          |          Not Used          |          Not Used          |
-|     U5     |     ON: transfer error     |     ON: transfer error     |     ON: transfer error     |
+|  LED name  |       STEVAL-IDB010V1      |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |       STEVAL-IDB013V1      |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     DL2    |  ON: transfer is complete  |  ON: transfer is complete  |  ON: transfer is complete  |  ON: transfer is complete  |  ON: transfer is complete  |
+|     DL3    |          ON: error         |          ON: error         |          ON: error         |          ON: error         |          ON: error         |
+|     DL4    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     U5     |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -219,6 +221,7 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 DMA_HandleTypeDef hdma_memtomem_dma1_channel1;
 
 static uint32_t aSRC_Buffer[BUFFER_SIZE] =
@@ -239,8 +242,10 @@ static __IO uint32_t transferErrorDetected;    /* Set to 1 if an error transfer 
 static __IO uint32_t transferCompleteDetected; /* Set to 1 if transfer is correctly completed */
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_DMA_Init(void);
 static void TransferComplete(DMA_HandleTypeDef *hdma_memtomem_dma1_channel1);
 static void TransferError(DMA_HandleTypeDef *hdma_memtomem_dma1_channel1);
@@ -262,17 +267,14 @@ int main(void)
     /* Error during system clock configuration take appropriate action */
     while(1);
   }
-  
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   printf("Initial buffer data:\n\r");  
   PrintBuffer((uint32_t*)aSRC_Buffer, BUFFER_SIZE);
@@ -283,7 +285,6 @@ int main(void)
   
   /* Initialize LEDs */
   BSP_LED_Init(BSP_LED2);
-  BSP_LED_Init(BSP_LED1);
   BSP_LED_Init(BSP_LED3);
   
   /* Infinite loop */
@@ -309,11 +310,10 @@ int main(void)
   {
     if (transferErrorDetected == 1)
     {
-      /* Turn LED1 on*/
-      BSP_LED_On(BSP_LED1);
+      /* Turn LED on*/
       transferErrorDetected = 0;
       HAL_Delay(1000);
-      BSP_LED_Off(BSP_LED3);
+      BSP_LED_On(BSP_LED3);
     }
     if (transferCompleteDetected == 1)
     {
@@ -385,6 +385,7 @@ void CompareBuffer()
   /* DMA data transfered consistency */
   printf("DMA data transfered consistency.\n\r");
   BSP_LED_On(BSP_LED2);
+  printf("** Test successfully. ** \n\r\n\r");
 }
 
 /** 
@@ -414,7 +415,7 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY );
   HAL_NVIC_EnableIRQ(DMA_IRQn);
 }
  
@@ -441,10 +442,21 @@ static void TransferError(DMA_HandleTypeDef *hdma_memtomem_dma1_channel1)
 }
 
 
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
+}
+
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+* @brief  This function is executed in case of error occurrence.
+* @retval None
+*/
 void Error_Handler(void)
 {
   /* Turn LED3 on: Transfer Error */

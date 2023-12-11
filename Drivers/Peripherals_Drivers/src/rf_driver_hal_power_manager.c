@@ -104,12 +104,6 @@ static void AHBUPCONV_WaitConfigrurationEnd(void);
 #ifndef POWER_SAVE_N_RESTORE_SYSCFG
 #define POWER_SAVE_N_RESTORE_SYSCFG 1
 #endif
-#if defined(LCDC)
-#define POWER_SAVE_N_RESTORE_LCDC 1
-#endif
-#if defined(COMP)
-#define POWER_SAVE_N_RESTORE_COMP 1
-#endif
 
 /* Enable Context Save and Restore for APB1 Peripherals */
 #if defined(SPI1) 
@@ -143,6 +137,11 @@ static void AHBUPCONV_WaitConfigrurationEnd(void);
 #ifndef POWER_SAVE_N_RESTORE_I2C2
 #define POWER_SAVE_N_RESTORE_I2C2 1
 #endif
+#endif
+
+/* Enable Context Save and Restore for APB2 Peripherals */
+#if defined(LPAWUR)
+#define POWER_SAVE_N_RESTORE_LPAWUR 1
 #endif
                                   
 /* System Tick Priority register */
@@ -316,12 +315,6 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 #endif
 
   /* APB0 Peripherals Config RAM virtual register */
-#ifdef POWER_SAVE_N_RESTORE_COMP
-  CTXT COMP_TypeDef COMP_vr={0};
-#endif
-#ifdef POWER_SAVE_N_RESTORE_LCDC
-  CTXT LCDC_TypeDef LCDC_vr={0};
-#endif
 #ifdef POWER_SAVE_N_RESTORE_TIM16
   CTXT TIM_TypeDef TIM16_vr={0};
 #endif
@@ -364,6 +357,11 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   CTXT I2C_TypeDef I2C2_vr={0};
 #endif
 
+  /* APB2 Peripherals Config RAM virtual register */
+#ifdef POWER_SAVE_N_RESTORE_LPAWUR
+  CTXT uint32_t LPAWUR_IRQ_ENABLE_vr=0;
+#endif
+  
   /* Vector Table offset Config RAM virtual register */
   CTXT uint32_t SCB_VTOR_vr;
 
@@ -381,7 +379,9 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* MR_BLE RRM LDO TRANSFO */
-  CTXT uint32_t LDO_TRANSFO_vr;
+#if defined(RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS)
+  CTXT uint32_t LDO_TRANSFO_vr = 0;
+#endif
 #endif
   
   /* Save the peripherals configuration */
@@ -389,125 +389,121 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   /* AHB0 Peripherals Config RAM virutal register */
 #ifdef POWER_SAVE_N_RESTORE_AES
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_AES)) {
-    Osal_MemCpy(&AES_vr, AES, sizeof(AES_TypeDef));
+    Osal_MemCpy4(&AES_vr, AES, sizeof(AES_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_DMA
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_DMA)) {
-    Osal_MemCpy((uint32_t *)DMAMUX_vr, (uint32_t *)DMAMUX1, 8*sizeof(DMAMUX_Channel_TypeDef));
-    Osal_MemCpy((uint32_t *)DMA_vr, (uint32_t *)DMA1, 8*sizeof(DMA_Channel_TypeDef));
+    Osal_MemCpy4((uint32_t *)DMAMUX_vr, (uint32_t *)DMAMUX1, 8*sizeof(DMAMUX_Channel_TypeDef));
+    Osal_MemCpy4((uint32_t *)DMA_vr, (uint32_t *)DMA1, 8*sizeof(DMA_Channel_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_RNG
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_RNG)) {
-    Osal_MemCpy((uint32_t *)&RNG_vr, (uint32_t *)RNG, sizeof(RNG_TypeDef));
+    Osal_MemCpy4((uint32_t *)&RNG_vr, (uint32_t *)RNG, sizeof(RNG_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_PKA   
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_PKA)) {
 #ifdef CONFIG_DEVICE_BLUENRG_LP
-    Osal_MemCpy((uint32_t *)&PKA_vr, (uint32_t *)PKA, sizeof(PKA_TypeDef));
+    Osal_MemCpy4((uint32_t *)&PKA_vr, (uint32_t *)PKA, sizeof(PKA_TypeDef));
 #endif
-#if defined CONFIG_DEVICE_BLUENRG_LPS
+#if defined (CONFIG_DEVICE_BLUENRG_LPS)
     PKA_vr.CR = PKA->CR;
 #endif
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_CRC
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_CRC)) {
-    Osal_MemCpy((uint32_t *)&CRC_vr, (uint32_t *)CRC, sizeof(CRC_TypeDef));
+    Osal_MemCpy4((uint32_t *)&CRC_vr, (uint32_t *)CRC, sizeof(CRC_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_GPIOA
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_GPIOA)) {
-    Osal_MemCpy((uint32_t *)&GPIOA_vr, (uint32_t *)GPIOA, sizeof(GPIO_TypeDef));
+    Osal_MemCpy4((uint32_t *)&GPIOA_vr, (uint32_t *)GPIOA, sizeof(GPIO_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_GPIOB 
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_GPIOB)) {
-    Osal_MemCpy((uint32_t *)&GPIOB_vr, (uint32_t *)GPIOB, sizeof(GPIO_TypeDef));
+    Osal_MemCpy4((uint32_t *)&GPIOB_vr, (uint32_t *)GPIOB, sizeof(GPIO_TypeDef));
   }
 #endif
 
   /* APB0 Peripherals Config RAM virtual register */
 #ifdef POWER_SAVE_N_RESTORE_SYSCFG
   if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SYSCFG)) {
-    Osal_MemCpy((uint32_t *)&SYSCFG_vr, (uint32_t *)SYSCFG, sizeof(SYSCFG_TypeDef));
+    Osal_MemCpy4((uint32_t *)&SYSCFG_vr, (uint32_t *)SYSCFG, sizeof(SYSCFG_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_TIM1
   if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM1)) {
-    Osal_MemCpy((uint32_t *)&TIM1_vr, (uint32_t *)TIM1, sizeof(TIM_TypeDef));
+    Osal_MemCpy4((uint32_t *)&TIM1_vr, (uint32_t *)TIM1, sizeof(TIM_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_TIM2
   if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM2)) {
-    Osal_MemCpy((uint32_t *)&TIM2_vr, (uint32_t *)TIM2, sizeof(TIM_TypeDef));
+    Osal_MemCpy4((uint32_t *)&TIM2_vr, (uint32_t *)TIM2, sizeof(TIM_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_TIM16
   if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM16)) {
-    Osal_MemCpy((uint32_t *)&TIM16_vr, (uint32_t *)TIM16, sizeof(TIM_TypeDef));
+    Osal_MemCpy4((uint32_t *)&TIM16_vr, (uint32_t *)TIM16, sizeof(TIM_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_TIM17
   if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM17)) {
-    Osal_MemCpy((uint32_t *)&TIM17_vr, (uint32_t *)TIM17, sizeof(TIM_TypeDef));
-  }
-#endif
-#ifdef POWER_SAVE_N_RESTORE_LCDC
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_LCDC)) {
-    Osal_MemCpy((uint32_t *)&LCDC_vr, (uint32_t *)LCDC, sizeof(LCDC_TypeDef));
-  }
-#endif
-#ifdef POWER_SAVE_N_RESTORE_COMP
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP) && !wsConfig.COMP_enable) {
-    Osal_MemCpy((uint32_t *)&COMP_vr, (uint32_t *)COMP, sizeof(COMP_TypeDef));
+    Osal_MemCpy4((uint32_t *)&TIM17_vr, (uint32_t *)TIM17, sizeof(TIM_TypeDef));
   }
 #endif
     
   /* APB1 Peripherals Config RAM virtual register */
 #ifdef POWER_SAVE_N_RESTORE_SPI1
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_SPI1)) {
-    Osal_MemCpy((uint32_t *)&SPI1_vr, (uint32_t *)SPI1, sizeof(SPI_TypeDef));
+    Osal_MemCpy4((uint32_t *)&SPI1_vr, (uint32_t *)SPI1, sizeof(SPI_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_SPI2
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_SPI2)) {
-    Osal_MemCpy((uint32_t *)&SPI2_vr, (uint32_t *)SPI2, sizeof(SPI_TypeDef));
+    Osal_MemCpy4((uint32_t *)&SPI2_vr, (uint32_t *)SPI2, sizeof(SPI_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_SPI3
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_SPI3)) {
-    Osal_MemCpy((uint32_t *)&SPI3_vr, (uint32_t *)SPI3, sizeof(SPI_TypeDef));
+    Osal_MemCpy4((uint32_t *)&SPI3_vr, (uint32_t *)SPI3, sizeof(SPI_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_ADC
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_ADCDIG)) {
-    Osal_MemCpy((uint32_t *)&ADC_vr, (uint32_t *)ADC, sizeof(ADC_TypeDef));
+    Osal_MemCpy4((uint32_t *)&ADC_vr, (uint32_t *)ADC, sizeof(ADC_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_LPUART
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_LPUART) && !wsConfig.LPU_enable) {
-    Osal_MemCpy((uint32_t *)&LPUART_vr, (uint32_t *)LPUART1, sizeof(USART_TypeDef));
+    Osal_MemCpy4((uint32_t *)&LPUART_vr, (uint32_t *)LPUART1, sizeof(USART_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_USART
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_USART)) {
-    Osal_MemCpy((uint32_t *)&USART_vr, (uint32_t *)USART1, sizeof(USART_TypeDef));
+    Osal_MemCpy4((uint32_t *)&USART_vr, (uint32_t *)USART1, sizeof(USART_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_I2C1
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_I2C1)) {
-    Osal_MemCpy((uint32_t *)&I2C1_vr, (uint32_t *)I2C1, sizeof(I2C_TypeDef));
+    Osal_MemCpy4((uint32_t *)&I2C1_vr, (uint32_t *)I2C1, sizeof(I2C_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_I2C2
   if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_I2C2)) {
-    Osal_MemCpy((uint32_t *)&I2C2_vr, (uint32_t *)I2C2, sizeof(I2C_TypeDef));
+    Osal_MemCpy4((uint32_t *)&I2C2_vr, (uint32_t *)I2C2, sizeof(I2C_TypeDef));
   }
 #endif
 
+  /* APB2 Peripherals Config RAM virtual register */
+#ifdef POWER_SAVE_N_RESTORE_LPAWUR
+    LPAWUR_IRQ_ENABLE_vr = LPAWUR->IRQ_ENABLE;
+  }
+#endif
+  
   /* Vector Table offset Config RAM virtual register */
   SCB_VTOR_vr = SCB->VTOR;
 
@@ -536,7 +532,9 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   if (!LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE)) {
     LL_APB2_EnableClock(LL_APB2_PERIPH_MRBLE);
   } else {
+#if defined(RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS)
     LDO_TRANSFO_vr = READ_BIT(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS);
+#endif
   }
   if ((WAKEUP->BLUE_SLEEP_REQUEST_MODE & WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_EN) == 0) {
     WAKEUP->BLUE_SLEEP_REQUEST_MODE |= WAKEUP_BLUE_SLEEP_REQUEST_MODE_FORCE_SLEEPING;
@@ -552,8 +550,8 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   if (ps_level == POWER_SAVE_LEVEL_STOP_NOTIMER) {
     RCC_CR_vr = RCC->CR;
     if (LL_RCC_LSE_IsEnabled()) {
-      LL_RCC_LSE_Disable();
-#if defined CONFIG_DEVICE_BLUENRG_LPS
+      LL_RCC_LSE_Disable(); 
+#if defined (CONFIG_DEVICE_BLUENRG_LPS)
       LL_PWR_EnablePDB(LL_PWR_PUPD_IO12|LL_PWR_PUPD_IO13);
 #endif
     } else {
@@ -570,13 +568,6 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     i++;
     ptr++;
   } while (i < CSTACK_PREAMBLE_NUMBER); 
-  
-  /* If a wakeup source is already active, no need to enable the power save */
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-  if (LL_PWR_GetWakeupSource() & (wsConfig.IO_Mask_High_polarity|wsConfig.IO_Mask_Low_polarity)) {
-    return ret_val;
-  }
-#endif
   
 #if defined(PWR_CR2_GPIORET)
   /* Enable the GPIO retention in DEEPSTOP configuration */
@@ -640,7 +631,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     
   /* Disable deep sleep, because if no reset occours for an interrrupt pending,
      the register value remain set and if a simple CPU_HALT command is called from the
-     application the BlueNRG-LP enters in deep sleep without make a context save.
+     application the device enters in deep sleep without make a context save.
      So, exiting from the deep sleep the context is restored with wrong random value. */
   SystemDeepSleepCmd(DISABLE);
 
@@ -696,12 +687,12 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
     /* AHB0 Peripherals Config */
 #ifdef POWER_SAVE_N_RESTORE_AES
   if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_AES)) {
-    Osal_MemCpy(AES, &AES_vr, sizeof(AES_TypeDef));
+    Osal_MemCpy4(AES, &AES_vr, sizeof(AES_TypeDef));
   }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_DMA
     if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_DMA)) {      
-      Osal_MemCpy((uint32_t *)DMAMUX1, (uint32_t *)DMAMUX_vr, 8*sizeof(DMAMUX_Channel_TypeDef));      
+      Osal_MemCpy4((uint32_t *)DMAMUX1, (uint32_t *)DMAMUX_vr, 8*sizeof(DMAMUX_Channel_TypeDef));      
       DMA_vr[0].CNDTR = 0;
       DMA_vr[1].CNDTR = 0;
       DMA_vr[2].CNDTR = 0;
@@ -710,20 +701,20 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       DMA_vr[5].CNDTR = 0;
       DMA_vr[6].CNDTR = 0;
       DMA_vr[7].CNDTR = 0;
-      Osal_MemCpy((uint32_t *)DMA1, (uint32_t *)DMA_vr, 8*sizeof(DMA_Channel_TypeDef));
+      Osal_MemCpy4((uint32_t *)DMA1, (uint32_t *)DMA_vr, 8*sizeof(DMA_Channel_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_RNG
     if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_RNG)) {
-      Osal_MemCpy((uint32_t *)RNG, (uint32_t *)&RNG_vr, sizeof(RNG_TypeDef));
+      Osal_MemCpy4((uint32_t *)RNG, (uint32_t *)&RNG_vr, sizeof(RNG_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_PKA   
     if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_PKA)) {
 #ifdef CONFIG_DEVICE_BLUENRG_LP
-    Osal_MemCpy((uint32_t *)PKA, (uint32_t *)&PKA_vr, sizeof(PKA_TypeDef));
+    Osal_MemCpy4((uint32_t *)PKA, (uint32_t *)&PKA_vr, sizeof(PKA_TypeDef));
 #endif
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
       PKA->CLRFR = 0x1A0000;
       PKA->CR = PKA_vr.CR;
 #endif
@@ -731,7 +722,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
 #endif
 #ifdef POWER_SAVE_N_RESTORE_CRC
     if (LL_AHB_IsEnabledClock(LL_AHB_PERIPH_CRC)) {
-      Osal_MemCpy((uint32_t *)CRC, (uint32_t *)&CRC_vr, sizeof(CRC_TypeDef));
+      Osal_MemCpy4((uint32_t *)CRC, (uint32_t *)&CRC_vr, sizeof(CRC_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_GPIOA
@@ -739,7 +730,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       GPIOA->AFR[0] = GPIOA_vr.AFR[0]; /* To avoid glitch in the line when an AF is set */
       GPIOA->AFR[1] = GPIOA_vr.AFR[1];
       GPIOA->ODR = GPIOA_vr.ODR;       /* To avoid glitch in the line when GPIO_MODE_OUTPUT is set */
-      Osal_MemCpy((uint32_t *)GPIOA, (uint32_t *)&GPIOA_vr, sizeof(GPIO_TypeDef));
+      Osal_MemCpy4((uint32_t *)GPIOA, (uint32_t *)&GPIOA_vr, sizeof(GPIO_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_GPIOB 
@@ -747,7 +738,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       GPIOB->AFR[0] = GPIOB_vr.AFR[0]; /* To avoid glitch in the line when an AF is set */
       GPIOB->AFR[1] = GPIOB_vr.AFR[1];
       GPIOB->ODR = GPIOB_vr.ODR;       /* To avoid glitch in the line when GPIO_MODE_OUTPUT is set */
-      Osal_MemCpy((uint32_t *)GPIOB, (uint32_t *)&GPIOB_vr, sizeof(GPIO_TypeDef));
+      Osal_MemCpy4((uint32_t *)GPIOB, (uint32_t *)&GPIOB_vr, sizeof(GPIO_TypeDef));
     }
 #endif    
 #if defined(PWR_CR2_GPIORET)
@@ -758,7 +749,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
   /* APB0 Peripherals Config */
 #ifdef POWER_SAVE_N_RESTORE_SYSCFG
     if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SYSCFG)) {
-      Osal_MemCpy((uint32_t *)SYSCFG, (uint32_t *)&SYSCFG_vr, sizeof(SYSCFG_TypeDef));
+      Osal_MemCpy4((uint32_t *)SYSCFG, (uint32_t *)&SYSCFG_vr, sizeof(SYSCFG_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_TIM1
@@ -766,7 +757,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = TIM1_vr.CR1;
       TIM1_vr.CR1 &= ~TIM_CR1_CEN;
-      Osal_MemCpy((uint32_t *)TIM1, (uint32_t *)&TIM1_vr, sizeof(TIM_TypeDef));
+      Osal_MemCpy4((uint32_t *)TIM1, (uint32_t *)&TIM1_vr, sizeof(TIM_TypeDef));
       TIM1->CR1 = app;
     }
 #endif
@@ -775,7 +766,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = TIM2_vr.CR1;
       TIM2_vr.CR1 &= ~TIM_CR1_CEN;
-      Osal_MemCpy((uint32_t *)TIM2, (uint32_t *)&TIM2_vr, sizeof(TIM_TypeDef));
+      Osal_MemCpy4((uint32_t *)TIM2, (uint32_t *)&TIM2_vr, sizeof(TIM_TypeDef));
       TIM2->CR1 = app;
     }
 #endif
@@ -784,7 +775,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = TIM16_vr.CR1;
       TIM16_vr.CR1 &= ~TIM_CR1_CEN;
-      Osal_MemCpy((uint32_t *)TIM16, (uint32_t *)&TIM16_vr, sizeof(TIM_TypeDef));
+      Osal_MemCpy4((uint32_t *)TIM16, (uint32_t *)&TIM16_vr, sizeof(TIM_TypeDef));
       TIM16->CR1 = app;
     }
 #endif
@@ -793,19 +784,9 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = TIM17_vr.CR1;
       TIM17_vr.CR1 &= ~TIM_CR1_CEN;
-      Osal_MemCpy((uint32_t *)TIM17, (uint32_t *)&TIM17_vr, sizeof(TIM_TypeDef));
+      Osal_MemCpy4((uint32_t *)TIM17, (uint32_t *)&TIM17_vr, sizeof(TIM_TypeDef));
       TIM17->CR1 = app;
     }
-#endif
-#ifdef POWER_SAVE_N_RESTORE_LCDC
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_LCDC)) {
-    Osal_MemCpy((uint32_t *)LCDC, (uint32_t *)&LCDC_vr, sizeof(LCDC_TypeDef));
-  }
-#endif
-#ifdef POWER_SAVE_N_RESTORE_COMP
-  if (LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP) && !wsConfig.COMP_enable) {
-    Osal_MemCpy((uint32_t *)COMP, (uint32_t *)&COMP_vr, sizeof(COMP_TypeDef));
-  }
 #endif
   
     /* APB1 Peripherals Config */
@@ -814,8 +795,8 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = SPI1_vr.CR1;
       SPI1_vr.CR1 &= ~SPI_CR1_SPE;
-      Osal_MemCpy((uint32_t *)SPI1, (uint32_t *)&SPI1_vr, 12); /* Skip DR */
-      Osal_MemCpy((uint32_t *)(&(SPI1->CRCPR)), (uint32_t *)(&SPI1_vr.CRCPR), 20);
+      Osal_MemCpy4((uint32_t *)SPI1, (uint32_t *)&SPI1_vr, 12); /* Skip DR */
+      Osal_MemCpy4((uint32_t *)(&(SPI1->CRCPR)), (uint32_t *)(&SPI1_vr.CRCPR), 20);
       SPI1->CR1 = app;
     }
 #endif
@@ -824,8 +805,8 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = SPI2_vr.CR1;
       SPI2_vr.CR1 &= ~SPI_CR1_SPE;
-      Osal_MemCpy((uint32_t *)SPI2, (uint32_t *)&SPI2_vr, 12); /* Skip DR */
-      Osal_MemCpy((uint32_t *)(&(SPI2->CRCPR)), (uint32_t *)(&SPI2_vr.CRCPR), 20);
+      Osal_MemCpy4((uint32_t *)SPI2, (uint32_t *)&SPI2_vr, 12); /* Skip DR */
+      Osal_MemCpy4((uint32_t *)(&(SPI2->CRCPR)), (uint32_t *)(&SPI2_vr.CRCPR), 20);
       SPI2->CR1 = app;
     }
 #endif
@@ -834,14 +815,14 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = SPI3_vr.CR1;
       SPI3_vr.CR1 &= ~SPI_CR1_SPE;
-      Osal_MemCpy((uint32_t *)SPI3, (uint32_t *)&SPI3_vr, 12); /* Skip DR */
-      Osal_MemCpy((uint32_t *)(&(SPI3->CRCPR)), (uint32_t *)(&SPI3_vr.CRCPR), 20);
+      Osal_MemCpy4((uint32_t *)SPI3, (uint32_t *)&SPI3_vr, 12); /* Skip DR */
+      Osal_MemCpy4((uint32_t *)(&(SPI3->CRCPR)), (uint32_t *)(&SPI3_vr.CRCPR), 20);
       SPI3->CR1 = app;
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_ADC
     if (LL_APB1_IsEnabledClock(LL_APB1_PERIPH_ADCDIG)) {
-      Osal_MemCpy((uint32_t *)ADC, (uint32_t *)&ADC_vr, sizeof(ADC_TypeDef));
+      Osal_MemCpy4((uint32_t *)ADC, (uint32_t *)&ADC_vr, sizeof(ADC_TypeDef));
     }
 #endif
 #ifdef POWER_SAVE_N_RESTORE_LPUART
@@ -849,7 +830,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = LPUART_vr.CR1;
       LPUART_vr.CR1 &= ~USART_CR1_UE;
-      Osal_MemCpy((uint32_t *)LPUART1, (uint32_t *)&LPUART_vr, 36); /* Skip RDR and TDR */
+      Osal_MemCpy4((uint32_t *)LPUART1, (uint32_t *)&LPUART_vr, 36); /* Skip RDR and TDR */
       LPUART1->PRESC = LPUART_vr.PRESC;
       LPUART1->CR1 = app;
     }
@@ -859,7 +840,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = USART_vr.CR1;
       USART_vr.CR1 &= ~USART_CR1_UE;
-      Osal_MemCpy((uint32_t *)USART1, (uint32_t *)&USART_vr, 36); /* Skip RDR and TDR */
+      Osal_MemCpy4((uint32_t *)USART1, (uint32_t *)&USART_vr, 36); /* Skip RDR and TDR */
       USART1->PRESC = USART_vr.PRESC;
       USART1->CR1 = app;
     }
@@ -869,7 +850,7 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = I2C1_vr.CR1;
       I2C1_vr.CR1 &= ~I2C_CR1_PE;
-      Osal_MemCpy((uint32_t *)I2C1, (uint32_t *)&I2C1_vr, 32); /* Skip PECR, RDR and TDR */
+      Osal_MemCpy4((uint32_t *)I2C1, (uint32_t *)&I2C1_vr, 32); /* Skip PECR, RDR and TDR */
       I2C1->CR1 = app;
     }
 #endif
@@ -878,8 +859,14 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       uint32_t app;
       app = I2C2_vr.CR1;
       I2C2_vr.CR1 &= ~I2C_CR1_PE;      
-      Osal_MemCpy((uint32_t *)I2C2, (uint32_t *)&I2C2_vr, 32); /* Skip PECR, RDR and TDR */
+      Osal_MemCpy4((uint32_t *)I2C2, (uint32_t *)&I2C2_vr, 32); /* Skip PECR, RDR and TDR */
       I2C2->CR1 = app;
+    }
+#endif
+    
+    /* APB2 Peripherals Config */
+#ifdef POWER_SAVE_N_RESTORE_LPAWUR
+      LPAWUR->IRQ_ENABLE = LPAWUR_IRQ_ENABLE_vr;
     }
 #endif
 
@@ -890,13 +877,15 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       WAKEUP->BLUE_SLEEP_REQUEST_MODE &= ~WAKEUP_BLUE_SLEEP_REQUEST_MODE_FORCE_SLEEPING;
       LL_APB2_DisableClock(LL_APB2_PERIPH_MRBLE);
     }  else {
+#if defined(RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS)
       if (LDO_TRANSFO_vr)
         SET_BIT(RRM->LDO_ANA_ENG, RRM_LDO_ANA_ENG_RFD_LDO_TRANSFO_BYPASS);
+#endif
     }
 #endif
     
     /* Wait until the HSE is ready */
-    SystemTimer_TimeoutConfig(SystemCoreClock, 350, TRUE);
+    SystemTimer_TimeoutConfig(SystemCoreClock, 300, TRUE);
     while(LL_RCC_HSE_IsReady() == 0U)      
     {
       if (SystemTimer_TimeoutExpired()) {
@@ -921,9 +910,9 @@ static uint8_t PowerSave_Setup(PowerSaveLevels ps_level, WakeupSourceConfig_Type
       LL_RCC_DIRECT_HSE_Enable();
       LL_RCC_RC64MPLL_Disable();
     }
-    
-    /* AHBUPCONV configuration restore no need that the RC64MPLL is ready */
+        
 #if defined(AHBUPCONV)
+    /* AHBUPCONV configuration restore no need that the RC64MPLL is ready */
     if (LL_APB2_IsEnabledClock(LL_APB2_PERIPH_MRBLE) && (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) == LL_BLUENRG_LP_CUT_10)) {
       /* Wait until the AHBUPCONV configuration is ended */
       AHBUPCONV_ConfigRestore();
@@ -1011,9 +1000,9 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
   RAM_VR.WakeupFromSleepFlag = 0; 
 
   /* BLE Stack allows to enable the power save */
-  if (RADIO_STACK_SleepCheck() != POWER_SAVE_LEVEL_RUNNING) {
-  
-    app_powerSave_level = App_PowerSaveLevel_Check(level);
+  if (RADIO_STACK_SleepCheck() != POWER_SAVE_LEVEL_RUNNING &&
+      (app_powerSave_level = App_PowerSaveLevel_Check(level)) != POWER_SAVE_LEVEL_RUNNING) {
+        
     vtimer_powerSave_level = HAL_VTIMER_PowerSaveLevelCheck(level);
     pka_level = (PowerSaveLevels) PKAMGR_PowerSaveLevelCheck(level);
     final_level = (PowerSaveLevels)MIN(app_powerSave_level, level);
@@ -1026,7 +1015,7 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
 
     /* Clear previous wakeup sources */
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-    LL_PWR_ClearWakeupSource(LL_PWE_EWS_ALL);
+    LL_PWR_ClearWakeupSource(LL_PWR_EWS_ALL);
 #endif
     
     if (final_level == POWER_SAVE_LEVEL_RUNNING) {
@@ -1085,7 +1074,7 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
     
     /* Disable all the wakeup sources */
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-    LL_PWR_DisableWakeupSource(LL_PWE_EWS_ALL);
+    LL_PWR_DisableWakeupSource(LL_PWR_EWS_ALL);
 #endif
     
     /* Disable LPUART wakeup from STOP mode */
@@ -1127,11 +1116,12 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
   return ret_val;
 }
 
-uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled)
+uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled
+                                     )
 {
   /* Clear previous wakeup sources */
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-  LL_PWR_ClearWakeupSource(LL_PWE_EWS_ALL);
+  LL_PWR_ClearWakeupSource(LL_PWR_EWS_ALL);
 #endif
   
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
@@ -1149,15 +1139,16 @@ uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled)
   if (BOR_enabled) {
     LL_PWR_EnableBORinSDN();
   } else {
-    LL_PWR_EnableBORinSDN();
+    LL_PWR_DisableBORinSDN();
   }
+
 
 #if defined(PWR_CR2_GPIORET)
   /* Enable the GPIO retention in Shutdown configuration */
   LL_PWR_EnableGPIORET();
 #endif
 
-  /* Enable the BlueNRG-LP Shutdown configuration */
+  /* Enable the device Shutdown configuration */
   LL_PWR_LowPowerMode(LL_PWR_MODE_SHUTDOWN);
     
   /* Disable DIRECT HSE configuration to allow shutdown request */

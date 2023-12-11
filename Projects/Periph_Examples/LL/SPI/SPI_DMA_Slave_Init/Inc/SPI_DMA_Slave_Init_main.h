@@ -82,6 +82,7 @@ void SPI_SLAVE_TransferError_Callback(void);
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 #if !defined( CONFIG_DATASIZE_16BIT ) & !defined( CONFIG_DATASIZE_8BIT )
   // default SPI CONFIG DATASIZE is 16 BIT
   #define CONFIG_DATASIZE_16BIT 1
@@ -144,7 +145,7 @@ void SPI_SLAVE_TransferError_Callback(void);
 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
     /** GPIO Configuration
     PB3/AF4    ------> SPI3_SCK
     PA8/AF3    ------> SPI3_MISO
@@ -166,7 +167,7 @@ void SPI_SLAVE_TransferError_Callback(void);
 #define LL_DMAMUX_REQ_SPI_SLAVE_TX             LL_DMAMUX_REQ_SPI3_TX
 #define LL_DMAMUX_REQ_SPI_SLAVE_RX             LL_DMAMUX_REQ_SPI3_RX
 
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 #ifdef __cplusplus

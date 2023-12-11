@@ -670,11 +670,12 @@ uint8_t HAL_VTIMER_SetRadioTimerValue(uint32_t time, uint8_t event_type, uint8_t
 
 /**
  * @brief  Get the last anchorPoint in system time unit.
+ * @param [out] Current System time
  * @return TimerCapture register in system time unit.
  */
-uint64_t HAL_VTIMER_GetAnchorPoint(void)
+uint64_t HAL_VTIMER_GetAnchorPoint(uint64_t *current_system_time)
 {
-  return TIMER_GetAnchorPoint();
+  return TIMER_GetAnchorPoint(current_system_time);
 }
 
 /**
@@ -897,18 +898,20 @@ PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level)
 {
   uint32_t nextRadioActivity;
   uint8_t timerState;
+  uint64_t current_time;
 
   if (HAL_VTIMER_SleepCheck() == FALSE)
   {
     return POWER_SAVE_LEVEL_RUNNING;
   }
 
+  current_time = TIMER_GetCurrentSysTime();
   timerState = TIMER_GetRadioTimerValue(&nextRadioActivity);
   /*Timer1 and wakeup timer are programmed only through 
   the timer module*/
   if(((radioTimer.active || radioTimer.pending)  && !(timerState == TIMER1_BUSY)) || radioTimer.intTxRx_to_be_served)
   {
-    if(radioTimer.expiryTime < (TIMER_GetCurrentSysTime() + \
+    if(radioTimer.expiryTime < (current_time + \
                                 __TIMER_GetSysRfSetupTime() + \
                                 HAL_VTIMER_Context.hs_startup_time + \
                                 LOW_POWER_THR))
@@ -928,7 +931,7 @@ PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level)
 
   if(HAL_VTIMER_Context.rootNode != NULL && HAL_VTIMER_Context.rootNode->active)
   {
-    if(HAL_VTIMER_Context.rootNode->expiryTime < (TIMER_GetCurrentSysTime() + LOW_POWER_THR + HAL_VTIMER_Context.hs_startup_time))
+    if(HAL_VTIMER_Context.rootNode->expiryTime < (current_time + LOW_POWER_THR + HAL_VTIMER_Context.hs_startup_time))
     {
       return POWER_SAVE_LEVEL_CPU_HALT;
     }
@@ -956,6 +959,43 @@ PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level)
 BOOL HAL_VTIMER_SleepCheck(void)
 {
   return ((HAL_VTIMER_Context.expired_count == HAL_VTIMER_Context.served_count) && (HAL_VTIMER_Context.calibration_in_progress == FALSE));
+}
+
+/**
+ * @brief   Returns the 64-bit system time, referred to the 32-bit system time parameter.
+ *          The returned system time refers to a time between last calibration and last
+ *          calibration + 10485 seconds.
+ * @param   sys_time: system time
+ * @warning The system time cannot be more then 10485 seconds (174 min) after the last calibration time.
+ * @return  STU value 
+ */
+uint64_t HAL_VTIMER_GetSysTime64(uint32_t sys_time)
+{
+  uint64_t time;
+  
+  time = calibrationData.last_calibration_time + (uint32_t)(sys_time - (uint32_t)calibrationData.last_calibration_time);
+  
+  return time;
+}
+
+/**
+ * @brief   Returns the next 64-bit system time in the future, referred to the 32-bit system time parameter.
+ *          Compared to HAL_VTIMER_GetSysTime64() this function makes sure that the returned
+ *          time is always in the future, but execution time of the function is longer.
+ * @param   sys_time: system time in the future (no more than 10485 s = 174 min in the future)
+ * @return  STU value 
+ */
+uint64_t HAL_VTIMER_GetFutureSysTime64(uint32_t sys_time)
+{
+  uint64_t current_time = HAL_VTIMER_GetCurrentSysTime();
+  uint32_t sysTime_ms32b = current_time >> 32; /* Most significant 32 bits of sysTime64 */
+  
+  if(sys_time < (uint32_t)current_time){    
+    /* Need to get most signicant 32 bits of current time increased by one */
+    sysTime_ms32b++;
+  }
+  
+  return sys_time | (((uint64_t)sysTime_ms32b) << 32);  
 }
 
 

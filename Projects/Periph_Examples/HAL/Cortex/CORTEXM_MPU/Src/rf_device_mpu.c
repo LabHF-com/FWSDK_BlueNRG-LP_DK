@@ -37,20 +37,11 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-#if defined ( __CC_ARM   )
-uint8_t PrivilegedReadOnlyArray[32] __attribute__((at(0x20002000)));
-
-#elif defined ( __ICCARM__ )
-#pragma location=0x20002000
-__no_init uint8_t PrivilegedReadOnlyArray[32];
-
-#elif defined   (  __GNUC__  )
-uint8_t PrivilegedReadOnlyArray[32] __attribute__((section(".ROarraySection")));
-
-#endif
-
+/* Only to demonstrate that the follow address is write protected, in this example is used the direct write of this location. */
+#define PRIVILEGED_ADDRESS_READ_ONLY 0x20002000
 
 /* Private function prototypes -----------------------------------------------*/
+
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -109,7 +100,7 @@ void MPU_AccessPermConfig(void)
 {
 #ifdef ACCESS_PERMISSION
   MPU_Region_InitTypeDef MPU_InitStruct;
-
+  
   /* Disable MPU */
   HAL_MPU_Disable();
 
@@ -131,11 +122,14 @@ void MPU_AccessPermConfig(void)
   HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 #endif
   
+  char *x = (char*) PRIVILEGED_ADDRESS_READ_ONLY;
+	
   /* Read from PrivilegedReadOnlyArray. This will not generate error */
-  (void)PrivilegedReadOnlyArray[0];
+  (void)x[0];
 
-  /* Uncomment the following line to write to PrivilegedReadOnlyArray. This will generate an error */
-  PrivilegedReadOnlyArray[0] = 'e'; 
+  /* write to privileged Read Only Area. This will generate an error */
+   x[0] = 'e'; 
+  
 }
 
 /**

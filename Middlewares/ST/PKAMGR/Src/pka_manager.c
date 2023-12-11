@@ -99,50 +99,7 @@ PKAMGR_ResultStatus PKAMGR_PrivateInit(void);
 
 PKAMGR_ResultStatus PKAMGR_PrivateDeinit(void);
 
-//PKAMGR_ResultStatus PKAMGR_Isr(void);
-
-//PKAMGR_ResultStatus PKAMGR_Tick(void);
-
 PKAMGR_ResultStatus PKAMGR_Status(void);
-/**
-* @}
-*/
-
-/** @defgroup PKA_Manager_Private_Functions Private Functions
-* @{
-*/
-WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_PrivateInit(void))
-{
-  return PKAMGR_SUCCESS;
-  
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
-
-WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_PrivateDeinit(void))
-{
-  return PKAMGR_SUCCESS;
-  
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
-
-//WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_Tick(void))
-//{
-//  return PKAMGR_SUCCESS;
-//  
-//  /* NOTE : This function should not be modified, the callback is implemented 
-//  in the dedicated board file */
-//}
-
-
-WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_Status(void))
-{
-  return PKAMGR_SUCCESS;
-  
-  /* NOTE : This function should not be modified, the callback is implemented 
-  in the dedicated board file */
-}
 /**
 * @}
 */
@@ -152,134 +109,116 @@ WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_Status(void))
 */
 PKAMGR_ResultStatus PKAMGR_Init(void)
 {
-  if(internalState != PKAMGR_STATE_RESET)
-  {
-    return PKAMGR_ERROR;
-  }
-  
+  PKAMGR_ResultStatus return_value = PKAMGR_ERROR;
+
   if(PKAMGR_PrivateInit() == PKAMGR_SUCCESS)
   {
     ATOMIC_SECTION_BEGIN();
     internalState = PKAMGR_STATE_IDLE;
     ATOMIC_SECTION_END();
-    return PKAMGR_SUCCESS;
+    return_value = PKAMGR_SUCCESS;
   }
-  return PKAMGR_ERROR;
+  return return_value;
 }
 
 PKAMGR_ResultStatus PKAMGR_Deinit(void)
 {
-  ATOMIC_SECTION_BEGIN();
-  if(internalState == PKAMGR_STATE_BUSY)
-  {
-    ATOMIC_SECTION_END();
-    return PKAMGR_ERR_BUSY;
-  }
-  else
-  {
-    /* Lock mechanism to access concurrently at the PKA resource */
-    internalState = PKAMGR_STATE_BUSY;
-    ATOMIC_SECTION_END();
-  }
-  
+  PKAMGR_ResultStatus return_value = PKAMGR_ERROR;
+
   if( PKAMGR_PrivateDeinit() == PKAMGR_SUCCESS)
   {
     ATOMIC_SECTION_BEGIN();
     internalState = PKAMGR_STATE_RESET;
     ATOMIC_SECTION_END();
-    return PKAMGR_SUCCESS;
+    return_value = PKAMGR_SUCCESS;
   }
-  
-  return PKAMGR_ERROR;
+
+  return return_value;
 }
 
 PKAMGR_ResultStatus PKAMGR_SleepCheck(void)
 {
-  if(internalState == PKAMGR_STATE_IDLE)
-    return PKAMGR_SUCCESS;
-  else
-    return PKAMGR_ERR_BUSY;
-}
+  PKAMGR_ResultStatus return_value = PKAMGR_ERR_BUSY;
 
-//WEAK_FUNCTION(uint8_t PKAMGR_PowerSaveLevelCheck(uint8_t x))
-//{
-//  (void) x;                                 /* To avoid gcc/g++ warnings */
-//  return 0;	
-//
-//  /* NOTE : This function should not be modified, the callback is implemented 
-//  in the dedicated board file */
-//}
+  if(internalState == PKAMGR_STATE_IDLE)
+    return_value = PKAMGR_SUCCESS;
+
+  return return_value;
+}
 
 PKAMGR_ResultStatus PKAMGR_Lock()
 {
+  PKAMGR_ResultStatus return_value = PKAMGR_SUCCESS;
+
   /* Only one consumer (Application layer or Stack) can use the PKA at the time */
   ATOMIC_SECTION_BEGIN();
   if(internalState != PKAMGR_STATE_IDLE)
   {
-    ATOMIC_SECTION_END();
-    return PKAMGR_ERR_BUSY;
+    return_value = PKAMGR_ERR_BUSY;
   }
   else
   {
     /* Lock mechanism to access concurrently at the PKA resource */
     internalState = PKAMGR_STATE_BUSY;
-    ATOMIC_SECTION_END();
   }
-  return PKAMGR_SUCCESS;
+  ATOMIC_SECTION_END();
+
+  return return_value;
 }
 
 PKAMGR_ResultStatus PKAMGR_Unlock()
 {
+  PKAMGR_ResultStatus return_value = PKAMGR_SUCCESS;
+
   /* Only one consumer (Application layer or Stack) can use the PKA at the time */
   ATOMIC_SECTION_BEGIN();
   if(internalState != PKAMGR_STATE_BUSY)
   {
-    ATOMIC_SECTION_END();
-    return PKAMGR_ERR_BUSY;
+    return_value = PKAMGR_ERR_BUSY;
   }
   else
   {
     /* Unlock mechanism to access concurrently at the PKA resource */
     internalState = PKAMGR_STATE_IDLE;
-    ATOMIC_SECTION_END();
   }
-  return PKAMGR_SUCCESS;
+  ATOMIC_SECTION_END();
+  
+  return return_value;
 }
 
 
-PKAMGR_ResultStatus PKAMGR_StartP256PublicKeyGeneration(PKAMGR_funcCB funcCB)
-{
-  uint32_t secretKey[8] = {0};
-
-#if 1
-  RNGMGR_NewSecretKey(secretKey);
-#else
-  /* ****************TEST*********************** */
-  /* 0 only to generate the point test           */
-  /* 0xEE80AADE 0xF458AD60 0x635B77EA 0xA8CC1FEB */
-  /* 0x700DEE70 0xD31F447C 0xF6A1319A 0x4915ED08 */
-  /* 0xF0111A82 0xAD38071A 0xDCB9F308 0x77F0BAB8 */
-  /* 0xA0FAFD61 0xF36CA7DA 0xD2F8209C 0x552E3E71 */
-  #warning "TEST OF KNOWN POINT : RNG not used for secret key. This is a test to use a known start point to obtain the expected output point.\n\r"
-  secretKey[0] = 0x00005e5f;
-  for(int i=1; i<8; i++)
-    secretKey[i] = 0;
-#endif
-  
-  return PKAMGR_StartP256DHkeyGeneration(secretKey, (uint32_t *)&PKAStartPoint[0], funcCB);
+PKAMGR_ResultStatus PKAMGR_StartP256PublicKeyGeneration(const uint32_t *private_key, PKAMGR_funcCB funcCB)
+{  
+  return PKAMGR_StartP256DHkeyGeneration(private_key, (uint32_t *)&PKAStartPoint[0], funcCB);
 }  
 
 
-WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(uint32_t *secretKey, uint32_t *publicKey, PKAMGR_funcCB funcCB))
+WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(const uint32_t *secretKey, const uint32_t *publicKey, PKAMGR_funcCB funcCB))
 {
   (void) secretKey;                                 /* To avoid gcc/g++ warnings */
   (void) publicKey;                                 /* To avoid gcc/g++ warnings */
   (void) funcCB;                                    /* To avoid gcc/g++ warnings */
-  return PKAMGR_SUCCESS;	
+  return PKAMGR_SUCCESS;
 
-  /* NOTE : This function should not be modified, the callback is implemented 
+  /* NOTE : This function should not be modified, the callback is implemented
   in the dedicated board file */
 }
+
+WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_PrivateInit(void))
+{
+  return PKAMGR_SUCCESS;
+}
+
+WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_PrivateDeinit(void))
+{
+  return PKAMGR_SUCCESS;
+}
+
+WEAK_FUNCTION(PKAMGR_ResultStatus PKAMGR_Status(void))
+{
+  return PKAMGR_SUCCESS;
+}
+
 
 /**
 * @}

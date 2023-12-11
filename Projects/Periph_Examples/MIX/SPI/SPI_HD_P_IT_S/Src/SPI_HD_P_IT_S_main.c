@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : SPI_HD_P_IT_S_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -23,7 +23,7 @@
   To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
   -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
   -# Open the KEIL project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\SPI_HD_P_IT_S.uvprojx</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\MDK-ARM\\{STEVAL-IDB011V1}\\SPI_HD_P_IT_S.uvprojx</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild all target files. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\SPI_HD_P_IT_S.eww</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\EWARM\\{STEVAL-IDB011V1}\\SPI_HD_P_IT_S.eww</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -45,7 +45,7 @@
   To use the project with WiSE-Studio IDE (GCC toolchain), please follow the instructions below:
   -# Open the WiSE-Studio IDE
   -# Select File, Import, Existing Projects into Workspace
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\WiSE-Studio\\{STEVAL-IDB011V1|STEVAL-IDB012V1}</tt> 
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\MIX\\SPI\\SPI_HD_P_IT_S\\WiSE-Studio\\{STEVAL-IDB011V1}</tt> 
   -# Select desired configuration to build
   -# Select Project->Build Project. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -57,6 +57,7 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 
@@ -96,7 +97,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |
+|  PIN name  | STEVAL-IDB011V{1-2} |
 ------------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -142,24 +143,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |
------------------------------------------------------------------------------------------------------
-|     DL1    |                 Not Used                 |                 Not Used                 |
-|     DL2    |   ON: the reception process is complete  |   ON: the reception process is complete  |
-|     DL3    |                 ON: error                |                 ON: error                |
-|     DL4    |                 Not Used                 |                 Not Used                 |
-|     U5     |                 Not Used                 |                 Not Used                 |
+|  LED name  |              STEVAL-IDB010V1             |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |
+--------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     DL2    |   ON: the reception process is complete  |   ON: the reception process is complete  |   ON: the reception process is complete  |
+|     DL3    |                 ON: error                |                 ON: error                |                 ON: error                |
+|     DL4    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     U5     |                 Not Used                 |                 Not Used                 |                 Not Used                 |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
--------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
 
 @endtable
 
@@ -274,22 +275,21 @@ int main(void)
   }
   
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  //HAL_Init();
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI_SLAVE_Init();
 
   /* Configure LEDs */
-  BSP_LED_Init(BSP_LED1);
   BSP_LED_Init(BSP_LED2);
   BSP_LED_Init(BSP_LED3);
 

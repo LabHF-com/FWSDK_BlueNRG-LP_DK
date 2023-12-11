@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_ECDSA_Sign_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,6 +59,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,7 +96,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |    STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB012V1 |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -140,23 +141,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |             STEVAL-IDB012V1            |
--------------------------------------------------------
-|     DL1    |                Not Used                |
-|     DL2    |   On: success; Slowly blinking: error  |
-|     DL3    |                Not Used                |
-|     DL4    |                Not Used                |
-|     U5     |                Not Used                |
+|  LED name  |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+-------------------------------------------------------------------------------------------------
+|     DL1    |                Not Used                |                Not Used                |
+|     DL2    |   On: success; Slowly blinking: error  |   On: success; Slowly blinking: error  |
+|     DL3    |                Not Used                |                Not Used                |
+|     DL4    |                Not Used                |                Not Used                |
+|     U5     |                Not Used                |                Not Used                |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB012V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -211,12 +212,13 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 
 /* Private variables ---------------------------------------------------------*/
 __IO uint32_t endOfProcess = 0;
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
 uint8_t RBuffer[32] = {0};
 uint8_t SBuffer[32] = {0};
+#endif
 static volatile uint8_t state = 0;
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 void LED_On(void);
@@ -241,17 +243,14 @@ int main(void)
     /* Error during system clock configuration take appropriate action */
     while(1);
   }
-  
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -260,6 +259,7 @@ int main(void)
   /* Set mode to ECDSA signature generation in interrupt mode */
   LL_PKA_SetMode(PKA, LL_PKA_MODE_ECDSA_SIGNATURE);
   
+#ifdef CONFIG_DEVICE_BLUENRG_LPS   
   /* Loads the input buffers to PKA RAM */
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_ORDER_NB_BITS] = prime256v1_Order_len * 8;
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_MOD_NB_BITS] = prime256v1_Prime_len * 8;
@@ -267,35 +267,45 @@ int main(void)
   
   /* Move the input parameters coefficient |a| to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_A_COEFF], prime256v1_absA, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_A_COEFF + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters modulus value p to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_MOD_GF], prime256v1_Prime, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_MOD_GF + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters integer k to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_K], SigGen_k, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_K + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters base point G coordinate x to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_INITIAL_POINT_X], prime256v1_GeneratorX, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_INITIAL_POINT_X + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters base point G coordinate y to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_INITIAL_POINT_Y], prime256v1_GeneratorY, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_INITIAL_POINT_Y + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters hash of message z to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_HASH_E], SigGen_Hash_Msg, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_HASH_E + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters private key d to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_PRIVATE_KEY_D], SigGen_d, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_PRIVATE_KEY_D + prime256v1_Prime_len / 4] = 0;
   
   /* Move the input parameters prime order n to PKA RAM */
   PKA_Memcpy_u8_to_u32(&PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_ORDER_N], prime256v1_Order, prime256v1_Prime_len);
+  /* extra word to zero*/
   PKA_RAM->RAM[PKA_ECDSA_SIGN_IN_ORDER_N + prime256v1_Prime_len / 4] = 0;
+  
+#endif
   
   /* Launch the computation in interrupt mode */
   LL_PKA_Start(PKA);
@@ -303,6 +313,8 @@ int main(void)
   
   /* Wait for the interrupt callback */
   while(endOfProcess != 1);
+  
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
   
   /* Retreive the result and output buffer */
   result = PKA_RAM->RAM[PKA_ECDSA_SIGN_OUT_ERROR];
@@ -316,19 +328,23 @@ int main(void)
     LED_Blinking(LED_BLINK_ERROR);
   } 
   
-  result = Buffercmp(RBuffer, SigGen_R, SigGen_R_len);
+  result = Buffercmp((uint8_t*)RBuffer, (uint8_t*)SigGen_R, SigGen_R_len);
   if (result != 0)
   {
     state = 3;
     LED_Blinking(LED_BLINK_ERROR);
   }  
   
-  result = Buffercmp(SBuffer, SigGen_S, SigGen_S_len);
+  result = Buffercmp((uint8_t*)SBuffer, (uint8_t*)SigGen_S, SigGen_S_len);
   if (result != 0)
   {
     state = 4;
     LED_Blinking(LED_BLINK_ERROR);
   }  
+  
+#endif
+
+
   LED_On();
   state = 0xA;
   printf("** Test successfully. **\n\r\n\r");
@@ -337,13 +353,6 @@ int main(void)
   while (1)
   {
   }
-}
-
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
 }
 
 /**
@@ -359,7 +368,7 @@ static void MX_PKA_Init(void)
   /* Configure NVIC for PKA interrupts */
   /*   Set priority for PKA_IRQn */
   /*   Enable PKA_IRQn */
-  NVIC_SetPriority(PKA_IRQn, 0);  
+  NVIC_SetPriority(PKA_IRQn, IRQ_LOW_PRIORITY );  
   NVIC_EnableIRQ(PKA_IRQn);
   
   LL_PKA_Enable(PKA);

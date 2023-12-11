@@ -166,10 +166,10 @@ __STATIC_INLINE void LL_CRC_ResetCRCCalculationUnit(CRC_TypeDef *CRCx)
   * @rmtoll CR           POLYSIZE      LL_CRC_SetPolynomialSize
   * @param  CRCx CRC Instance
   * @param  PolySize This parameter can be one of the following values:
-  *         @arg @ref LL_CRC_POLYLENGTH_32B
-  *         @arg @ref LL_CRC_POLYLENGTH_16B
-  *         @arg @ref LL_CRC_POLYLENGTH_8B
-  *         @arg @ref LL_CRC_POLYLENGTH_7B
+  * @arg LL_CRC_POLYLENGTH_32B
+  * @arg LL_CRC_POLYLENGTH_16B
+  * @arg LL_CRC_POLYLENGTH_8B
+  * @arg LL_CRC_POLYLENGTH_7B
   * @retval None
   */
 __STATIC_INLINE void LL_CRC_SetPolynomialSize(CRC_TypeDef *CRCx, uint32_t PolySize)
@@ -182,10 +182,10 @@ __STATIC_INLINE void LL_CRC_SetPolynomialSize(CRC_TypeDef *CRCx, uint32_t PolySi
   * @rmtoll CR           POLYSIZE      LL_CRC_GetPolynomialSize
   * @param  CRCx CRC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_CRC_POLYLENGTH_32B
-  *         @arg @ref LL_CRC_POLYLENGTH_16B
-  *         @arg @ref LL_CRC_POLYLENGTH_8B
-  *         @arg @ref LL_CRC_POLYLENGTH_7B
+  * @arg LL_CRC_POLYLENGTH_32B
+  * @arg LL_CRC_POLYLENGTH_16B
+  * @arg LL_CRC_POLYLENGTH_8B
+  * @arg LL_CRC_POLYLENGTH_7B
   */
 __STATIC_INLINE uint32_t LL_CRC_GetPolynomialSize(CRC_TypeDef *CRCx)
 {
@@ -197,10 +197,10 @@ __STATIC_INLINE uint32_t LL_CRC_GetPolynomialSize(CRC_TypeDef *CRCx)
   * @rmtoll CR           REV_IN        LL_CRC_SetInputDataReverseMode
   * @param  CRCx CRC Instance
   * @param  ReverseMode This parameter can be one of the following values:
-  *         @arg @ref LL_CRC_INDATA_REVERSE_NONE
-  *         @arg @ref LL_CRC_INDATA_REVERSE_BYTE
-  *         @arg @ref LL_CRC_INDATA_REVERSE_HALFWORD
-  *         @arg @ref LL_CRC_INDATA_REVERSE_WORD
+  * @arg LL_CRC_INDATA_REVERSE_NONE
+  * @arg LL_CRC_INDATA_REVERSE_BYTE
+  * @arg LL_CRC_INDATA_REVERSE_HALFWORD
+  * @arg LL_CRC_INDATA_REVERSE_WORD
   * @retval None
   */
 __STATIC_INLINE void LL_CRC_SetInputDataReverseMode(CRC_TypeDef *CRCx, uint32_t ReverseMode)
@@ -213,10 +213,10 @@ __STATIC_INLINE void LL_CRC_SetInputDataReverseMode(CRC_TypeDef *CRCx, uint32_t 
   * @rmtoll CR           REV_IN        LL_CRC_GetInputDataReverseMode
   * @param  CRCx CRC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_CRC_INDATA_REVERSE_NONE
-  *         @arg @ref LL_CRC_INDATA_REVERSE_BYTE
-  *         @arg @ref LL_CRC_INDATA_REVERSE_HALFWORD
-  *         @arg @ref LL_CRC_INDATA_REVERSE_WORD
+  * @arg LL_CRC_INDATA_REVERSE_NONE
+  * @arg LL_CRC_INDATA_REVERSE_BYTE
+  * @arg LL_CRC_INDATA_REVERSE_HALFWORD
+  * @arg LL_CRC_INDATA_REVERSE_WORD
   */
 __STATIC_INLINE uint32_t LL_CRC_GetInputDataReverseMode(CRC_TypeDef *CRCx)
 {
@@ -228,8 +228,8 @@ __STATIC_INLINE uint32_t LL_CRC_GetInputDataReverseMode(CRC_TypeDef *CRCx)
   * @rmtoll CR           REV_OUT       LL_CRC_SetOutputDataReverseMode
   * @param  CRCx CRC Instance
   * @param  ReverseMode This parameter can be one of the following values:
-  *         @arg @ref LL_CRC_OUTDATA_REVERSE_NONE
-  *         @arg @ref LL_CRC_OUTDATA_REVERSE_BIT
+  * @arg LL_CRC_OUTDATA_REVERSE_NONE
+  * @arg LL_CRC_OUTDATA_REVERSE_BIT
   * @retval None
   */
 __STATIC_INLINE void LL_CRC_SetOutputDataReverseMode(CRC_TypeDef *CRCx, uint32_t ReverseMode)
@@ -242,8 +242,8 @@ __STATIC_INLINE void LL_CRC_SetOutputDataReverseMode(CRC_TypeDef *CRCx, uint32_t
   * @rmtoll CR           REV_OUT       LL_CRC_GetOutputDataReverseMode
   * @param  CRCx CRC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_CRC_OUTDATA_REVERSE_NONE
-  *         @arg @ref LL_CRC_OUTDATA_REVERSE_BIT
+  * @arg LL_CRC_OUTDATA_REVERSE_NONE
+  * @arg LL_CRC_OUTDATA_REVERSE_BIT
   */
 __STATIC_INLINE uint32_t LL_CRC_GetOutputDataReverseMode(CRC_TypeDef *CRCx)
 {

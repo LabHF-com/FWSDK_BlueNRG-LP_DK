@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_RangeCheck_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,6 +59,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,7 +96,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |    STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB012V1 |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -140,23 +141,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |             STEVAL-IDB012V1            |
--------------------------------------------------------
-|     DL1    |                Not Used                |
-|     DL2    |   On: success; Slowly blinking: error  |
-|     DL3    |                Not Used                |
-|     DL4    |                Not Used                |
-|     U5     |                Not Used                |
+|  LED name  |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+-------------------------------------------------------------------------------------------------
+|     DL1    |                Not Used                |                Not Used                |
+|     DL2    |   On: success; Slowly blinking: error  |   On: success; Slowly blinking: error  |
+|     DL3    |                Not Used                |                Not Used                |
+|     DL4    |                Not Used                |                Not Used                |
+|     U5     |                Not Used                |                Not Used                |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB012V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -205,9 +206,10 @@ uint8_t RBuffer[32] = {0};
 uint8_t SBuffer[32] = {0};
 
 static volatile int state_ERROR_callback = 0x0;
-static volatile int exitResult = 0x0;
-
-static uint32_t PKAStartPoint[16] = { 0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U, 0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};
+uint32_t exitResult[] = {0x0, 0x0};
+uint32_t PKA_muber_of_bits_of_P[] = { 0, 256};
+static uint32_t PKAStartPoint[16] = { 0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U,   /* x */
+                                      0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};  /* y */
 
 static const uint32_t P256_gfp[8] =
 {
@@ -222,15 +224,11 @@ static const uint32_t P256_gfp[8] =
 };
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 void LED_On(void);
 void LED_Blinking(uint32_t Period);
-void LL_PKA_WriteSingleInput( uint32_t index, uint32_t word );
-void LL_PKA_WriteOperand( uint32_t index, int size, const uint32_t* in );
-void LL_PKA_ReadResult( uint32_t index, int size, uint32_t* out );
-uint32_t LL_PKA_ReadSingleOutput( uint32_t index );
+void printInfo(uint32_t indexPKARAM, uint32_t dim);
 
 /* Private user code ---------------------------------------------------------*/
 
@@ -247,41 +245,36 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
+  LL_Init1msTick(SystemCoreClock); 
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_PKA_Init();
   
   LL_PKA_SetMode(PKA, LL_PKA_MODE_COMPARISON);
+ 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
   
   /* Loads the input buffers to PKA RAM */
    /* Set the muber of bits of P (Operators length in bit) */
-  LL_PKA_WriteSingleInput( 1, 256 );
+  LL_PKA_WriteSingleInput( PKA_COMPARISON_NB_BITS, PKA_muber_of_bits_of_P[1] );
   
-  /*  
-  Two inputs, Op1 and Op2.
-  Result is a word equal to 0, 1 or 2:
-  · If Op1 = Op2, then result = 0
-  · If Op1 > Op2, then result = 1
-  · If Op1 < Op2, then result = 2
-*/
-
   /* exitResult = 2 */
   /* Set the coordinate (Op1) */
-  LL_PKA_WriteOperand( 301, 8, &PKAStartPoint[0]);
-
+  LL_PKA_WriteOperand( PKA_COMPARISON_IN_OP1, 8, &PKAStartPoint[0]);
+  printInfo(PKA_COMPARISON_IN_OP1,10);
+  
   /* Set the modulus value p (Op2) */
-  LL_PKA_WriteOperand( 401, 8, P256_gfp );
+  LL_PKA_WriteOperand( PKA_COMPARISON_IN_OP2, 8, P256_gfp );
+  printInfo(PKA_COMPARISON_IN_OP2,10);
   
   while(LL_PKA_IsActiveFlag_BUSY(PKA)); 
   
@@ -299,14 +292,17 @@ int main(void)
   · If Op1 < Op2, then result = 2
 */
   /* Retreive the result and output buffer */
-  exitResult = LL_PKA_ReadSingleOutput( 500 );
-
-  if( exitResult == 2)
+  exitResult[0] = LL_PKA_ReadSingleOutput( PKA_COMPARISON_OUT_RESULT );
+  printInfo(PKA_COMPARISON_OUT_RESULT,2);
+  
+  if( exitResult[0] == 2)
   {
     LED_On();
     printf("** Test successfully. ** \n\r\n\r");
 
   }
+  
+#endif  
   
   /* Infinite loop */
   while (1)
@@ -314,11 +310,15 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
+void printInfo(uint32_t indexPKARAM, uint32_t dim)
 {
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  uint32_t ramAddress = 0;
+  for(int i=indexPKARAM; i<(indexPKARAM+dim); i++)
+  {
+    ramAddress = PKA_RAM_BASE + ( i << 2);
+    printf("%08X PKA_RAM[%d] = %08X \n\r", ramAddress, i, PKA_RAM->RAM[i]);
+  }
+  printf("\n\r");
 }
 
 /**
@@ -365,6 +365,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStruct);
+  
+  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN); 
 }
 
 void PKA_ERROR_callback(void)

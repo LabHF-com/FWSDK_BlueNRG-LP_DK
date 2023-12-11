@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\BLE_Beacon_Scanner.ewp</path>
+    </project>
+    <batchBuild>
+        <batchDefinition>
+            <name>ALL</name>
+            <member>
+                <project>BLE_Beacon_Scanner</project>
+                <configuration>AoA_Locator</configuration>
+            </member>
+            <member>
+                <project>BLE_Beacon_Scanner</project>
+                <configuration>LegacyExtended</configuration>
+            </member>
+            <member>
+                <project>BLE_Beacon_Scanner</project>
+                <configuration>PeriodicAdvSync</configuration>
+            </member>
+        </batchDefinition>
+    </batchBuild>
+</workspace>

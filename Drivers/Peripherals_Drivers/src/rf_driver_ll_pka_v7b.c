@@ -178,9 +178,9 @@ ErrorStatus LL_PKA_VerifyProcess(void)
 /**
   * @brief  Write the PKA RAM with the input data.
   * @param  dataType: select the region of PKA RAM to write:
-  *         @arg LL_PKA_DATA_SK is the K value
-  *         @arg LL_PKA_DATA_PCX is the point X coordinate
-  *         @arg LL_PKA_DATA_PCY is the point Y coordinate
+  * @arg LL_PKA_DATA_SK is the K value
+  * @arg LL_PKA_DATA_PCX is the point X coordinate
+  * @arg LL_PKA_DATA_PCY is the point Y coordinate
   * @param  srcData Source Data
   * @retval ErrorStatus
   */
@@ -245,9 +245,9 @@ ErrorStatus LL_PKA_SetData(uint8_t dataType, uint32_t* srcData)
 /**
   * @brief  Get from the PKA RAM the output data.
   * @param  dataType: select the region of PKA RAM to read:
-  *         @arg LL_PKA_DATA_SK is the K value
-  *         @arg LL_PKA_DATA_PCX is the point X coordinate
-  *         @arg LL_PKA_DATA_PCY is the point Y coordinate
+  * @arg LL_PKA_DATA_SK is the K value
+  * @arg LL_PKA_DATA_PCX is the point X coordinate
+  * @arg LL_PKA_DATA_PCY is the point Y coordinate
   * @param  dataTarget PKA RAM output data
   * @retval ErrorStatus
   */

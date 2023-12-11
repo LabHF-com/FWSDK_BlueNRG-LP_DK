@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : ADC_BatterySensor_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,40 +100,40 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     A0     |        N.A.        |        N.A.        |      Not Used      |
-|     A1     |      Not Used      |      Not Used      |      Not Used      |
-|     A10    |        N.A.        |        N.A.        |      Not Used      |
-|     A11    |      Not Used      |      Not Used      |      Not Used      |
-|     A12    |      Not Used      |      Not Used      |        N.A.        |
-|     A13    |      Not Used      |      Not Used      |        N.A.        |
-|     A14    |      Not Used      |      Not Used      |        N.A.        |
-|     A15    |      Not Used      |      Not Used      |        N.A.        |
-|     A3     |        N.A.        |        N.A.        |      Not Used      |
-|     A4     |      Not Used      |      Not Used      |        N.A.        |
-|     A5     |      Not Used      |      Not Used      |        N.A.        |
-|     A6     |      Not Used      |      Not Used      |        N.A.        |
-|     A7     |      Not Used      |      Not Used      |        N.A.        |
-|     A8     |      Not Used      |      Not Used      |      Not Used      |
-|     A9     |      Not Used      |      Not Used      |        N.A.        |
-|     B0     |      Not Used      |      Not Used      |      Not Used      |
-|     B1     |        N.A.        |        N.A.        |      Not Used      |
-|     B12    |        N.A.        |        N.A.        |      Not Used      |
-|     B13    |        N.A.        |        N.A.        |      Not Used      |
-|     B14    |      Not Used      |      Not Used      |      Not Used      |
-|     B15    |        N.A.        |        N.A.        |      Not Used      |
-|     B2     |      Not Used      |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |      Not Used      |
-|     B6     |        N.A.        |        N.A.        |      Not Used      |
-|     B7     |      Not Used      |      Not Used      |      Not Used      |
-|     B8     |      Not Used      |      Not Used      |        N.A.        |
-|     B9     |      Not Used      |      Not Used      |        N.A.        |
-|     GND    |      Not Used      |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |      Not Used      |
+|  PIN name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     A0     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A12    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A13    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A14    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A15    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A3     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |        N.A.        |
+|     A4     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A5     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A6     |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A7     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B12    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B13    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     B9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -148,24 +150,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -219,7 +221,7 @@ Other peripherals used:
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
-ADC_ConfigChannelTypeDef xChannel;
+ADC_ChannelConfTypeDef xChannel;
 int8_t offset_vinm0 = 0;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -248,26 +250,29 @@ int main(void)
   HAL_Init();
   
   /* Initialization of LEDs */
-  BSP_LED_Init(BSP_LED1);
   BSP_LED_Init(BSP_LED2);
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Parameters for ADC initialization */
   __HAL_RCC_ADCDIG_CLK_ENABLE();
   __HAL_RCC_ADCANA_CLK_ENABLE();
   
     /* Enable the ADC peripheral */
-  HAL_ADC_StructInit(&hadc);
+  hadc.Instance = ADC;
   hadc.Init.DataRatio = USER_RATIO;
   hadc.Init.DataWidth = USER_DATAWIDTH;
+  hadc.Init.InvertOutputBitMode = ADC_INVERT_OUTBIT_SING;
+  hadc.Init.OverrunMode = ADC_NEW_DATA_IS_KEPT;
   hadc.Init.SampleRate = USER_SAMPLERATE;
+  hadc.Init.SamplingMode = ADC_SAMPLING_AT_END;
+  hadc.Init.SequenceLength = ADC_SEQ_LEN_01;
 #if defined(CONFIG_DEVICE_BLUENRG_LPS)
   hadc.Init.SampleRateMsb = USER_SAMPLERATE_MSB;
 #endif
@@ -276,16 +281,15 @@ int main(void)
     Error_Handler();
   }
 
-  /* Start the sampling at end of previous sample */
-  LL_ADC_InputSamplingMode(ADC, LL_ADC_SAMPLING_AT_END);
-  
   /* Set the input channel */
   xChannel.ChannelType = ADC_CH_BATTERY_LEVEL_DETECTOR;
   xChannel.SequenceNumber = ADC_SEQ_POS_01;
+  xChannel.VoltRange = ADC_VIN_RANGE_3V6;
   HAL_ADC_ConfigChannel(&hadc, &xChannel);
 
   /* Set the GAIN */
-  if(LL_ADC_GET_CALIB_GAIN_FOR_VINMX_3V6() != 0xFFF) {
+  if(LL_ADC_GET_CALIB_GAIN_FOR_VINMX_3V6() != 0xFFF)
+  {
     LL_ADC_SetCalibPoint1Gain(ADC, LL_ADC_GET_CALIB_GAIN_FOR_VINMX_3V6() );
 
     offset_vinm0 = LL_ADC_GET_CALIB_OFFSET_FOR_VINMX_3V6();
@@ -300,7 +304,8 @@ int main(void)
       offset_vinm0 = 0;
     }
   }
-  else {
+  else 
+  {
     LL_ADC_SetCalibPoint1Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_3V6);
   }
   
@@ -308,11 +313,11 @@ int main(void)
   HAL_ADC_Start(&hadc);
   
   /* Infinite loop */
-  while (1) {
-    
+  while (1) 
+  {
     /* Check the ADC flag End Of Down Sampler conversion */
-    if( HAL_ADC_PollForConversion(&hadc, 100) != HAL_OK) {
-      
+    if( HAL_ADC_PollForConversion(&hadc, 100) != HAL_OK)
+    {
       /* Get the battery raw value from the Down Sampler */
       nVBattRawVal = HAL_ADC_GetValue(&hadc);
       adcValue = (float)LL_ADC_GetADCConvertedValueBatt(hadc.Instance, nVBattRawVal, USER_DATAWIDTH, offset_vinm0);
@@ -321,7 +326,7 @@ int main(void)
       printf("Battery voltage %d.%03d mV\r\n", PRINT_INT(adcValue),PRINT_FLOAT(adcValue));
       
       /* Toggle the conversion/activity LED */
-      BSP_LED_Toggle(BSP_LED1);
+      BSP_LED_Toggle(BSP_LED2);
       
       /* Add 100 ms of delay between each measure */
       HAL_Delay(100);

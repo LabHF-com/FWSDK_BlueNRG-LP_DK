@@ -86,7 +86,7 @@ void PKA_IRQHandler(void)
   {
     printf("PKA errror: ADDRERR\n\r");
     LL_PKA_ClearFlag_ADDRERR(PKA);
-    PKA_ERROR_callback();
+    //PKA_ERROR_callback();
   }
   
   /* Manage the PKA End of Operation flag */

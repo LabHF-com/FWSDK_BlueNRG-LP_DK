@@ -393,8 +393,8 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabled(SPI_TypeDef *SPIx)
   *         CR1          SSI           LL_SPI_SetMode
   * @param  SPIx SPI Instance
   * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_MODE_MASTER
-  *         @arg @ref LL_SPI_MODE_SLAVE
+  * @arg LL_SPI_MODE_MASTER
+  * @arg LL_SPI_MODE_SLAVE
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode)
@@ -408,8 +408,8 @@ __STATIC_INLINE void LL_SPI_SetMode(SPI_TypeDef *SPIx, uint32_t Mode)
   *         CR1          SSI           LL_SPI_GetMode
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_MODE_MASTER
-  *         @arg @ref LL_SPI_MODE_SLAVE
+  * @arg LL_SPI_MODE_MASTER
+  * @arg LL_SPI_MODE_SLAVE
   */
 __STATIC_INLINE uint32_t LL_SPI_GetMode(SPI_TypeDef *SPIx)
 {
@@ -422,8 +422,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetMode(SPI_TypeDef *SPIx)
   * @rmtoll CR2          FRF           LL_SPI_SetStandard
   * @param  SPIx SPI Instance
   * @param  Standard This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_PROTOCOL_MOTOROLA
-  *         @arg @ref LL_SPI_PROTOCOL_TI
+  * @arg LL_SPI_PROTOCOL_MOTOROLA
+  * @arg LL_SPI_PROTOCOL_TI
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
@@ -436,8 +436,8 @@ __STATIC_INLINE void LL_SPI_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
   * @rmtoll CR2          FRF           LL_SPI_GetStandard
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_PROTOCOL_MOTOROLA
-  *         @arg @ref LL_SPI_PROTOCOL_TI
+  * @arg LL_SPI_PROTOCOL_MOTOROLA
+  * @arg LL_SPI_PROTOCOL_TI
   */
 __STATIC_INLINE uint32_t LL_SPI_GetStandard(SPI_TypeDef *SPIx)
 {
@@ -451,8 +451,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetStandard(SPI_TypeDef *SPIx)
   * @rmtoll CR1          CPHA          LL_SPI_SetClockPhase
   * @param  SPIx SPI Instance
   * @param  ClockPhase This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_PHASE_1EDGE
-  *         @arg @ref LL_SPI_PHASE_2EDGE
+  * @arg LL_SPI_PHASE_1EDGE
+  * @arg LL_SPI_PHASE_2EDGE
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase)
@@ -465,8 +465,8 @@ __STATIC_INLINE void LL_SPI_SetClockPhase(SPI_TypeDef *SPIx, uint32_t ClockPhase
   * @rmtoll CR1          CPHA          LL_SPI_GetClockPhase
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_PHASE_1EDGE
-  *         @arg @ref LL_SPI_PHASE_2EDGE
+  * @arg LL_SPI_PHASE_1EDGE
+  * @arg LL_SPI_PHASE_2EDGE
   */
 __STATIC_INLINE uint32_t LL_SPI_GetClockPhase(SPI_TypeDef *SPIx)
 {
@@ -480,8 +480,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetClockPhase(SPI_TypeDef *SPIx)
   * @rmtoll CR1          CPOL          LL_SPI_SetClockPolarity
   * @param  SPIx SPI Instance
   * @param  ClockPolarity This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_POLARITY_LOW
-  *         @arg @ref LL_SPI_POLARITY_HIGH
+  * @arg LL_SPI_POLARITY_LOW
+  * @arg LL_SPI_POLARITY_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity)
@@ -494,8 +494,8 @@ __STATIC_INLINE void LL_SPI_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPo
   * @rmtoll CR1          CPOL          LL_SPI_GetClockPolarity
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_POLARITY_LOW
-  *         @arg @ref LL_SPI_POLARITY_HIGH
+  * @arg LL_SPI_POLARITY_LOW
+  * @arg LL_SPI_POLARITY_HIGH
   */
 __STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(SPI_TypeDef *SPIx)
 {
@@ -508,14 +508,14 @@ __STATIC_INLINE uint32_t LL_SPI_GetClockPolarity(SPI_TypeDef *SPIx)
   * @rmtoll CR1          BR            LL_SPI_SetBaudRatePrescaler
   * @param  SPIx SPI Instance
   * @param  BaudRate This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV2
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV4
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV8
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV16
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV32
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV64
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV128
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV2
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV4
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV8
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV16
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV32
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV64
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV128
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV256
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t BaudRate)
@@ -528,14 +528,14 @@ __STATIC_INLINE void LL_SPI_SetBaudRatePrescaler(SPI_TypeDef *SPIx, uint32_t Bau
   * @rmtoll CR1          BR            LL_SPI_GetBaudRatePrescaler
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV2
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV4
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV8
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV16
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV32
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV64
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV128
-  *         @arg @ref LL_SPI_BAUDRATEPRESCALER_DIV256
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV2
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV4
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV8
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV16
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV32
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV64
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV128
+  * @arg LL_SPI_BAUDRATEPRESCALER_DIV256
   */
 __STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(SPI_TypeDef *SPIx)
 {
@@ -548,8 +548,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetBaudRatePrescaler(SPI_TypeDef *SPIx)
   * @rmtoll CR1          LSBFIRST      LL_SPI_SetTransferBitOrder
   * @param  SPIx SPI Instance
   * @param  BitOrder This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_LSB_FIRST
-  *         @arg @ref LL_SPI_MSB_FIRST
+  * @arg LL_SPI_LSB_FIRST
+  * @arg LL_SPI_MSB_FIRST
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitOrder)
@@ -562,8 +562,8 @@ __STATIC_INLINE void LL_SPI_SetTransferBitOrder(SPI_TypeDef *SPIx, uint32_t BitO
   * @rmtoll CR1          LSBFIRST      LL_SPI_GetTransferBitOrder
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_LSB_FIRST
-  *         @arg @ref LL_SPI_MSB_FIRST
+  * @arg LL_SPI_LSB_FIRST
+  * @arg LL_SPI_MSB_FIRST
   */
 __STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(SPI_TypeDef *SPIx)
 {
@@ -579,10 +579,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetTransferBitOrder(SPI_TypeDef *SPIx)
   *         CR1          BIDIOE        LL_SPI_SetTransferDirection
   * @param  SPIx SPI Instance
   * @param  TransferDirection This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_FULL_DUPLEX
-  *         @arg @ref LL_SPI_SIMPLEX_RX
-  *         @arg @ref LL_SPI_HALF_DUPLEX_RX
-  *         @arg @ref LL_SPI_HALF_DUPLEX_TX
+  * @arg LL_SPI_FULL_DUPLEX
+  * @arg LL_SPI_SIMPLEX_RX
+  * @arg LL_SPI_HALF_DUPLEX_RX
+  * @arg LL_SPI_HALF_DUPLEX_TX
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t TransferDirection)
@@ -597,10 +597,10 @@ __STATIC_INLINE void LL_SPI_SetTransferDirection(SPI_TypeDef *SPIx, uint32_t Tra
   *         CR1          BIDIOE        LL_SPI_GetTransferDirection
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_FULL_DUPLEX
-  *         @arg @ref LL_SPI_SIMPLEX_RX
-  *         @arg @ref LL_SPI_HALF_DUPLEX_RX
-  *         @arg @ref LL_SPI_HALF_DUPLEX_TX
+  * @arg LL_SPI_FULL_DUPLEX
+  * @arg LL_SPI_SIMPLEX_RX
+  * @arg LL_SPI_HALF_DUPLEX_RX
+  * @arg LL_SPI_HALF_DUPLEX_TX
   */
 __STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(SPI_TypeDef *SPIx)
 {
@@ -612,19 +612,19 @@ __STATIC_INLINE uint32_t LL_SPI_GetTransferDirection(SPI_TypeDef *SPIx)
   * @rmtoll CR2          DS            LL_SPI_SetDataWidth
   * @param  SPIx SPI Instance
   * @param  DataWidth This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_DATAWIDTH_4BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_5BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_6BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_7BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_8BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_9BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_10BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_11BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_12BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_13BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_14BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_15BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_16BIT
+  * @arg LL_SPI_DATAWIDTH_4BIT
+  * @arg LL_SPI_DATAWIDTH_5BIT
+  * @arg LL_SPI_DATAWIDTH_6BIT
+  * @arg LL_SPI_DATAWIDTH_7BIT
+  * @arg LL_SPI_DATAWIDTH_8BIT
+  * @arg LL_SPI_DATAWIDTH_9BIT
+  * @arg LL_SPI_DATAWIDTH_10BIT
+  * @arg LL_SPI_DATAWIDTH_11BIT
+  * @arg LL_SPI_DATAWIDTH_12BIT
+  * @arg LL_SPI_DATAWIDTH_13BIT
+  * @arg LL_SPI_DATAWIDTH_14BIT
+  * @arg LL_SPI_DATAWIDTH_15BIT
+  * @arg LL_SPI_DATAWIDTH_16BIT
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth)
@@ -637,19 +637,19 @@ __STATIC_INLINE void LL_SPI_SetDataWidth(SPI_TypeDef *SPIx, uint32_t DataWidth)
   * @rmtoll CR2          DS            LL_SPI_GetDataWidth
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_DATAWIDTH_4BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_5BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_6BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_7BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_8BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_9BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_10BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_11BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_12BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_13BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_14BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_15BIT
-  *         @arg @ref LL_SPI_DATAWIDTH_16BIT
+  * @arg LL_SPI_DATAWIDTH_4BIT
+  * @arg LL_SPI_DATAWIDTH_5BIT
+  * @arg LL_SPI_DATAWIDTH_6BIT
+  * @arg LL_SPI_DATAWIDTH_7BIT
+  * @arg LL_SPI_DATAWIDTH_8BIT
+  * @arg LL_SPI_DATAWIDTH_9BIT
+  * @arg LL_SPI_DATAWIDTH_10BIT
+  * @arg LL_SPI_DATAWIDTH_11BIT
+  * @arg LL_SPI_DATAWIDTH_12BIT
+  * @arg LL_SPI_DATAWIDTH_13BIT
+  * @arg LL_SPI_DATAWIDTH_14BIT
+  * @arg LL_SPI_DATAWIDTH_15BIT
+  * @arg LL_SPI_DATAWIDTH_16BIT
   */
 __STATIC_INLINE uint32_t LL_SPI_GetDataWidth(SPI_TypeDef *SPIx)
 {
@@ -661,8 +661,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetDataWidth(SPI_TypeDef *SPIx)
   * @rmtoll CR2          FRXTH         LL_SPI_SetRxFIFOThreshold
   * @param  SPIx SPI Instance
   * @param  Threshold This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_RX_FIFO_TH_HALF
-  *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
+  * @arg LL_SPI_RX_FIFO_TH_HALF
+  * @arg LL_SPI_RX_FIFO_TH_QUARTER
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Threshold)
@@ -675,8 +675,8 @@ __STATIC_INLINE void LL_SPI_SetRxFIFOThreshold(SPI_TypeDef *SPIx, uint32_t Thres
   * @rmtoll CR2          FRXTH         LL_SPI_GetRxFIFOThreshold
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_RX_FIFO_TH_HALF
-  *         @arg @ref LL_SPI_RX_FIFO_TH_QUARTER
+  * @arg LL_SPI_RX_FIFO_TH_HALF
+  * @arg LL_SPI_RX_FIFO_TH_QUARTER
   */
 __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOThreshold(SPI_TypeDef *SPIx)
 {
@@ -733,8 +733,8 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledCRC(SPI_TypeDef *SPIx)
   * @rmtoll CR1          CRCL          LL_SPI_SetCRCWidth
   * @param  SPIx SPI Instance
   * @param  CRCLength This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_CRC_8BIT
-  *         @arg @ref LL_SPI_CRC_16BIT
+  * @arg LL_SPI_CRC_8BIT
+  * @arg LL_SPI_CRC_16BIT
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength)
@@ -747,8 +747,8 @@ __STATIC_INLINE void LL_SPI_SetCRCWidth(SPI_TypeDef *SPIx, uint32_t CRCLength)
   * @rmtoll CR1          CRCL          LL_SPI_GetCRCWidth
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_CRC_8BIT
-  *         @arg @ref LL_SPI_CRC_16BIT
+  * @arg LL_SPI_CRC_8BIT
+  * @arg LL_SPI_CRC_16BIT
   */
 __STATIC_INLINE uint32_t LL_SPI_GetCRCWidth(SPI_TypeDef *SPIx)
 {
@@ -827,9 +827,9 @@ __STATIC_INLINE uint32_t LL_SPI_GetTxCRC(SPI_TypeDef *SPIx)
   * @rmtoll CR2          SSOE          LL_SPI_SetNSSMode
   * @param  SPIx SPI Instance
   * @param  NSS This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_NSS_SOFT
-  *         @arg @ref LL_SPI_NSS_HARD_INPUT
-  *         @arg @ref LL_SPI_NSS_HARD_OUTPUT
+  * @arg LL_SPI_NSS_SOFT
+  * @arg LL_SPI_NSS_HARD_INPUT
+  * @arg LL_SPI_NSS_HARD_OUTPUT
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetNSSMode(SPI_TypeDef *SPIx, uint32_t NSS)
@@ -844,9 +844,9 @@ __STATIC_INLINE void LL_SPI_SetNSSMode(SPI_TypeDef *SPIx, uint32_t NSS)
   * @rmtoll CR2          SSOE          LL_SPI_GetNSSMode
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_NSS_SOFT
-  *         @arg @ref LL_SPI_NSS_HARD_INPUT
-  *         @arg @ref LL_SPI_NSS_HARD_OUTPUT
+  * @arg LL_SPI_NSS_SOFT
+  * @arg LL_SPI_NSS_HARD_INPUT
+  * @arg LL_SPI_NSS_HARD_OUTPUT
   */
 __STATIC_INLINE uint32_t LL_SPI_GetNSSMode(SPI_TypeDef *SPIx)
 {
@@ -988,10 +988,10 @@ __STATIC_INLINE uint32_t LL_SPI_IsActiveFlag_FRE(SPI_TypeDef *SPIx)
   * @rmtoll SR           FRLVL         LL_SPI_GetRxFIFOLevel
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_RX_FIFO_EMPTY
-  *         @arg @ref LL_SPI_RX_FIFO_QUARTER_FULL
-  *         @arg @ref LL_SPI_RX_FIFO_HALF_FULL
-  *         @arg @ref LL_SPI_RX_FIFO_FULL
+  * @arg LL_SPI_RX_FIFO_EMPTY
+  * @arg LL_SPI_RX_FIFO_QUARTER_FULL
+  * @arg LL_SPI_RX_FIFO_HALF_FULL
+  * @arg LL_SPI_RX_FIFO_FULL
   */
 __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(SPI_TypeDef *SPIx)
 {
@@ -1003,10 +1003,10 @@ __STATIC_INLINE uint32_t LL_SPI_GetRxFIFOLevel(SPI_TypeDef *SPIx)
   * @rmtoll SR           FTLVL         LL_SPI_GetTxFIFOLevel
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_TX_FIFO_EMPTY
-  *         @arg @ref LL_SPI_TX_FIFO_QUARTER_FULL
-  *         @arg @ref LL_SPI_TX_FIFO_HALF_FULL
-  *         @arg @ref LL_SPI_TX_FIFO_FULL
+  * @arg LL_SPI_TX_FIFO_EMPTY
+  * @arg LL_SPI_TX_FIFO_QUARTER_FULL
+  * @arg LL_SPI_TX_FIFO_HALF_FULL
+  * @arg LL_SPI_TX_FIFO_FULL
   */
 __STATIC_INLINE uint32_t LL_SPI_GetTxFIFOLevel(SPI_TypeDef *SPIx)
 {
@@ -1259,8 +1259,8 @@ __STATIC_INLINE uint32_t LL_SPI_IsEnabledDMAReq_TX(SPI_TypeDef *SPIx)
   * @rmtoll CR2          LDMARX        LL_SPI_SetDMAParity_RX
   * @param  SPIx SPI Instance
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_DMA_PARITY_ODD
-  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+  * @arg LL_SPI_DMA_PARITY_ODD
+  * @arg LL_SPI_DMA_PARITY_EVEN
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity)
@@ -1273,8 +1273,8 @@ __STATIC_INLINE void LL_SPI_SetDMAParity_RX(SPI_TypeDef *SPIx, uint32_t Parity)
   * @rmtoll CR2          LDMARX        LL_SPI_GetDMAParity_RX
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_DMA_PARITY_ODD
-  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+  * @arg LL_SPI_DMA_PARITY_ODD
+  * @arg LL_SPI_DMA_PARITY_EVEN
   */
 __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(SPI_TypeDef *SPIx)
 {
@@ -1286,8 +1286,8 @@ __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_RX(SPI_TypeDef *SPIx)
   * @rmtoll CR2          LDMATX        LL_SPI_SetDMAParity_TX
   * @param  SPIx SPI Instance
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_SPI_DMA_PARITY_ODD
-  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+  * @arg LL_SPI_DMA_PARITY_ODD
+  * @arg LL_SPI_DMA_PARITY_EVEN
   * @retval None
   */
 __STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity)
@@ -1300,8 +1300,8 @@ __STATIC_INLINE void LL_SPI_SetDMAParity_TX(SPI_TypeDef *SPIx, uint32_t Parity)
   * @rmtoll CR2          LDMATX        LL_SPI_GetDMAParity_TX
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_SPI_DMA_PARITY_ODD
-  *         @arg @ref LL_SPI_DMA_PARITY_EVEN
+  * @arg LL_SPI_DMA_PARITY_ODD
+  * @arg LL_SPI_DMA_PARITY_EVEN
   */
 __STATIC_INLINE uint32_t LL_SPI_GetDMAParity_TX(SPI_TypeDef *SPIx)
 {
@@ -1670,10 +1670,10 @@ __STATIC_INLINE uint32_t LL_I2S_IsEnabled(SPI_TypeDef *SPIx)
   *         I2SCFGR      CHLEN         LL_I2S_SetDataFormat
   * @param  SPIx SPI Instance
   * @param  DataFormat This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_DATAFORMAT_16B
-  *         @arg @ref LL_I2S_DATAFORMAT_16B_EXTENDED
-  *         @arg @ref LL_I2S_DATAFORMAT_24B
-  *         @arg @ref LL_I2S_DATAFORMAT_32B
+  * @arg LL_I2S_DATAFORMAT_16B
+  * @arg LL_I2S_DATAFORMAT_16B_EXTENDED
+  * @arg LL_I2S_DATAFORMAT_24B
+  * @arg LL_I2S_DATAFORMAT_32B
   * @retval None
   */
 __STATIC_INLINE void LL_I2S_SetDataFormat(SPI_TypeDef *SPIx, uint32_t DataFormat)
@@ -1687,10 +1687,10 @@ __STATIC_INLINE void LL_I2S_SetDataFormat(SPI_TypeDef *SPIx, uint32_t DataFormat
   *         I2SCFGR      CHLEN         LL_I2S_GetDataFormat
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2S_DATAFORMAT_16B
-  *         @arg @ref LL_I2S_DATAFORMAT_16B_EXTENDED
-  *         @arg @ref LL_I2S_DATAFORMAT_24B
-  *         @arg @ref LL_I2S_DATAFORMAT_32B
+  * @arg LL_I2S_DATAFORMAT_16B
+  * @arg LL_I2S_DATAFORMAT_16B_EXTENDED
+  * @arg LL_I2S_DATAFORMAT_24B
+  * @arg LL_I2S_DATAFORMAT_32B
   */
 __STATIC_INLINE uint32_t LL_I2S_GetDataFormat(SPI_TypeDef *SPIx)
 {
@@ -1702,8 +1702,8 @@ __STATIC_INLINE uint32_t LL_I2S_GetDataFormat(SPI_TypeDef *SPIx)
   * @rmtoll I2SCFGR      CKPOL         LL_I2S_SetClockPolarity
   * @param  SPIx SPI Instance
   * @param  ClockPolarity This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_POLARITY_LOW
-  *         @arg @ref LL_I2S_POLARITY_HIGH
+  * @arg LL_I2S_POLARITY_LOW
+  * @arg LL_I2S_POLARITY_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_I2S_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPolarity)
@@ -1716,8 +1716,8 @@ __STATIC_INLINE void LL_I2S_SetClockPolarity(SPI_TypeDef *SPIx, uint32_t ClockPo
   * @rmtoll I2SCFGR      CKPOL         LL_I2S_GetClockPolarity
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2S_POLARITY_LOW
-  *         @arg @ref LL_I2S_POLARITY_HIGH
+  * @arg LL_I2S_POLARITY_LOW
+  * @arg LL_I2S_POLARITY_HIGH
   */
 __STATIC_INLINE uint32_t LL_I2S_GetClockPolarity(SPI_TypeDef *SPIx)
 {
@@ -1730,11 +1730,11 @@ __STATIC_INLINE uint32_t LL_I2S_GetClockPolarity(SPI_TypeDef *SPIx)
   *         I2SCFGR      PCMSYNC       LL_I2S_SetStandard
   * @param  SPIx SPI Instance
   * @param  Standard This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_STANDARD_PHILIPS
-  *         @arg @ref LL_I2S_STANDARD_MSB
-  *         @arg @ref LL_I2S_STANDARD_LSB
-  *         @arg @ref LL_I2S_STANDARD_PCM_SHORT
-  *         @arg @ref LL_I2S_STANDARD_PCM_LONG
+  * @arg LL_I2S_STANDARD_PHILIPS
+  * @arg LL_I2S_STANDARD_MSB
+  * @arg LL_I2S_STANDARD_LSB
+  * @arg LL_I2S_STANDARD_PCM_SHORT
+  * @arg LL_I2S_STANDARD_PCM_LONG
   * @retval None
   */
 __STATIC_INLINE void LL_I2S_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
@@ -1748,11 +1748,11 @@ __STATIC_INLINE void LL_I2S_SetStandard(SPI_TypeDef *SPIx, uint32_t Standard)
   *         I2SCFGR      PCMSYNC       LL_I2S_GetStandard
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2S_STANDARD_PHILIPS
-  *         @arg @ref LL_I2S_STANDARD_MSB
-  *         @arg @ref LL_I2S_STANDARD_LSB
-  *         @arg @ref LL_I2S_STANDARD_PCM_SHORT
-  *         @arg @ref LL_I2S_STANDARD_PCM_LONG
+  * @arg LL_I2S_STANDARD_PHILIPS
+  * @arg LL_I2S_STANDARD_MSB
+  * @arg LL_I2S_STANDARD_LSB
+  * @arg LL_I2S_STANDARD_PCM_SHORT
+  * @arg LL_I2S_STANDARD_PCM_LONG
   */
 __STATIC_INLINE uint32_t LL_I2S_GetStandard(SPI_TypeDef *SPIx)
 {
@@ -1764,10 +1764,10 @@ __STATIC_INLINE uint32_t LL_I2S_GetStandard(SPI_TypeDef *SPIx)
   * @rmtoll I2SCFGR      I2SCFG        LL_I2S_SetTransferMode
   * @param  SPIx SPI Instance
   * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_MODE_SLAVE_TX
-  *         @arg @ref LL_I2S_MODE_SLAVE_RX
-  *         @arg @ref LL_I2S_MODE_MASTER_TX
-  *         @arg @ref LL_I2S_MODE_MASTER_RX
+  * @arg LL_I2S_MODE_SLAVE_TX
+  * @arg LL_I2S_MODE_SLAVE_RX
+  * @arg LL_I2S_MODE_MASTER_TX
+  * @arg LL_I2S_MODE_MASTER_RX
   * @retval None
   */
 __STATIC_INLINE void LL_I2S_SetTransferMode(SPI_TypeDef *SPIx, uint32_t Mode)
@@ -1780,10 +1780,10 @@ __STATIC_INLINE void LL_I2S_SetTransferMode(SPI_TypeDef *SPIx, uint32_t Mode)
   * @rmtoll I2SCFGR      I2SCFG        LL_I2S_GetTransferMode
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2S_MODE_SLAVE_TX
-  *         @arg @ref LL_I2S_MODE_SLAVE_RX
-  *         @arg @ref LL_I2S_MODE_MASTER_TX
-  *         @arg @ref LL_I2S_MODE_MASTER_RX
+  * @arg LL_I2S_MODE_SLAVE_TX
+  * @arg LL_I2S_MODE_SLAVE_RX
+  * @arg LL_I2S_MODE_MASTER_TX
+  * @arg LL_I2S_MODE_MASTER_RX
   */
 __STATIC_INLINE uint32_t LL_I2S_GetTransferMode(SPI_TypeDef *SPIx)
 {
@@ -1818,8 +1818,8 @@ __STATIC_INLINE uint32_t LL_I2S_GetPrescalerLinear(SPI_TypeDef *SPIx)
   * @rmtoll I2SPR        ODD           LL_I2S_SetPrescalerParity
   * @param  SPIx SPI Instance
   * @param  PrescalerParity This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_EVEN
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_ODD
+  * @arg LL_I2S_PRESCALER_PARITY_EVEN
+  * @arg LL_I2S_PRESCALER_PARITY_ODD
   * @retval None
   */
 __STATIC_INLINE void LL_I2S_SetPrescalerParity(SPI_TypeDef *SPIx, uint32_t PrescalerParity)
@@ -1832,8 +1832,8 @@ __STATIC_INLINE void LL_I2S_SetPrescalerParity(SPI_TypeDef *SPIx, uint32_t Presc
   * @rmtoll I2SPR        ODD           LL_I2S_GetPrescalerParity
   * @param  SPIx SPI Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_EVEN
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_ODD
+  * @arg LL_I2S_PRESCALER_PARITY_EVEN
+  * @arg LL_I2S_PRESCALER_PARITY_ODD
   */
 __STATIC_INLINE uint32_t LL_I2S_GetPrescalerParity(SPI_TypeDef *SPIx)
 {

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : BSP_LedButton_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      Not Used      |
 |     A11    |       Not Used      |      Not Used      |
@@ -134,24 +136,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |
---------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |               Not Used               |               Not Used               |               Not Used               |
-|     DL2    |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |
-|     DL3    |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |
-|     DL4    |               Not Used               |               Not Used               |               Not Used               |
-|     U5     |             Toggling LED             |             Toggling LED             |             Toggling LED             |
+|  LED name  |            STEVAL-IDB010V1           |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |            STEVAL-IDB013V1           |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |               Not Used               |               Not Used               |               Not Used               |               Not Used               |               Not Used               |
+|     DL2    |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |      Turn ON if PUSH1 is pressed     |
+|     DL3    |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |   Toggle each time PUSH2 is pressed  |
+|     DL4    |               Not Used               |               Not Used               |               Not Used               |               Not Used               |               Not Used               |
+|     U5     |             Toggling LED             |             Toggling LED             |             Toggling LED             |             Toggling LED             |             Toggling LED             |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |
-------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |
-|      PUSH2     |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |
-|      RESET     |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |
+|   BUTTON name  |            STEVAL-IDB010V1           |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |            STEVAL-IDB013V1           |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |    If it is pressed, DL2 stays ON    |
+|      PUSH2     |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |   DL3 toggles each time was pressed  |
+|      RESET     |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LP           |           Reset BlueNRG-LPS          |           Reset BlueNRG-LPS          |
 
 @endtable
 
@@ -168,7 +170,7 @@ In this example, PUSH2 is configured to generate an interrupt on each rising edg
 
 **/
    
-/* Includes ------------------------------------------------------------------*/
+/* Private includes ----------------------------------------------------------*/
 #include "rf_driver_ll_rcc.h"
 #include "rf_driver_ll_bus.h"
 #include "rf_driver_ll_system.h"
@@ -180,18 +182,12 @@ In this example, PUSH2 is configured to generate an interrupt on each rising edg
 #include "rf_driver_ll_usart.h"
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#include "bluenrg_lp_evb_config.h"
 #endif
 #include "rf_driver_ll_gpio.h"
 #if defined(USE_FULL_ASSERT)
 #include "rf_driver_assert.h"
 #endif /* USE_FULL_ASSERT */
-
-
-/* Private includes ----------------------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#include "bluenrg_lp_evb_config.h"
-#endif
-
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -220,11 +216,13 @@ int main(void)
   }
   
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize the LEDs */
   BSP_LED_Init(BSP_LED_GREEN);
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   BSP_LED_Init(BSP_LED_BLUE);
+#endif
   BSP_LED_Init(BSP_LED_RED);
   
   /* Initialize the button BSP_PUSH1 */
@@ -242,15 +240,14 @@ int main(void)
     else {
       BSP_LED_Off(BSP_LED_GREEN);
     }
-    
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
     /* Toggle the LED */
     LL_mDelay(100);
     BSP_LED_Toggle(BSP_LED_BLUE);
+#endif
   }
   
 }
-
-
 
 
 /******************************************************************************/

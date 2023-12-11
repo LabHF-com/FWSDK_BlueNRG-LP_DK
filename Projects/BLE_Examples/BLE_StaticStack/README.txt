@@ -9,7 +9,7 @@ If you want to customize and build it, the following steps need to be followed.
 Prerequisites
 ------
 Install GNU ARM Embedded Toolchain and add the binary folder in the system PATH. The utility
-create_sym_lib.exe in BlueNRG-1 SDK Utility folder needs the following utilities:
+create_sym_lib.exe in Utility folder needs the following utilities:
 - arm-none-eabi-readelf 
 - arm-none-eabi-gcc
 - arm-none-eabi-ar

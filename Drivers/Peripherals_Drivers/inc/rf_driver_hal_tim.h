@@ -780,6 +780,7 @@ __STATIC_INLINE uint32_t HAL_TIM_GetPeriphClock(TIM_TypeDef *TIMx)
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
 
 
+
 /**
   * @}
   */
@@ -1513,6 +1514,7 @@ mode.
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
 
 
+
 /**
   * @brief  Get the TIM Capture Compare Register value on runtime.
   * @param __HANDLE__ TIM handle.
@@ -1543,6 +1545,7 @@ mode.
  ((__CHANNEL__) == TIM_CHANNEL_3) ? ((__HANDLE__)->Instance->CCR3) :\
  ((__HANDLE__)->Instance->CCR4))
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
+
 
 
 /**
@@ -1576,6 +1579,7 @@ mode.
          ((__HANDLE__)->Instance->CCMR3 |= TIM_CCMR3_OC4PE))
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
           
+          
 
 /**
   * @brief  Reset the TIM Output compare preload.
@@ -1608,6 +1612,7 @@ mode.
          ((__HANDLE__)->Instance->CCMR2 &= (uint16_t)~TIM_CCMR2_OC4PE))
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
           
+          
      
 
 /**
@@ -1618,8 +1623,7 @@ mode.
   *        enabled)
   * @retval None
   */
-#define __HAL_TIM_URS_ENABLE(__HANDLE__) \
-    ((__HANDLE__)->Instance->CR1|= TIM_CR1_URS)
+#define __HAL_TIM_URS_ENABLE(__HANDLE__)    ((__HANDLE__)->Instance->CR1|= TIM_CR1_URS)
 
 /**
   * @brief  Reset the Update Request Source (URS) bit of the TIMx_CR1 register.
@@ -1677,9 +1681,9 @@ mode.
   * @note ex: @ref __LL_TIM_CALC_DEADTIME (80000000, @ref LL_TIM_GetClockDivision (), 120);
   * @param  __TIMCLK__ timer input clock frequency (in Hz)
   * @param  __CKD__ This parameter can be one of the following values:
-  *         @arg @ref LL_TIM_CLOCKDIVISION_DIV1
-  *         @arg @ref LL_TIM_CLOCKDIVISION_DIV2
-  *         @arg @ref LL_TIM_CLOCKDIVISION_DIV4
+  * @arg LL_TIM_CLOCKDIVISION_DIV1
+  * @arg LL_TIM_CLOCKDIVISION_DIV2
+  * @arg LL_TIM_CLOCKDIVISION_DIV4
   * @param  __DT__ deadtime duration (in ns)
   * @retval DTG[0:7]
   */
@@ -1722,6 +1726,7 @@ mode.
 #define TIM_CCER_CCxE_MASK  ((uint32_t)(TIM_CCER_CC1E | TIM_CCER_CC2E | TIM_CCER_CC3E | TIM_CCER_CC4E))
 #define TIM_CCER_CCxNE_MASK ((uint32_t)(TIM_CCER_CC1NE))
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
+
 
           
 /**
@@ -1803,6 +1808,7 @@ mode.
                                             ((__CHANNEL__) == TIM_CHANNEL_4) || \
                                             ((__CHANNEL__) == TIM_CHANNEL_ALL))
 #endif /* CONFIG_DEVICE_BLUENRG_LPS */
+
 
 
 #define IS_TIM_OPM_CHANNELS(__CHANNEL__)   (((__CHANNEL__) == TIM_CHANNEL_1) || \

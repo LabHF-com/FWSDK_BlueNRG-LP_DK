@@ -31,7 +31,6 @@
 #include "hci_const.h"
 #include "user_timer.h"
 #include "bluenrg_lp_types.h"
-#include "bluenrg_lp_gap.h"
 #include "bluenrg_lp_aci.h"
 #include "bluenrg_lp_hci_le.h"
 #include "SDK_EVAL_Config.h"

@@ -100,7 +100,7 @@ void Error_Handler(void);
 
 #endif /* STEVAL_IDB011V1 */
 
-#if defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB012V1)
  /* I2S peripheral configuration defines */
 #define I2S_INSTANCE                    SPI3
 #define SPIx_IRQHandler                 SPI3_IRQHandler

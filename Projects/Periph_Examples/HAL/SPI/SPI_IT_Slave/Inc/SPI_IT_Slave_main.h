@@ -136,8 +136,7 @@ extern "C" {
 #define SPI_SLAVE_IRQn                         SPI3_IRQn  
 #define SPI_SLAVE_IRQHandler                   SPI3_IRQHandler
 
-  
-#endif  /* defined(STEVAL_IDB012V1)   */
+#endif /* STEVAL_IDB012V1   */
 
 
   

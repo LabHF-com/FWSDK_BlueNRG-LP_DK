@@ -517,8 +517,8 @@ void LL_I2S_StructInit(LL_I2S_InitTypeDef *I2S_InitStruct)
   * @param  SPIx SPI Instance
   * @param  PrescalerLinear value Min_Data=0x02 and Max_Data=0xFF.
   * @param  PrescalerParity This parameter can be one of the following values:
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_EVEN
-  *         @arg @ref LL_I2S_PRESCALER_PARITY_ODD
+  * @arg LL_I2S_PRESCALER_PARITY_EVEN
+  * @arg LL_I2S_PRESCALER_PARITY_ODD
   * @retval None
   */
 void LL_I2S_ConfigPrescaler(SPI_TypeDef *SPIx, uint32_t PrescalerLinear, uint32_t PrescalerParity)

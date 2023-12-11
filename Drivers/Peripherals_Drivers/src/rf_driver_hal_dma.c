@@ -201,7 +201,7 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *hdma)
   }
 
   /* Set peripheral request  to DMAMUX channel */
-  hdma->DMAmuxChannel->CCR = (hdma->Init.Request & DMAMUX_CxCR_DMAREQ_ID);
+  hdma->DMAmuxChannel->CxCR = (hdma->Init.Request & DMAMUX_CxCR_DMAREQ_ID);
 
   /* Initialize the error code */
   hdma->ErrorCode = HAL_DMA_ERROR_NONE;
@@ -249,7 +249,7 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *hdma)
   hdma->DMAmuxChannel = (DMAMUX1_Channel0 + (hdma->ChannelIndex >> 2U));
 
   /* Reset the DMAMUX channel that corresponds to the DMA channel */
-  hdma->DMAmuxChannel->CCR = 0U;
+  hdma->DMAmuxChannel->CxCR = 0U;
 
   /* Clean callbacks */
   hdma->XferCpltCallback = NULL;

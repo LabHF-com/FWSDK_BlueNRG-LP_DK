@@ -98,17 +98,7 @@ extern "C" {
 #define TIMx_BKIN_PORT                                  GPIOA 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
-/**TIMx GPIO Configuration  
-  PB5 / AF2   ------> TIM17_BKIN 
-  */
-#define TIMx_BKIN_PIN                                   LL_GPIO_PIN_5
-#define TIMx_BKIN_AF                                    LL_GPIO_AF_2
-#define TIMx_BKIN_PORT                                  GPIOB 
-#endif /* STEVAL_IDB012V1 */
-
-
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                            TIM17
 #define EnableClock_TIMx()              __HAL_RCC_TIM17_CLK_ENABLE() 
@@ -121,7 +111,14 @@ extern "C" {
 #define TIMx_CH1_AF                     GPIO_AF2_TIM17
 #define TIMx_CH1_PORT                   GPIOB
 
-#endif /* STEVAL_IDB012V1 */
+/**TIMx GPIO Configuration  
+  PB5 / AF2   ------> TIM17_BKIN 
+  */
+#define TIMx_BKIN_PIN                                   LL_GPIO_PIN_5
+#define TIMx_BKIN_AF                                    LL_GPIO_AF_2
+#define TIMx_BKIN_PORT                                  GPIOB 
+#endif /* STEVAL_IDB012V1   */
+
 
 
   

@@ -59,7 +59,7 @@ void SysTick_IRQHandler(void)
 /* please refer to the startup file.                                          */
 /******************************************************************************/
 
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
   * @brief  This function handles External line interrupt request.
   * @param  None

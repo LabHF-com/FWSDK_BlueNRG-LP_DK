@@ -76,7 +76,7 @@ void Error_Callback(void);
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 
@@ -120,6 +120,8 @@ void Error_Callback(void);
 
 
 
+
+
 #ifdef STEVAL_IDB011V1
   /**USART1 GPIO Configuration    
   PB3/AF0   ------> USART1_nCTS (FTDI Green)
@@ -155,6 +157,7 @@ void Error_Callback(void);
 #define LED2_GPIO_PORT                          GPIOB
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
+
 
 /* Define used to enable time-out management*/
 #define USE_TIMEOUT       0

@@ -592,7 +592,7 @@ void DevicePowerSaveProcedure(void)
     wakeupIO.LPU_enable = 0;
     if (Button == BSP_PUSH1)
     {
-      wakeupIO.IO_Mask_High_polarity = WAKEUP_PA10;
+      wakeupIO.IO_Mask_High_polarity = BSP_PUSH1_WAKEUP;
     }
     /* Power Save Request */
     HAL_PWR_MNGR_Request(POWER_SAVE_LEVEL_STOP_NOTIMER, wakeupIO, &stopLevel);
@@ -813,9 +813,9 @@ void aci_gatt_srv_attribute_modified_event(uint16_t Connection_Handle,
 #endif  
 }
 
-void aci_gatt_read_permit_req_event(uint16_t Connection_Handle,
-                                    uint16_t Attribute_Handle,
-                                    uint16_t Offset)
+void aci_gatt_srv_read_event(uint16_t Connection_Handle,
+                             uint16_t Attribute_Handle,
+                             uint16_t Offset)
 {
   HID_Lib_aci_gatt_read_permit_req_event(Connection_Handle, Attribute_Handle,
                                          Offset);

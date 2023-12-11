@@ -234,6 +234,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=PASSKEY_RANDOM_PIN</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -1315,6 +1316,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=PASSKEY_RANDOM_PIN</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -2397,6 +2399,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=PASSKEY_FIXED_PIN</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -3478,6 +3481,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=PASSKEY_FIXED_PIN</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -4560,6 +4564,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=JUST_WORKS</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -5642,6 +5647,7 @@
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=JUST_WORKS</state>
         <state>ADD_WEAK_DEFINITION</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -6724,6 +6730,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=NUMERIC_COMPARISON</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -7805,6 +7812,7 @@
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>SECURITY_MODE=NUMERIC_COMPARISON</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -8687,10 +8695,10 @@
   <group>
       <name>CMSIS</name>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
       </file>
     </group>
   <group>
@@ -8771,13 +8779,13 @@
       <configuration>Slave_NumericComp</configuration>
       </excluded>
     <file>
-        <name>$PROJ_DIR$/../../Src/central/rf_device_it.c</name>
-      </file>
-    <file>
         <name>$PROJ_DIR$/../../Src/central/C_main.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../Src/central/gatt_db.c</name>
+      </file>
+    <file>
+        <name>$PROJ_DIR$/../../Src/central/rf_device_it.c</name>
       </file>
     </group>
   <group>
@@ -8792,13 +8800,13 @@
         <name>$PROJ_DIR$/../../Src/peripheral/BLE_Security_Peripheral.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../Src/peripheral/rf_device_it.c</name>
-      </file>
-    <file>
         <name>$PROJ_DIR$/../../Src/peripheral/gatt_db.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../Src/peripheral/P_main.c</name>
+      </file>
+    <file>
+        <name>$PROJ_DIR$/../../Src/peripheral/rf_device_it.c</name>
       </file>
     </group>
   </group>

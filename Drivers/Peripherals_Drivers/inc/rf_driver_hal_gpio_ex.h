@@ -47,6 +47,18 @@
   * @{
   */
 
+/**
+  * @brief The follow Alternate Function values are not available on all devices.
+  */
+#define GPIO_AF0                ((uint8_t)0x00) 
+#define GPIO_AF1                ((uint8_t)0x01) 
+#define GPIO_AF2                ((uint8_t)0x02) 
+#define GPIO_AF3                ((uint8_t)0x03) 
+#define GPIO_AF4                ((uint8_t)0x04) 
+#define GPIO_AF5                ((uint8_t)0x05) 
+#define GPIO_AF6                ((uint8_t)0x06) 
+#define GPIO_AF7                ((uint8_t)0x07) 
+
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 
 /**
@@ -155,7 +167,8 @@
 #endif /* TIM2 */
 
 /**
-  * @brief   AF 5 selection
+  * @brief   AF 5 selection 
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   */
 #define GPIO_AF5_ADC           ((uint8_t)0x05)  /*!< ADC Alternate Function mapping                 */
 #define GPIO_AF5_SWDIO         ((uint8_t)0x05)  /*!< SWDIO Alternate Function mapping               */
@@ -176,6 +189,7 @@
 
 /**
   * @brief   AF 7 selection
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   */
 #define GPIO_AF7_RF_DTB        ((uint8_t)0x07)  /*!< RF DTB Alternate Function mapping              */
 #define GPIO_AF7_SWDIO         ((uint8_t)0x07)  /*!< SWDIO Alternate Function mapping               */
@@ -185,7 +199,7 @@
 #define IS_GPIO_AF(AF)         ((AF) <= (uint8_t)0x07)
 
    
-#endif /* CONFIG_DEVICE_BLUENRG_LP || CONFIG_DEVICE_BLUENRG_LPS */
+#endif
    
    
 

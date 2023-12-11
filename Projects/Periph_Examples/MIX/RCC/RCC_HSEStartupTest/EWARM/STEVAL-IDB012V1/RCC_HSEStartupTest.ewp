@@ -1134,6 +1134,9 @@
     <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/ST/hal/Src/osal_memcpy.s</name>
       </file>
+    <file>
+        <name>$PROJ_DIR$/../../../../../../../Middlewares/ST/hal/Src/osal.c</name>
+      </file>
     </group>
   </group>
 </project>

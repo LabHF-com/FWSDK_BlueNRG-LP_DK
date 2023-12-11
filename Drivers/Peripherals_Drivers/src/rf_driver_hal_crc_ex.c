@@ -76,8 +76,8 @@
   * @param  hcrc CRC handle
   * @param  Pol CRC generating polynomial (7, 8, 16 or 32-bit long).
   *         This parameter is written in normal representation, e.g.
-  *         @arg for a polynomial of degree 7, X^7 + X^6 + X^5 + X^2 + 1 is written 0x65
-  *         @arg for a polynomial of degree 16, X^16 + X^12 + X^5 + 1 is written 0x1021
+  * @arg for a polynomial of degree 7, X^7 + X^6 + X^5 + X^2 + 1 is written 0x65
+  * @arg for a polynomial of degree 16, X^16 + X^12 + X^5 + 1 is written 0x1021
   * @param  PolyLength CRC polynomial length.
   *         This parameter can be one of the following values:
   *          @arg @ref CRC_POLYLENGTH_7B  7-bit long CRC (generating polynomial of degree 7)

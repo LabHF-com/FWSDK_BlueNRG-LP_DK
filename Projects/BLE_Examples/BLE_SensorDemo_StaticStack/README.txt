@@ -17,8 +17,9 @@ How to compile application
     - RNG
     - GAP and GATT profiles
     - HAL_VTimer
-- Include bluenrg_lp_stack_init_if.c and libbluenrg_lp_static_stack.a in your project
-  (from Middlewares\ST\Bluetooth_LE\Library\static_stack).
+    - HAL Miscutil
+- Include bluenrg_lp_stack_init_if.c and liblp_stack.a in your project
+  (from Middlewares\ST\Bluetooth_LE\Library\static).
 - Define MEMORY_FLASH_APP_OFFSET for linker, depending on the Flash size occupied by the BlueNRG
   static stack image. E.g. if static stack image uses the Flash till address 0x1005a438, offset
   must be equal to 0x1A800, which is the offset of the first available Flash location aligned to

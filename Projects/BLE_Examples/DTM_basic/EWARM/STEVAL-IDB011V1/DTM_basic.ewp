@@ -6645,36 +6645,6 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\libbluenrg_lp_stack.a</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_2mc_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_cos_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_cte_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_dle_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_eas_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_mas_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_pas_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_pcl_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_pri_api_stubs.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_sec_api_stubs.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Src\stack_user_cfg.c</name>
             </file>
         </group>
@@ -6753,7 +6723,7 @@
         <group>
             <name>Queued_Write</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Queued_Write\Src\att_pwrq.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\BLE_Application\Queued_Write\Src\eatt_pwrq.c</name>
             </file>
         </group>
         <group>

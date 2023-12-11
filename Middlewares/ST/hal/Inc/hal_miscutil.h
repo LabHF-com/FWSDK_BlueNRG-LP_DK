@@ -27,9 +27,15 @@
 
 #define DIE_SW_ID_BLUENRG_LP  ((uint8_t)3)
 #define DIE_SW_ID_BLUENRG_LPS ((uint8_t)5)
+#define DIE_SW_ID_BLUENRG_LPF ((uint8_t)6)
 #define JTAG_ID_CODE_LP       ((uint32_t)0x0201E041)
 #define JTAG_ID_CODE_LPS      ((uint32_t)0x02028041)
+#define JTAG_ID_CODE_LPF      ((uint32_t)0x02032041)
 #define DIE_SW_ID_UNKOWN      ((uint8_t)0xFF)
+
+#define RSSI_INVALID          127
+
+#define DEFAULT_TX_PA_LEVEL    31
 
 /**
  * @brief A structure that represents part information details
@@ -104,5 +110,28 @@ void HAL_SetHighPower(FunctionalState state);
   */
 void HAL_RXTX_SEQ_IRQHandler(void);
 
+uint8_t HAL_DBmToPALevel(int8_t TX_dBm);
+
+uint8_t HAL_DBmToPALevelGe(int8_t TX_dBm);
+
+int8_t HAL_PALevelToDBm(uint8_t PA_Level);
+
+void HAL_ReadTransmitPower(int8_t *Min_Tx_Power, int8_t *Max_Tx_Power);
+
+uint8_t HAL_GetMaxPALevel(void);
+
+uint8_t HAL_GetDefaultPALevel(void);
+
+void HAL_SetHighPower(FunctionalState state);
+
+int8_t HAL_CalculateRSSI(void);
+
+int8_t HAL_UpdateAvgRSSI(int8_t avg_rssi, int8_t rssi, uint8_t rssi_filter_coeff);
+
+void HAL_AntIdxRemap(uint8_t AntPattLen, uint8_t *pAntRamTable, const uint8_t* pAntPatt);
+
+void HAL_ToneStart(uint8_t RF_Channel, uint8_t Offset, uint8_t PA_Level);
+
+void HAL_ToneStop(void);
 
 #endif /* __HAL_MISCUTIL_H__ */

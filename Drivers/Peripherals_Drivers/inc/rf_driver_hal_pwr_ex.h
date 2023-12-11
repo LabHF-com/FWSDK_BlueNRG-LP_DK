@@ -91,6 +91,7 @@
   */
 /* Note: SMPS voltage is trimmed during device production to control
          the actual voltage level variation from device to device. */
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V20  LL_PWR_SMPS_OUTLVL_1V2     /*!< SMPS step down converter supply output voltage 1.20V */
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V25  LL_PWR_SMPS_OUTLVL_1V25    /*!< SMPS step down converter supply output voltage 1.25V */
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V30  LL_PWR_SMPS_OUTLVL_1V3     /*!< SMPS step down converter supply output voltage 1.30V */
@@ -107,9 +108,8 @@
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V85  LL_PWR_SMPS_OUTLVL_1V85    /*!< SMPS step down converter supply output voltage 1.85V */
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V90  LL_PWR_SMPS_OUTLVL_1V9     /*!< SMPS step down converter supply output voltage 1.90V */
 #define PWR_SMPS_OUTPUT_VOLTAGE_1V95  LL_PWR_SMPS_OUTLVL_1V95    /*!< SMPS step down converter supply output voltage 1.95V */
-/**
-  * @}
-  */
+#endif
+
 
 /**
   * @}

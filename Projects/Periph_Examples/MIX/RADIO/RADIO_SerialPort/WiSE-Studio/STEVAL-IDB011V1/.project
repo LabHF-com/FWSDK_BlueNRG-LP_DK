@@ -136,6 +136,11 @@
     <type>1</type>
     <locationURI>PARENT-7-PROJECT_LOC/Middlewares/ST/hal/Src/osal_memcpy.s</locationURI>
     </link>
+  <link>
+      <name>Hal/osal.c</name>
+    <type>1</type>
+    <locationURI>PARENT-7-PROJECT_LOC/Middlewares/ST/hal/Src/osal.c</locationURI>
+    </link>
   </linkedResources>
 </projectDescription>
 

@@ -99,7 +99,7 @@ void UART_Error_Callback(void);
 #define EnableClock_USART_RX_PORT          __HAL_RCC_GPIOA_CLK_ENABLE
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 #define USARTx                             USART1
 #define USARTx_IRQn                        USART1_IRQn
 #define USARTx_IRQHandler                  USART1_IRQHandler
@@ -113,11 +113,11 @@ void UART_Error_Callback(void);
 #define USARTx_RX_PIN                      GPIO_PIN_0
 #define USARTx_RX_PORT                     GPIOB
 #define USARTx_RX_AF                       GPIO_AF0_USART1 
-#define EnableClock_USART                  __HAL_RCC_USART_CLK_ENABLE
-#define DisableClock_USART                 __HAL_RCC_USART_CLK_DISABLE
-#define EnableClock_USART_TX_PORT          __HAL_RCC_GPIOA_CLK_ENABLE
-#define EnableClock_USART_RX_PORT          __HAL_RCC_GPIOB_CLK_ENABLE
-#endif /* STEVAL_IDB012V1 */
+#define EnableClock_USART()                __HAL_RCC_USART_CLK_ENABLE()
+#define DisableClock_USART()               __HAL_RCC_USART_CLK_DISABLE()
+#define EnableClock_USART_TX_PORT()        __HAL_RCC_GPIOA_CLK_ENABLE()
+#define EnableClock_USART_RX_PORT()        __HAL_RCC_GPIOA_CLK_ENABLE()
+#endif /* STEVAL_IDB012V1   */
 
 #ifdef __cplusplus
 }

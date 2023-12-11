@@ -27,6 +27,10 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "rf_driver_hal.h"
+  
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+#include "bluenrg_lp_evb_config.h"
+#endif
 
 /* Private includes ----------------------------------------------------------*/
 

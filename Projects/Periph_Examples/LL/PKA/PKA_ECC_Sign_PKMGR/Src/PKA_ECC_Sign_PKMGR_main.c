@@ -52,7 +52,6 @@ uint8_t SBuffer[32] = {0};
 /* Private function prototypes -----------------------------------------------*/
 void PrintBuffer(uint32_t* pBuffer, uint32_t BufferLength);
 uint8_t Buffercmp(uint32_t* pBuffer1, uint32_t* pBuffer2, uint32_t BufferLength);
-static void LL_Init(void);
 void CallbackNewPointA(PKAMGR_ResultStatus errorCode, void *args); 
 void CallbackNewPointB(PKAMGR_ResultStatus errorCode, void *args); 
 void CallbackNewPointC(PKAMGR_ResultStatus errorCode, void *args); 
@@ -66,27 +65,25 @@ static uint32_t RandomKA[8] = {0};
 * @retval int
 */
 int main(void)
-{ 
+{
+  uint32_t secretKey[8];
+  uint8_t i;
+   
   /* System initialization function */
   if (SystemInit(SYSCLK_32M, RADIO_SYSCLK_NONE) != SUCCESS)
   {
     /* Error during system clock configuration take appropriate action */
     while(1);
   }
+ 
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
-  /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
-  
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
    
   printf("\n\r\tPKA_ECC_Sign_PKMGR\tMANAGER VERSION\n\r\n\r");
 #ifdef STEVAL_IDB011V1
@@ -107,18 +104,24 @@ int main(void)
     Error_Handler();
   }
 
-  /* ***** PROCEDURE FOR A ***** */
-  if( PKAMGR_StartP256PublicKeyGeneration(&CallbackNewPointA) != PKAMGR_SUCCESS)
+  /* ***** PROCEDURE FOR A ***** */  
+  for (i=0; i<8; i++)
+    RNGMGR_GetRandom32(&secretKey[i]);
+  
+  if( PKAMGR_StartP256PublicKeyGeneration(secretKey, &CallbackNewPointA) != PKAMGR_SUCCESS)
   {
-    printf("PROCEDURE FOR A - Error : PKAMGR_StartP256PublicKeyGeneration(&CallbackNewPointA)\n\r");
+    printf("PROCEDURE FOR A - Error : PKAMGR_StartP256PublicKeyGeneration(secretKey, &CallbackNewPointA)\n\r");
   }  
   
   while(PKAMGR_SleepCheck()==PKAMGR_ERR_BUSY);
 
   /* ***** PROCEDURE FOR B ***** */
-  if( PKAMGR_StartP256PublicKeyGeneration(&CallbackNewPointB) != PKAMGR_SUCCESS)
+  for (i=0; i<8; i++)
+    RNGMGR_GetRandom32(&secretKey[i]);
+  
+  if( PKAMGR_StartP256PublicKeyGeneration(secretKey, &CallbackNewPointB) != PKAMGR_SUCCESS)
   {
-    printf("PROCEDURE FOR B - Error : PKAMGR_StartP256PublicKeyGeneration(&CallbackNewPointB)\n\r");
+    printf("PROCEDURE FOR B - Error : PKAMGR_StartP256PublicKeyGeneration(secretKey, &CallbackNewPointB)\n\r");
   }
   
   while(PKAMGR_SleepCheck()==PKAMGR_ERR_BUSY);
@@ -224,12 +227,6 @@ void PrintBuffer(uint32_t* pBuffer, uint32_t BufferLength)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
   * @brief  Compares two buffers.

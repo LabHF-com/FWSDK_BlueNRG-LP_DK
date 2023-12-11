@@ -107,7 +107,7 @@ uint8_t PKAMGR_PowerSaveLevelCheck(uint8_t x){
   }
 }
 
-PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(uint32_t* secretKey, uint32_t* publicKey, PKAMGR_funcCB funcCB)
+PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(const uint32_t* secretKey, const uint32_t* publicKey, PKAMGR_funcCB funcCB)
 {
   /* Set the PKA internal state to busy */
   if(PKAMGR_Lock()!=PKAMGR_SUCCESS)

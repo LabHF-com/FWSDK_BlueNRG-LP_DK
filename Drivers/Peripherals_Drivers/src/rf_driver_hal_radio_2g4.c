@@ -292,7 +292,7 @@ uint8_t HAL_RADIO_CarrierSense(uint8_t channel, int8_t *rssi)
   
   _timeout = FALSE;
   
-  ret = HAL_RADIO_ReceivePacket(channel, 240, buffer, 5, sizeof(buffer), CarrierSenseCallback);
+  ret = HAL_RADIO_ReceivePacket(channel, 300, buffer, 5, sizeof(buffer), CarrierSenseCallback);
   
   networkID = networkID_tmp;
   

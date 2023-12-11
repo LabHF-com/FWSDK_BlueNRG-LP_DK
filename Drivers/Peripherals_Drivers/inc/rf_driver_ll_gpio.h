@@ -261,27 +261,27 @@ typedef struct
   * @rmtoll MODER        MODEy         LL_GPIO_SetPinMode
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_MODE_INPUT
-  *         @arg @ref LL_GPIO_MODE_OUTPUT
-  *         @arg @ref LL_GPIO_MODE_ALTERNATE
-  *         @arg @ref LL_GPIO_MODE_ANALOG
+  * @arg LL_GPIO_MODE_INPUT
+  * @arg LL_GPIO_MODE_OUTPUT
+  * @arg LL_GPIO_MODE_ALTERNATE
+  * @arg LL_GPIO_MODE_ANALOG
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin, uint32_t Mode)
@@ -296,27 +296,27 @@ __STATIC_INLINE void LL_GPIO_SetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin, uint3
   * @rmtoll MODER        MODEy         LL_GPIO_GetPinMode
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_MODE_INPUT
-  *         @arg @ref LL_GPIO_MODE_OUTPUT
-  *         @arg @ref LL_GPIO_MODE_ALTERNATE
-  *         @arg @ref LL_GPIO_MODE_ANALOG
+  * @arg LL_GPIO_MODE_INPUT
+  * @arg LL_GPIO_MODE_OUTPUT
+  * @arg LL_GPIO_MODE_ALTERNATE
+  * @arg LL_GPIO_MODE_ANALOG
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -330,26 +330,26 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinMode(GPIO_TypeDef *GPIOx, uint32_t Pin)
   * @rmtoll OTYPER       OTy           LL_GPIO_SetPinOutputType
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @param  OutputType This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_OUTPUT_PUSHPULL
-  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
+  * @arg LL_GPIO_OUTPUT_PUSHPULL
+  * @arg LL_GPIO_OUTPUT_OPENDRAIN
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint32_t OutputType)
@@ -365,26 +365,26 @@ __STATIC_INLINE void LL_GPIO_SetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t PinM
   * @rmtoll OTYPER       OTy           LL_GPIO_GetPinOutputType
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_OUTPUT_PUSHPULL
-  *         @arg @ref LL_GPIO_OUTPUT_OPENDRAIN
+  * @arg LL_GPIO_OUTPUT_PUSHPULL
+  * @arg LL_GPIO_OUTPUT_OPENDRAIN
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -400,27 +400,27 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinOutputType(GPIO_TypeDef *GPIOx, uint32_t 
   * @rmtoll OSPEEDR      OSPEEDy       LL_GPIO_SetPinSpeed
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @param  Speed This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_SPEED_FREQ_LOW
-  *         @arg @ref LL_GPIO_SPEED_FREQ_MEDIUM
-  *         @arg @ref LL_GPIO_SPEED_FREQ_HIGH
-  *         @arg @ref LL_GPIO_SPEED_FREQ_VERY_HIGH
+  * @arg LL_GPIO_SPEED_FREQ_LOW
+  * @arg LL_GPIO_SPEED_FREQ_MEDIUM
+  * @arg LL_GPIO_SPEED_FREQ_HIGH
+  * @arg LL_GPIO_SPEED_FREQ_VERY_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetPinSpeed(GPIO_TypeDef *GPIOx, uint32_t Pin, uint32_t  Speed)
@@ -437,27 +437,27 @@ __STATIC_INLINE void LL_GPIO_SetPinSpeed(GPIO_TypeDef *GPIOx, uint32_t Pin, uint
   * @rmtoll OSPEEDR      OSPEEDy       LL_GPIO_GetPinSpeed
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_SPEED_FREQ_LOW
-  *         @arg @ref LL_GPIO_SPEED_FREQ_MEDIUM
-  *         @arg @ref LL_GPIO_SPEED_FREQ_HIGH
-  *         @arg @ref LL_GPIO_SPEED_FREQ_VERY_HIGH
+  * @arg LL_GPIO_SPEED_FREQ_LOW
+  * @arg LL_GPIO_SPEED_FREQ_MEDIUM
+  * @arg LL_GPIO_SPEED_FREQ_HIGH
+  * @arg LL_GPIO_SPEED_FREQ_VERY_HIGH
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetPinSpeed(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -470,26 +470,26 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinSpeed(GPIO_TypeDef *GPIOx, uint32_t Pin)
   * @rmtoll PUPDR        PUPDy         LL_GPIO_SetPinPull
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @param  Pull This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PULL_NO
-  *         @arg @ref LL_GPIO_PULL_UP
-  *         @arg @ref LL_GPIO_PULL_DOWN
+  * @arg LL_GPIO_PULL_NO
+  * @arg LL_GPIO_PULL_UP
+  * @arg LL_GPIO_PULL_DOWN
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin, uint32_t Pull)
@@ -537,26 +537,26 @@ __STATIC_INLINE void LL_GPIO_SetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin, uint3
   * @rmtoll PUPDR        PUPDy         LL_GPIO_GetPinPull
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_PULL_NO
-  *         @arg @ref LL_GPIO_PULL_UP
-  *         @arg @ref LL_GPIO_PULL_DOWN
+  * @arg LL_GPIO_PULL_NO
+  * @arg LL_GPIO_PULL_UP
+  * @arg LL_GPIO_PULL_DOWN
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -597,26 +597,27 @@ __STATIC_INLINE uint32_t LL_GPIO_GetPinPull(GPIO_TypeDef *GPIOx, uint32_t Pin)
   * @brief  Configure gpio alternate function of a dedicated pin from 0 to 7 for a dedicated port.
   * @note   Possible values are from AF0 to AF7 depending on target.
   * @note   Warning: only one pin can be passed as parameter.
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   * @rmtoll AFRL         AFSELy        LL_GPIO_SetAFPin_0_7
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
   * @param  Alternate This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_AF_0
-  *         @arg @ref LL_GPIO_AF_1
-  *         @arg @ref LL_GPIO_AF_2
-  *         @arg @ref LL_GPIO_AF_3
-  *         @arg @ref LL_GPIO_AF_4
-  *         @arg @ref LL_GPIO_AF_5
-  *         @arg @ref LL_GPIO_AF_6
-  *         @arg @ref LL_GPIO_AF_7
+  * @arg LL_GPIO_AF_0
+  * @arg LL_GPIO_AF_1
+  * @arg LL_GPIO_AF_2
+  * @arg LL_GPIO_AF_3
+  * @arg LL_GPIO_AF_4
+  * @arg LL_GPIO_AF_5
+  * @arg LL_GPIO_AF_6
+  * @arg LL_GPIO_AF_7
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin, uint32_t Alternate)
@@ -627,26 +628,27 @@ __STATIC_INLINE void LL_GPIO_SetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin, uin
 
 /**
   * @brief  Return gpio alternate function of a dedicated pin from 0 to 7 for a dedicated port.
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   * @rmtoll AFRL         AFSELy        LL_GPIO_GetAFPin_0_7
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_AF_0
-  *         @arg @ref LL_GPIO_AF_1
-  *         @arg @ref LL_GPIO_AF_2
-  *         @arg @ref LL_GPIO_AF_3
-  *         @arg @ref LL_GPIO_AF_4
-  *         @arg @ref LL_GPIO_AF_5
-  *         @arg @ref LL_GPIO_AF_6
-  *         @arg @ref LL_GPIO_AF_7
+  * @arg LL_GPIO_AF_0
+  * @arg LL_GPIO_AF_1
+  * @arg LL_GPIO_AF_2
+  * @arg LL_GPIO_AF_3
+  * @arg LL_GPIO_AF_4
+  * @arg LL_GPIO_AF_5
+  * @arg LL_GPIO_AF_6
+  * @arg LL_GPIO_AF_7
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -658,26 +660,27 @@ __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_0_7(GPIO_TypeDef *GPIOx, uint32_t Pin)
   * @brief  Configure gpio alternate function of a dedicated pin from 8 to 15 for a dedicated port.
   * @note   Possible values are from AF0 to AF7 depending on target.
   * @note   Warning: only one pin can be passed as parameter.
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   * @rmtoll AFRH         AFSELy        LL_GPIO_SetAFPin_8_15
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @param  Alternate This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_AF_0
-  *         @arg @ref LL_GPIO_AF_1
-  *         @arg @ref LL_GPIO_AF_2
-  *         @arg @ref LL_GPIO_AF_3
-  *         @arg @ref LL_GPIO_AF_4
-  *         @arg @ref LL_GPIO_AF_5
-  *         @arg @ref LL_GPIO_AF_6
-  *         @arg @ref LL_GPIO_AF_7
+  * @arg LL_GPIO_AF_0
+  * @arg LL_GPIO_AF_1
+  * @arg LL_GPIO_AF_2
+  * @arg LL_GPIO_AF_3
+  * @arg LL_GPIO_AF_4
+  * @arg LL_GPIO_AF_5
+  * @arg LL_GPIO_AF_6
+  * @arg LL_GPIO_AF_7
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin, uint32_t Alternate)
@@ -689,26 +692,27 @@ __STATIC_INLINE void LL_GPIO_SetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin, ui
 /**
   * @brief  Return gpio alternate function of a dedicated pin from 8 to 15 for a dedicated port.
   * @note   Possible values are from AF0 to AF7 depending on target.
+  * @note   AF5 and AF7 are not applicable for Spirit3.
   * @rmtoll AFRH         AFSELy        LL_GPIO_GetAFPin_8_15
   * @param  GPIOx GPIO Port
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_GPIO_AF_0
-  *         @arg @ref LL_GPIO_AF_1
-  *         @arg @ref LL_GPIO_AF_2
-  *         @arg @ref LL_GPIO_AF_3
-  *         @arg @ref LL_GPIO_AF_4
-  *         @arg @ref LL_GPIO_AF_5
-  *         @arg @ref LL_GPIO_AF_6
-  *         @arg @ref LL_GPIO_AF_7
+  * @arg LL_GPIO_AF_0
+  * @arg LL_GPIO_AF_1
+  * @arg LL_GPIO_AF_2
+  * @arg LL_GPIO_AF_3
+  * @arg LL_GPIO_AF_4
+  * @arg LL_GPIO_AF_5
+  * @arg LL_GPIO_AF_6
+  * @arg LL_GPIO_AF_7
   */
 __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin)
 {
@@ -728,23 +732,23 @@ __STATIC_INLINE uint32_t LL_GPIO_GetAFPin_8_15(GPIO_TypeDef *GPIOx, uint32_t Pin
   * @rmtoll LCKR         LCKK          LL_GPIO_LockPin
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -762,23 +766,23 @@ __STATIC_INLINE void LL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
   * @rmtoll LCKR         LCKy          LL_GPIO_IsPinLocked
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_GPIO_IsPinLocked(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -821,23 +825,23 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadInputPort(GPIO_TypeDef *GPIOx)
   * @rmtoll IDR          IDy           LL_GPIO_IsInputPinSet
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_GPIO_IsInputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -873,23 +877,23 @@ __STATIC_INLINE uint32_t LL_GPIO_ReadOutputPort(GPIO_TypeDef *GPIOx)
   * @rmtoll ODR          ODy           LL_GPIO_IsOutputPinSet
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -902,23 +906,23 @@ __STATIC_INLINE uint32_t LL_GPIO_IsOutputPinSet(GPIO_TypeDef *GPIOx, uint32_t Pi
   * @rmtoll BSRR         BSy           LL_GPIO_SetOutputPin
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -931,23 +935,23 @@ __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
   * @rmtoll BRR          BRy           LL_GPIO_ResetOutputPin
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
@@ -960,26 +964,26 @@ __STATIC_INLINE void LL_GPIO_ResetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMas
   * @rmtoll BSRR         BSy           LL_GPIO_WriteOutputPin
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @param  Pin This parameter can be one of the following values:
-  *         @arg @ref LL_GPIO_OUTPUT_HIGH
-  *         @arg @ref LL_GPIO_OUTPUT_LOW
+  * @arg LL_GPIO_OUTPUT_HIGH
+  * @arg LL_GPIO_OUTPUT_LOW
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_WriteOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask, uint8_t Level)
@@ -992,23 +996,23 @@ __STATIC_INLINE void LL_GPIO_WriteOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMas
   * @rmtoll ODR          ODy           LL_GPIO_TogglePin
   * @param  GPIOx GPIO Port
   * @param  PinMask This parameter can be a combination of the following values:
-  *         @arg @ref LL_GPIO_PIN_0
-  *         @arg @ref LL_GPIO_PIN_1
-  *         @arg @ref LL_GPIO_PIN_2
-  *         @arg @ref LL_GPIO_PIN_3
-  *         @arg @ref LL_GPIO_PIN_4
-  *         @arg @ref LL_GPIO_PIN_5
-  *         @arg @ref LL_GPIO_PIN_6
-  *         @arg @ref LL_GPIO_PIN_7
-  *         @arg @ref LL_GPIO_PIN_8
-  *         @arg @ref LL_GPIO_PIN_9
-  *         @arg @ref LL_GPIO_PIN_10
-  *         @arg @ref LL_GPIO_PIN_11
-  *         @arg @ref LL_GPIO_PIN_12
-  *         @arg @ref LL_GPIO_PIN_13
-  *         @arg @ref LL_GPIO_PIN_14
-  *         @arg @ref LL_GPIO_PIN_15
-  *         @arg @ref LL_GPIO_PIN_ALL
+  * @arg LL_GPIO_PIN_0
+  * @arg LL_GPIO_PIN_1
+  * @arg LL_GPIO_PIN_2
+  * @arg LL_GPIO_PIN_3
+  * @arg LL_GPIO_PIN_4
+  * @arg LL_GPIO_PIN_5
+  * @arg LL_GPIO_PIN_6
+  * @arg LL_GPIO_PIN_7
+  * @arg LL_GPIO_PIN_8
+  * @arg LL_GPIO_PIN_9
+  * @arg LL_GPIO_PIN_10
+  * @arg LL_GPIO_PIN_11
+  * @arg LL_GPIO_PIN_12
+  * @arg LL_GPIO_PIN_13
+  * @arg LL_GPIO_PIN_14
+  * @arg LL_GPIO_PIN_15
+  * @arg LL_GPIO_PIN_ALL
   * @retval None
   */
 __STATIC_INLINE void LL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint32_t PinMask)

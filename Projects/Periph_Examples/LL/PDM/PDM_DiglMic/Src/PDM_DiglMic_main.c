@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PDM_DiglMic_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,6 +58,7 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 
@@ -97,7 +98,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   
+|  PIN name  | STEVAL-IDB011V{1-2} |   
 ------------------------------------
 |     A1     |       Not Used      |   
 |     A11    |       Not Used      |   
@@ -147,24 +148,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |
------------------------------------------------------------------
-|     DL1    |        Not Used        |        Not Used        |
-|     DL2    |        Not Used        |        Not Used        |
-|     DL3    |        Not Used        |        Not Used        |
-|     DL4    |        Not Used        |        Not Used        |
-|     U5     |   PDM conversion done  |   PDM conversion done  |
+|  LED name  |     STEVAL-IDB010V1    |     STEVAL-IDB011V1    |     STEVAL-IDB011V2    |
+--------------------------------------------------------------------------------------------
+|     DL1    |        Not Used        |        Not Used        |        Not Used        |
+|     DL2    |        Not Used        |        Not Used        |        Not Used        |
+|     DL3    |        Not Used        |        Not Used        |        Not Used        |
+|     DL4    |        Not Used        |        Not Used        |        Not Used        |
+|     U5     |   PDM conversion done  |   PDM conversion done  |   PDM conversion done  |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
--------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
 
 @endtable
 
@@ -281,7 +282,7 @@ int main(void)
   BSP_Init();
   
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize the digital microphone pins */
   BSP_DIGMIC_Init();
@@ -304,7 +305,7 @@ int main(void)
   while (1) {
     /* Led toggle - activity led */
     LL_mDelay(250);
-    BSP_LED_Toggle(BSP_LED1);
+    BSP_LED_Toggle(BSP_LED2);
   }
   
 }
@@ -313,15 +314,15 @@ int main(void)
 static void BSP_Init(void)
 {
   /* Initialization of LEDs */
-  BSP_LED_Init(BSP_LED1);
+  BSP_LED_Init(BSP_LED2);
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
     
   /* USART TX DMA configuration */
   LL_DMA_InitTypeDef DMA_InitStruct;
@@ -431,7 +432,7 @@ static void APP_DMA_Init(void)
   LL_DMA_EnableIT_HT(DMA1, LL_DMA_CHANNEL_ADC);
   
   /* Configure NVIC for DMA half transfer/transfer complete interrupts */
-  NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(DMA_IRQn);
 }
 

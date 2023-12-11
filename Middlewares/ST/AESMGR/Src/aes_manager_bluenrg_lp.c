@@ -106,11 +106,16 @@ AESMGR_ResultStatus AESMGR_Deinit(void)
 
 AESMGR_ResultStatus AESMGR_Encrypt(const uint32_t *plainTextData, const uint32_t *key, uint32_t *encryptedData, uint8_t isr)
 {
-  static volatile uint8_t inIsr;
+  /* Counter to signal interruption by a higher priority routine. */
+  static volatile uint8_t start_cnt;
+  uint8_t priv_start_cnt;
+  
+  start_cnt++;
 
   do
   {
-    inIsr = isr;
+    priv_start_cnt = start_cnt;
+    /* Starting from this point, any call to HW_AES_Encrypt will change start_cnt. */
 
     /* Write the Key in the BLE register */  
     BLUE->MANAESKEY0REG = key[0];
@@ -132,7 +137,7 @@ AESMGR_ResultStatus AESMGR_Encrypt(const uint32_t *plainTextData, const uint32_t
     encryptedData[2] = BLUE->MANAESCIPHERTEXT2REG;
     encryptedData[3] = BLUE->MANAESCIPHERTEXT3REG;
 
-  } while (inIsr != isr);
+  } while (priv_start_cnt != start_cnt);
 
   return AESMGR_SUCCESS;
 }

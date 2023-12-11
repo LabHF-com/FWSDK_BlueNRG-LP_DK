@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : ADC_ConvSequ_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -144,24 +146,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -204,11 +206,7 @@ Other peripherals used:
    
 
 /* Includes ------------------------------------------------------------------*/
-#include "rf_driver_hal.h"
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#include "bluenrg_lp_evb_config.h"
-#endif
-#include "ADC_DMA_main.h"
+#include "ADC_ConvSequ_main.h"
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -231,7 +229,7 @@ Other peripherals used:
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef adc_handle;
-ADC_ConfigChannelTypeDef xChannel;
+ADC_ChannelConfTypeDef xChannel;
 DMA_HandleTypeDef hdma_adc;
 uint16_t ADC_DMA_buffer[ADC_DMA_BUF_LEN];
 int8_t offset_vinp0 = 0;
@@ -259,17 +257,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
   
-  /* Initialization of LEDs */
-  BSP_LED_Init(BSP_LED1);
-  BSP_LED_Init(BSP_LED2);
+  printf("** Application started **\n\r");
   
   /* Configure ADC and DMA */
   MX_ADC_Init();
@@ -278,12 +272,14 @@ int main(void)
   printf("ADC average value of\r\nPin Voltage\tBattery Voltage\tTemperature\r\n");
     
   /* Start ADC-DMA conversion */
-   if (HAL_ADC_Start_DMA(&adc_handle, (uint32_t *)ADC_DMA_buffer, ADC_DMA_BUF_LEN) != HAL_OK) {
+   if (HAL_ADC_Start_DMA(&adc_handle, (uint32_t *)ADC_DMA_buffer, ADC_DMA_BUF_LEN) != HAL_OK)
+   {
     Error_Handler();
    }
   
   /* Infinite loop */
-  while (1) {
+  while (1)
+  {
     /* Nothing to do */
   }
 }
@@ -295,39 +291,42 @@ int main(void)
 static void MX_ADC_Init(void)
 {
   /* Enable the ADC peripheral */
-  HAL_ADC_StructInit(&adc_handle);
+  adc_handle.Instance = ADC;
   adc_handle.Init.DataRatio = USER_RATIO;
   adc_handle.Init.DataWidth = USER_DATAWIDTH;
+  adc_handle.Init.InvertOutputBitMode = ADC_INVERT_OUTBIT_SING;
+  adc_handle.Init.OverrunMode = ADC_NEW_DATA_IS_KEPT;
   adc_handle.Init.SampleRate = USER_SAMPLERATE;
 #if defined(CONFIG_DEVICE_BLUENRG_LPS)
   adc_handle.Init.SampleRateMsb = USER_SAMPLERATE_MSB;
 #endif
-  adc_handle.Init.SamplingMode = ADC_SAMPLING_AT_START;
+  adc_handle.Init.SamplingMode = ADC_SAMPLING_AT_END;
   adc_handle.Init.SequenceLength = ADC_SEQ_LEN_03;
   adc_handle.DMA_Handle = &hdma_adc;
   
-  if (HAL_ADC_Init(&adc_handle) != HAL_OK) {
+  if (HAL_ADC_Init(&adc_handle) != HAL_OK)
+  {
     Error_Handler();
   }
-
-  /* Start the sampling at end of previous sample */
-  LL_ADC_InputSamplingMode(ADC, LL_ADC_SAMPLING_AT_END);
   
   /* Set the input channel */
   xChannel.ChannelType = ADC_CH_VINP0_TO_SINGLE_POSITIVE_INPUT;
   xChannel.SequenceNumber = ADC_SEQ_POS_01;
   xChannel.VoltRange = ADC_VIN_RANGE_3V6;
-  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK) {
+  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK)
+  {
     Error_Handler();
   }
 
   /* Set the GAIN */
-  if(LL_ADC_GET_CALIB_GAIN_FOR_VINPX_3V6() != 0xFFF) {
+  if(LL_ADC_GET_CALIB_GAIN_FOR_VINPX_3V6() != 0xFFF)
+  {
     LL_ADC_SetCalibPoint1Gain(ADC, LL_ADC_GET_CALIB_GAIN_FOR_VINPX_3V6() );
     
     offset_vinp0 = LL_ADC_GET_CALIB_OFFSET_FOR_VINPX_3V6();
 #ifdef CONFIG_DEVICE_BLUENRG_LP
-    if(offset_vinp0 < -64 || offset_vinp0 > 63) {
+    if(offset_vinp0 < -64 || offset_vinp0 > 63)
+    {
       LL_ADC_SetCalibPoint1Offset(ADC, 0);
     }
     else
@@ -337,7 +336,8 @@ static void MX_ADC_Init(void)
       offset_vinp0 = 0;
     }
   }
-  else {
+  else
+  {
     LL_ADC_SetCalibPoint1Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_3V6);
   }
   LL_ADC_SetCalibPointForSinglePos3V6(ADC, LL_ADC_CALIB_POINT_1);
@@ -345,7 +345,8 @@ static void MX_ADC_Init(void)
   /* Set the input channe2 */
   xChannel.ChannelType = ADC_CH_BATTERY_LEVEL_DETECTOR;
   xChannel.SequenceNumber = ADC_SEQ_POS_02;
-  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK) {
+  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK)
+  {
     Error_Handler();
   }
 
@@ -358,15 +359,24 @@ static void MX_ADC_Init(void)
   xChannel.ChannelType = ADC_CH_TEMPERATURE_SENSOR;
   xChannel.SequenceNumber = ADC_SEQ_POS_03;
   xChannel.VoltRange = ADC_VIN_RANGE_1V2;
-  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK) {
+  if (HAL_ADC_ConfigChannel(&adc_handle, &xChannel)!= HAL_OK)
+  {
     Error_Handler();
   }
-  if(LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2() != 0xFFF) {
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
+  if(LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2() != 0xFFF)
+  {
     LL_ADC_SetCalibPoint2Gain(ADC, LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2() );
   }
-  else {
+  else
+  {
     LL_ADC_SetCalibPoint2Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_1V2);
   }
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    LL_ADC_SetCalibPoint2Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_1V2);
+#endif
+  
   LL_ADC_SetCalibPointForSinglePos1V2(ADC, LL_ADC_CALIB_POINT_2);
   
 }
@@ -380,9 +390,8 @@ static void MX_DMA_Init(void)
   __HAL_RCC_DMA_CLK_ENABLE();
 
   /* Configure NVIC for DMA */
-  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY);
   HAL_NVIC_EnableIRQ(DMA_IRQn);
-
 }
 
 
@@ -399,7 +408,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
   float vpin = 0.0, vbattery = 0.0;
   float temp = 0.0;
   
-  for (int i=0; i<ADC_DMA_BUF_LEN/3; i++) {
+  for (int i=0; i<ADC_DMA_BUF_LEN/3; i++)
+  {
     vpin += LL_ADC_GetADCConvertedValueSingle(ADC, ADC_DMA_buffer[j], LL_ADC_VIN_RANGE_3V6, USER_DATAWIDTH, offset_vinp0);
     vbattery += LL_ADC_GetADCConvertedValueBatt(ADC, ADC_DMA_buffer[j+1], USER_DATAWIDTH, 0);
     temp += LL_ADC_GetADCConvertedValueTemp(ADC, ADC_DMA_buffer[j+2], USER_DATAWIDTH)/100.0;
@@ -416,7 +426,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 #endif
 
   /* Restart ADC DMA conversion */
-  if (HAL_ADC_Start_DMA(&adc_handle, (uint32_t *)ADC_DMA_buffer, ADC_DMA_BUF_LEN) != HAL_OK) {
+  if (HAL_ADC_Start_DMA(&adc_handle, (uint32_t *)ADC_DMA_buffer, ADC_DMA_BUF_LEN) != HAL_OK)
+  {
    Error_Handler();
   }
 }

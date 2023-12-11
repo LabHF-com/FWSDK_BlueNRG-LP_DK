@@ -101,18 +101,18 @@ ErrorStatus LL_PWR_DeInit(void)
                     LL_PWR_EWS_INT
                   | LL_PWR_EWS_BLEHOST 
                   | LL_PWR_EWS_BLE     
-                  | LL_PWE_EWS_EW11    
-                  | LL_PWE_EWS_EW10    
-                  | LL_PWE_EWS_EW9     
-                  | LL_PWE_EWS_EW8     
-                  | LL_PWE_EWS_EW7     
-                  | LL_PWE_EWS_EW6     
-                  | LL_PWE_EWS_EW5     
-                  | LL_PWE_EWS_EW4     
-                  | LL_PWE_EWS_EW3     
-                  | LL_PWE_EWS_EW2     
-                  | LL_PWE_EWS_EW1     
-                  | LL_PWE_EWS_EW0
+                  | LL_PWR_EWS_EW11    
+                  | LL_PWR_EWS_EW10    
+                  | LL_PWR_EWS_EW9     
+                  | LL_PWR_EWS_EW8     
+                  | LL_PWR_EWS_EW7     
+                  | LL_PWR_EWS_EW6     
+                  | LL_PWR_EWS_EW5     
+                  | LL_PWR_EWS_EW4     
+                  | LL_PWR_EWS_EW3     
+                  | LL_PWR_EWS_EW2     
+                  | LL_PWR_EWS_EW1     
+                  | LL_PWR_EWS_EW0
                  );
 #endif
 

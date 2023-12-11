@@ -199,42 +199,42 @@ typedef struct
   * @brief  Enable IO Interrupt for Lines in range PA0... PB15
   * @rmtoll IO_IER        LL_EXTI_EnableIT
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval None
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE void LL_EXTI_EnableIT(uint32_t ExtiLine)
 {
@@ -245,42 +245,42 @@ __STATIC_INLINE void LL_EXTI_EnableIT(uint32_t ExtiLine)
   * @brief  Disable IO Interrupt for Lines in range PA0... PB15
   * @rmtoll IO_IER        LL_EXTI_DisableIT
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval None
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE void LL_EXTI_DisableIT(uint32_t ExtiLine)
 {
@@ -291,42 +291,42 @@ __STATIC_INLINE void LL_EXTI_DisableIT(uint32_t ExtiLine)
   * @brief  Indicate if IO Interrupt Mask is enabled
   * @rmtoll IO_IER        LL_EXTI_IsEnabledIT
   * @param  ExtiLine This parameter can be one of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval State of bit (1 or 0).
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT(uint32_t ExtiLine)
 {
@@ -345,45 +345,45 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT(uint32_t ExtiLine)
   * @brief  Set IO Interrupt Type for Lines in range PA0... PB15
   * @rmtoll IO_DTR        LL_EXTI_SetType
   * @param  Type This parameter can be one of the following values:
-  *         @arg @ref LL_EXTI_TYPE_EDGE
-  *         @arg @ref LL_EXTI_TYPE_LEVEL
+  * @arg LL_EXTI_TYPE_EDGE
+  * @arg LL_EXTI_TYPE_LEVEL
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval None
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE void LL_EXTI_SetType(uint8_t Type, uint32_t ExtiLine)
 {
@@ -398,44 +398,44 @@ __STATIC_INLINE void LL_EXTI_SetType(uint8_t Type, uint32_t ExtiLine)
   * @brief  Get IO Interrupt Type for Lines in range PA0... PB15
   * @rmtoll IO_DTR        LL_EXTI_GetType
   * @param  ExtiLine This parameter can be one of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval One of the following values:
-  *         @arg @ref LL_EXTI_TYPE_EDGE
-  *         @arg @ref LL_EXTI_TYPE_LEVEL
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
+  * @arg LL_EXTI_TYPE_EDGE
+  * @arg LL_EXTI_TYPE_LEVEL
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
   */
 __STATIC_INLINE uint8_t LL_EXTI_GetType(uint32_t ExtiLine)
 {
@@ -457,48 +457,48 @@ __STATIC_INLINE uint8_t LL_EXTI_GetType(uint32_t ExtiLine)
   * @brief  Set IO Interrupt Trigger for Lines in range PA0... PB15
   * @rmtoll IO_IBER/IO_IEVR/IO_DTR        LL_EXTI_SetTrigger
   * @param  Trigger This parameter can be one of the following values:
-  *         @arg @ref LL_EXTI_TRIGGER_RISING_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_FALLING_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_BOTH_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_LOW_LEVEL
-  *         @arg @ref LL_EXTI_TRIGGER_HIGH_LEVEL
+  * @arg LL_EXTI_TRIGGER_RISING_EDGE
+  * @arg LL_EXTI_TRIGGER_FALLING_EDGE
+  * @arg LL_EXTI_TRIGGER_BOTH_EDGE
+  * @arg LL_EXTI_TRIGGER_LOW_LEVEL
+  * @arg LL_EXTI_TRIGGER_HIGH_LEVEL
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval None
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE void LL_EXTI_SetTrigger(uint8_t Trigger, uint32_t ExtiLine)
 {  
@@ -532,47 +532,47 @@ __STATIC_INLINE void LL_EXTI_SetTrigger(uint8_t Trigger, uint32_t ExtiLine)
   * @brief  Get IO Interrupt Trigger for Lines in range PA0... PB15
   * @rmtoll IO_IBER/IO_IEVR/IO_DTR        LL_EXTI_GetTrigger
   * @param  ExtiLine This parameter can be one of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval The return value can be one of the following values:
-  *         @arg @ref LL_EXTI_TRIGGER_RISING_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_FALLING_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_BOTH_EDGE
-  *         @arg @ref LL_EXTI_TRIGGER_LOW_LEVEL
-  *         @arg @ref LL_EXTI_TRIGGER_HIGH_LEVEL
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @arg LL_EXTI_TRIGGER_RISING_EDGE
+  * @arg LL_EXTI_TRIGGER_FALLING_EDGE
+  * @arg LL_EXTI_TRIGGER_BOTH_EDGE
+  * @arg LL_EXTI_TRIGGER_LOW_LEVEL
+  * @arg LL_EXTI_TRIGGER_HIGH_LEVEL
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE uint8_t LL_EXTI_GetTrigger(uint32_t ExtiLine)
 {
@@ -612,42 +612,42 @@ __STATIC_INLINE uint8_t LL_EXTI_GetTrigger(uint32_t ExtiLine)
   * @note  This bit is cleared by writing a 1 to the bit.
   * @rmtoll IO_ISCR                   LL_EXTI_IsInterruptPending
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval State of bit (1 or 0).
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE uint32_t LL_EXTI_IsInterruptPending(uint32_t ExtiLine)
 {
@@ -659,42 +659,42 @@ __STATIC_INLINE uint32_t LL_EXTI_IsInterruptPending(uint32_t ExtiLine)
   * @brief Clear the ExtLine Interrupt for Lines in range PA0...PB15
   * @rmtoll IO_ISCR                   LL_EXTI_ClearInterrupt
   * @param  ExtiLine This parameter can be a combination of the following values:
-  *         @arg @ref LL_EXTI_LINE_PA0
-  *         @arg @ref LL_EXTI_LINE_PA1
-  *         @arg @ref LL_EXTI_LINE_PA2
-  *         @arg @ref LL_EXTI_LINE_PA3
-  *         @arg @ref LL_EXTI_LINE_PA4
-  *         @arg @ref LL_EXTI_LINE_PA5
-  *         @arg @ref LL_EXTI_LINE_PA6
-  *         @arg @ref LL_EXTI_LINE_PA7
-  *         @arg @ref LL_EXTI_LINE_PA8
-  *         @arg @ref LL_EXTI_LINE_PA9
-  *         @arg @ref LL_EXTI_LINE_PA10
-  *         @arg @ref LL_EXTI_LINE_PA11
-  *         @arg @ref LL_EXTI_LINE_PA12
-  *         @arg @ref LL_EXTI_LINE_PA13
-  *         @arg @ref LL_EXTI_LINE_PA14
-  *         @arg @ref LL_EXTI_LINE_PA15
-  *         @arg @ref LL_EXTI_LINE_PB0 
-  *         @arg @ref LL_EXTI_LINE_PB1 
-  *         @arg @ref LL_EXTI_LINE_PB2 
-  *         @arg @ref LL_EXTI_LINE_PB3 
-  *         @arg @ref LL_EXTI_LINE_PB4 
-  *         @arg @ref LL_EXTI_LINE_PB5 
-  *         @arg @ref LL_EXTI_LINE_PB6 
-  *         @arg @ref LL_EXTI_LINE_PB7 
-  *         @arg @ref LL_EXTI_LINE_PB8 
-  *         @arg @ref LL_EXTI_LINE_PB9 
-  *         @arg @ref LL_EXTI_LINE_PB10
-  *         @arg @ref LL_EXTI_LINE_PB11
-  *         @arg @ref LL_EXTI_LINE_PB12
-  *         @arg @ref LL_EXTI_LINE_PB13
-  *         @arg @ref LL_EXTI_LINE_PB14
-  *         @arg @ref LL_EXTI_LINE_PB15
-  *         @arg @ref LL_EXTI_LINE_ALL
+  * @arg LL_EXTI_LINE_PA0
+  * @arg LL_EXTI_LINE_PA1
+  * @arg LL_EXTI_LINE_PA2
+  * @arg LL_EXTI_LINE_PA3
+  * @arg LL_EXTI_LINE_PA4
+  * @arg LL_EXTI_LINE_PA5
+  * @arg LL_EXTI_LINE_PA6
+  * @arg LL_EXTI_LINE_PA7
+  * @arg LL_EXTI_LINE_PA8
+  * @arg LL_EXTI_LINE_PA9
+  * @arg LL_EXTI_LINE_PA10
+  * @arg LL_EXTI_LINE_PA11
+  * @arg LL_EXTI_LINE_PA12
+  * @arg LL_EXTI_LINE_PA13
+  * @arg LL_EXTI_LINE_PA14
+  * @arg LL_EXTI_LINE_PA15
+  * @arg LL_EXTI_LINE_PB0 
+  * @arg LL_EXTI_LINE_PB1 
+  * @arg LL_EXTI_LINE_PB2 
+  * @arg LL_EXTI_LINE_PB3 
+  * @arg LL_EXTI_LINE_PB4 
+  * @arg LL_EXTI_LINE_PB5 
+  * @arg LL_EXTI_LINE_PB6 
+  * @arg LL_EXTI_LINE_PB7 
+  * @arg LL_EXTI_LINE_PB8 
+  * @arg LL_EXTI_LINE_PB9 
+  * @arg LL_EXTI_LINE_PB10
+  * @arg LL_EXTI_LINE_PB11
+  * @arg LL_EXTI_LINE_PB12
+  * @arg LL_EXTI_LINE_PB13
+  * @arg LL_EXTI_LINE_PB14
+  * @arg LL_EXTI_LINE_PB15
+  * @arg LL_EXTI_LINE_ALL
   * @retval None
-  * @note   PA0-PA15 and PB0-PB15 are valid for BLueNRG-LP 
-  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS 
+  * @note   PA0-PA15 and PB0-PB15 are valid for BlueNRG-LP 
+  * @note   PA0-PA3, PA8-PA11, PB0-PB7 and PB12-PB15 are valid for BlueNRG-LPS
   */
 __STATIC_INLINE void LL_EXTI_ClearInterrupt(uint32_t ExtiLine)
 {

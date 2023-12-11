@@ -22,7 +22,6 @@
 #define __HCI_H_
 
 #include "hal_types.h"
-#include "link_layer.h"
 #include "list.h"
 #include "hci_const.h"
 

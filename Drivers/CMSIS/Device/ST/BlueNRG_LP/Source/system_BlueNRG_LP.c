@@ -107,7 +107,7 @@ NO_INIT_SECTION(REQUIRED(RAM_VR_TypeDef RAM_VR), ".ram_vr");
 
 /* BLUE RAM, reserved for radio communication. Not usable from the application */
 SECTION(".bss.__blue_RAM")
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 REQUIRED(uint8_t __blue_RAM[CONFIG_NUM_MAX_LINKS*92+28]) = {0,};
 #else /* BlueNRG_LP */
 REQUIRED(uint8_t __blue_RAM[CONFIG_NUM_MAX_LINKS*80+28]) = {0,};
@@ -144,7 +144,7 @@ void SystemTimer_TimeoutConfig(uint32_t system_clock_freq, uint32_t timeout, uin
 /**
   * @brief System Timer Timeout Expired information
   * @retval True if the timout configured with the SystemTimer_TimeoutConfig() 
-  *         is epired, FALSE otherwise
+  *         is expired, FALSE otherwise
   */                               
 uint8_t SystemTimer_TimeoutExpired(void)
 {
@@ -248,7 +248,7 @@ static uint8_t SmpsTrimConfig(void)
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
 #endif
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
     main_regulator    = 0x0A;
     hsi_calib         = 0x1F;
     lsi_bw            = 8;
@@ -277,11 +277,6 @@ static uint8_t SmpsTrimConfig(void)
   
   /* Set SMPS in LP Open */
   LL_PWR_SetSMPSOpenMode(LL_PWR_SMPS_LPOPEN);
-
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
-  if (((LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision()) == LL_BLUENRG_LP_CUT_10)
-    LL_PWR_SetSMPSOutputLevel(LL_PWR_SMPS_OUTLVL_1V2);
-#endif
   
 #ifdef CONFIG_HW_SMPS_NONE
   /* No SMPS configuration */
@@ -381,11 +376,11 @@ void MrBleBiasTrimConfig(uint8_t coldStart)
     mr_ble_iptat = 0x07;
     mr_ble_vbg   = 0x08;
     mr_ble_rxadc_delay_flag = FALSE;
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
     mr_ble_rxadc_delay_i    = 3;
     mr_ble_rxadc_delay_q    = 3;
     mr_ble_rxadc_delay_flag = TRUE;
-#endif /* CONFIG_DEVICE_BLUENRG_LPS */
+#endif /* CONFIG_DEVICE_BLUENRG_LPS/F */
   }
 
   /* Write MR_BLE Trimming values in the registers: Cbias' VBG, Cbias' IPTAT, Cbias' IBIAS, RxAnaUsr Delay Trim I & Q */
@@ -397,23 +392,6 @@ void MrBleBiasTrimConfig(uint8_t coldStart)
     MODIFY_REG_FIELD(RRM->RXADC_ANA_USR, RRM_RXADC_ANA_USR_RFD_RXADC_DELAYTRIM_Q, mr_ble_rxadc_delay_q);
   }
 
-  /* AGC configuration */
-  MODIFY_REG_FIELD(RRM->AGC0_DIG_ENG, RRM_AGC0_DIG_ENG_AGC_THR_HIGH, AGC_THR0);
-  SET_BIT(RRM->AGC0_DIG_ENG, RRM_AGC0_DIG_ENG_AGC_ENABLE);
-  MODIFY_REG_FIELD(RRM->AGC1_DIG_ENG, RRM_AGC1_DIG_ENG_AGC_THR_LOW_6, AGC_THR1);
-  SET_BIT(RRM->AGC1_DIG_ENG, RRM_AGC1_DIG_ENG_AGC_LOCK_SYNC);
-  CLEAR_BIT(RRM->AGC1_DIG_ENG, RRM_AGC1_DIG_ENG_AGC_AUTOLOCK);
-  MODIFY_REG_FIELD(RRM->AGC10_DIG_ENG, RRM_AGC10_DIG_ENG_ATT_0, AGC_ATT0);
-  MODIFY_REG_FIELD(RRM->AGC11_DIG_ENG, RRM_AGC11_DIG_ENG_ATT_1, AGC_ATT1);
-  MODIFY_REG_FIELD(RRM->AGC12_DIG_ENG, RRM_AGC12_DIG_ENG_ATT_2, AGC_ATT2);
-  MODIFY_REG_FIELD(RRM->AGC13_DIG_ENG, RRM_AGC13_DIG_ENG_ATT_3, AGC_ATT3);
-  MODIFY_REG_FIELD(RRM->AGC14_DIG_ENG, RRM_AGC14_DIG_ENG_ATT_4, AGC_ATT4);
-  MODIFY_REG_FIELD(RRM->AGC15_DIG_ENG, RRM_AGC15_DIG_ENG_ATT_5, AGC_ATT5);
-  MODIFY_REG_FIELD(RRM->AGC16_DIG_ENG, RRM_AGC16_DIG_ENG_ATT_6, AGC_ATT6);
-  MODIFY_REG_FIELD(RRM->AGC17_DIG_ENG, RRM_AGC17_DIG_ENG_ATT_7, AGC_ATT7);
-  MODIFY_REG_FIELD(RRM->AGC18_DIG_ENG, RRM_AGC18_DIG_ENG_ATT_8, AGC_ATT8);
-  MODIFY_REG_FIELD(RRM->AGC19_DIG_ENG, RRM_AGC19_DIG_ENG_ATT_9, AGC_ATT9);
-  
   /* AFC configuration */
   MODIFY_REG(RRM->AFC1_DIG_ENG, RRM_AFC1_DIG_ENG_AFC_DELAY_AFTER|RRM_AFC1_DIG_ENG_AFC_DELAY_BEFORE,
              ((AFC_DELAY_BEFORE << RRM_AFC1_DIG_ENG_AFC_DELAY_BEFORE_Pos) & RRM_AFC1_DIG_ENG_AFC_DELAY_BEFORE_Msk) |
@@ -432,7 +410,7 @@ void MrBleBiasTrimConfig(uint8_t coldStart)
   /* Enable Viterbi */
   SET_BIT(RRM->VIT_CONF_DIG_ENG, RRM_VIT_CONF_DIG_ENG_VIT_CONF_0);
   
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
   MODIFY_REG_FIELD(RRM->ANTSW_DIG0_USR, RRM_ANTSW0_DIG_USR_RX_TIME_TO_SAMPLE, RX_TIME_TO_SAMPLE);
   MODIFY_REG_FIELD(RRM->ANTSW_DIG1_USR, RRM_ANTSW1_DIG_USR_RX_TIME_TO_SWITCH, RX_TIME_TO_SWITCH);
 #endif  

@@ -32,6 +32,7 @@
 #define HCI_ACLDATA_PKT		0x02
 #define HCI_SCODATA_PKT		0x03
 #define HCI_EVENT_PKT		0x04
+#define HCI_ISO_DATA_PKT	0x05
 #define HCI_COMMAND_EXT_PKT	0x81
 #define HCI_EVENT_EXT_PKT	0x82
 #define HCI_VENDOR_PKT		0xFF
@@ -58,9 +59,15 @@ typedef PACKED(struct) _hci_cmd_hdr{
 
 typedef PACKED(struct) _hci_acl_hdr{
   uint8_t   type;
-  uint16_t	handle;		/* Handle & Flags(PB, BC) */
+  uint16_t	handle;		/* Connection handle & Flags(PB, BC) */
   uint16_t	dlen;
 } hci_acl_hdr;
+
+typedef PACKED(struct) _hci_iso_data_hdr{
+  uint8_t   type;
+  uint16_t	handle;		/* Connection handle & Flags(PB, TS) */
+  uint16_t	dlen;       /* ISO Data Load Length (2 msb are reserved) */
+} hci_iso_data_hdr;
 
 typedef PACKED(struct) _hci_cmd_ext_hdr{
   uint8_t   type;

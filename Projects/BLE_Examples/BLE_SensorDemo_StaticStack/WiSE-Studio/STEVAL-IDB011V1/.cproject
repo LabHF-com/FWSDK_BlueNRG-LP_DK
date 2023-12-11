@@ -16,7 +16,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928" name="Release" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_SensorDemo_StaticStack" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928" name="Release" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -74,10 +74,10 @@
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart.1825840038" name="Do not use standard start files (-nostartfiles)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano.1117631563" name="Use newlib-nano (--specs=nano.specs)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.libs.1850719124" name="Libraries (-l)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.libs" useByScannerDiscovery="false" valueType="libs">
-                  <listOptionValue builtIn="false" value="bluenrg_lp_static_stack_basic"></listOptionValue>
+                  <listOptionValue builtIn="false" value="lp_stack_basic"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.paths.1874234536" name="Library search path (-L)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.paths" useByScannerDiscovery="false" valueType="libPaths">
-                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack"></listOptionValue>
+                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static"></listOptionValue>
                 </option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.other.1485904601" name="Other linker flags" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.other" useByScannerDiscovery="false" value="-Wl,--cref  -Wl,--defsym=MEMORY_FLASH_APP_OFFSET=0x18000 -Wl,--defsym=MEMORY_RAM_APP_OFFSET=0x0700" valueType="string"></option>
               <inputType id="fr.ac6.ide.wise.managedbuild.tool.c.linker.input.1868966268" superClass="fr.ac6.ide.wise.managedbuild.tool.c.linker.input">
@@ -99,7 +99,7 @@
             </toolChain>
           </folderInfo>
         <sourceEntries>
-            <entry excluding="Middlewares/OTA|Middlewares/BLE_Stack/libbluenrg_lp_static_stack_rstmngr_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
+            <entry excluding="Middlewares/OTA|Middlewares/BLE_StaticStack/liblp_stack_rstmngr_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
           </sourceEntries>
         </configuration>
       </storageModule>
@@ -118,7 +118,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2" name="LowerApp_OTA" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_SensorDemo_StaticStack_LowerApp_OTA" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2" name="LowerApp_OTA" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -179,10 +179,10 @@
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart.1825840038" name="Do not use standard start files (-nostartfiles)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano.1117631563" name="Use newlib-nano (--specs=nano.specs)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.libs.1850719124" name="Libraries (-l)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.libs" useByScannerDiscovery="false" valueType="libs">
-                  <listOptionValue builtIn="false" value="bluenrg_lp_static_stack_rstmngr_basic"></listOptionValue>
+                  <listOptionValue builtIn="false" value="lp_stack_rstmngr_basic"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.paths.1874234536" name="Library search path (-L)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.paths" useByScannerDiscovery="false" valueType="libPaths">
-                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack"></listOptionValue>
+                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static"></listOptionValue>
                 </option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.other.1485904601" name="Other linker flags" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.other" useByScannerDiscovery="false" value="-Wl,--cref  -Wl,--defsym=CONFIG_OTA_LOWER=1 -Wl,--defsym=RESET_MANAGER_SIZE=0x18000 -Wl,--defsym=MEMORY_RAM_APP_OFFSET=0x0700" valueType="string"></option>
               <inputType id="fr.ac6.ide.wise.managedbuild.tool.c.linker.input.1868966268" superClass="fr.ac6.ide.wise.managedbuild.tool.c.linker.input">
@@ -204,7 +204,7 @@
             </toolChain>
           </folderInfo>
         <sourceEntries>
-            <entry excluding="Middlewares/BLE_Stack/libbluenrg_lp_static_stack_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
+            <entry excluding="Middlewares/BLE_StaticStack/liblp_stack_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
           </sourceEntries>
         </configuration>
       </storageModule>
@@ -223,7 +223,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3" name="HigherApp_OTA" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_SensorDemo_StaticStack_HigherApp_OTA" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3" name="HigherApp_OTA" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -284,10 +284,10 @@
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart.1825840038" name="Do not use standard start files (-nostartfiles)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.nostart" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano.1117631563" name="Use newlib-nano (--specs=nano.specs)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.usenewlibnano" useByScannerDiscovery="false" value="true" valueType="boolean"></option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.libs.1850719124" name="Libraries (-l)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.libs" useByScannerDiscovery="false" valueType="libs">
-                  <listOptionValue builtIn="false" value="bluenrg_lp_static_stack_rstmngr_basic"></listOptionValue>
+                  <listOptionValue builtIn="false" value="lp_stack_rstmngr_basic"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.linker.paths.1874234536" name="Library search path (-L)" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.paths" useByScannerDiscovery="false" valueType="libPaths">
-                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static_stack"></listOptionValue>
+                  <listOptionValue builtIn="false" value="../../../../../../Middlewares/ST/Bluetooth_LE/Library/static"></listOptionValue>
                 </option>
               <option id="fr.ac6.ide.wise.managedbuild.option.c.linker.other.1485904601" name="Other linker flags" superClass="fr.ac6.ide.wise.managedbuild.option.c.linker.other" useByScannerDiscovery="false" value="-Wl,--cref  -Wl,--defsym=CONFIG_OTA_HIGHER=1 -Wl,--defsym=RESET_MANAGER_SIZE=0x18000 -Wl,--defsym=MEMORY_RAM_APP_OFFSET=0x0700" valueType="string"></option>
               <inputType id="fr.ac6.ide.wise.managedbuild.tool.c.linker.input.1868966268" superClass="fr.ac6.ide.wise.managedbuild.tool.c.linker.input">
@@ -309,7 +309,7 @@
             </toolChain>
           </folderInfo>
         <sourceEntries>
-            <entry excluding="Middlewares/BLE_Stack/libbluenrg_lp_static_stack_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
+            <entry excluding="Middlewares/BLE_StaticStack/liblp_stack_basic.a" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""></entry>
           </sourceEntries>
         </configuration>
       </storageModule>

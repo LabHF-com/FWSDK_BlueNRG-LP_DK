@@ -102,15 +102,15 @@
   * @brief  De-initialize the DMA registers to their default reset values.
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
-  *         @arg @ref LL_DMA_CHANNEL_ALL
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_ALL
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: DMA registers are de-initialized
   *          - ERROR: DMA registers are not de-initialized
@@ -209,18 +209,18 @@ ErrorStatus LL_DMA_DeInit(DMA_TypeDef *DMAx, uint32_t Channel)
 /**
   * @brief  Initialize the DMA registers according to the specified parameters in DMA_InitStruct.
   * @note   To convert DMAx_Channely Instance to DMAx Instance and Channely, use helper macros :
-  *         @arg @ref __LL_DMA_GET_INSTANCE
-  *         @arg @ref __LL_DMA_GET_CHANNEL
+  * @arg @ref __LL_DMA_GET_INSTANCE
+  * @arg @ref __LL_DMA_GET_CHANNEL
   * @param  DMAx DMAx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMA_CHANNEL_1
-  *         @arg @ref LL_DMA_CHANNEL_2
-  *         @arg @ref LL_DMA_CHANNEL_3
-  *         @arg @ref LL_DMA_CHANNEL_4
-  *         @arg @ref LL_DMA_CHANNEL_5
-  *         @arg @ref LL_DMA_CHANNEL_6
-  *         @arg @ref LL_DMA_CHANNEL_7
-  *         @arg @ref LL_DMA_CHANNEL_8
+  * @arg LL_DMA_CHANNEL_1
+  * @arg LL_DMA_CHANNEL_2
+  * @arg LL_DMA_CHANNEL_3
+  * @arg LL_DMA_CHANNEL_4
+  * @arg LL_DMA_CHANNEL_5
+  * @arg LL_DMA_CHANNEL_6
+  * @arg LL_DMA_CHANNEL_7
+  * @arg LL_DMA_CHANNEL_8
   * @param  DMA_InitStruct pointer to a @ref LL_DMA_InitTypeDef structure.
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: DMA registers are initialized

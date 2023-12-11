@@ -29,7 +29,7 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define BLUE_FLAG_FLASH_BASE_ADDRESS    (0x10041014)
 #define DTM_APP_ADDR                    (0x10041000)
 #else
@@ -44,13 +44,11 @@
 #ifdef CONFIG_DEVICE_BLUENRG_LP
 #define DTM_SPI_BOOT_PIN_PDA()  LL_PWR_EnablePDA(LL_PWR_PUPD_IO15)
 #define DTM_SPI_BOOT_PIN_PUA()  LL_PWR_EnablePUA(LL_PWR_PUPD_IO15)
-
 #endif
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define DTM_SPI_BOOT_PIN_PDA()  LL_PWR_EnablePDA(LL_PWR_PUPD_IO11)
 #define DTM_SPI_BOOT_PIN_PUA()  LL_PWR_EnablePUA(LL_PWR_PUPD_IO11)
-
 #endif
 
 /* Exported macro ------------------------------------------------------------*/

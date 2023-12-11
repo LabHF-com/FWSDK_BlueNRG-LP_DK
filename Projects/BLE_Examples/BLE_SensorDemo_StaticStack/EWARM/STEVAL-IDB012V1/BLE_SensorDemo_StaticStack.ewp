@@ -3381,19 +3381,19 @@
     <group>
         <name>Middlewares</name>
         <group>
-            <name>BLE_Stack</name>
+            <name>BLE_StaticStack</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\bluenrg_lp_stack_init_if.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\bluenrg_lp_stack_init_if.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack_basic.a</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack_basic.a</name>
                 <excluded>
                     <configuration>LowerApp_OTA</configuration>
                     <configuration>HigherApp_OTA</configuration>
                 </excluded>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack_rstmngr_basic.a</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack_rstmngr_basic.a</name>
                 <excluded>
                     <configuration>Release</configuration>
                 </excluded>
@@ -3412,12 +3412,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Src\gp_timer.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Src\hal_miscutil.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Src\miscutil.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\hal\Src\osal.c</name>

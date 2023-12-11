@@ -3,7 +3,7 @@
   * @file    steval_idb012V1_config.h
   * @author  RF Application Team
   * @brief   This file contains definitions for:
-  *          Resources available on a specific BlueNRG-LPS QFN48 Eval Kit from STMicroelectronics
+  *          Resources available on a specific BlueNRG-LPS QFN32 Eval Kit from STMicroelectronics
   ******************************************************************************
   * @attention
   *
@@ -141,8 +141,8 @@ typedef enum
 
 
 #define BSP_I2C                                   I2C1
-#define BSP_I2C_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_I2C1);
-#define BSP_I2C_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_I2C1);
+#define BSP_I2C_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_I2C1)
+#define BSP_I2C_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_I2C1)
 
 #define BSP_I2C_DATA_PIN                          LL_GPIO_PIN_7
 #define BSP_I2C_DATA_GPIO_PORT                    GPIOB
@@ -182,11 +182,12 @@ typedef enum
 #define BSP_UART_RX_GPIO_AF()                     LL_GPIO_SetAFPin_0_7(BSP_UART_RX_GPIO_PORT, BSP_UART_RX_PIN, BSP_UART_RX_GPIO_AF_N)
 #define BSP_UART_RX_GPIO_CLK_ENABLE()             LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #define BSP_UART_RX_GPIO_CLK_DISABLE()            LL_AHB_DisableClock(LL_AHB_PERIPH_GPIOB)
+#define BSP_USART_RX_WAKEUP                       WAKEUP_PB0
 
 
 #define BSP_SPI                                   SPI3
-#define BSP_SPI_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_SPI3);
-#define BSP_SPI_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_SPI3);
+#define BSP_SPI_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_SPI3)
+#define BSP_SPI_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_SPI3)
 #define BSP_SPI_GPIO_CLOCK_ENABLE()               LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA)
 #define BSP_SPI_CLK_POLARITY                      LL_SPI_POLARITY_HIGH
 #define BSP_SPI_CLK_PHASE                         LL_SPI_PHASE_2EDGE

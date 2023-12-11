@@ -39,7 +39,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
@@ -89,7 +89,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     HAL_GPIO_Init(GPIO_MASTER_NSS, &GPIO_InitStruct);
 
     /* SPI_MASTER interrupt Init */
-    HAL_NVIC_SetPriority(SPI_MASTER_IRQn, IRQ_HIGH_PRIORITY);
+    HAL_NVIC_SetPriority(SPI_MASTER_IRQn, IRQ_LOW_PRIORITY );
     HAL_NVIC_EnableIRQ(SPI_MASTER_IRQn);
   }
 }

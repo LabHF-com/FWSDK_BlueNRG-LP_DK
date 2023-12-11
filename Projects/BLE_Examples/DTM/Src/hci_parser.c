@@ -30,6 +30,7 @@
 #include "cmd.h"
 #include "transport_layer.h"
 #include "osal.h"
+#include "dtm_cmd_en.h"
 
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,6 +42,7 @@
 #endif 
 
 #define HCI_PACKET_SIZE 536 // Maximum size of HCI packets are 255 bytes + the HCI header (3 bytes) + 1 byte for transport layer.
+#define MAX_ISO_DATA_LOAD_LENGTH 512 // This value should be less than FIFO_VAR_LEN_ITEM_MAX_SIZE - 5
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -83,7 +85,7 @@ hci_state hci_input(uint8_t *buff, uint16_t len)
       else if(byte == HCI_COMMAND_EXT_PKT){
         header_len = 5;
       }
-      else if(byte == HCI_ACLDATA_PKT){
+      else if(byte == HCI_ACLDATA_PKT || byte == HCI_ISO_DATA_PKT){
         header_len = 5;
       }
       else if(byte == HCI_VENDOR_PKT){
@@ -113,6 +115,10 @@ hci_state hci_input(uint8_t *buff, uint16_t len)
         else if(pckt_type == HCI_ACLDATA_PKT){
           hci_acl_hdr *hdr = (hci_acl_hdr *)hci_buffer;
           payload_len = hdr->dlen;
+        }
+        else if(pckt_type == HCI_ISO_DATA_PKT){
+            hci_iso_data_hdr *hdr = (hci_iso_data_hdr *)hci_buffer;
+            payload_len = hdr->dlen & 0x3FFF;
         }
         else if(pckt_type == HCI_VENDOR_PKT){
           hci_vendor_hdr *hdr = (hci_vendor_hdr *)hci_buffer;
@@ -162,6 +168,24 @@ void packet_received(void)
       hci_tx_acl_data(connHandle, pb_flag, bc_flag, dataLen, pduData);
     }
     break;
+#if HCI_TX_ISO_DATA_ENABLED
+  case HCI_ISO_DATA_PKT:
+    {
+      uint16_t connection_hanlde;
+      uint16_t iso_data_load_len;
+      uint8_t* iso_data_load;
+      uint8_t  pb_flag;
+      uint8_t  ts_flag;
+      
+      connection_hanlde = LE_TO_HOST_16(hci_buffer+1) & 0x0FFF;
+      iso_data_load_len = LE_TO_HOST_16(hci_buffer+3) & 0x3FFF;
+      pb_flag = (hci_buffer[2] >> 4) & 0x3;
+      ts_flag = (hci_buffer[2] >> 6) & 0x1;
+      iso_data_load = &hci_buffer[5];
+      hci_tx_iso_data(connection_hanlde, pb_flag, ts_flag, iso_data_load_len, iso_data_load);
+    }
+    break;
+#endif
   case HCI_COMMAND_PKT:
   case HCI_COMMAND_EXT_PKT:
     send_command(hci_buffer, hci_pckt_len);
@@ -172,15 +196,41 @@ void packet_received(void)
   }
 }
 
-tBleStatus hci_rx_acl_data_event(uint16_t connHandle, uint8_t  pb_flag, uint8_t  bc_flag, uint16_t  dataLen, uint8_t*  pduData)
+tBleStatus hci_rx_acl_data_event(uint16_t connHandle, uint8_t pb_flag, uint8_t bc_flag, uint16_t dataLen, uint8_t* pduData)
 {
   uint8_t buffer_out[251+5];
   
   buffer_out[0] = 0x02;
   buffer_out[1] = connHandle & 0xFF;
   buffer_out[2] = (connHandle >> 8 & 0x0F) | (pb_flag << 4) | (bc_flag << 6) ;
-  Osal_MemCpy(buffer_out+3,&dataLen, 2);
+  Osal_MemCpy(buffer_out+3, &dataLen, 2);
   Osal_MemCpy(buffer_out+5, pduData, dataLen);
   send_event(buffer_out, dataLen+2+2+1, -1);
+  return 0;
+}
+
+tBleStatus hci_le_rx_iso_data_event(uint16_t Connection_Handle, uint8_t  PB_Flag, uint8_t TS_Flag, uint16_t ISO_Data_Load_Length,  uint8_t *ISO_Data_Load)
+{
+  uint8_t buffer_out[MAX_ISO_DATA_LOAD_LENGTH+5];
+  
+  if(ISO_Data_Load_Length + 5 > sizeof(buffer_out)) // Header is 5 bytes
+    return 0;
+  
+  buffer_out[0] = HCI_ISO_DATA_PKT;
+  Connection_Handle &= 0x0FFF;
+  HOST_TO_LE_16(buffer_out+1, Connection_Handle);
+  
+  PB_Flag &= 0x03;
+  buffer_out[2] |= (PB_Flag << 4);
+  
+  TS_Flag &= 0x01;
+  buffer_out[2] |= (TS_Flag << 6);
+  
+  HOST_TO_LE_16(buffer_out+3, ISO_Data_Load_Length);
+  
+  Osal_MemCpy(buffer_out+5, ISO_Data_Load, ISO_Data_Load_Length);
+  
+  send_event(buffer_out, ISO_Data_Load_Length + 5, -1);
+  
   return 0;
 }

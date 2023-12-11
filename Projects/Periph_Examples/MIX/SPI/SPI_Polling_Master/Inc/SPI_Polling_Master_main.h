@@ -124,7 +124,9 @@ extern "C" {
 #define SPI_MASTER_IRQn                         SPI3_IRQn
 #define SPI_MASTER_IRQHandler(void)             SPI3_IRQHandler(void)
 
-#endif  /* defined(STEVAL_IDB012V1) */
+#endif  /* STEVAL_IDB012V1   */
+
+  
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);

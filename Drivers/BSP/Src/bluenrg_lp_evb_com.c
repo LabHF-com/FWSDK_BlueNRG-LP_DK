@@ -395,6 +395,14 @@ int putchar(int c)
   return c;
 }
 
+uint8_t __io_getcharNonBlocking(uint8_t *data)
+{
+  if (Read_Buffer_Pop(data))
+    return 1;
+  else
+    return 0;
+}
+
 #else
 #if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100))
 

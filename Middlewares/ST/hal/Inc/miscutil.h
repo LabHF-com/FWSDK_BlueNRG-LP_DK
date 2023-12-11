@@ -19,6 +19,15 @@
 #ifndef __MISCUTIL_H_
 #define __MISCUTIL_H_
 
+struct antenna_conf_s {
+  uint8_t Antenna_IDs;
+  uint8_t Antenna_ID_Shift;
+  uint8_t Default_Antenna_ID;
+  uint8_t RF_Activity_Enable;
+};
+
+extern struct antenna_conf_s antenna_conf;
+
 /**
  * @brief This command is used to enable ANTENNA_ID signal by enabling the
  *        Alternate Function on the corresponding pins. Some IOs may not be
@@ -64,5 +73,36 @@ tBleStatus aci_hal_set_antenna_switch_parameters(uint8_t Antenna_IDs,
                                                  uint8_t Antenna_ID_Shift,
                                                  uint8_t Default_Antenna_ID,
                                                  uint8_t RF_Activity_Enable);
+
+/**
+ * @brief This command starts a carrier frequency, i.e. a tone, on a specific
+ *        channel. The frequency sine wave at the specific channel may be used
+ *        for debugging purpose only. The channel ID is a parameter from 0x00 to
+ *        0x27 for the 40 BLE channels, e.g. 0x00 for 2.402 GHz, 0x01 for 2.404
+ *        GHz etc. This command should not be used when normal Bluetooth
+ *        activities are ongoing. The tone should be stopped by @ref
+ *        aci_hal_tone_stop command.
+ * @param RF_Channel BLE Channel ID, from 0x00 to 0x27 meaning (2.402 + 2*0xXX)
+ *        GHz.
+ *        Values:
+ *        - 0x00 ... 0x27
+ * @param Offset Specify if the tone must be emitted with an offset from the
+ *        channel center frequency.  If 0, the tone is emitted at the channel
+ *        center frequency. If 1 or 2, the device will continuously emit the
+ *        tone at the center frequency plus or minus 250 kHz respectively.
+ *        Values:
+ *        - 0x00: 0 kHz offset
+ *        - 0x01: +250 kHz offset
+ *        - 0x02: -250 kHz offset
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_hal_tone_start(uint8_t RF_Channel,
+                              uint8_t Offset);
+/**
+ * @brief This command is used to stop the previously started @ref
+ *        aci_hal_tone_start command.
+ * @retval Value indicating success or error code.
+ */
+tBleStatus aci_hal_tone_stop(void);
 
 #endif /* __MISCUTIL_H_ */

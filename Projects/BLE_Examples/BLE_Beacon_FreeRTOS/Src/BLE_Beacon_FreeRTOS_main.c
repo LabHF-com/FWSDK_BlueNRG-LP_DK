@@ -79,7 +79,7 @@ SemaphoreHandle_t UARTSemaphoreHandle;
 #define	BLE_TASK_PRIORITY		            ( tskIDLE_PRIORITY + 1 )
 
 /*-----------------------------------------------------------*/
-/* Wait time of the test task (numbe rof ticks) */
+/* Wait time of the test task (number of ticks) */
 #define TEST_PERIOD         			    ( 200 / portTICK_PERIOD_MS )
 #define ADV_CHANGE_PERIOD         			( 500 / portTICK_PERIOD_MS )
 

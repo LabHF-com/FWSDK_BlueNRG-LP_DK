@@ -48,6 +48,7 @@ extern "C" {
 #include "rf_driver_hal_power_manager.h"
 #include "system_BlueNRG_LP.h"
 #include "BlueNRG_LPS.h"
+
 	
 /** @addtogroup PKA_Manager_BlueNRG_LP_Peripheral  PKA Manager
  * @{

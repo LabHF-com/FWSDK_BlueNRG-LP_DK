@@ -38,7 +38,9 @@
 /* BlueNRG-x Flash memory layout for OTA */
 
 /** @brief Flash erase basic unit */
-#define FLASH_PAGE_SIZE LL_FLASH_PAGE_SIZE 
+#ifndef FLASH_PAGE_SIZE
+#define FLASH_PAGE_SIZE LL_FLASH_PAGE_SIZE
+#endif
 /** @brief Reset manager size: it defines the lower application base address (and
   * the OTA Service Manger base address) 
   */
@@ -279,7 +281,7 @@ void OTA_terminate_connection(void);
  * @brief  Function to be called when an aci_att_exchange_mtu_resp_event is
  *         received.
  * @param Connection_Handle Connection handle related to the response
- * @param Server_RX_MTU ATT_MTU value agreed between server and client
+ * @param Att_MTU ATT MTU value agreed between server and client
  *
  * @note The API code could be subject to change in future releases.
  */

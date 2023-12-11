@@ -81,6 +81,7 @@ extern "C" {
 #define LED_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 /**
   * @brief Toggle periods for various blinking modes
   */
@@ -129,7 +130,7 @@ void LED_Off(void);
 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                                             TIM2
 #define LL_EnableClock_TIMx()                            LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2);
@@ -154,14 +155,14 @@ void LED_Off(void);
 #define LL_EnableClock_TIMx_CH2()                        LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #define LL_GPIO_SetAFPin_TIMx_CH2()                      LL_GPIO_SetAFPin_0_7(TIMx_CH2_PORT, TIMx_CH2_PIN, TIMx_CH2_AF);
 
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1  */
 
 
 
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 

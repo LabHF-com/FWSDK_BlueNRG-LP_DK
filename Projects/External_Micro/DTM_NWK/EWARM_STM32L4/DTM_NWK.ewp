@@ -363,6 +363,8 @@
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI\includes</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1433,6 +1435,8 @@
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\HAL\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI\includes</state>
                     <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\External_micro\SimpleBlueNRG-LP_HCI</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>

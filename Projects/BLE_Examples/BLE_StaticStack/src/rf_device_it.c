@@ -54,7 +54,6 @@
   */
 NOSTACK_FUNCTION(NORETURN_FUNCTION(void NMI_IRQHandler(void)))
 {
-  HAL_CrashHandler(__get_MSP(), NMI_SIGNATURE);  
   /* Go to infinite loop when NMI exception occurs */
   while (1)
   {}
@@ -65,7 +64,6 @@ NOSTACK_FUNCTION(NORETURN_FUNCTION(void NMI_IRQHandler(void)))
 */
 NOSTACK_FUNCTION(NORETURN_FUNCTION(void HardFault_IRQHandler(void)))
 {
-  HAL_CrashHandler(__get_MSP(), HARD_FAULT_SIGNATURE);  
   /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {}

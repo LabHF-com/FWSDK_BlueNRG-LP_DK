@@ -86,9 +86,9 @@ RNGMGR_ResultStatus RNGMGR_Init(void);
 
 RNGMGR_ResultStatus RNGMGR_Deinit(void);
 
-RNGMGR_ResultStatus RNGMGR_NewSecretKey(uint32_t* buffer);
-
 RNGMGR_ResultStatus RNGMGR_GetRandom16(uint32_t* buffer, uint8_t isr);
+
+RNGMGR_ResultStatus RNGMGR_GetRandom32(uint32_t* buffer);
 
 
 /**

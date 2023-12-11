@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : BLE_DirectionFinding_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -60,6 +60,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -96,42 +97,42 @@
                         
 * \section Pin_settings Pin settings
 @table
-|            |         Tag        |       Locator      |
---------------------------------------------------------
-|  PIN name  |   STEVAL-IDB012V1  |   STEVAL-IDB012V1  |
---------------------------------------------------------
-|     A0     |      Not Used      |      Not Used      |
-|     A1     |      Not Used      |      Not Used      |
-|     A10    |      Not Used      |      Not Used      |
-|     A11    |      Not Used      |      Not Used      |
-|     A12    |        N.A.        |        N.A.        |
-|     A13    |        N.A.        |        N.A.        |
-|     A14    |        N.A.        |        N.A.        |
-|     A15    |        N.A.        |        N.A.        |
-|     A3     |      Not Used      |      Not Used      |
-|     A4     |        N.A.        |        N.A.        |
-|     A5     |        N.A.        |        N.A.        |
-|     A6     |        N.A.        |        N.A.        |
-|     A7     |        N.A.        |        N.A.        |
-|     A8     |      Not Used      |      Not Used      |
-|     A9     |        N.A.        |        N.A.        |
-|     B0     |      Not Used      |      Not Used      |
-|     B1     |      Not Used      |      Not Used      |
-|     B12    |      Not Used      |      Not Used      |
-|     B13    |      Not Used      |      Not Used      |
-|     B14    |      Not Used      |      Not Used      |
-|     B15    |      Not Used      |      Not Used      |
-|     B2     |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |
-|     B6     |      Not Used      |      Not Used      |
-|     B7     |      Not Used      |      Not Used      |
-|     B8     |        N.A.        |        N.A.        |
-|     B9     |        N.A.        |        N.A.        |
-|     GND    |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |
+|            |                   Tag                   ||                 Locator                 ||
+----------------------------------------------------------------------------------------------------
+|  PIN name  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------
+|     A0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A11    |      Not Used      |        N.A.        |      Not Used      |        N.A.        |
+|     A12    |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A13    |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A14    |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A15    |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A3     |      Not Used      |        N.A.        |      Not Used      |        N.A.        |
+|     A4     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A5     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A6     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A7     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     A8     |      Not Used      |        N.A.        |      Not Used      |        N.A.        |
+|     A9     |        N.A.        |      Not Used      |        N.A.        |      Not Used      |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B12    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B13    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     B9     |        N.A.        |        N.A.        |        N.A.        |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -147,28 +148,28 @@
 
 * \section LEDs_description LEDs description
 @table
-|            |         Tag        |       Locator      |
---------------------------------------------------------
-|  LED name  |   STEVAL-IDB012V1  |   STEVAL-IDB012V1  |
---------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |
+|            |                   Tag                   ||                 Locator                 ||
+----------------------------------------------------------------------------------------------------
+|  LED name  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|                |          Tag         |        Locator       |
-----------------------------------------------------------------
-|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB012V1   |
-----------------------------------------------------------------
-|      PUSH1     |       Not Used       |       Not Used       |
-|      PUSH2     |       Not Used       |       Not Used       |
-|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
+|                |                     Tag                     ||                   Locator                   ||
+----------------------------------------------------------------------------------------------------------------
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+----------------------------------------------------------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 

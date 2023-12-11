@@ -62,10 +62,13 @@
                                       ((__VALUE__) == LL_PKA_MODE_MODULAR_REDUC)             ||\
                                       ((__VALUE__) == LL_PKA_MODE_MODULAR_ADD)               ||\
                                       ((__VALUE__) == LL_PKA_MODE_MODULAR_SUB)               ||\
+                                      ((__VALUE__) == LL_PKA_MODE_ECC_DOUBLE_BASE_LADDER)    ||\
+                                      ((__VALUE__) == LL_PKA_MODE_ECC_COMPLETE_ADDITION)     ||\
                                       ((__VALUE__) == LL_PKA_MODE_MONTGOMERY_MUL))
 /**
   * @}
   */
+
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -167,13 +170,17 @@ void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct)
 }
 
 
+#if defined CONFIG_DEVICE_BLUENRG_LPS
+
 void LL_PKA_WriteSingleInput( uint32_t index, uint32_t word )
 {
   /* Write the single word into PKA RAM */
   PKA_RAM->RAM[index] = word;
 }
 
+#endif
 
+#if defined CONFIG_DEVICE_BLUENRG_LPS
 
 void LL_PKA_WriteOperand( uint32_t index, int size, const uint32_t* in )
 {
@@ -187,6 +194,8 @@ void LL_PKA_WriteOperand( uint32_t index, int size, const uint32_t* in )
   *pka_ram = 0;
 }
 
+#endif
+
 void LL_PKA_ReadResult( uint32_t index, int size, uint32_t* out )
 {
   uint32_t* pka_ram = (uint32_t*)&PKA_RAM->RAM[index];
@@ -196,6 +205,9 @@ void LL_PKA_ReadResult( uint32_t index, int size, uint32_t* out )
     *out++ = *pka_ram++;
   }
 }
+
+
+#if defined CONFIG_DEVICE_BLUENRG_LPS
 
 /** 
   * @brief  
@@ -208,6 +220,9 @@ uint32_t LL_PKA_ReadSingleOutput( uint32_t index )
   /* Read a single word from PKA RAM */
   return PKA_RAM->RAM[index];
 }
+
+
+#endif
 
 /**
   * @}

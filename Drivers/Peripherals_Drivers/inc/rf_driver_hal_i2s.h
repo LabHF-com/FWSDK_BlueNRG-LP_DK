@@ -166,6 +166,7 @@ typedef  void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to 
 #define HAL_I2S_ERROR_UDR                (0x00000004U)  /*!< UDR error                   */
 #define HAL_I2S_ERROR_DMA                (0x00000008U)  /*!< DMA transfer error          */
 #define HAL_I2S_ERROR_PRESCALER          (0x00000010U)  /*!< Prescaler Calculation error */
+#define HAL_I2S_ERROR_FRE                (0x00000020U)  /*!< FRE transfer error          */
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
 #define HAL_I2S_ERROR_INVALID_CALLBACK   (0x00000020U)  /*!< Invalid Callback error      */
 #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */

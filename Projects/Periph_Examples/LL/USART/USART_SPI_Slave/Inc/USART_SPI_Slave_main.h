@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    LL/USART/USART_Comm_TxRx_DMA_Init/Inc/USART_Comm_TxRx_DMA_Init_main.h
+  * @file    LL/USART/USART_SPI_Slave/Inc/USART_SPI_Slave_main.h
   * @author  RF Application Team
-  * @brief   Header for main.c module
+  * @brief   Header for USART_SPI_Slave_main.c module
   ******************************************************************************
   * @attention
   *
@@ -63,7 +63,7 @@ extern "C" {
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 
@@ -143,6 +143,8 @@ void USART_CharReception_Callback(void);
 #define LL_PWR_EnablePDA_USART_TX()             LL_PWR_EnablePDA(LL_PWR_PUPD_IO1);
 #define LL_PWR_EnablePDA_USART_RX()             LL_PWR_EnablePDB(LL_PWR_PUPD_IO0);
 #endif /* STEVAL_IDB012V1 */
+
+
 
 #ifdef __cplusplus
 }

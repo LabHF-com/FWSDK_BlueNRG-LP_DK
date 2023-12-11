@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : FLASH_WProt_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -23,7 +23,7 @@
   To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
   -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
   -# Open the KEIL project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\HAL\\FLASH\FLASH_WProt\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\FLASH_WProt.uvprojx</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\HAL\\FLASH\\FLASH_WProt\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\FLASH_WProt.uvprojx</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild all target files. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -96,7 +98,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -141,23 +143,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                        STEVAL-IDB011V1                                       |                                        STEVAL-IDB011V2                                       |                                        STEVAL-IDB012V1                                       |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     DL2    |   ON: there are data writing into the protected pages - Fast Blinking: wait for user action  |   ON: there are data writing into the protected pages - Fast Blinking: wait for user action  |   ON: there are data writing into the protected pages - Fast Blinking: wait for user action  |
-|     DL3    |               ON: the page protection doesn't allow to write into the page 126               |               ON: the page protection doesn't allow to write into the page 126               |               ON: the page protection doesn't allow to write into the page 126               |
-|     DL4    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     U5     |                               ON: errors after data programming                              |                               ON: errors after data programming                              |                               ON: errors after data programming                              |
+|  LED name  |                    STEVAL-IDB010V1                   |                    STEVAL-IDB011V1                   |                    STEVAL-IDB011V2                   |                    STEVAL-IDB012V1                   |                    STEVAL-IDB013V1                   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |
+|     DL2    |   ON: success - Fast Blinking: wait for user action  |   ON: success - Fast Blinking: wait for user action  |   ON: success - Fast Blinking: wait for user action  |   ON: success - Fast Blinking: wait for user action  |   ON: success - Fast Blinking: wait for user action  |
+|     DL3    |                      ON: errors                      |                      ON: errors                      |                      ON: errors                      |                      ON: errors                      |                      ON: errors                      |
+|     DL4    |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |
+|     U5     |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |
-------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   it is used to start application  |   it is used to start application  |   it is used to start application  |
-|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |
-|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |
+|   BUTTON name  |           STEVAL-IDB010V1          |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |           STEVAL-IDB013V1          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   it is used to start application  |   it is used to start application  |   it is used to start application  |   it is used to start application  |   it is used to start application  |
+|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
+|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LPS         |          Reset BlueNRG-LPS         |
 
 @endtable
 
@@ -213,6 +215,7 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 uint32_t FirstPage = 0, NbOfPages = 0;
 uint32_t Address = 0, PageError = 0;
 __IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
@@ -222,6 +225,7 @@ static FLASH_EraseInitTypeDef EraseInitStruct;
 
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_GPIO_Init(void);
 static uint32_t GetPage(uint32_t Address);
 
@@ -243,19 +247,18 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   
-  /* Initialize LED1, LED2 and LED3 */
-  BSP_LED_Init(BSP_LED1);
+  /* Initialize LEDs */
   BSP_LED_Init(BSP_LED2);
   BSP_LED_Init(BSP_LED3);
   
@@ -331,6 +334,7 @@ int main(void)
       /* Error occurred while writing data in Flash memory.
       User can add here some code to deal with this error */
       printf("Error occurred while writing data in Flash memory.\n\r");
+      printf("** Test successfully. ** \n\r\n\r");
       while (1)
       {
         BSP_LED_On(BSP_LED3);
@@ -367,16 +371,17 @@ void WaitForUserButtonPress(void)
 {
   printf("Wait for User push-button (PUSH1) press to start the application.\n\r");
   /* Wait for User push-button (PUSH1) press before starting the Communication */
-  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_RESET)
+  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_RESET && pressCToContinue == 0)
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(200);
   }
-  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_SET)
+  while (BSP_PB_GetState(BSP_PUSH1) != GPIO_PIN_SET && pressCToContinue == 0)
   {
     BSP_LED_Toggle(BSP_LED2);
     HAL_Delay(200);
   }
+  pressCToContinue = 0;
   printf("PUSH1 pressed.\n\r");
 }
 
@@ -395,6 +400,18 @@ static uint32_t GetPage(uint32_t Addr)
     while(1);
   }
   return page;
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
 }
 
 /**

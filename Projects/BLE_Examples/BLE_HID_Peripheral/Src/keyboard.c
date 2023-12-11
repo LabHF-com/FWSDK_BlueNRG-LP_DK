@@ -374,17 +374,17 @@ void DevicePowerSaveProcedure(void)
   /* Allow sleep mode only if not connected because we cannot receive characters from UART while sleeping. */
   if ( hid_status & HID_DEVICE_READY_TO_SLEEP && !(hid_status & HID_DEVICE_CONNECTED)) {
     wakeupIO.IO_Mask_High_polarity = 0;
-    wakeupIO.IO_Mask_Low_polarity = WAKEUP_PA8;
+    wakeupIO.IO_Mask_Low_polarity = BSP_USART_RX_WAKEUP;
     wakeupIO.RTC_enable = 0;
     wakeupIO.LPU_enable = 0;
     if (Button == BSP_PUSH1)
     {
-      wakeupIO.IO_Mask_High_polarity = WAKEUP_PA10;
+      wakeupIO.IO_Mask_High_polarity = BSP_PUSH1_WAKEUP;
     }
     /* Power Save Request */
     HAL_PWR_MNGR_Request(Level, wakeupIO, &stopLevel);
     
-    if(stopLevel >=POWER_SAVE_LEVEL_STOP_WITH_TIMER && HAL_PWR_MNGR_WakeupSource() == WAKEUP_PA8){
+    if(stopLevel >=POWER_SAVE_LEVEL_STOP_WITH_TIMER && HAL_PWR_MNGR_WakeupSource() == BSP_USART_RX_WAKEUP){
       hidSetNotificationPending(TRUE);
     }
   }

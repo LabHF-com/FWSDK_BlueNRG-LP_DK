@@ -1,229 +1,38 @@
-
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
-* File Name          : RTC_WakeUp_Calendar_main.c
-* Author             : RF Application Team
-* Version            : 1.0.0
-* Date               : 04-March-2019
-* Description        : Code demonstrating the RTC functionality
-********************************************************************************
-* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
-* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
-* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
-* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
-* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
-*******************************************************************************/
-
 /**
- * @file  RTC_WakeUp_Calendar/RTC_WakeUp_Calendar_main.c
- * @brief This example shows how to configure RTC peripheral to set the power save level stop with timer.
- *
-
-* \section KEIL_project KEIL project
-  To use the project with KEIL uVision 5 for ARM, please follow the instructions below:
-  -# Open the KEIL uVision 5 for ARM and select Project->Open Project menu. 
-  -# Open the KEIL project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\RTC\\RTC_WakeUp_Calendar\\MDK-ARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\RTC_WakeUp_Calendar.uvprojx</tt>
-  -# Select desired configuration to build
-  -# Select Project->Rebuild all target files. This will recompile and link the entire application
-  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
-  -# Select Project->Download to download the related binary image.
-  -# Alternatively, open the BlueNRG-LP Flasher utility and download the built binary image.
-
-* \section IAR_project IAR project
-  To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
-  -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
-  -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\RTC\\RTC_WakeUp_Calendar\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\RTC_WakeUp_Calendar.eww</tt>
-  -# Select desired configuration to build
-  -# Select Project->Rebuild All. This will recompile and link the entire application
-  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
-  -# Select Project->Download and Debug to download the related binary image.
-  -# Alternatively, open the Flasher utility and download the built binary image.
-
-* \section WISE_project WiSE-Studio project
-  To use the project with WiSE-Studio IDE (GCC toolchain), please follow the instructions below:
-  -# Open the WiSE-Studio IDE
-  -# Select File, Import, Existing Projects into Workspace
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\RTC\\RTC_WakeUp_Calendar\\WiSE-Studio\\{STEVAL-IDB011V1|STEVAL-IDB012V1}</tt> 
-  -# Select desired configuration to build
-  -# Select Project->Build Project. This will recompile and link the entire application
-  -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
-  -# Select Run->Run/Debug to download the related binary image.
-  -# Alternatively, open the Flasher utility and download the built binary image.
-
-* \subsection Project_configurations Project configurations
-- \c Release - Release configuration
-
-
-* \section Board_supported Boards supported
-- \c STEVAL-IDB011V1
-- \c STEVAL-IDB011V2
-- \c STEVAL-IDB012V1
-
-
-
-* \section Power_settings Power configuration settings
-@table
-
-==========================================================================================================
-|                                         STEVAL-IDB01xV1                                                |
-----------------------------------------------------------------------------------------------------------
-| Jumper name | Description                                                                |
-| JP2         |                                                                            |
-----------------------------------------------------------------------------------------------------------
-| USB         | USB supply power                                                            |
-| BAT         | The supply voltage must be provided through battery pins.                   |
-
-
-@endtable
-
-* \section Jumper_settings Jumper settings
-@table
-
-========================================================================================================================================================================================
-|                                                                             STEVAL-IDB01xV1                                                                                          |
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Jumper name |                                                                Description                                                                                             |
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
-| JP1         | It provides the voltage to the BlueNRG-LP circuit. It must be fitted. It can be used for current measurements of the BlueNRG-LP device.                                |          
-| JP2         | It is a switch between two power domains. BAT position: to provide power from battery holder; USB position: to provide power from USB connector.                       |
-| JP3         | It connects the BLE_SWCLK pin of the BlueNRG-LP with the SWCLK pin of the USB_CMSISDAP. It must be fitted.                                                             |          
-| JP4         | It connects the BLE_SWDIO pin of the BlueNRG-LP with the SWDIO pin of the USB_CMSISDAP. It must be fitted.                                                             |
-| JP5         | It connects the BLE_RSTN pin of the BlueNRG-LP with the rest of the board (the USB_CMSISDAP and RESET push button). It must be fitted.                                 |
-
-
-@endtable 
-
-* \section Pin_settings Pin settings
-@table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
---------------------------------------------------------
-|     A1     |       Not Used      |      USART TX      |
-|     A11    |        Output       |      Not Used      |
-|     A12    |       Not Used      |        N.A.        |
-|     A13    |       Not Used      |        N.A.        |
-|     A14    |       Not Used      |        N.A.        |
-|     A15    |       Not Used      |        N.A.        |
-|     A4     |        Output       |        N.A.        |
-|     A5     |       Not Used      |        N.A.        |
-|     A6     |        Output       |        N.A.        |
-|     A7     |        Output       |        N.A.        |
-|     A8     |       USART TX      |      Not Used      |
-|     A9     |       USART RX      |      Not Used      |
-|     B0     |       Not Used      |      USART RX      |
-|     B14    |       Not Used      |      Not Used      |
-|     B2     |       Not Used      |      Not Used      |
-|     B3     |       Not Used      |      Not Used      |
-|     B4     |       Not Used      |        DL2         |
-|     B5     |       Not Used      |      Not Used      |
-|     B7     |       Not Used      |      Not Used      |
-|     B8     |         DL2         |        N.A.        |
-|     B9     |       Not Used      |        N.A.        |
-|     A0     |         N.A.        |      Not Used      |
-|     A10    |         N.A.        |      Not Used      |
-|     B1     |         N.A.        |      Not Used      |
-|     B6     |         N.A.        |      Not Used      |
-|     B15    |         N.A.        |      Not Used      |
-|     GND    |       Not Used      |      Not Used      |
-|     RST    |       Not Used      |      Not Used      |
-|    VBAT    |       Not Used      |      Not Used      |
-@endtable 
-
-* \section Serial_IO Serial I/O
-  The application will listen for keys typed and it will send back in the serial port.
-  In other words everything typed in serial port will be send back.
-@table
-| Parameter name  | Value            | Unit      |
-----------------------------------------------------
-| Baudrate        | 115200           | bit/sec   |
-| Data bits       | 8                | bit       |
-| Parity          | None             | bit       |
-| Start bits      | 1                | bit       |
-| Stop bits       | 1                | bit       |
-| HW flow control | None             | bit       |
-@endtable
-
-
-* \section LEDs_description LEDs description
-@table
-|  LED name  |                                 STEVAL-IDB011V1                                |                                 STEVAL-IDB011V2                                |                                 STEVAL-IDB012V1                                |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |
-|     DL2    |  ON; RTC configuration is done correctly; toggling: system generates an error  |  ON; RTC configuration is done correctly; toggling: system generates an error  |  ON; RTC configuration is done correctly; toggling: system generates an error  |
-|     DL3    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |
-|     DL4    |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |
-|     U5     |                                    Not Used                                    |                                    Not Used                                    |                                    Not Used                                    |
-
-@endtable
-
-
-* \section Buttons_description Buttons description
-@table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
-
-@endtable
-
-* \section Usage Usage
-
-
-Configuration of the LL API to set the RTC calendar. The peripheral initialization uses LL unitary service functions for optimization purposes (performance and size).
-
-The RTC peripheral configuration is ensured by the Configure_RTC() function (configure of the needed RTC resources according to the used hardware CLOCK, PWR, RTC clock source and BackUp). You may update this function to change RTC configuration.
-
-Configure_RTC_Calendar function is then called to initialize the time and the date.
-
-After startup from reset and system configuration, the  RTC Wakeup peripheral is initialized.
-The application shows a state massage on USART peripheral and it is put in stop mode with timer enabled.
-On first  character reception from USART Com port (ex: using HyperTerminal) the device is waked up. 
-The device can be waked up also pressing the User push-button (PUSH1).
-After 5 sec, if User doesn't interact with the application the device is waked up due to the RTC wake up timer is elapsed.
-
-When the device is waked up the output value on port PA4, PA6, PA7 and PA11 is changed from high to low and vice versa.
-
-A key value RTC_BKP_DATE_TIME_UPDTATED is written in backup data register 1 to indicate if the RTC is already configured.
-To debug the intialize procedure when the backup data register 1 is been already written, is mandatory change the value of the #define RTC_BKP_DATE_TIME_UPDTATED.
- 
-When a reset (except power on reset) occurs the BKP domain is not reset and the RTC configuration is not lost.
-
-When power on reset occurs and there are no battery connected to the VBAT pin: the BKP domain is reset and the RTC configuration is lost.
- 
-LED2 is turned ON when the RTC configuration is done correctly.
-LED2 is toggling : This indicates that the system generates an error.
-The current time and date are updated and displayed on the debugger in aShowTime and aShowDate variables (watch or live watch).
-
-This example is applicable only for BlueNRG_LP cut 2.0 or above.
-
-In order to make the program work, you must do the following:
- - Launch serial communication SW on PC
- - Flash the project in the Board
- - Press the RESET button
-
-BlueNRG_LP-EVB Set-up
-Connect the following pins to an oscilloscope to monitor the output waveforms:
-- PA4
-- PA6
-- PA7
-- PA11
-Connect USART1 TX/RX to respectively RX and TX pins of PC UART (could be done through a USB to UART adapter) :
-- Connect BlueNRG_LP board USART1 TX pin to PC COM port RX signal
-- Connect BlueNRG_LP board USART1 RX pin to PC COM port TX signal
-- Connect BlueNRG_LP board GND to PC COM port GND signal
-
-Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper configuration :
-- 115200 bauds
-- 8 bits data
-- 1 start bit
-- 1 stop bit
-- no parity
-- no HW flow control 
-
-**/
-   
+  ******************************************************************************
+  * @file    RTC/RTC_WakeUp_Calendar/Src/RTC_WakeUp_Calendar_main.c
+  * @author  RF Application Team
+  * @brief   this example shows the configuration of the calendar and the 
+  *          configuration of the RTC to wake up from Standby mode using the 
+  *          RTC Wakeup timer.
+******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; COPYRIGHT(c) 2020 STMicroelectronics</center></h2>
+  *
+  * Redistribution and use in source and binary forms, with or without modification,
+  * are permitted provided that the following conditions are met:
+  *   1. Redistributions of source code must retain the above copyright notice,
+  *      this list of conditions and the following disclaimer.
+  *   2. Redistributions in binary form must reproduce the above copyright notice,
+  *      this list of conditions and the following disclaimer in the documentation
+  *      and/or other materials provided with the distribution.
+  *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  *      may be used to endorse or promote products derived from this software
+  *      without specific prior written permission.
+  *
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+  *******************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
@@ -280,10 +89,12 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
+
 /* Define used to indicate date/time updated */
 #define RTC_BKP_DATE_TIME_UPDTATED ((uint32_t)0x32F2)
 
-/** @addtogroup BlueNRGLP_StdPeriph_Examples Peripheral Examples
+/** @addtogroup StdPeriph_Examples Peripheral Examples
 * @{
 */
 
@@ -524,13 +335,13 @@ int main(void)
     while(1);
   }
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Init LED2 */
   BSP_LED_Init(BSP_LED2);

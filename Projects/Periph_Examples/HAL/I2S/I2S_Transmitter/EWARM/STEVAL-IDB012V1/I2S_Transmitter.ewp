@@ -246,23 +246,23 @@
         </option>
       <option>
           <name>CCListCFile</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>CCListCMnemonics</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>CCListCMessages</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>CCListAssFile</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>CCListAssSource</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>CCEnableRemarks</name>
@@ -331,7 +331,7 @@
         </option>
       <option>
           <name>CCCompilerRuntimeInfo</name>
-        <state>0</state>
+        <state>1</state>
         </option>
       <option>
           <name>IFpuProcessor</name>
@@ -387,7 +387,7 @@
         </option>
       <option>
           <name>CCOptLevelSlave</name>
-        <state>3</state>
+        <state>0</state>
         </option>
       <option>
           <name>CompilerMisraRules98</name>
@@ -1069,13 +1069,13 @@
   <group>
       <name>User</name>
     <file>
+        <name>$PROJ_DIR$/../../Src/I2S_Transmitter_main.c</name>
+      </file>
+    <file>
         <name>$PROJ_DIR$/../../Src/rf_device_hal_msp.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../Src/rf_device_it.c</name>
-      </file>
-    <file>
-        <name>$PROJ_DIR$/../../Src/I2S_Transmitter_main.c</name>
       </file>
     </group>
   </group>
@@ -1087,10 +1087,10 @@
         <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_button.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_com.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_io.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/BSP/Src/bluenrg_lp_evb_led.c</name>
@@ -1099,10 +1099,10 @@
   <group>
       <name>CMSIS</name>
     <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
       </file>
     </group>
   <group>

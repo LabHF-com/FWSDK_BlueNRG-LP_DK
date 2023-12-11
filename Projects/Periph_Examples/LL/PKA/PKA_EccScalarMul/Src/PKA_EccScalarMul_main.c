@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : PKA_EccScalarMul_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -59,6 +59,7 @@
 
 * \section Board_supported Boards supported
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -95,7 +96,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |    STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB012V1 |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -140,23 +141,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |             STEVAL-IDB012V1            |
--------------------------------------------------------
-|     DL1    |                Not Used                |
-|     DL2    |   On: success; Slowly blinking: error  |
-|     DL3    |                Not Used                |
-|     DL4    |                Not Used                |
-|     U5     |                Not Used                |
+|  LED name  |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+-------------------------------------------------------------------------------------------------
+|     DL1    |                Not Used                |                Not Used                |
+|     DL2    |   On: success; Slowly blinking: error  |   On: success; Slowly blinking: error  |
+|     DL3    |                Not Used                |                Not Used                |
+|     DL4    |                Not Used                |                Not Used                |
+|     U5     |                Not Used                |                Not Used                |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB012V1  |
----------------------------------------
-|      PUSH1     |      Not Used      |
-|      PUSH2     |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |
+|   BUTTON name  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+-----------------------------------------------------------------
+|      PUSH1     |       Not Used       |       Not Used       |
+|      PUSH2     |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -203,17 +204,35 @@ uint8_t SBuffer[32] = {0};
 
 static volatile int state = 0x0;
 
- uint32_t RandomKA[8] = {0x00005e5f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
- uint32_t PKAStartPoint[16] = { 0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 
-                                      0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U, 
-                                      0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 
-                                      0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};
- uint32_t Expected_Point_A[16] = {0xEE80AADE, 0xF458AD60, 0x635B77EA, 0xA8CC1FEB, 
-                                        0x700DEE70, 0xD31F447C, 0xF6A1319A, 0x4915ED08, 
-                                        0xF0111A82, 0xAD38071A, 0xDCB9F308, 0x77F0BAB8, 
-                                        0xA0FAFD61, 0xF36CA7DA, 0xD2F8209C, 0x552E3E71};
- uint32_t Point_A[16] = {0};
+uint32_t RandomKA[8] = {0x00005e5f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
 
+uint32_t PKAStartPoint[16] = {  0xd898c296U, 0xf4a13945U, 0x2deb33a0U, 0x77037d81U, 
+                                0x63a440f2U, 0xf8bce6e5U, 0xe12c4247U, 0x6b17d1f2U, 
+                                0x37bf51f5U, 0xcbb64068U, 0x6b315eceU, 0x2bce3357U, 
+                                0x7c0f9e16U, 0x8ee7eb4aU, 0xfe1a7f9bU, 0x4fe342e2U};
+
+uint32_t Expected_Point_A[16] = {0xEE80AADE, 0xF458AD60, 0x635B77EA, 0xA8CC1FEB, 
+                                0x700DEE70, 0xD31F447C, 0xF6A1319A, 0x4915ED08, 
+                                0xF0111A82, 0xAD38071A, 0xDCB9F308, 0x77F0BAB8, 
+                                0xA0FAFD61, 0xF36CA7DA, 0xD2F8209C, 0x552E3E71};
+
+uint32_t Point_A[16] = {0};
+
+static const uint32_t nbits_k[2] = {
+0x100,
+0x0
+};
+   
+static const uint32_t nbits_m[2] = {
+0x100,
+0x0
+};
+                                
+static const uint32_t a_coeff_sign[2] = {
+0x1,
+0x0
+};
+                                
 static const uint32_t P256_gfp[8] =
 {
   0xFFFFFFFF, /* LSB */
@@ -252,13 +271,13 @@ static const uint32_t P256_a[8] =
 };
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_PKA_Init(void);
 void LED_On(void);
 void LED_Blinking(uint32_t Period);
 void PrintBuffer(uint32_t* pBuffer, uint32_t BufferLength);
 static uint32_t Buffercmp(const uint32_t* pBuffer1,const uint32_t* pBuffer2, uint32_t BufferLength);
+void printInfo(uint32_t indexPKARAM, uint32_t dim);
 
 /* Private user code ---------------------------------------------------------*/
 
@@ -275,11 +294,13 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-    
+  /* Set systick to 1ms using system clock frequency */
+  LL_Init1msTick(SystemCoreClock); 
+  
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -287,34 +308,38 @@ int main(void)
   MX_PKA_Init();
   
   LL_PKA_SetMode(PKA, LL_PKA_MODE_ECC_KP_PRIMITIVE);
+ 
+#if defined CONFIG_DEVICE_BLUENRG_LPS
+
+  LL_PKA_WriteSingleInput( PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS, nbits_k[0]);
   
-   /* Set the scalar multiplier k length */
-  LL_PKA_WriteSingleInput( 0, 256 );
-
   /* Set the modulus length */
-  LL_PKA_WriteSingleInput( 1, 256 );
-
+  LL_PKA_WriteSingleInput( PKA_ECC_SCALAR_MUL_IN_OP_NB_BITS, nbits_m[0]);
+  
   /* Set the coefficient a sign */
-  LL_PKA_WriteSingleInput( 2, 1 );
-
+  LL_PKA_WriteSingleInput( PKA_ECC_SCALAR_MUL_IN_A_COEFF_SIGN, a_coeff_sign[0] );
+   
   /* Set the coefficient |a| */
-  LL_PKA_WriteOperand( 3, 8, P256_a );
-
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_A_COEFF, 8, P256_a );
+  
   /* Set the modulus value p */
-  LL_PKA_WriteOperand( 24, 8, P256_gfp );
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_MOD_GF , 8, P256_gfp );
   
   /* Set the Montgomery parameter */
-  LL_PKA_WriteOperand( 45, 8, P256_r2 );
-
-  /* Set the scalar multiplier k */
-  LL_PKA_WriteOperand( 66, 8, (uint32_t*)&RandomKA[0] );
-
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_MONTGOMERY_PARAM, 8, P256_r2 );
+  
+  /* Set the scalar multiplier k */ /* index 36 */
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_K, 8, (uint32_t*)&RandomKA[0] );
+  
   /* Set the point P coordinate x */
-  LL_PKA_WriteOperand( 87, 8, (uint32_t*)&PKAStartPoint[0] );
-
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X, 8, (uint32_t*)&PKAStartPoint[0] );
+  
   /* Set the point P coordinate y */
-  LL_PKA_WriteOperand( 108, 8, (uint32_t*)&PKAStartPoint[8] );
-
+  LL_PKA_WriteOperand( PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y, 8, (uint32_t*)&PKAStartPoint[8] );
+  
+  
+#endif  
+  
   while(LL_PKA_IsActiveFlag_BUSY(PKA));
   
   /* Launch the computation in interrupt mode */
@@ -322,24 +347,32 @@ int main(void)
   
   /* Wait for the interrupt callback */
   while(endOfProcess != 1);
-  
-  /* Retreive the result and output buffer */
-  LL_PKA_ReadResult( 87, 8, &Point_A[0] );
 
+  /* Retreive the result and output buffer */
+  LL_PKA_ReadResult(PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X, 8, &Point_A[0] );
+  
   /* Read the output point Y as the second half of the result */
-  LL_PKA_ReadResult( 108, 8, &Point_A[8] );
+  LL_PKA_ReadResult( PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y, 8, &Point_A[8] );
+
+  
+  printf("ECC Scalar Multiplication complete.\n\r");  
+  printf("RandomKA \n\r");
+  PrintBuffer((uint32_t *)&RandomKA[0],8);
+  printf("PKAStartPoint \n\r");
+  PrintBuffer((uint32_t *)&PKAStartPoint[0],16); 
+  printf("Point_A \n\r");
+  PrintBuffer((uint32_t *)&Point_A[0],16);
+  printf("Expected_Point_A \n\r");
+  PrintBuffer((uint32_t *)&Expected_Point_A[0],16);
   
   if(Buffercmp(Point_A, Expected_Point_A, 16))
-  {
-    printf("ECC Scalar Multiplication complete.\n\r");  
-    printf("RandomKA \n\r");
-    PrintBuffer((uint32_t *)&RandomKA[0],8);
-    printf("PKAStartPoint \n\r");
-    PrintBuffer((uint32_t *)&PKAStartPoint[0],16); 
-    printf("Point_A \n\r");
-    PrintBuffer((uint32_t *)&Point_A[0],16); 
+  { 
     LED_On();
     printf("** Test successfully. ** \n\r\n\r");
+  }
+  else
+  {
+    printf("** Test fail. ** \n\r\n\r");
   }
   
   /* Infinite loop */
@@ -348,11 +381,16 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
+void printInfo(uint32_t indexPKARAM, uint32_t dim)
 {
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  uint32_t ramAddress = 0;
+  for(int i=indexPKARAM;i<(indexPKARAM+dim);i++)
+  {
+    ramAddress = PKA_RAM_BASE + ( i << 2);
+    //printf("ox%08X PKA_RAM[%d] = ox%08X \n\r", ramAddress, i, PKA_RAM->RAM[i]);
+    printf("0x%08X;%d;x%08X\n\r", ramAddress, i, PKA_RAM->RAM[i]);
+  }
+  printf("\n\r");
 }
 
 /**
@@ -365,33 +403,34 @@ static void MX_PKA_Init(void)
   /* Peripheral clock enable */
   LL_AHB_EnableClock(LL_AHB_PERIPH_PKA);
   
+  LL_PKA_Enable(PKA);
+  LL_PKA_EnableIT_ADDRERR(PKA);
+  LL_PKA_EnableIT_RAMERR(PKA);
+  LL_PKA_EnableIT_PROCEND(PKA);
+  
   /* Configure NVIC for PKA interrupts */
   /*   Set priority for PKA_IRQn */
   /*   Enable PKA_IRQn */
   NVIC_SetPriority(PKA_IRQn, IRQ_MED_PRIORITY);  
   NVIC_EnableIRQ(PKA_IRQn);
   
-  LL_PKA_Enable(PKA);
-  LL_PKA_EnableIT_ADDRERR(PKA);
-  LL_PKA_EnableIT_RAMERR(PKA);
-  LL_PKA_EnableIT_PROCEND(PKA);
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+* @brief GPIO Initialization Function
+* @param None
+* @retval None
+*/
 static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
+  
   /* GPIO Ports Clock Enable */
   LED2_GPIO_CLK_ENABLE();
-
+  
   /*  Set several pins to low level on dedicated gpio port */
   LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
-
+  
   /* Configure GPIO for LED */
   GPIO_InitStruct.Pin = LED2_PIN;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;

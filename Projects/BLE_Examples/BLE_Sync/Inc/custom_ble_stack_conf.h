@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
   * @file    custom_ble_stack_config.h
-  * @author  AMS - RF Application team
-  * @version V1.1.0
-  * @date    07 December 2021
+  * @author  RF Application team
+  * @version V1.2.0
+  * @date    11 April 2023
   * @brief   Custom BLE stack modular configuration options header file
   ******************************************************************************
   * @attention
@@ -19,7 +19,7 @@
   ******************************************************************************
 * \section BLE_Config BLE stack configuration options  
 
-    - The BLE stack v3.1 supports the following outstanding features:
+    - The BLE stack v3.x supports the following outstanding features:
       -- Controller Privacy
       -- LE Secure Connections
       -- Controller Master
@@ -32,8 +32,13 @@
       -- Constant Tone Extension (not for BlueNRG-LP; reserved for future use)
       -- LE Power Control
       -- Connection Support (v3.1a)
+      -- LE Channel Classification (v3.2)
+      -- Broadcast Isochronous streams (v3.2) 
+      -- EATT  (v3.2)
+      -- Connection subrating (v3.2)
+      -- Connection Isochronous streams (v3.2)
 
-    - In order to configure the BLE stack v3.1 or later the following options are available: 
+    - In order to configure the BLE stack v3.x the following options are available: 
 
         - CONTROLLER_MASTER_ENABLED                 : Master role                               (1:ENABLED; 0: DISABLED) 
         - CONTROLLER_PRIVACY_ENABLED                : Controller Privacy feature                (1:ENABLED; 0: DISABLED) 
@@ -46,6 +51,11 @@
         - CONTROLLER_CTE_ENABLED                    : Constant Tone Extension                   (1:ENABLED; 0: DISABLED) 
         - CONTROLLER_POWER_CONTROL_ENABLED          : LE Power Control                          (1:ENABLED; 0: DISABLED)
         - CONNECTION_ENABLED                        : Connection Support                        (1:ENABLED; 0: DISABLED)
+        - CONTROLLER_CHAN_CLASS_ENABLED             : LE Channel Classification                 (1:ENABLED; 0: DISABLED)
+        - CONTROLLER_BIS_ENABLED                    : Broadcast Isochronous support             (1:ENABLED; 0: DISABLED)
+	- EATT_ENABLED                              : EATT Support                              (1:ENABLED; 0: DISABLED)
+	- CONNECTION_SUBRATING_ENABLED              : Connection Subrating feature              (1:ENABLED; 0: DISABLED) 
+	- CONTROLLER_CIS_ENABLED                    : Connection Isochronous streams support    (1:ENABLED; 0: DISABLED) 
 **/
 
 #ifndef _CUSTOM_BLE_STACK_CONF_H_
@@ -65,5 +75,10 @@
 #define CONTROLLER_CTE_ENABLED                    (0U)
 #define CONTROLLER_POWER_CONTROL_ENABLED          (0U)
 #define CONNECTION_ENABLED                        (1U)
+#define CONTROLLER_CHAN_CLASS_ENABLED             (0U) /* LE Channel Classification  */
+#define CONTROLLER_BIS_ENABLED                    (0U) /* BIS Support */
+#define EATT_ENABLED                              (0U)
+#define CONNECTION_SUBRATING_ENABLED              (0U)
+#define CONTROLLER_CIS_ENABLED                    (0U)
 
 #endif // _CUSTOM_BLE_STACK_CONF_H_

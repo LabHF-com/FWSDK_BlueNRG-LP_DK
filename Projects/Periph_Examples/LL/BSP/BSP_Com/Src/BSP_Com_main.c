@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : BSP_Com_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -96,7 +98,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -143,24 +145,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -181,17 +183,14 @@ This example shows basic UART communication.
 #include "rf_driver_ll_dma.h"
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #include "bluenrg_lpx.h"
+#include "bluenrg_lp_evb_config.h"
 #endif
 #include "rf_driver_ll_gpio.h"
 #if defined(USE_FULL_ASSERT)
 #include "rf_driver_assert.h"
 #endif /* USE_FULL_ASSERT */
-
-    
+  
 /* Private includes ----------------------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#include "bluenrg_lp_evb_config.h"
-#endif
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -221,17 +220,14 @@ int main(void)
     /* Error during system clock configuration take appropriate action */
     while(1);
   }
-  
-  /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
-  
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Print the start message */
   printf("%s", startMessage);

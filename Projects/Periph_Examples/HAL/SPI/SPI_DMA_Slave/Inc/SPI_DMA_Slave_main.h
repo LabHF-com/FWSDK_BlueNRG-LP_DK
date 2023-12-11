@@ -100,9 +100,9 @@ extern "C" {
 #define DMA_REQUEST_SPI_SLAVE_RX               DMA_REQUEST_SPI1_RX
 #endif
 
-#endif  /* defined(STEVAL_IDB011V1)  */
+#endif  /* STEVAL_IDB011V1 */
   
-#if defined(STEVAL_IDB012V1)  
+#if defined(STEVAL_IDB012V1)
     /** GPIO Configuration
     PB3/AF4    ------> SPI3_SCK
     PA8/AF3    ------> SPI3_MISO
@@ -126,7 +126,7 @@ extern "C" {
 #define DMA_REQUEST_SPI_SLAVE_RX               DMA_REQUEST_SPI3_RX
 
 
-#endif  /* defined(STEVAL_IDB012V1)  */
+#endif  /* STEVAL_IDB012V1   */
 
 
 /* Exported functions prototypes ---------------------------------------------*/

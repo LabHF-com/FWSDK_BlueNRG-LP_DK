@@ -68,7 +68,11 @@ typedef enum
 
 /** @brief Macro that returns a 16-bit value from a buffer where the value is stored in Little Endian Format */
 #define LE_TO_HOST_16(ptr)   (uint16_t) ( ((uint16_t)*((uint8_t *)(ptr))) | \
-                                           ((uint16_t)*((uint8_t *)(ptr) + 1) << 8) )
+                                          ((uint16_t)*((uint8_t *)(ptr) + 1) << 8) )
+
+/** @brief Macro that returns a 16-bit value from a buffer where the value is stored in Big Endian Format */
+#define BE_TO_HOST_16(ptr)  (uint16_t) ( ((uint16_t) *((uint8_t *)ptr)) << 8 | \
+                                         ((uint16_t) *((uint8_t *)ptr + 1) ) )
 
 /** @brief Macro that stores a 16-bit value into a buffer in Little Endian Format (2 bytes) */
 #define HOST_TO_LE_16(buf, val)    ( ((buf)[0] =  (uint8_t) (val)    ) , \
@@ -79,6 +83,12 @@ typedef enum
                                            ((uint32_t)*((uint8_t *)(ptr) + 1) << 8)  | \
                                            ((uint32_t)*((uint8_t *)(ptr) + 2) << 16) | \
                                            ((uint32_t)*((uint8_t *)(ptr) + 3) << 24) )
+
+/** @brief Macro that returns a 16-bit value from a buffer where the value is stored in Big Endian Format */
+#define BE_TO_HOST_32(ptr)  (uint32_t) ( ((uint32_t) *((uint8_t *)ptr    )) << 24 | \
+                                         ((uint32_t) *((uint8_t *)ptr + 1)) << 16 | \
+                                         ((uint32_t) *((uint8_t *)ptr + 2)) << 8 | \
+                                         ((uint32_t) *((uint8_t *)ptr + 3)) )
 
 /** @brief Macro that stores a 32-bit value into a buffer in Little Endian Format (4 bytes) */
 #define HOST_TO_LE_32(buf, val)    ( ((buf)[0] =  (uint8_t) (val)     ) , \

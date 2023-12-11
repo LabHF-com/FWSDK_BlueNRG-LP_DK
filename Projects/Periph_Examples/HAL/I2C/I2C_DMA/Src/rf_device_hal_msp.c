@@ -43,7 +43,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
@@ -114,7 +114,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     __HAL_LINKDMA(hi2c,hdmarx,hdma_i2cx_rx);
 
     /* I2Cx interrupt Init */
-    HAL_NVIC_SetPriority(I2Cx_IRQn, IRQ_HIGH_PRIORITY);
+    HAL_NVIC_SetPriority(I2Cx_IRQn, IRQ_LOW_PRIORITY );
     HAL_NVIC_EnableIRQ(I2Cx_IRQn);
   }
 }

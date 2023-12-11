@@ -79,6 +79,7 @@ extern "C" {
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 /**
   * @brief Key push-button
   */
@@ -107,6 +108,7 @@ extern "C" {
 #define MCO_GPIO_AF                            LL_GPIO_AF_0
 #define MCO_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA)
 #endif /* STEVAL_IDB012V1 */  
+  
   
   
 /* Exported macro ------------------------------------------------------------*/

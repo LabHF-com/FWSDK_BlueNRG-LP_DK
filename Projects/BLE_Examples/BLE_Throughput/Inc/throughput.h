@@ -26,13 +26,13 @@
 #define L2C_COS_MTU                     (1024)
 #define L2C_COS_MPS                     (550)
 #define L2C_COS_CFC_POLICY              (1)
-#define L2C_COS_RX_SDU_BUFFER_SIZE      ((L2C_COS_MTU + 2) * 3)//(247 + 4)
+#define L2C_COS_RX_SDU_BUFFER_SIZE      (L2C_COS_MTU)
 #else
 #define L2C_COS_CID                     (0x50)
 #define L2C_COS_MTU                     (1024)
 #define L2C_COS_MPS                     (1024)
 #define L2C_COS_CFC_POLICY              (1)
-#define L2C_COS_RX_SDU_BUFFER_SIZE      ((L2C_COS_MTU + 2) * 3)//(247 + 4)
+#define L2C_COS_RX_SDU_BUFFER_SIZE      (L2C_COS_MTU)
 #endif
 
 /*

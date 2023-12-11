@@ -281,8 +281,8 @@ HAL_StatusTypeDef HAL_PWREx_ConfigSMPS(uint32_t outputVoltage)
 /**
   * @brief Set SMPS operating mode.
   * @param  OperatingMode This parameter can be one of the following values:
-  *         @arg @ref PWR_SMPS_BYPASS
-  *         @arg @ref PWR_SMPS_STEP_DOWN
+  * @arg @ref PWR_SMPS_BYPASS
+  * @arg @ref PWR_SMPS_STEP_DOWN
   *
   * @retval None
   */
@@ -306,8 +306,8 @@ void HAL_PWREx_SMPS_SetMode(uint32_t OperatingMode)
 /**
   * @brief  Get SMPS operating mode
   * @retval Returned value can be one of the following values:
-  *         @arg @ref PWR_SMPS_BYPASS
-  *         @arg @ref PWR_SMPS_STEP_DOWN
+  * @arg @ref PWR_SMPS_BYPASS
+  * @arg @ref PWR_SMPS_STEP_DOWN
   */
 uint32_t HAL_PWREx_SMPS_GetMode(void)
 {  

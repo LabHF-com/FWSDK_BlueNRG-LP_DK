@@ -43,10 +43,10 @@
 #define USB2SERIAL_FW_VERSION_MAJOR    1 //CMSIS-DAP FW 1.5
 #define USB2SERIAL_FW_VERSION_MINOR    5 //CMSIS-DAP FW 1.5
                   
-                  
-#define DTM_FW_VERSION_MAJOR    1 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
-#define DTM_FW_VERSION_MINOR    2 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
-#define DTM_FW_VERSION_PATCH    0 //BlueNRG-LP/BlueNRG-LPS SDK 1.2.0
+/* BlueNRG-LP/BlueNRG-LPS SDK 1.5.0  (Bluetooth LE stack v3.2a) */               
+#define DTM_FW_VERSION_MAJOR    1 
+#define DTM_FW_VERSION_MINOR    5
+#define DTM_FW_VERSION_PATCH    0
 
 #ifdef UART_INTERFACE                  
 #define DTM_VARIANT             1

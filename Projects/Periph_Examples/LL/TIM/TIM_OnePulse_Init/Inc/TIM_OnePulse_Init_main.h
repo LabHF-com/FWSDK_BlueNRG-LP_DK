@@ -65,9 +65,7 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 
 /* Exported constants --------------------------------------------------------*/
-/**
-  * @brief BSP_LED2 
-  */
+
 
 #ifdef STEVAL_IDB011V1
 #define LED_PIN                                LL_GPIO_PIN_8
@@ -80,6 +78,7 @@ extern "C" {
 #define LED_GPIO_PORT                          GPIOB
 #define LED_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
+
 
 /* Exported macro ------------------------------------------------------------*/
 
@@ -109,7 +108,7 @@ void TimerCaptureCompare_Callback(void);
 #define LL_EnableClock_TIMx_CH4()                       LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA)
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 #define TIMx                                            TIM2
 #define LL_EnableClock_TIMx()                           LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2);
 #define TIMx_IRQHandler                                 TIM2_IRQHandler
@@ -122,13 +121,13 @@ void TimerCaptureCompare_Callback(void);
 #define TIMx_CH4_PORT                                   GPIOB
 #define LL_EnableClock_TIMx_CH4()                       LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #define LL_GPIO_SetAFPin_TIMx_CH4()                     LL_GPIO_SetAFPin_0_7(TIMx_CH4_PORT, TIMx_CH4_PIN, TIMx_CH4_AF);
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 
 /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 

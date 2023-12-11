@@ -65,115 +65,115 @@ typedef enum {
 
 /** @brief Wakeup source PA15 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU27)
-#define WAKEUP_PA15 LL_PWE_EWS_EW27
+#define WAKEUP_PA15 LL_PWR_EWS_EW27
 #endif
 
 /** @brief Wakeup source PA14 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU26)
-#define WAKEUP_PA14 LL_PWE_EWS_EW26
+#define WAKEUP_PA14 LL_PWR_EWS_EW26
 #endif
 
 /** @brief Wakeup source PA13 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU25)
-#define WAKEUP_PA13 LL_PWE_EWS_EW25
+#define WAKEUP_PA13 LL_PWR_EWS_EW25
 #endif
 
 /** @brief Wakeup source PA12 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU24)
-#define WAKEUP_PA12 LL_PWE_EWS_EW24
+#define WAKEUP_PA12 LL_PWR_EWS_EW24
 #endif
 
 /** @brief Wakeup source PA11 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA11 LL_PWE_EWS_EW11
+#define WAKEUP_PA11 LL_PWR_EWS_EW11
 
 /** @brief Wakeup source PA10 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA10 LL_PWE_EWS_EW10
+#define WAKEUP_PA10 LL_PWR_EWS_EW10
 
 /** @brief Wakeup source PA9 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA9  LL_PWE_EWS_EW9
+#define WAKEUP_PA9  LL_PWR_EWS_EW9
 
 /** @brief Wakeup source PA8 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA8  LL_PWE_EWS_EW8
+#define WAKEUP_PA8  LL_PWR_EWS_EW8
 
 /** @brief Wakeup source PA7 Mask (only valid for BlueNRG-LP) */
-#define WAKEUP_PA7 LL_PWE_EWS_EW19
+#define WAKEUP_PA7 LL_PWR_EWS_EW19
 
 /** @brief Wakeup source PA6 Mask (only valid for BlueNRG-LP) */
-#define WAKEUP_PA6 LL_PWE_EWS_EW18
+#define WAKEUP_PA6 LL_PWR_EWS_EW18
 
 /** @brief Wakeup source PA5 Mask (only valid for BlueNRG-LP) */
-#define WAKEUP_PA5 LL_PWE_EWS_EW17
+#define WAKEUP_PA5 LL_PWR_EWS_EW17
 
 /** @brief Wakeup source PA4 Mask (only valid for BlueNRG-LP) */
-#define WAKEUP_PA4 LL_PWE_EWS_EW16
+#define WAKEUP_PA4 LL_PWR_EWS_EW16
 
 /** @brief Wakeup source PA3 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA3 LL_PWE_EWS_EW15
+#define WAKEUP_PA3 LL_PWR_EWS_EW15
 
 /** @brief Wakeup source PA2 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA2 LL_PWE_EWS_EW14
+#define WAKEUP_PA2 LL_PWR_EWS_EW14
 
 /** @brief Wakeup source PA1 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA1 LL_PWE_EWS_EW13
+#define WAKEUP_PA1 LL_PWR_EWS_EW13
 
 /** @brief Wakeup source PA0 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PA0 LL_PWE_EWS_EW12
+#define WAKEUP_PA0 LL_PWR_EWS_EW12
 
 /** @brief Wakeup source PB15 Mask (only valid for BlueNRG-LPS) */
-#define WAKEUP_PB15 LL_PWE_EWS_EW19
+#define WAKEUP_PB15 LL_PWR_EWS_EW19
 
 /** @brief Wakeup source PB14 Mask (only valid for BlueNRG-LPS) */
-#define WAKEUP_PB14 LL_PWE_EWS_EW18
+#define WAKEUP_PB14 LL_PWR_EWS_EW18
 
 /** @brief Wakeup source PB13 Mask (only valid for BlueNRG-LPS) */
-#define WAKEUP_PB13 LL_PWE_EWS_EW17
+#define WAKEUP_PB13 LL_PWR_EWS_EW17
 
 /** @brief Wakeup source PB12 Mask (only valid for BlueNRG-LPS) */
-#define WAKEUP_PB12 LL_PWE_EWS_EW16
+#define WAKEUP_PB12 LL_PWR_EWS_EW16
 
 /** @brief Wakeup source PB11 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU23)
-#define WAKEUP_PB11 LL_PWE_EWS_EW23
+#define WAKEUP_PB11 LL_PWR_EWS_EW23
 #endif
 
 /** @brief Wakeup source PB10 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU22)
-#define WAKEUP_PB10 LL_PWE_EWS_EW22
+#define WAKEUP_PB10 LL_PWR_EWS_EW22
 #endif
 
 /** @brief Wakeup source PB9 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU21)
-#define WAKEUP_PB9 LL_PWE_EWS_EW21
+#define WAKEUP_PB9 LL_PWR_EWS_EW21
 #endif
 
 /** @brief Wakeup source PB8 Mask (only valid for BlueNRG-LP) */
 #if defined(PWR_CR6_EWU20)
-#define WAKEUP_PB8 LL_PWE_EWS_EW20
+#define WAKEUP_PB8 LL_PWR_EWS_EW20
 #endif
 
 /** @brief Wakeup source PB7 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB7  LL_PWE_EWS_EW7
+#define WAKEUP_PB7  LL_PWR_EWS_EW7
 
 /** @brief Wakeup source PB6 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB6  LL_PWE_EWS_EW6
+#define WAKEUP_PB6  LL_PWR_EWS_EW6
 
 /** @brief Wakeup source PB5 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB5  LL_PWE_EWS_EW5
+#define WAKEUP_PB5  LL_PWR_EWS_EW5
 
 /** @brief Wakeup source PB4 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB4  LL_PWE_EWS_EW4
+#define WAKEUP_PB4  LL_PWR_EWS_EW4
 
 /** @brief Wakeup source PB3 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB3  LL_PWE_EWS_EW3
+#define WAKEUP_PB3  LL_PWR_EWS_EW3
 
 /** @brief Wakeup source PB2 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB2  LL_PWE_EWS_EW2
+#define WAKEUP_PB2  LL_PWR_EWS_EW2
 
 /** @brief Wakeup source PB1 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB1  LL_PWE_EWS_EW1
+#define WAKEUP_PB1  LL_PWR_EWS_EW1
 
 /** @brief Wakeup source PB0 Mask (valid for both BlueNRG-LP & BlueNRG-LPS) */
-#define WAKEUP_PB0  LL_PWE_EWS_EW0
+#define WAKEUP_PB0  LL_PWR_EWS_EW0
 #endif
 
 
@@ -234,12 +234,18 @@ uint8_t HAL_PWR_MNGR_Request(PowerSaveLevels level, WakeupSourceConfig_TypeDef w
  * The BOR feature may be enabled or disabled during SHUTDOWN mode.
  *
  * @param BOR_enabled if TRUE the BOR is enabled during Shutdown mode, otherwise it is disabled.
+ * @param IO_wakeup_enabled Enable the wakeup from IOs PB0
+ * @param IO_wakeup_polarity IOs wakeup polarity, values can be:
+ *                           - 0: wakeup from shutdown on high pulse or high level detection.
+                             – 1: wakeup from shutdown on low pulse or low level detection.
  * 
  * @retval ERROR if for some reason the device not allow the Shutdown mode.
  *
- * Note: The application never read SUCCESS like return value because a POR happens at wakeup
+ * Note: The application never read SUCCESS like return value because a POR happens at wakeup. 
  */
-uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled);
+uint8_t HAL_PWR_MNGR_ShutdownRequest(uint8_t BOR_enabled
+                                     );
+
 
 #if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**

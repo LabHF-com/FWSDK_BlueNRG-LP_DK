@@ -20,8 +20,9 @@
 #include "gatt_profile.h"
 #include <string.h>
 #include "osal.h"
-#include "att_pwrq.h"
+#include "eatt_pwrq.h"
 #include "dm_alloc.h"
+#include "stack_user_cfg.h"
 #include "bluenrg_lp_stack.h"
 #include "bluenrg_lp_api.h"
 
@@ -58,6 +59,7 @@ typedef struct ACI_gatt_nwk_def_entry_s {
 
 typedef struct ACI_gatt_nwk_write_ops_s {
     uint16_t conn_handle; /**< Write buffer mutex. */
+    uint16_t cid; /**< Channel ID. */
     ble_gatt_clt_write_ops_t *write_ops_p; /**< Write parameters. */
     struct ACI_gatt_nwk_write_ops_s *next_p;
     uint8_t buffer[]; /**< Write value buffer. */
@@ -72,7 +74,7 @@ struct {
  * PRIVATE PROTOTYPES
  ******************************************************************************/
 
-#if (CONNECTION_ENABLED == 1)
+#if (CONNECTION_ENABLED == 1) && (BLESTACK_CONTROLLER_ONLY == 0)
 
 /**
  * @brief Write all queued write for the given connection handle.
@@ -156,6 +158,7 @@ static tBleStatus ACI_gatt_nwk_set_uuid(const uint8_t src_uuid_type,
  * @brief Allocate and add a write_ops structure and its buffer.
  *
  * @param conn_handle[in] The connection handle.
+ * @param cid[in] The channel ID.
  * @param num_write_ops[in] Number of attribute to write.
  * @param buffer_size[in] Size of value buffer.
  *
@@ -163,6 +166,7 @@ static tBleStatus ACI_gatt_nwk_set_uuid(const uint8_t src_uuid_type,
  *
  */
 static ACI_gatt_nwk_write_ops_t *ACI_gatt_nwk_add_write_ops(uint16_t conn_handle,
+                                                            uint16_t cid,
                                                             uint8_t num_write_ops,
                                                             uint16_t buffer_size);
 
@@ -170,11 +174,12 @@ static ACI_gatt_nwk_write_ops_t *ACI_gatt_nwk_add_write_ops(uint16_t conn_handle
  * @brief Release a write_ops structure and its buffer.
  *
  * @param conn_handle[in] The connection handle.
+ * @param cid[in] The channel ID.
  *
  * @return Pointer to allocated write ops structure.
  *
  */
-static void ACI_gatt_nwk_rm_write_ops(uint16_t conn_handle);
+static void ACI_gatt_nwk_rm_write_ops(uint16_t conn_handle, uint16_t cid);
 /******************************************************************************
  * LOCAL VARIABLES
  *****************************************************************************/
@@ -186,7 +191,7 @@ void ACI_gatt_nwk_reset(void)
     /**
      * Reset Prepare Write Queue.
      */
-    ATT_pwrq_reset();
+    EATT_pwrq_reset();
 }
 
 void ACI_gatt_nwk_init(uint16_t pwrq_size)
@@ -207,24 +212,25 @@ void ACI_gatt_nwk_init(uint16_t pwrq_size)
     {
         q_wr_p = NULL;
     }
-    (void)ATT_pwrq_init(pwrq_size, q_wr_p);
+    (void)EATT_pwrq_init(pwrq_size, q_wr_p);
 }
 
 void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle,
+                                uint16_t CID,
                                 uint8_t Error_Code)
 {
-    ACI_gatt_nwk_rm_write_ops(Connection_Handle);
+    ACI_gatt_nwk_rm_write_ops(Connection_Handle, CID);
 }
 
-void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle)
+void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle, uint16_t CID)
 {
-    ACI_gatt_nwk_rm_write_ops(Connection_Handle);
+    ACI_gatt_nwk_rm_write_ops(Connection_Handle, CID);
 
     /**
      * Propagate disconnection event to the Prepare Write Queue module to flush
      * all pending prepared write.
      */
-    ATT_pwrq_flush(Connection_Handle);
+    EATT_pwrq_flush(Connection_Handle, EATT_PWRQ_CID_ALL);
 }
 
 tBleStatus aci_gatt_srv_add_service_nwk(uint8_t Service_UUID_Type,
@@ -998,22 +1004,22 @@ tBleStatus aci_gatt_srv_read_multiple_instance_handle_value_nwk(uint16_t Connect
 {
   uint8_t *value_p;
   tBleStatus ret;
-  
+
   ret = aci_gatt_srv_read_multiple_instance_handle_value(Connection_Handle,
                                                           Attr_Handle,
                                                           Value_Length,
                                                           &value_p);
-  
+
   if(ret == BLE_STATUS_SUCCESS)
   {
     if(*Value_Length > 16)
       return BLE_ERROR_MEMORY_CAPACITY_EXCEEDED;
-    
+
     Osal_MemCpy(Value,value_p, *Value_Length);
   }
-  
+
   return ret;
-  
+
 }
 
 tBleStatus aci_gatt_srv_set_access_permission_nwk(uint16_t Attr_Handle,
@@ -1106,13 +1112,14 @@ tBleStatus aci_gatt_srv_set_access_permission_nwk(uint16_t Attr_Handle,
     return BLE_STATUS_SUCCESS;
 }
 
-tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
-                                           uint16_t Attr_Handle,
-                                           uint8_t Operation_Type,
-                                           uint8_t Error_Code,
-                                           uint16_t Data_Offset,
-                                           uint16_t Data_Length,
-                                           uint8_t Data[])
+tBleStatus aci_gatt_eatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
+                                                uint16_t CID,
+                                                uint16_t Attr_Handle,
+                                                uint8_t Operation_Type,
+                                                uint8_t Error_Code,
+                                                uint16_t Data_Offset,
+                                                uint16_t Data_Length,
+                                                uint8_t Data[])
 {
     tBleStatus ret;
     uint8_t att_err, *data_p;
@@ -1169,8 +1176,8 @@ tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
             /**
              * Push the prepare write in the queue.
              */
-            ret = ATT_pwrq_push(Conn_Handle, Attr_Handle, Data_Offset,
-                                Data_Length, Data);
+            ret = EATT_pwrq_push(Conn_Handle, CID, Attr_Handle,
+                                 Data_Offset, Data_Length, Data);
             if (ret != BLE_STATUS_SUCCESS)
             {
                 att_err = BLE_ATT_ERR_PREP_QUEUE_FULL;
@@ -1203,13 +1210,27 @@ tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
             }
             if ((def_p->val_p->event_mask & GATT_SERVER_ATTR_WRITE) != 0x00U)
             {
+#if (EATT_ENABLED == 1)
                 /**
                  * The application expect to receive the attribute modified event.
                  */
-                aci_gatt_srv_attribute_modified_event(Conn_Handle,
-                                                      Attr_Handle,
-                                                      Data_Length,
-                                                      def_p->val_p->buffer_va);
+                if (ACI_GATT_EATT_SUPPORTED())
+                {
+                    aci_gatt_eatt_srv_attribute_modified_event(Conn_Handle,
+                                                               CID,
+                                                               Attr_Handle,
+                                                               Data_Length,
+                                                               def_p->val_p->buffer_va);
+
+                }
+                else
+#endif
+                {
+                    aci_gatt_srv_attribute_modified_event(Conn_Handle,
+                                                          Attr_Handle,
+                                                          Data_Length,
+                                                          def_p->val_p->buffer_va);
+                }
             }
         }
     }
@@ -1220,14 +1241,24 @@ tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
 
     if (Operation_Type != GATT_AUTHOR_OP_TYPE_WRITE_CMD)
     {
-        aci_gatt_srv_resp(Conn_Handle, Attr_Handle, att_err, data_len, data_p);
+# if (EATT_ENABLED == 1)
+        if (ACI_GATT_EATT_SUPPORTED())
+        {
+            aci_gatt_eatt_srv_resp(Conn_Handle, CID, Attr_Handle, att_err, data_len, data_p);
+        }
+        else
+#endif
+        {
+            aci_gatt_srv_resp(Conn_Handle, Attr_Handle, att_err, data_len, data_p);
+        }
     }
 
     return BLE_STATUS_SUCCESS;
 }
 
-tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
-                                        uint8_t Exec)
+tBleStatus aci_gatt_eatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
+                                                 uint16_t CID,
+                                                 uint8_t Exec)
 {
     uint8_t att_error;
 
@@ -1240,14 +1271,22 @@ tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
     /**
      * Flush the queue from all prepared write received by this connection handle.
      */
-    ATT_pwrq_flush(Conn_Handle);
+    EATT_pwrq_flush(Conn_Handle, EATT_PWRQ_CID_ALL);
 
     /**
      * Return to the stack to send the Execute Write Response or in case the
      * error response if the att_error is not zero.
      */
-    aci_gatt_srv_resp(Conn_Handle, 0U, att_error, 0U, NULL);
-
+#if (EATT_ENABLED == 1)
+    if (ACI_GATT_EATT_SUPPORTED())
+    {
+        aci_gatt_eatt_srv_resp(Conn_Handle, CID, 0U, att_error, 0U, NULL);
+    }
+    else
+#endif
+    {
+        aci_gatt_srv_resp(Conn_Handle, 0U, att_error, 0U, NULL);
+    }
     return BLE_STATUS_SUCCESS;
 }
 
@@ -1264,7 +1303,7 @@ tBleStatus aci_gatt_srv_read_prepare_queue_nwk(uint16_t Conn_Handle,
     /**
      * Read the queued write at the given queue index.
      */
-    ret = ATT_pwrq_read(Conn_Handle, Item_Index, &wr_ops);
+    ret = EATT_pwrq_read(Conn_Handle, EATT_PWRQ_CID_ALL, Item_Index, &wr_ops);
     if (ret == BLE_STATUS_SUCCESS)
     {
         *Attr_Handle = wr_ops.attr_h;
@@ -1276,17 +1315,18 @@ tBleStatus aci_gatt_srv_read_prepare_queue_nwk(uint16_t Conn_Handle,
     return ret;
 }
 
-tBleStatus aci_gatt_clt_write_long_nwk(uint16_t Connection_Handle,
-                                       uint16_t Attr_Handle,
-                                       uint16_t Val_Offset,
-                                       uint16_t Attribute_Val_Length,
-                                       uint8_t Attribute_Val[])
+tBleStatus aci_gatt_eatt_clt_write_long_nwk(uint16_t Connection_Handle,
+                                            uint16_t CID,
+                                            uint16_t Attr_Handle,
+                                            uint16_t Val_Offset,
+                                            uint16_t Attribute_Val_Length,
+                                            uint8_t Attribute_Val[])
 {
     ACI_gatt_nwk_write_ops_t *ops_p;
     tBleStatus ret;
 
     ret = BLE_STATUS_FAILED;
-    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, 1U, Attribute_Val_Length);
+    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, CID, 1U, Attribute_Val_Length);
     if (ops_p != NULL)
     {
         ops_p->write_ops_p->attr_h = Attr_Handle;
@@ -1294,27 +1334,37 @@ tBleStatus aci_gatt_clt_write_long_nwk(uint16_t Connection_Handle,
         ops_p->write_ops_p->data_len = Attribute_Val_Length;
         ops_p->write_ops_p->data_p = ops_p->buffer;
         (void)Osal_MemCpy(ops_p->buffer, Attribute_Val, Attribute_Val_Length);
-        ret = aci_gatt_clt_write_long(Connection_Handle, ops_p->write_ops_p);
+#if (EATT_ENABLED == 1)
+        if (ACI_GATT_EATT_SUPPORTED())
+        {
+            ret = aci_gatt_eatt_clt_write_long(Connection_Handle, CID, ops_p->write_ops_p);
+        }
+        else
+#endif
+        {
+            ret = aci_gatt_clt_write_long(Connection_Handle, ops_p->write_ops_p);
+        }
         if (ret != BLE_STATUS_SUCCESS)
         {
-            ACI_gatt_nwk_rm_write_ops(Connection_Handle);
+            ACI_gatt_nwk_rm_write_ops(Connection_Handle, CID);
         }
     }
 
     return ret;
 }
 
-tBleStatus aci_gatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
-                                                uint16_t Attr_Handle,
-                                                uint16_t Val_Offset,
-                                                uint16_t Attribute_Val_Length,
-                                                uint8_t Attribute_Val[])
+tBleStatus aci_gatt_eatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
+                                                     uint16_t CID,
+                                                     uint16_t Attr_Handle,
+                                                     uint16_t Val_Offset,
+                                                     uint16_t Attribute_Val_Length,
+                                                     uint8_t Attribute_Val[])
 {
     ACI_gatt_nwk_write_ops_t *ops_p;
     tBleStatus ret;
 
     ret = BLE_STATUS_FAILED;
-    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, 1U, Attribute_Val_Length);
+    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, CID, 1U, Attribute_Val_Length);
     if (ops_p != NULL)
     {
         ops_p->write_ops_p[0].attr_h = Attr_Handle;
@@ -1323,35 +1373,57 @@ tBleStatus aci_gatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
         ops_p->write_ops_p[0].data_p = &ops_p->buffer[0];
         (void)Osal_MemCpy(ops_p->write_ops_p[0].data_p, Attribute_Val,
                           Attribute_Val_Length);
-        ret = aci_gatt_clt_write_char_reliable(Connection_Handle, 1U,
-                                               ops_p->write_ops_p);
+#if (EATT_ENABLED == 1)
+        if (ACI_GATT_EATT_SUPPORTED())
+        {
+            ret = aci_gatt_eatt_clt_write_char_reliable(Connection_Handle,
+                                                        CID,
+                                                        1U,
+                                                        ops_p->write_ops_p);
+        }
+        else
+#endif
+        {
+            ret = aci_gatt_clt_write_char_reliable(Connection_Handle, 1U, ops_p->write_ops_p);
+        }
         if (ret != BLE_STATUS_SUCCESS)
         {
-            ACI_gatt_nwk_rm_write_ops(Connection_Handle);
+            ACI_gatt_nwk_rm_write_ops(Connection_Handle, CID);
         }
     }
 
     return ret;
 }
 
-tBleStatus aci_gatt_clt_write_nwk(uint16_t Connection_Handle,
-                                  uint16_t Attr_Handle,
-                                  uint16_t Attribute_Val_Length,
-                                  uint8_t Attribute_Val[])
+tBleStatus aci_gatt_eatt_clt_write_nwk(uint16_t Connection_Handle,
+                                       uint16_t CID,
+                                       uint16_t Attr_Handle,
+                                       uint16_t Attribute_Val_Length,
+                                       uint8_t Attribute_Val[])
 {
     ACI_gatt_nwk_write_ops_t *ops_p;
     tBleStatus ret;
 
     ret = BLE_STATUS_FAILED;
-    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, 1U, Attribute_Val_Length);
+    ops_p = ACI_gatt_nwk_add_write_ops(Connection_Handle, CID, 1U, Attribute_Val_Length);
     if (ops_p != NULL)
     {
         (void)Osal_MemCpy(ops_p->buffer, Attribute_Val, Attribute_Val_Length);
-        ret = aci_gatt_clt_write(Connection_Handle, Attr_Handle,
-                                 Attribute_Val_Length, ops_p->buffer);
+# if (EATT_ENABLED == 1)
+        if (ACI_GATT_EATT_SUPPORTED())
+        {
+            ret = aci_gatt_eatt_clt_write(Connection_Handle, CID, Attr_Handle,
+                                          Attribute_Val_Length, ops_p->buffer);
+        }
+        else
+#endif
+        {
+            ret = aci_gatt_clt_write(Connection_Handle, Attr_Handle,
+                                     Attribute_Val_Length, ops_p->buffer);
+        }
         if (ret != BLE_STATUS_SUCCESS)
         {
-            ACI_gatt_nwk_rm_write_ops(Connection_Handle);
+            ACI_gatt_nwk_rm_write_ops(Connection_Handle, CID);
         }
     }
 
@@ -1361,11 +1433,12 @@ tBleStatus aci_gatt_clt_write_nwk(uint16_t Connection_Handle,
 /******************************************************************************
  * EVENT HANDLERS
  *****************************************************************************/
-void aci_gatt_srv_write_event(uint16_t Connection_Handle,
-                              uint8_t Resp_Needed,
-                              uint16_t Attribute_Handle,
-                              uint16_t Data_Length,
-                              uint8_t Data[])
+void aci_gatt_eatt_srv_write_event(uint16_t Connection_Handle,
+                                   uint16_t CID,
+                                   uint8_t Resp_Needed,
+                                   uint16_t Attribute_Handle,
+                                   uint16_t Data_Length,
+                                   uint8_t Data[])
 {
     uint8_t att_err;
     ACI_gatt_nwk_def_entry_t *def_p;
@@ -1391,12 +1464,24 @@ void aci_gatt_srv_write_event(uint16_t Connection_Handle,
             {
                 op_type = GATT_AUTHOR_OP_TYPE_WRITE_CMD;
             }
+            if (ACI_GATT_EATT_SUPPORTED())
+            {
+                aci_gatt_eatt_srv_authorize_nwk_event(Connection_Handle,
+                                                      CID,
+                                                      Attribute_Handle,
+                                                      op_type,
+                                                      0x0000U,
+                                                      Data_Length, Data);
 
-            aci_gatt_srv_authorize_nwk_event(Connection_Handle,
-                                             Attribute_Handle,
-                                             op_type,
-                                             0x0000U,
-                                             Data_Length, Data);
+            }
+            else
+            {
+                aci_gatt_srv_authorize_nwk_event(Connection_Handle,
+                                                 Attribute_Handle,
+                                                 op_type,
+                                                 0x0000U,
+                                                 Data_Length, Data);
+            }
 
             return;
         }
@@ -1428,7 +1513,21 @@ void aci_gatt_srv_write_event(uint16_t Connection_Handle,
              * It is a write request then call response function to generate
              * write response message.
              */
-            aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err, 0,  NULL);
+#if (EATT_ENABLED == 1)
+            if (ACI_GATT_EATT_SUPPORTED())
+            {
+            aci_gatt_eatt_srv_resp(Connection_Handle,
+                                   CID,
+                                   Attribute_Handle,
+                                   att_err,
+                                   0,
+                                   NULL);
+            }
+            else
+#endif
+            {
+                aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err, 0, NULL);
+            }
         }
         if ((att_err == BLE_ATT_ERR_NONE) &&
             ((def_p->val_p->event_mask & GATT_SERVER_ATTR_WRITE) != 0x00U))
@@ -1446,18 +1545,44 @@ void aci_gatt_srv_write_event(uint16_t Connection_Handle,
             {
                 event_data_len = def_p->val_p->buffer_len;
             }
+            if (ACI_GATT_EATT_SUPPORTED())
+            {
+                aci_gatt_eatt_srv_attribute_modified_event(Connection_Handle,
+                                                           CID,
+                                                           Attribute_Handle,
+                                                           event_data_len,
+                                                           def_p->val_p->buffer_va);
 
-            aci_gatt_srv_attribute_modified_event(Connection_Handle,
-                                                  Attribute_Handle,
-                                                  event_data_len,
-                                                  def_p->val_p->buffer_va);
+            }
+            else
+            {
+                aci_gatt_srv_attribute_modified_event(Connection_Handle,
+                                                      Attribute_Handle,
+                                                      event_data_len,
+                                                      def_p->val_p->buffer_va);
+            }
         }
     }
 }
 
-void aci_gatt_srv_read_event(uint16_t Connection_Handle,
-                             uint16_t Attribute_Handle,
-                             uint16_t Data_Offset)
+void aci_gatt_srv_write_event(uint16_t Connection_Handle,
+                              uint8_t Resp_Needed,
+                              uint16_t Attribute_Handle,
+                              uint16_t Data_Length,
+                              uint8_t Data[])
+{
+    aci_gatt_eatt_srv_write_event(Connection_Handle,
+                                  L2C_CID_ATTRIBUTE_PROTOCOL,
+                                  Resp_Needed,
+                                  Attribute_Handle,
+                                  Data_Length,
+                                  Data);
+}
+
+void aci_gatt_eatt_srv_read_event(uint16_t Connection_Handle,
+                                  uint16_t CID,
+                                  uint16_t Attribute_Handle,
+                                  uint16_t Data_Offset)
 {
     uint8_t att_err, *data_p;
     uint16_t data_len;
@@ -1488,11 +1613,24 @@ void aci_gatt_srv_read_event(uint16_t Connection_Handle,
              * The application has to authorize read operation for the requested
              * attribute value.
              */
-            aci_gatt_srv_authorize_nwk_event(Connection_Handle,
-                                             Attribute_Handle,
-                                             GATT_AUTHOR_OP_TYPE_READ,
-                                             Data_Offset,
-                                             0U, NULL);
+            if (ACI_GATT_EATT_SUPPORTED())
+            {
+                aci_gatt_eatt_srv_authorize_nwk_event(Connection_Handle,
+                                                      CID,
+                                                      Attribute_Handle,
+                                                      GATT_AUTHOR_OP_TYPE_READ,
+                                                      Data_Offset,
+                                                      0U, NULL);
+
+            }
+            else
+            {
+                aci_gatt_srv_authorize_nwk_event(Connection_Handle,
+                                                 Attribute_Handle,
+                                                 GATT_AUTHOR_OP_TYPE_READ,
+                                                 Data_Offset,
+                                                 0U, NULL);
+            }
 
             return;
         }
@@ -1524,15 +1662,35 @@ void aci_gatt_srv_read_event(uint16_t Connection_Handle,
      * Return to the stack the value to read informations and in case the error
      * code.
      */
-    aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err, data_len,
-                      data_p);
+#if (EATT_ENABLED == 1)
+    if (ACI_GATT_EATT_SUPPORTED())
+    {
+    aci_gatt_eatt_srv_resp(Connection_Handle, CID, Attribute_Handle, att_err,
+                           data_len, data_p);
+    }
+    else
+#endif
+    {
+        aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err, data_len, data_p);
+    }
 }
 
-void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
-                                         uint16_t Attribute_Handle,
-                                         uint16_t Data_Offset,
-                                         uint16_t Data_Length,
-                                         uint8_t Data[])
+void aci_gatt_srv_read_event(uint16_t Connection_Handle,
+                             uint16_t Attribute_Handle,
+                             uint16_t Data_Offset)
+{
+    aci_gatt_eatt_srv_read_event(Connection_Handle,
+                                 L2C_CID_ATTRIBUTE_PROTOCOL,
+                                 Attribute_Handle,
+                                 Data_Offset);
+}
+
+void aci_eatt_srv_prepare_write_req_event(uint16_t Connection_Handle,
+                                              uint16_t CID,
+                                              uint16_t Attribute_Handle,
+                                              uint16_t Data_Offset,
+                                              uint16_t Data_Length,
+                                              uint8_t Data[])
 {
     ACI_gatt_nwk_def_entry_t *def_p;
     uint8_t att_err;
@@ -1546,12 +1704,26 @@ void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
             /**
              * Generate authorization event.
              */
-            aci_gatt_srv_authorize_nwk_event(Connection_Handle,
-                                             Attribute_Handle,
-                                             GATT_AUTHOR_OP_TYPE_PREP_WRITE,
-                                             Data_Offset,
-                                             Data_Length,
-                                             Data);
+            if (ACI_GATT_EATT_SUPPORTED())
+            {
+                aci_gatt_eatt_srv_authorize_nwk_event(Connection_Handle,
+                                                      CID,
+                                                      Attribute_Handle,
+                                                      GATT_AUTHOR_OP_TYPE_PREP_WRITE,
+                                                      Data_Offset,
+                                                      Data_Length,
+                                                      Data);
+
+            }
+            else
+            {
+                aci_gatt_srv_authorize_nwk_event(Connection_Handle,
+                                                 Attribute_Handle,
+                                                 GATT_AUTHOR_OP_TYPE_PREP_WRITE,
+                                                 Data_Offset,
+                                                 Data_Length,
+                                                 Data);
+            }
 
             /**
              * No respons has to be send before application response.
@@ -1564,8 +1736,8 @@ void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
              * This attribute has not be set for authorization. Push the received
              * prepare write in the queue.
              */
-            ret = ATT_pwrq_push(Connection_Handle, Attribute_Handle,
-                                Data_Offset, Data_Length, Data);
+            ret = EATT_pwrq_push(Connection_Handle, CID, Attribute_Handle,
+                                 Data_Offset, Data_Length, Data);
             if (ret != BLE_STATUS_SUCCESS)
             {
                 att_err = BLE_ATT_ERR_PREP_QUEUE_FULL;
@@ -1584,8 +1756,32 @@ void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
     /**
      * Send response.
      */
-    aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err,
-                      Data_Length, Data);
+#if (EATT_ENABLED == 1)
+    if (ACI_GATT_EATT_SUPPORTED())
+    {
+    aci_gatt_eatt_srv_resp(Connection_Handle, CID, Attribute_Handle, att_err,
+                           Data_Length, Data);
+    }
+    else
+#endif
+    {
+        aci_gatt_srv_resp(Connection_Handle, Attribute_Handle, att_err,
+                          Data_Length, Data);
+    }
+}
+
+void aci_att_srv_prepare_write_req_event(uint16_t Connection_Handle,
+                                         uint16_t Attribute_Handle,
+                                         uint16_t Data_Offset,
+                                         uint16_t Data_Length,
+                                         uint8_t Data[])
+{
+    aci_eatt_srv_prepare_write_req_event(Connection_Handle,
+                                         L2C_CID_ATTRIBUTE_PROTOCOL,
+                                         Attribute_Handle,
+                                         Data_Offset,
+                                         Data_Length,
+                                         Data);
 }
 
 /******************************************************************************
@@ -1800,6 +1996,7 @@ static tBleStatus ACI_gatt_nwk_set_uuid(const uint8_t src_uuid_type,
 }
 
 static ACI_gatt_nwk_write_ops_t *ACI_gatt_nwk_add_write_ops(uint16_t conn_handle,
+                                                            uint16_t cid,
                                                             uint8_t num_write_ops,
                                                             uint16_t buffer_size)
 {
@@ -1819,6 +2016,7 @@ static ACI_gatt_nwk_write_ops_t *ACI_gatt_nwk_add_write_ops(uint16_t conn_handle
         {
             ops_p->next_p = NULL;
             ops_p->conn_handle = conn_handle;
+            ops_p->cid = cid;
             if (aci_gatt_nwk_ctx_s.write_ops_head_p == NULL)
             {
                 aci_gatt_nwk_ctx_s.write_ops_head_p = ops_p;
@@ -1838,31 +2036,31 @@ static ACI_gatt_nwk_write_ops_t *ACI_gatt_nwk_add_write_ops(uint16_t conn_handle
     return ops_p;
 }
 
-static void ACI_gatt_nwk_rm_write_ops(uint16_t conn_handle)
+static void ACI_gatt_nwk_rm_write_ops(uint16_t conn_handle, uint16_t cid)
 {
   ACI_gatt_nwk_write_ops_t *ops_p = NULL, *prev_p = NULL;
-  
+
   ops_p = aci_gatt_nwk_ctx_s.write_ops_head_p;
-  
+
   while (ops_p != NULL)
   {
-    if (ops_p->conn_handle == conn_handle)
-    {            
+    if ((ops_p->conn_handle == conn_handle) && (ops_p->cid == cid))
+    {
       if(ops_p == aci_gatt_nwk_ctx_s.write_ops_head_p)
       {
         /* First element in the list */
-        aci_gatt_nwk_ctx_s.write_ops_head_p = ops_p->next_p;              
+        aci_gatt_nwk_ctx_s.write_ops_head_p = ops_p->next_p;
       }
       else
       {
-        prev_p->next_p = ops_p->next_p;             
+        prev_p->next_p = ops_p->next_p;
       }
       break;
     }
     prev_p = ops_p;
     ops_p = ops_p->next_p;
   }
-  
+
   if (ops_p != NULL)
   {
     dm_free((uint32_t *)ops_p->write_ops_p);
@@ -1880,17 +2078,17 @@ static uint8_t ACI_gatt_nwk_write_queue(uint16_t conn_handle)
     /**
      * Set attribute handle to 0x0000 to extract the first found entry.
      */
-    attr_h = 0x0000U;
+    attr_h = EATT_PWRQ_ATTR_HANDLE_INVALID;
     def_p = NULL;
     while (TRUE)
     {
         /**
          * Extract queued write.
          */
-        ret = ATT_pwrq_pop(conn_handle, attr_h, &wr_ops);
+        ret = EATT_pwrq_pop(conn_handle, EATT_PWRQ_CID_ALL, attr_h, &wr_ops);
         if (ret == BLE_STATUS_SUCCESS)
         {
-            if (attr_h == 0x0000U)
+            if (attr_h == EATT_PWRQ_ATTR_HANDLE_INVALID)
             {
                 /**
                  * Select the first extracted attribute handle for the next
@@ -1995,23 +2193,98 @@ static uint8_t ACI_gatt_nwk_write_queue(uint16_t conn_handle)
     return BLE_ATT_ERR_NONE;
 }
 
-/* Hooks for DTM commands */ 
+/* Hooks for DTM commands */
 
 int hci_disconnection_complete_event_preprocess(uint8_t Status,
                                                 uint16_t Connection_Handle,
                                                 uint8_t Reason)
 {
-  ACI_gatt_nwk_disconnection(Connection_Handle);
-  
+  ACI_gatt_nwk_disconnection(Connection_Handle, L2C_CID_ATTRIBUTE_PROTOCOL);
+
   return 0;
 }
 
 int aci_gatt_clt_proc_complete_event_preprocess(uint16_t Connection_Handle,
                                                 uint8_t Error_Code)
 {
-  ACI_gatt_nwk_proc_complete(Connection_Handle, Error_Code);
-  
+  ACI_gatt_nwk_proc_complete(Connection_Handle, L2C_CID_ATTRIBUTE_PROTOCOL, Error_Code);
+
   return 0;
+}
+
+int aci_gatt_eatt_clt_proc_complete_event_preprocess(uint16_t Connection_Handle,
+                                                     uint16_t CID,
+                                                     uint8_t Error_Code)
+{
+  ACI_gatt_nwk_proc_complete(Connection_Handle, CID, Error_Code);
+
+  return 0;
+}
+
+tBleStatus aci_gatt_clt_write_nwk(uint16_t Connection_Handle,
+                                  uint16_t Attr_Handle,
+                                  uint16_t Attribute_Val_Length,
+                                  uint8_t Attribute_Val[])
+{
+    return aci_gatt_eatt_clt_write_nwk(Connection_Handle,
+                                       L2C_CID_ATTRIBUTE_PROTOCOL,
+                                       Attr_Handle,
+                                       Attribute_Val_Length,
+                                       Attribute_Val);
+}
+
+tBleStatus aci_gatt_clt_write_long_nwk(uint16_t Connection_Handle,
+                                       uint16_t Attr_Handle,
+                                       uint16_t Val_Offset,
+                                       uint16_t Attribute_Val_Length,
+                                       uint8_t Attribute_Val[])
+{
+    return aci_gatt_eatt_clt_write_long_nwk(Connection_Handle,
+                                            L2C_CID_ATTRIBUTE_PROTOCOL,
+                                            Attr_Handle,
+                                            Val_Offset,
+                                            Attribute_Val_Length,
+                                            Attribute_Val);
+}
+
+tBleStatus aci_gatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
+                                                uint16_t Attr_Handle,
+                                                uint16_t Val_Offset,
+                                                uint16_t Attribute_Val_Length,
+                                                uint8_t Attribute_Val[])
+{
+    return aci_gatt_eatt_clt_write_char_reliable_nwk(Connection_Handle,
+                                                     L2C_CID_ATTRIBUTE_PROTOCOL,
+                                                     Attr_Handle,
+                                                     Val_Offset,
+                                                     Attribute_Val_Length,
+                                                     Attribute_Val);
+}
+
+tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
+                                           uint16_t Attr_Handle,
+                                           uint8_t Operation_Type,
+                                           uint8_t Error_Code,
+                                           uint16_t Data_Offset,
+                                           uint16_t Data_Length,
+                                           uint8_t Data[])
+{
+    return aci_gatt_eatt_srv_authorize_resp_nwk(Conn_Handle,
+                                                L2C_CID_ATTRIBUTE_PROTOCOL,
+                                                Attr_Handle,
+                                                Operation_Type,
+                                                Error_Code,
+                                                Data_Offset,
+                                                Data_Length,
+                                                Data);
+}
+
+tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
+                                            uint8_t Exec)
+{
+    return aci_gatt_eatt_srv_exec_write_resp_nwk(Conn_Handle,
+                                                 L2C_CID_ATTRIBUTE_PROTOCOL,
+                                                 Exec);
 }
 
 #else
@@ -2024,169 +2297,32 @@ void ACI_gatt_nwk_reset(void)
 {
 }
 
-void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle, uint8_t Error_Code)
+void ACI_gatt_nwk_proc_complete(uint16_t Connection_Handle, uint16_t CID, uint8_t Error_Code)
 {
 }
 
-void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle)
+void ACI_gatt_nwk_disconnection(uint16_t Connection_Handle, uint16_t CID)
 {
 }
 
-tBleStatus aci_gatt_srv_add_service_nwk(uint8_t Service_UUID_Type,
-                                        Service_UUID_t *Service_UUID,
-                                        uint8_t Service_Type,
-                                        uint8_t Max_Attribute_Records,
-                                        uint16_t *Service_Handle)
+int hci_disconnection_complete_event_preprocess(uint8_t Status,
+                                                uint16_t Connection_Handle,
+                                                uint8_t Reason)
 {
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+  return 0;
 }
 
-tBleStatus aci_gatt_srv_include_service_nwk(uint16_t Service_Handle,
-                                            uint16_t Included_Service_Handle,
-                                            uint16_t *Include_Handle)
+int aci_gatt_clt_proc_complete_event_preprocess(uint16_t Connection_Handle,
+                                                uint8_t Error_Code)
 {
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+  return 0;
 }
 
-
-tBleStatus aci_gatt_srv_add_char_nwk(uint16_t Service_Handle,
-                                     uint8_t Char_UUID_Type,
-                                     Char_UUID_t *Char_UUID,
-                                     uint16_t Char_Value_Length,
-                                     uint8_t Char_Properties,
-                                     uint8_t Security_Permissions,
-                                     uint8_t GATT_Evt_Mask,
-                                     uint8_t Enc_Key_Size,
-                                     uint8_t Is_Variable,
-                                     uint16_t *Char_Handle)
-
+int aci_gatt_eatt_clt_proc_complete_event_preprocess(uint16_t Connection_Handle,
+                                                     uint16_t CID,
+                                                     uint8_t Error_Code)
 {
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-
-tBleStatus aci_gatt_srv_add_char_desc_nwk(uint16_t Char_Handle,
-                                          uint8_t Char_Desc_Uuid_Type,
-                                          Char_Desc_Uuid_t *Char_Desc_Uuid,
-                                          uint16_t Char_Desc_Value_Max_Len,
-                                          uint16_t Char_Desc_Value_Length,
-                                          uint8_t Char_Desc_Value[],
-                                          uint8_t Security_Permissions,
-                                          uint8_t Access_Permissions,
-                                          uint8_t GATT_Evt_Mask,
-                                          uint8_t Enc_Key_Size,
-                                          uint8_t Is_Variable,
-                                          uint16_t *Char_Desc_Handle)
-
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_write_handle_value_nwk(uint16_t Attr_Handle,
-                                               uint16_t Val_Offset,
-                                               uint16_t Value_Length,
-                                               uint8_t Value[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_rm_char_nwk(uint16_t Char_Handle)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_rm_service_nwk(uint16_t Serv_Handle)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_rm_include_service_nwk(uint16_t Include_Handle)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_clt_write_nwk(uint16_t Connection_Handle,
-                                  uint16_t Attr_Handle,
-                                  uint16_t Attribute_Val_Length,
-                                  uint8_t Attribute_Val[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_clt_write_long_nwk(uint16_t Connection_Handle,
-                                       uint16_t Attr_Handle,
-                                       uint16_t Val_Offset,
-                                       uint16_t Attribute_Val_Length,
-                                       uint8_t Attribute_Val[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_clt_write_char_reliable_nwk(uint16_t Connection_Handle,
-                                                uint16_t Attr_Handle,
-                                                uint16_t Val_Offset,
-                                                uint16_t Attribute_Val_Length,
-                                                uint8_t Attribute_Val[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_set_security_permission_nwk(uint16_t Attr_Handle,
-                                                    uint8_t Security_Permissions)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_read_handle_value_nwk(uint16_t Attr_Handle,
-                                              uint16_t Offset,
-                                              uint16_t Value_Length_Requested,
-                                              uint16_t *Length,
-                                              uint16_t *Value_Length,
-                                              uint8_t Value[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_read_multiple_instance_handle_value_nwk(uint16_t Connection_Handle,
-                                                            uint16_t Attr_Handle,
-                                                            uint16_t *Value_Length,
-                                                            uint8_t Value[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_set_access_permission_nwk(uint16_t Attr_Handle,
-                                                  uint8_t Access_Permissions)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_authorize_resp_nwk(uint16_t Conn_Handle,
-                                           uint16_t Attr_Handle,
-                                           uint8_t Operation_Type,
-                                           uint8_t Error_Code,
-                                           uint16_t Data_Offset,
-                                           uint16_t Data_Length,
-                                           uint8_t Data[])
-{
-  return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-tBleStatus aci_gatt_srv_read_prepare_queue_nwk(uint16_t Conn_Handle,
-                                               uint8_t Item_Index,
-                                               uint16_t *Attr_Handle,
-                                               uint16_t *Value_Offset,
-                                               uint16_t *Value_Length,
-                                               uint8_t Value[])
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
-}
-
-
-tBleStatus aci_gatt_srv_exec_write_resp_nwk(uint16_t Conn_Handle,
-                                        uint8_t Exec)
-{
-    return BLE_ERROR_UNKNOWN_HCI_COMMAND;
+  return 0;
 }
 
 #endif

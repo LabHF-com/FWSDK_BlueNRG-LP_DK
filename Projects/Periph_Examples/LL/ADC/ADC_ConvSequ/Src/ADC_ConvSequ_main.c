@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : ADC_ConvSequ_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -148,24 +150,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |    Error detect    |    Error detect    |    Error detect    |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |    Activity LED    |    Activity LED    |    Activity LED    |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |    Activity LED    |    Activity LED    |    Activity LED    |    Activity LED    |    Activity LED    |
+|     DL3    |    Error detect    |    Error detect    |    Error detect    |    Error detect    |    Error detect    |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -272,7 +274,7 @@ int main(void)
   BSP_Init();
 
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
 
   /* Initialize all configured peripherals */
   APP_ADC_Init();
@@ -326,7 +328,7 @@ int main(void)
       LL_DMA_ClearFlag_TC1(DMA1);
       
       /* Toggle the conversion/activity LED */
-      BSP_LED_Toggle(BSP_LED1);
+      BSP_LED_Toggle(BSP_LED2);
       
       /* Add 100 ms of delay between each sequence of measurement */
       LL_mDelay(200);
@@ -347,7 +349,7 @@ int main(void)
       LL_ADC_ClearFlag_OVRDS(ADC);
 
       /* Turn on the LED2 if overrun occurs */
-      BSP_LED_On(BSP_LED2);
+      BSP_LED_On(BSP_LED3);
     }
 
     /* Check the DMA flag Transfer Error on channel 1 */
@@ -357,7 +359,7 @@ int main(void)
       LL_ADC_ClearFlag_OVRDS(ADC);
 
       /* Turn on the LED2 if transfer error occurs */
-      BSP_LED_On(BSP_LED2);
+      BSP_LED_On(BSP_LED3);
     }
   }
 }
@@ -365,17 +367,15 @@ int main(void)
 
 static void BSP_Init(void)
 {
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   LL_GPIO_InitTypeDef  gpioinitstruct = {0};
   LL_GPIO_StructInit(&gpioinitstruct);
   
   /* Initialization of LEDs */
-  BSP_LED_Init(BSP_LED1);
   BSP_LED_Init(BSP_LED2);
+  BSP_LED_Init(BSP_LED3);
   
   /* Initialization of the ADC pins */
   LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB);
@@ -388,6 +388,8 @@ static void BSP_Init(void)
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
 }
 
 
@@ -496,7 +498,6 @@ static void APP_ADC_Init(void)
 #ifdef CONFIG_DEVICE_BLUENRG_LP
   /* Enable the temperature sensor */
   LL_PWR_EnableTempSens();
-#endif
   
   if(LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2() != 0xFFF) {
     LL_ADC_SetCalibPoint4Gain(ADC, LL_ADC_GET_CALIB_GAIN_FOR_VINPX_1V2() );
@@ -504,6 +505,11 @@ static void APP_ADC_Init(void)
   else {
     LL_ADC_SetCalibPoint4Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_1V2);
   }
+#endif
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    LL_ADC_SetCalibPoint4Gain(ADC, LL_ADC_DEFAULT_RANGE_VALUE_1V2);
+#endif
+  
   LL_ADC_SetCalibPointForSinglePos1V2(ADC, LL_ADC_CALIB_POINT_4);
 }
 

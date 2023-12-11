@@ -193,7 +193,6 @@ void GPIOA_IRQHandler(void)
         systick_counter_prev = 0;
         LL_SYSTICK_Disable();
         SPI_STATE_TRANSACTION(SPI_PROT_TRANS_COMPLETE_STATE);
-        DEBUG_NOTES(SPI_PROT_TRANS_COMPLETE);
         
         /* Pass the number of data received in fifo_command */
         uint16_t tmp_spi_dma_len;
@@ -202,7 +201,13 @@ void GPIOA_IRQHandler(void)
 #else
         tmp_spi_dma_len = (command_fifo_dma_len - LL_DMA_GetDataLength(DMA1, DMA_CH_SPI_RX));
 #endif
-          advance_spi_dma(tmp_spi_dma_len);
+        advance_spi_dma(tmp_spi_dma_len);
+        
+        if(LL_SPI_GetTxFIFOLevel(BSP_SPI) != LL_SPI_TX_FIFO_EMPTY)
+        {
+          SPI_FIFO_Flush();
+          DEBUG_NOTES(TXFIFO_NE);
+        }
       }
     }
     /* CS pin falling edge - start SPI communication */

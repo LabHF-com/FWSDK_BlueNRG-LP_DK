@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -328,13 +328,13 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
             <Define>STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 CONFIG_HW_LS_XTAL</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\Inc;..\..\..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\..\..\Drivers\CMSIS\Include</IncludePath>

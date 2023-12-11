@@ -31,37 +31,40 @@
 #include "stack_user_cfg.h"
 #include "adv_buff_alloc.h"
 #include "adv_buff_alloc_tiny.h"
-#include "link_layer.h"
+#include "ble_const.h"
 #include "system_BlueNRG_LP.h"
-#include "bluenrg_lp_stack.h"
 #include "rf_driver_ll_gpio.h"
-
+#include "bluenrg_lp_stack.h"
 #include "DTM_burst.h"
+#include "hal_miscutil.h"    
 
-#define MIN(a,b)                        (((a) < (b))? (a) : (b))
+#ifndef MIN
+#   define MIN(a,b) (((a) < (b)) ? (a) : (b))
+#endif
 
 #ifdef WATCHDOG
 #include "rf_driver_ll_iwdg.h"
 #endif
 
+/* Private macro -------------------------------------------------------------*/
 /** @name BLE stack v3.1 stack modular configurations bitmap
   * @{
   */
-#define CONTROLLER_PRIVACY_BIT                 ((uint16_t)0x0001)  /*!< Bit 0 selected */
-#define SECURE_CONNECTIONS_BIT                 ((uint16_t)0x0002)  /*!< Bit 1 selected */
+#define CONTROLLER_PRIVACY_BIT                 ((uint32_t)0x00000001)  /*!< Bit  0 selected */
+#define SECURE_CONNECTIONS_BIT                 ((uint32_t)0x00000002)  /*!< Bit  1 selected */
 /* Observer (scanner) or Central role support:
    -  Observer disabled (CONTROLLER_MASTER_BIT = 0) or enabled (CONTROLLER_MASTER_BIT = 1) if CONNECTION_BIT = 0;
    -  Observer and Central disabled (CONTROLLER_MASTER_BIT = 0) or enabled (CONTROLLER_MASTER_BIT = 1) if CONNECTION_BIT = 1.
 */
-#define CONTROLLER_MASTER_BIT                  ((uint16_t)0x0004)  /*!< Bit 2 selected */
-#define CONTROLLER_DATA_LENGTH_EXTENSION_BIT   ((uint16_t)0x0008)  /*!< Bit 3 selected */
-#define LINK_LAYER_ONLY_BIT                    ((uint16_t)0x0010)  /*!< Bit 4 selected */
-#define CONTROLLER_2M_CODED_PHY_BIT            ((uint16_t)0x0020)  /*!< Bit 5 selected */
-#define CONTROLLER_EXT_ADV_SCAN_BIT            ((uint16_t)0x0040)  /*!< Bit 6 selected */
-#define L2CAP_COS_BIT                          ((uint16_t)0x0080)  /*!< Bit 7 selected */
-#define CONTROLLER_PERIODIC_ADV_BIT            ((uint16_t)0x0100)  /*!< Bit 8 selected */
-#define CONTROLLER_CTE_BIT                     ((uint16_t)0x0200)  /*!< Bit 9 selected */
-#define CONTROLLER_POWER_CONTROL_BIT           ((uint16_t)0x0400)  /*!< Bit 10 selected */
+#define CONTROLLER_MASTER_BIT                  ((uint32_t)0x00000004)  /*!< Bit  2 selected */
+#define CONTROLLER_DATA_LENGTH_EXTENSION_BIT   ((uint32_t)0x00000008)  /*!< Bit  3 selected */
+#define LINK_LAYER_ONLY_BIT                    ((uint32_t)0x00000010)  /*!< Bit  4 selected */
+#define CONTROLLER_2M_CODED_PHY_BIT            ((uint32_t)0x00000020)  /*!< Bit  5 selected */
+#define CONTROLLER_EXT_ADV_SCAN_BIT            ((uint32_t)0x00000040)  /*!< Bit  6 selected */
+#define L2CAP_COS_BIT                          ((uint32_t)0x00000080)  /*!< Bit  7 selected */
+#define CONTROLLER_PERIODIC_ADV_BIT            ((uint32_t)0x00000100)  /*!< Bit  8 selected */
+#define CONTROLLER_CTE_BIT                     ((uint32_t)0x00000200)  /*!< Bit  9 selected */
+#define CONTROLLER_POWER_CONTROL_BIT           ((uint32_t)0x00000400)  /*!< Bit 10 selected */
 /* Support to connections:
    - If CONNECTION_BIT = 0, connections are not supported;
      device is a broadcaster-only if CONTROLLER_MASTER_BIT = 0,
@@ -70,7 +73,13 @@
      device can only act as broadcaster or peripheral if CONTROLLER_MASTER_BIT = 0,
      or any role (broadcaster, observer, peripheral, and central) if CONTROLLER_MASTER_BIT = 1.
 */
-#define CONNECTION_BIT                         ((uint32_t)0x0800)  /*!< Bit 11 selected */
+#define CONNECTION_BIT                         ((uint32_t)0x00000800)  /*!< Bit 11 selected */
+#define CONTROLLER_ONLY_BIT                    ((uint32_t)0x00001000)  /*!< Bit 12 selected */
+#define CONTROLLER_CHAN_CLASS_BIT              ((uint32_t)0x00010000)  /*!< Bit 16 selected */
+#define CONTROLLER_BIS_BIT                     ((uint32_t)0x00020000)  /*!< Bit 17 selected */
+#define EATT_BIT                               ((uint32_t)0x00040000)  /*!< Bit 18 selected */
+#define CONNECTION_SUBRATING_BIT               ((uint32_t)0x00080000)  /*!< Bit 19 selected */
+#define CONTROLLER_CIS_BIT                     ((uint32_t)0x00100000)  /*!< Bit 20 selected */
 /**
   * @}
   */
@@ -79,7 +88,7 @@
 #ifndef BLESTACK_CONTROLLER_ONLY
 #define BLESTACK_CONTROLLER_ONLY (0U)
 #endif
-#if defined(LL_ONLY) || (BLESTACK_CONTROLLER_ONLY == 1U)
+#if (BLESTACK_CONTROLLER_ONLY == 1U)
 #define LINK_LAYER_ONLY_ENABLED (1U)
 #else
 #define LINK_LAYER_ONLY_ENABLED (0U)
@@ -87,18 +96,24 @@
 
 /** @brief Define BLE stack configurations variant bitmap value based on enabled BLE stack options and associated bits (LSB 5 bits) */
 #define BLE_STACK_CONFIGURATIONS_VARIANT (                                                          \
-    ((uint16_t)(CONTROLLER_PRIVACY_ENABLED * CONTROLLER_PRIVACY_BIT))                             | \
-    ((uint16_t)(SECURE_CONNECTIONS_ENABLED * SECURE_CONNECTIONS_BIT))                             | \
-    ((uint16_t)(CONTROLLER_MASTER_ENABLED * CONTROLLER_MASTER_BIT))                               | \
-    ((uint16_t)(CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED * CONTROLLER_DATA_LENGTH_EXTENSION_BIT)) | \
-    ((uint16_t)(LINK_LAYER_ONLY_ENABLED * LINK_LAYER_ONLY_BIT))                                   | \
-    ((uint16_t)(CONTROLLER_2M_CODED_PHY_ENABLED * CONTROLLER_2M_CODED_PHY_BIT))                   | \
-    ((uint16_t)(CONTROLLER_EXT_ADV_SCAN_ENABLED * CONTROLLER_EXT_ADV_SCAN_BIT))                   | \
-    ((uint16_t)(L2CAP_COS_ENABLED * L2CAP_COS_BIT))                                               | \
-    ((uint16_t)(CONTROLLER_PERIODIC_ADV_ENABLED * CONTROLLER_PERIODIC_ADV_BIT))                   | \
-    ((uint16_t)(CONTROLLER_CTE_ENABLED * CONTROLLER_CTE_BIT))                                     | \
-    ((uint16_t)(CONTROLLER_POWER_CONTROL_ENABLED * CONTROLLER_POWER_CONTROL_BIT))                 | \
-    ((uint16_t)(CONNECTION_ENABLED * CONNECTION_BIT))                               \
+    ((uint32_t)(CONTROLLER_PRIVACY_ENABLED * CONTROLLER_PRIVACY_BIT))                             | \
+    ((uint32_t)(SECURE_CONNECTIONS_ENABLED * SECURE_CONNECTIONS_BIT))                             | \
+    ((uint32_t)(CONTROLLER_MASTER_ENABLED * CONTROLLER_MASTER_BIT))                               | \
+    ((uint32_t)(CONTROLLER_DATA_LENGTH_EXTENSION_ENABLED * CONTROLLER_DATA_LENGTH_EXTENSION_BIT)) | \
+    ((uint32_t)(LINK_LAYER_ONLY_ENABLED * LINK_LAYER_ONLY_BIT))                                   | \
+    ((uint32_t)(CONTROLLER_2M_CODED_PHY_ENABLED * CONTROLLER_2M_CODED_PHY_BIT))                   | \
+    ((uint32_t)(CONTROLLER_EXT_ADV_SCAN_ENABLED * CONTROLLER_EXT_ADV_SCAN_BIT))                   | \
+    ((uint32_t)(L2CAP_COS_ENABLED * L2CAP_COS_BIT))                                               | \
+    ((uint32_t)(CONTROLLER_PERIODIC_ADV_ENABLED * CONTROLLER_PERIODIC_ADV_BIT))                   | \
+    ((uint32_t)(CONTROLLER_CTE_ENABLED * CONTROLLER_CTE_BIT))                                     | \
+    ((uint32_t)(CONTROLLER_POWER_CONTROL_ENABLED * CONTROLLER_POWER_CONTROL_BIT))                 | \
+    ((uint32_t)(CONNECTION_ENABLED * CONNECTION_BIT))                                             | \
+    ((uint32_t)(BLESTACK_CONTROLLER_ONLY * CONTROLLER_ONLY_BIT))                                  | \
+    ((uint32_t)(CONTROLLER_CHAN_CLASS_ENABLED * CONTROLLER_CHAN_CLASS_BIT))                       | \
+    ((uint32_t)(CONTROLLER_BIS_ENABLED * CONTROLLER_BIS_BIT))                                     | \
+    ((uint32_t)(EATT_ENABLED * EATT_BIT))                                                         | \
+    ((uint32_t)(CONNECTION_SUBRATING_ENABLED * CONNECTION_SUBRATING_BIT))                         | \
+    ((uint32_t)(CONTROLLER_CIS_ENABLED * CONTROLLER_CIS_BIT))                                       \
 )
 
 tBleStatus aci_hal_updater_start(void)
@@ -120,6 +135,31 @@ tBleStatus aci_hal_get_firmware_details(uint8_t *DTM_version_major,
                                         uint8_t *BTLE_Stack_development,
                                         uint16_t *BTLE_Stack_variant,
                                         uint16_t *BTLE_Stack_Build_Number)
+{
+  tBleStatus ret;
+  uint32_t BTLE_Stack_variant_ext;
+  
+  ret = aci_hal_get_firmware_details_v2(DTM_version_major,DTM_version_minor,DTM_version_patch,
+                                         DTM_variant,DTM_Build_Number,BTLE_Stack_version_major,
+                                         BTLE_Stack_version_minor,BTLE_Stack_version_patch,
+                                         BTLE_Stack_development,&BTLE_Stack_variant_ext,
+                                         BTLE_Stack_Build_Number);
+  *BTLE_Stack_variant = BTLE_Stack_variant_ext;
+  
+  return ret;  
+}
+
+tBleStatus aci_hal_get_firmware_details_v2(uint8_t *DTM_version_major,
+                                           uint8_t *DTM_version_minor,
+                                           uint8_t *DTM_version_patch,
+                                           uint8_t *DTM_variant,
+                                           uint16_t *DTM_Build_Number,
+                                           uint8_t *BTLE_Stack_version_major,
+                                           uint8_t *BTLE_Stack_version_minor,
+                                           uint8_t *BTLE_Stack_version_patch,
+                                           uint8_t *BTLE_Stack_development,
+                                           uint32_t *BTLE_Stack_variant,
+                                           uint16_t *BTLE_Stack_Build_Number)
 {
 
     aci_hal_get_fw_build_number(BTLE_Stack_Build_Number);
@@ -144,7 +184,7 @@ tBleStatus aci_hal_get_firmware_details(uint8_t *DTM_version_major,
      
     /* Set the stack configurations variant bitmap value:
        first LSB 7 bits are reserved for BLE stack modular options + Link Layer only*/
-    *BTLE_Stack_variant |= BLE_STACK_CONFIGURATIONS_VARIANT;
+    *BTLE_Stack_variant = BLE_STACK_CONFIGURATIONS_VARIANT;
     
     return (BLE_STATUS_SUCCESS);
     
@@ -174,7 +214,7 @@ tBleStatus aci_hal_transmitter_test_packets(uint8_t TX_Frequency,
     return BLE_ERROR_INVALID_HCI_CMD_PARAMS;
   }
 
-#ifdef CONTROLLER_2M_CODED_PHY_ENABLED
+#if CONTROLLER_2M_CODED_PHY_ENABLED
   
   status =  hci_le_enhanced_transmitter_test(TX_Frequency,
                                             Length_Of_Test_Data,
@@ -196,6 +236,7 @@ tBleStatus aci_hal_transmitter_test_packets(uint8_t TX_Frequency,
   return status;
 }
 
+#if CONTROLLER_CTE_ENABLED
 /**
  * @brief  This API implements the hci le transmitter test v2 with 
  *         the capability to set the number of packets to be sent. 
@@ -245,7 +286,9 @@ tBleStatus aci_hal_transmitter_test_packets_v2(uint8_t TX_Channel,
   
   return status;
 }
+#endif
 
+#if (CONNECTION_ENABLED == 1) && (BLESTACK_CONTROLLER_ONLY==0)
 
 tBleStatus aci_test_tx_notification_start(uint16_t Connection_Handle, uint16_t Service_Handle, uint16_t Char_Handle, uint16_t Value_Length)
 {
@@ -285,3 +328,5 @@ tBleStatus aci_test_report(uint32_t *TX_Packets, uint32_t *RX_Packets, uint16_t 
   
   return BLE_STATUS_SUCCESS;
 }
+
+#endif

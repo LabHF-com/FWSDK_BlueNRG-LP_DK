@@ -700,7 +700,7 @@ typedef  void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart);  /*!< poin
 
 /** @brief  Check USART Baud rate.
   * @param  __BAUDRATE__ Baudrate specified by the user.
-  *         The maximum Baud Rate is derived from the maximum clock on BlueNRG-LP (i.e. 16 MHz)
+  *         The maximum Baud Rate is derived from the maximum clock (i.e. 16 MHz)
   *         divided by the smallest oversampling used on the USART (i.e. 8)
   * @retval SET (__BAUDRATE__ is valid) or RESET (__BAUDRATE__ is invalid)  */
 #define IS_USART_BAUDRATE(__BAUDRATE__) ((__BAUDRATE__) <= 2000000U)

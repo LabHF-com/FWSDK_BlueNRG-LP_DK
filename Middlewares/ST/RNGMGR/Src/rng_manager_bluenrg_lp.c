@@ -36,7 +36,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "rng_manager.h"
-#include "rng_manager_bluenrg_lp.h"
+#include "rf_driver_ll_rng.h"
+#include "rf_driver_ll_bus.h"
+#include "bluenrg_lpx.h"
 
 /** @defgroup RNG_Manager_BlueNRG_LP  RNG Manager
 * @{
@@ -52,13 +54,6 @@
 /** @defgroup RNG_Manager_BlueNRG_LP_Private_Defines Private Defines
 * @{
 */
-#define RNG_BUFFER_DIM                  30
-
-#define ATOMIC_SECTION_BEGIN() uint32_t uwPRIMASK_Bit = __get_PRIMASK(); \
-__disable_irq(); \
-  /* Must be called in the same or in a lower scope of ATOMIC_SECTION_BEGIN */
-#define ATOMIC_SECTION_END() __set_PRIMASK(uwPRIMASK_Bit)
-
 /**
 * @}
 */
@@ -66,9 +61,6 @@ __disable_irq(); \
 /** @defgroup RNG_Manager_BlueNRG_LP_Private_Variables Private Variables
 * @{
 */
-//static uint16_t internalBuffer[RNG_BUFFER_DIM] = {0};
-//static uint16_t internalBufferIndex = 0;
-
 /**
 * @}
 */
@@ -76,26 +68,6 @@ __disable_irq(); \
 /** @defgroup RNG_Manager_BlueNRG_LP_External_Variables External Variables
 * @{
 */
-/**
-* @}
-*/
-
-/** @defgroup RNG_Manager_BlueNRG_LP_Private_FunctionPrototypes Private Function Prototypes
-* @{
-*/
-void RNGMGR_PRIVATE_GenerateNewRandomNumberForBuffer(void);
-/**
-* @}
-*/
-
-/** @defgroup RNG_Manager_BlueNRG_LP_Private_Functions Private Functions
-* @{
-*/
-void RNGMGR_PRIVATE_GenerateNewRandomNumberForBuffer(void)
-{
-
-}
-
 /**
 * @}
 */
@@ -111,27 +83,9 @@ RNGMGR_ResultStatus RNGMGR_Init(void)
   
   /* Initialize random numbers generation */
   LL_RNG_Enable(RNG);
-  
-  /* Generate Random 16bit Numbers */
-  
-#if (USE_TIMEOUT == 1)
-  Timeout = RNG_GENERATION_TIMEOUT;
-#endif /* USE_TIMEOUT */
-  
+    
   /* Wait for DRDY flag to be raised */
-  while (!LL_RNG_IsActiveFlag_RNGRDY(RNG))
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
-    { 
-      if(Timeout-- == 0)
-      {
-        return RNGMGR_ERROR_TIMEOUT;
-      }
-    } 
-#endif /* USE_TIMEOUT */
-  }
+  while (!LL_RNG_IsActiveFlag_RNGRDY(RNG));
   
   /* Check if error occurs */
   if (  LL_RNG_IsActiveFlag_FAULT(RNG)  )
@@ -153,33 +107,12 @@ RNGMGR_ResultStatus RNGMGR_Deinit(void)
 }
 
 
-RNGMGR_ResultStatus RNGMGR_NewSecretKey(uint32_t* buffer)
-{
-  uint32_t temp[2];
-  /* The requeste size of the input buffer is 8 */
-  /* Get a random number to be used as Secret Key */
-  for(int i=0; i<8; i++)
-  {
-    /* Wait for RNGRDY signal */
-    while (!LL_RNG_IsActiveFlag_RNGRDY(RNG));
-    temp[0] = (uint32_t)LL_RNG_ReadRandData16(RNG);
-    
-    /* Wait for RNGRDY signal */
-    while (!LL_RNG_IsActiveFlag_RNGRDY(RNG));
-    temp[1] = (uint32_t)LL_RNG_ReadRandData16(RNG);
-    
-    buffer[i] = ( temp[0] + (temp[1] << 16) );
-  }
-  return RNGMGR_SUCCESS;
-}
-
 /**
  * @brief Provide a 16-bit true random number 
  * @param buffer: pointer to the random value returned
  * @param isr: 1 = The function is being called from  the radio isr context
- *              0 = The function is being called from the user context
- *
- * @return error status: 0 = No error, 1 = Timeout
+ *             0 = The function is being called from the user context
+ * @return error status: 0 = No error
  */
 RNGMGR_ResultStatus RNGMGR_GetRandom16(uint32_t* buffer, uint8_t isr)
 {
@@ -190,6 +123,30 @@ RNGMGR_ResultStatus RNGMGR_GetRandom16(uint32_t* buffer, uint8_t isr)
   
   return RNGMGR_SUCCESS;
 }
+
+/**
+ * @brief Provide a 32-bit true random number
+ * @param buffer: pointer to the random value returned
+ *
+ * @return error status: 0 = No error
+ */
+RNGMGR_ResultStatus RNGMGR_GetRandom32(uint32_t* buffer)
+{
+  uint16_t *buffer_16 = (uint16_t *) buffer;
+
+  /* Wait for RNGRDY signal */
+  while (!LL_RNG_IsActiveFlag_RNGRDY(RNG));
+
+  buffer_16[0] = (uint16_t)LL_RNG_ReadRandData16(RNG);
+
+/* Wait for RNGRDY signal */
+  while (!LL_RNG_IsActiveFlag_RNGRDY(RNG));
+
+  buffer_16[1] = (uint16_t)LL_RNG_ReadRandData16(RNG);
+
+  return RNGMGR_SUCCESS;
+}
+
 /**
 * @}
 */

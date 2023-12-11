@@ -60,6 +60,17 @@ void SysTick_IRQHandler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file.                                          */
 /******************************************************************************/
+/**
+* @brief  This function handles UART interrupt request.
+* @param  None
+* @retval None
+*/
+
+void USART1_IRQHandler(void)
+{  
+  BSP_COM_IRQHandler();
+}
+
 
 /**
   * @brief This function handles RTC wake-up interrupt .

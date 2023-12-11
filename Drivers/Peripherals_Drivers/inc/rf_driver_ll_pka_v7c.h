@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "BlueNRG_LPS.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+#include "bluenrg_lpx.h"
+#endif
 
 /** @addtogroup RF_DRIVER_LL_Driver
   * @{
@@ -82,6 +84,12 @@ typedef struct
   * @brief    Flags defines which can be used with LL_PKA_ReadReg function
   * @{
   */
+#ifdef PKA_SR_FAULTERRORCODEF
+#define LL_PKA_SR_FAULTERRORCODEF          PKA_SR_FAULTERRORCODEF
+#endif
+#ifdef PKA_SR_FAULTFSMF
+#define LL_PKA_SR_FAULTFSMF                PKA_SR_FAULTFSMF
+#endif
 #define LL_PKA_SR_ADDRERRF                 PKA_SR_ADDRERRF
 #define LL_PKA_SR_RAMERRF                  PKA_SR_RAMERRF
 #define LL_PKA_SR_PROCENDF                 PKA_SR_PROCENDF
@@ -94,9 +102,22 @@ typedef struct
   * @brief    IT defines which can be used with LL_PKA_ReadReg and  LL_PKA_WriteReg functions
   * @{
   */
+#ifdef PKA_CR_FAULTERRORCODEIE
+#define LL_PKA_CR_FAULTERRORCODEIE         PKA_CR_FAULTERRORCODEIE
+#endif
+#ifdef PKA_CR_FAULTFSMIE
+#define LL_PKA_CR_FAULTFSMIE               PKA_CR_FAULTFSMIE
+#endif
 #define LL_PKA_CR_ADDRERRIE                PKA_CR_ADDRERRIE
 #define LL_PKA_CR_RAMERRIE                 PKA_CR_RAMERRIE
 #define LL_PKA_CR_PROCENDIE                PKA_CR_PROCENDIE
+
+#ifdef LL_PKA_CLRFR_FAULTERRORCODEFC
+#define LL_PKA_CLRFR_FAULTERRORCODEFC      PKA_CLRFR_FAULTERRORCODEFC
+#endif
+#ifdef LL_PKA_CLRFR_FAULTFSMFC
+#define LL_PKA_CLRFR_FAULTFSMFC            PKA_CLRFR_FAULTFSMFC
+#endif
 #define LL_PKA_CLRFR_PROCENDFC             PKA_CLRFR_PROCENDFC
 #define LL_PKA_CLRFR_RAMERRFC              PKA_CLRFR_RAMERRFC
 #define LL_PKA_CLRFR_ADDRERRFC             PKA_CLRFR_ADDRERRFC
@@ -118,6 +139,7 @@ typedef struct
   * @brief    List of opearation mode.
   * @{
   */
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP ((uint32_t)0x00000000U) /*!< Compute Montgomery parameter and modular exponentiation */
 #define LL_PKA_MODE_MONTGOMERY_PARAM         ((uint32_t)0x00000001U) /*!< Compute Montgomery parameter only */
 #define LL_PKA_MODE_MODULAR_EXP              ((uint32_t)0x00000002U) /*!< Compute modular exponentiation only (Montgomery parameter should be loaded) */
@@ -136,6 +158,8 @@ typedef struct
 #define LL_PKA_MODE_MODULAR_ADD              ((uint32_t)0x0000000EU) /*!< Modular addition */
 #define LL_PKA_MODE_MODULAR_SUB              ((uint32_t)0x0000000FU) /*!< Modular subtraction */
 #define LL_PKA_MODE_MONTGOMERY_MUL           ((uint32_t)0x00000010U) /*!< Montgomery multiplication */
+#endif
+
 
 /**
   * @}
@@ -192,25 +216,27 @@ typedef struct
   * @brief  Set PKA operating mode.
   * @rmtoll CR           MODE          LL_PKA_Config
   * @param  PKAx PKA Instance.
-  * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-  *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_ECC
-  *         @arg @ref LL_PKA_MODE_ECC_KP_PRIMITIVE
-  *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-  *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-  *         @arg @ref LL_PKA_MODE_POINT_CHECK
-  *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-  *         @arg @ref LL_PKA_MODE_MODULAR_INV
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-  *         @arg @ref LL_PKA_MODE_COMPARISON
-  *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-  *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-  *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+  * @param  Mode This parameter can be one of the following values for BlueNRG-LPS where applicable:
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM
+  * @arg LL_PKA_MODE_MODULAR_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_ECC
+  * @arg LL_PKA_MODE_ECC_KP_PRIMITIVE
+  * @arg LL_PKA_MODE_ECDSA_SIGNATURE
+  * @arg LL_PKA_MODE_ECDSA_VERIFICATION
+  * @arg LL_PKA_MODE_POINT_CHECK
+  * @arg LL_PKA_MODE_RSA_CRT_EXP
+  * @arg LL_PKA_MODE_MODULAR_INV
+  * @arg LL_PKA_MODE_ARITHMETIC_ADD
+  * @arg LL_PKA_MODE_ARITHMETIC_SUB
+  * @arg LL_PKA_MODE_ARITHMETIC_MUL
+  * @arg LL_PKA_MODE_COMPARISON
+  * @arg LL_PKA_MODE_MODULAR_REDUC
+  * @arg LL_PKA_MODE_MODULAR_ADD
+  * @arg LL_PKA_MODE_MODULAR_SUB
+  * @arg LL_PKA_MODE_MONTGOMERY_MUL
+  * @arg LL_PKA_MODE_ECC_COMPLETE_ADDITION
+  * @arg LL_PKA_MODE_ECC_DOUBLE_BASE_LADDER
   */
 __STATIC_INLINE void LL_PKA_Config(PKA_TypeDef *PKAx, uint32_t Mode)
 {
@@ -254,25 +280,27 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabled(PKA_TypeDef *PKAx)
   * @brief  Set PKA operating mode.
   * @rmtoll CR           MODE          LL_PKA_SetMode
   * @param  PKAx PKA Instance.
-  * @param  Mode This parameter can be one of the following values:
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-  *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_ECC
-  *         @arg @ref LL_PKA_MODE_ECC_KP_PRIMITIVE
-  *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-  *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-  *         @arg @ref LL_PKA_MODE_POINT_CHECK
-  *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-  *         @arg @ref LL_PKA_MODE_MODULAR_INV
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-  *         @arg @ref LL_PKA_MODE_COMPARISON
-  *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-  *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-  *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+  * @param  Mode This parameter can be one of the following values for BlueNRG-LPS where applicable:
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM
+  * @arg LL_PKA_MODE_MODULAR_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_ECC
+  * @arg LL_PKA_MODE_ECC_KP_PRIMITIVE
+  * @arg LL_PKA_MODE_ECDSA_SIGNATURE
+  * @arg LL_PKA_MODE_ECDSA_VERIFICATION
+  * @arg LL_PKA_MODE_POINT_CHECK
+  * @arg LL_PKA_MODE_RSA_CRT_EXP
+  * @arg LL_PKA_MODE_MODULAR_INV
+  * @arg LL_PKA_MODE_ARITHMETIC_ADD
+  * @arg LL_PKA_MODE_ARITHMETIC_SUB
+  * @arg LL_PKA_MODE_ARITHMETIC_MUL
+  * @arg LL_PKA_MODE_COMPARISON
+  * @arg LL_PKA_MODE_MODULAR_REDUC
+  * @arg LL_PKA_MODE_MODULAR_ADD
+  * @arg LL_PKA_MODE_MODULAR_SUB
+  * @arg LL_PKA_MODE_MONTGOMERY_MUL
+  * @arg LL_PKA_MODE_ECC_COMPLETE_ADDITION
+  * @arg LL_PKA_MODE_ECC_DOUBLE_BASE_LADDER
   * @retval None
   */
 __STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode)
@@ -284,25 +312,27 @@ __STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode)
   * @brief  Get PKA operating mode.
   * @rmtoll CR           MODE          LL_PKA_GetMode
   * @param  PKAx PKA Instance.
-  * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-  *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM_ECC
-  *         @arg @ref LL_PKA_MODE_ECC_KP_PRIMITIVE
-  *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-  *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-  *         @arg @ref LL_PKA_MODE_POINT_CHECK
-  *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-  *         @arg @ref LL_PKA_MODE_MODULAR_INV
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-  *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-  *         @arg @ref LL_PKA_MODE_COMPARISON
-  *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-  *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-  *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-  *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+  * @retval Returned value can be one of the following values for BlueNRG-LPS where applicable:
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_MOD_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM
+  * @arg LL_PKA_MODE_MODULAR_EXP
+  * @arg LL_PKA_MODE_MONTGOMERY_PARAM_ECC
+  * @arg LL_PKA_MODE_ECC_KP_PRIMITIVE
+  * @arg LL_PKA_MODE_ECDSA_SIGNATURE
+  * @arg LL_PKA_MODE_ECDSA_VERIFICATION
+  * @arg LL_PKA_MODE_POINT_CHECK
+  * @arg LL_PKA_MODE_RSA_CRT_EXP
+  * @arg LL_PKA_MODE_MODULAR_INV
+  * @arg LL_PKA_MODE_ARITHMETIC_ADD
+  * @arg LL_PKA_MODE_ARITHMETIC_SUB
+  * @arg LL_PKA_MODE_ARITHMETIC_MUL
+  * @arg LL_PKA_MODE_COMPARISON
+  * @arg LL_PKA_MODE_MODULAR_REDUC
+  * @arg LL_PKA_MODE_MODULAR_ADD
+  * @arg LL_PKA_MODE_MODULAR_SUB
+  * @arg LL_PKA_MODE_MONTGOMERY_MUL
+  * @arg LL_PKA_MODE_ECC_COMPLETE_ADDITION
+  * @arg LL_PKA_MODE_ECC_DOUBLE_BASE_LADDER
   */
 __STATIC_INLINE uint32_t LL_PKA_GetMode(PKA_TypeDef *PKAx)
 {
@@ -313,8 +343,8 @@ __STATIC_INLINE uint32_t LL_PKA_GetMode(PKA_TypeDef *PKAx)
   * @brief  Set the Security level.
   * @rmtoll CR           SECLVL         LL_PKA_SetSecurityLevel
   * @param  arg This parameter can be one of the following values:
-  *         @arg @ref LL_PKA_SECURITY_LEVEL_NONE
-  *         @arg @ref LL_PKA_SECURITY_LEVEL_ENABLE
+  * @arg LL_PKA_SECURITY_LEVEL_NONE
+  * @arg LL_PKA_SECURITY_LEVEL_ENABLE
   * @param  PKAx PKA Instance.
   * @retval NONE
   */
@@ -328,8 +358,8 @@ __STATIC_INLINE void LL_PKA_SetSecurityLevel(PKA_TypeDef *PKAx, uint32_t arg)
   * @rmtoll CR           SECLVL         LL_PKA_GetSecurityLevel
   * @param  PKAx PKA Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_PKA_SECURITY_LEVEL_NONE
-  *         @arg @ref LL_PKA_SECURITY_LEVEL_ENABLE
+  * @arg LL_PKA_SECURITY_LEVEL_NONE
+  * @arg LL_PKA_SECURITY_LEVEL_ENABLE
   */
 __STATIC_INLINE void LL_PKA_GetSecurityLevel(PKA_TypeDef *PKAx)
 {
@@ -354,6 +384,32 @@ __STATIC_INLINE void LL_PKA_Start(PKA_TypeDef *PKAx)
 /** @defgroup PKA_LL_EF_IT_Management IT_Management
   * @{
   */
+
+#ifdef PKA_CR_FAULTERRORCODEIE
+/**
+  * @brief  Enable Fault error code interrupt.
+  * @rmtoll CR           FAULTERRORCODEIE   LL_PKA_EnableIT_FAULTERRORCODE
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_EnableIT_FAULTERRORCODE(PKA_TypeDef *PKAx)
+{
+  SET_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE);
+}
+#endif
+
+#ifdef PKA_CR_FAULTFSMIE
+/**
+  * @brief  Enable Fault FSM interrupt.
+  * @rmtoll CR           FAULTFSMIE    LL_PKA_EnableIT_FAULTFSM
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_EnableIT_FAULTFSM(PKA_TypeDef *PKAx)
+{
+  SET_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE);
+}
+#endif
 
 /**
   * @brief  Enable address error interrupt.
@@ -389,6 +445,32 @@ __STATIC_INLINE void LL_PKA_EnableIT_PROCEND(PKA_TypeDef *PKAx)
   SET_BIT(PKAx->CR, PKA_CR_PROCENDIE);
 }
 
+#ifdef PKA_CR_FAULTERRORCODEIE
+/**
+  * @brief  Disable Fault error code interrupt.
+  * @rmtoll CR           FAULTERRORCODEIE   LL_PKA_DisableIT_FAULTERRORCODE
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_DisableIT_FAULTERRORCODE(PKA_TypeDef *PKAx)
+{
+  CLEAR_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE);
+}
+#endif
+
+#ifdef PKA_CR_FAULTFSMIE
+/**
+  * @brief  Disable Fault FSM interrupt.
+  * @rmtoll CR           FAULTFSMIE    LL_PKA_DisableIT_FAULTFSM
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_DisableIT_FAULTFSM(PKA_TypeDef *PKAx)
+{
+  CLEAR_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE);
+}
+#endif
+
 /**
   * @brief  Disable address error interrupt.
   * @rmtoll CR           ADDRERRIE     LL_PKA_DisableIT_ADDRERR
@@ -421,6 +503,33 @@ __STATIC_INLINE void LL_PKA_DisableIT_PROCEND(PKA_TypeDef *PKAx)
 {
   CLEAR_BIT(PKAx->CR, PKA_CR_PROCENDIE);
 }
+
+
+#ifdef PKA_CR_FAULTERRORCODEIE
+/**
+  * @brief  Check if Fault error code interrupt is enabled.
+  * @rmtoll CR           FAULTERRORCODEIE   LL_PKA_IsEnabledIT_FAULTERRORCODE
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_FAULTERRORCODE(PKA_TypeDef *PKAx)
+{
+  return ((READ_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE) == (PKA_CR_FAULTERRORCODEIE)) ? 1UL : 0UL);
+}
+#endif
+
+#ifdef PKA_CR_FAULTFSMIE
+/**
+  * @brief  Check if Fault FSM interrupt is enabled.
+  * @rmtoll CR           FAULTFSMIE    LL_PKA_IsEnabledIT_FAULTFSM
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_FAULTFSM(PKA_TypeDef *PKAx)
+{
+  return ((READ_BIT(PKAx->CR, PKA_CR_FAULTERRORCODEIE) == (PKA_CR_FAULTERRORCODEIE)) ? 1UL : 0UL);
+}
+#endif
 
 /**
   * @brief  Check if address error interrupt is enabled.
@@ -509,6 +618,32 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(PKA_TypeDef *PKAx)
   return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL);
 }
 
+#ifdef LL_PKA_CLRFR_FAULTERRORCODEFC
+/**
+  * @brief  Clear PKA Fault error code flag.
+  * @rmtoll CLRFR        FAULTERRORCODEFC LL_PKA_ClearFlag_FAULTERRORCODE
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_ClearFlag_FAULTERRORCODE(PKA_TypeDef *PKAx)
+{
+  SET_BIT(PKAx->CLRFR, PKA_CLRFR_FAULTERRORCODEFC);
+}
+#endif
+#ifdef LL_PKA_CLRFR_FAULTFSMFC
+/**
+  * @brief  Clear PKA Fault error code flag.
+  * @rmtoll CLRFR        FAULTFSMFC    LL_PKA_ClearFlag_FAULTFSM
+  * @param  PKAx PKA Instance.
+  * @retval None
+  */
+__STATIC_INLINE void LL_PKA_ClearFlag_FAULTFSM(PKA_TypeDef *PKAx)
+{
+  SET_BIT(PKAx->CLRFR, PKA_CLRFR_FAULTFSMFC);
+}
+#endif
+
+
 /**
   * @brief  Clear PKA address error flag.
   * @rmtoll CLRFR        ADDRERRFC     LL_PKA_ClearFlag_ADDRERR
@@ -556,10 +691,15 @@ __STATIC_INLINE void LL_PKA_ClearFlag_PROCEND(PKA_TypeDef *PKAx)
 ErrorStatus LL_PKA_DeInit(PKA_TypeDef *PKAx);
 ErrorStatus LL_PKA_Init(PKA_TypeDef *PKAx, LL_PKA_InitTypeDef *PKA_InitStruct);
 void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct);
+#if defined CONFIG_DEVICE_BLUENRG_LPS
 void LL_PKA_WriteSingleInput( uint32_t index, uint32_t word );
+#endif
 void LL_PKA_WriteOperand( uint32_t index, int size, const uint32_t* in );
+void LL_PKA_WriteOperandByAddress( uint32_t address, int size, const uint32_t* in );
 void LL_PKA_ReadResult( uint32_t index, int size, uint32_t* out );
-uint32_t LL_PKA_ReadSingleOutput(uint32_t index);
+#if defined CONFIG_DEVICE_BLUENRG_LPS
+uint32_t LL_PKA_ReadSingleOutput( uint32_t index );
+#endif
 
 /**
   * @}

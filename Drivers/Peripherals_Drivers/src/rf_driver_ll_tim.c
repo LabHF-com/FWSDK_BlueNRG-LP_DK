@@ -356,12 +356,12 @@ void LL_TIM_OC_StructInit(LL_TIM_OC_InitTypeDef *TIM_OC_InitStruct)
   * @brief  Configure the TIMx output channel.
   * @param  TIMx Timer Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_TIM_CHANNEL_CH1
-  *         @arg @ref LL_TIM_CHANNEL_CH2
-  *         @arg @ref LL_TIM_CHANNEL_CH3
-  *         @arg @ref LL_TIM_CHANNEL_CH4
-  *         @arg @ref LL_TIM_CHANNEL_CH5
-  *         @arg @ref LL_TIM_CHANNEL_CH6
+  * @arg LL_TIM_CHANNEL_CH1
+  * @arg LL_TIM_CHANNEL_CH2
+  * @arg LL_TIM_CHANNEL_CH3
+  * @arg LL_TIM_CHANNEL_CH4
+  * @arg LL_TIM_CHANNEL_CH5
+  * @arg LL_TIM_CHANNEL_CH6
   * @param  TIM_OC_InitStruct pointer to a @ref LL_TIM_OC_InitTypeDef structure (TIMx output channel configuration data structure)
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: TIMx output channel is initialized
@@ -421,10 +421,10 @@ void LL_TIM_IC_StructInit(LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
   * @brief  Configure the TIMx input channel.
   * @param  TIMx Timer Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_TIM_CHANNEL_CH1
-  *         @arg @ref LL_TIM_CHANNEL_CH2
-  *         @arg @ref LL_TIM_CHANNEL_CH3
-  *         @arg @ref LL_TIM_CHANNEL_CH4
+  * @arg LL_TIM_CHANNEL_CH1
+  * @arg LL_TIM_CHANNEL_CH2
+  * @arg LL_TIM_CHANNEL_CH3
+  * @arg LL_TIM_CHANNEL_CH4
   * @param  TIM_IC_InitStruct pointer to a @ref LL_TIM_IC_InitTypeDef structure (TIMx input channel configuration data structure)
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: TIMx output channel is initialized

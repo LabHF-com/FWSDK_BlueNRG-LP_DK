@@ -233,6 +233,7 @@
                     <state>USER_BUTTON=BSP_PUSH1</state>
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_CUSTOM_CONF</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1317,6 +1318,7 @@
                     <state>USER_BUTTON=BSP_PUSH1</state>
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_BASIC_CONF</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -2402,6 +2404,7 @@
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_CUSTOM_CONF</state>
                     <state>USE_LONG_WRITE</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -3487,6 +3490,7 @@
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_BASIC_CONF</state>
                     <state>USE_LONG_WRITE</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -4573,6 +4577,7 @@
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_SLAVE_DLE_CONF</state>
                     <state>CONFIG_SW_OTA_DATA_LENGTH_EXT</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -5660,6 +5665,7 @@
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_SLAVE_DLE_CONF</state>
                     <state>CONFIG_SW_OTA_DATA_LENGTH_EXT</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -6745,6 +6751,7 @@
                     <state>CONFIG_OTA_USE_SERVICE_MANAGER</state>
                     <state>CONFIG_HW_LS_XTAL</state>
                     <state>BLE_STACK_BASIC_CONF</state>
+                    <state>CONFIG_NUM_MAX_LINKS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>

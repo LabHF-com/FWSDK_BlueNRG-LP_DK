@@ -50,8 +50,7 @@ static const ble_gatt_srv_def_t sync_service = {
 
 /*******************************************************************************
 * Function Name  : Add_Sync_Service
-* Description    : Add the Sync service. This service has two writable
-*                  characteristics.
+* Description    : Add the Sync service.
 * Input          : None
 * Return         : Status.
 *******************************************************************************/

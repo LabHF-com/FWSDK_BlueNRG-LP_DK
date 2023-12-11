@@ -65,7 +65,8 @@ void PKA_PROCEND_callback(void);
 #define LED2_PIN                                LL_GPIO_PIN_4
 #define LED2_GPIO_PORT                          GPIOB
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
-#endif /* STEVAL_IDB012V1 */   
+#endif /* STEVAL_IDB012V1 */
+
 
 #ifdef __cplusplus
 }

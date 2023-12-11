@@ -820,6 +820,16 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData, uin
       /* Set the error code */
       SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_UDR);
     }
+
+    /* Check if an underrun occurs */
+    if (__HAL_I2S_GET_FLAG(hi2s, I2S_FLAG_FRE) == SET)
+    {
+      /* Clear underrun flag */
+      __HAL_I2S_CLEAR_UDRFLAG(hi2s);
+
+      /* Set the error code */
+      SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_FRE);
+    }
   }
 
   /* Check if Slave mode is selected */
@@ -1409,6 +1419,16 @@ void HAL_I2S_IRQHandler(I2S_HandleTypeDef *hi2s)
 
       /* Set the error code and execute error callback*/
       SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_UDR);
+    }
+
+    /* I2S FRE error interrupt occurred --------------------------------*/
+    if ((i2ssr & I2S_FLAG_FRE) == I2S_FLAG_FRE)
+    {
+      /* Disable TXE and ERR interrupt */
+      __HAL_I2S_DISABLE_IT(hi2s, (I2S_IT_TXE | I2S_IT_ERR));
+
+      /* Set the error code and execute error callback*/
+      SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_FRE);
     }
 
     /* Set the I2S State ready */

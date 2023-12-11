@@ -77,13 +77,13 @@ static const uint16_t LPUART_PRESCALER_TAB[] =
 
 #if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define LPUART_PERIPHCLK               ( LL_RCC_GetLPUARTClockSource() == LL_RCC_LPUCLKSEL_16M ? 16000000U : 32768U )
-#endif /*  CONFIG_DEVICE_BLUENRG_LPS */
+#endif
 #if defined(CONFIG_DEVICE_BLUENRG_LP)
 /* An always 16 MHz is requested by LPUART to maintain fixed baud rate while 
  * system clock is switching from a frequency to another)
  */
 #define LPUART_PERIPHCLK               16000000 
-#endif /* CONFIG_DEVICE_BLUENRG_LP */
+#endif
 /**
   * @}
   */
@@ -430,18 +430,18 @@ typedef struct
   * @brief  Compute LPUARTDIV value according to Peripheral Clock and
   *         expected Baud Rate (20-bit value of LPUARTDIV is returned)
   * @param  __PRESCALER__ This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PRESCALER_DIV1
-  *         @arg @ref LL_LPUART_PRESCALER_DIV2
-  *         @arg @ref LL_LPUART_PRESCALER_DIV4
-  *         @arg @ref LL_LPUART_PRESCALER_DIV6
-  *         @arg @ref LL_LPUART_PRESCALER_DIV8
-  *         @arg @ref LL_LPUART_PRESCALER_DIV10
-  *         @arg @ref LL_LPUART_PRESCALER_DIV12
-  *         @arg @ref LL_LPUART_PRESCALER_DIV16
-  *         @arg @ref LL_LPUART_PRESCALER_DIV32
-  *         @arg @ref LL_LPUART_PRESCALER_DIV64
-  *         @arg @ref LL_LPUART_PRESCALER_DIV128
-  *         @arg @ref LL_LPUART_PRESCALER_DIV256
+  * @arg LL_LPUART_PRESCALER_DIV1
+  * @arg LL_LPUART_PRESCALER_DIV2
+  * @arg LL_LPUART_PRESCALER_DIV4
+  * @arg LL_LPUART_PRESCALER_DIV6
+  * @arg LL_LPUART_PRESCALER_DIV8
+  * @arg LL_LPUART_PRESCALER_DIV10
+  * @arg LL_LPUART_PRESCALER_DIV12
+  * @arg LL_LPUART_PRESCALER_DIV16
+  * @arg LL_LPUART_PRESCALER_DIV32
+  * @arg LL_LPUART_PRESCALER_DIV64
+  * @arg LL_LPUART_PRESCALER_DIV128
+  * @arg LL_LPUART_PRESCALER_DIV256
   * @param  __BAUDRATE__ Baud Rate value to achieve
   * @retval LPUARTDIV value to be used for BRR register filling
   */
@@ -543,12 +543,12 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledFIFO(USART_TypeDef *LPUARTx)
   * @rmtoll CR3          TXFTCFG       LL_LPUART_SetTXFIFOThreshold
   * @param  LPUARTx LPUART Instance
   * @param  Threshold This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetTXFIFOThreshold(USART_TypeDef *LPUARTx, uint32_t Threshold)
@@ -561,12 +561,12 @@ __STATIC_INLINE void LL_LPUART_SetTXFIFOThreshold(USART_TypeDef *LPUARTx, uint32
   * @rmtoll CR3          TXFTCFG       LL_LPUART_GetTXFIFOThreshold
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetTXFIFOThreshold(USART_TypeDef *LPUARTx)
 {
@@ -578,12 +578,12 @@ __STATIC_INLINE uint32_t LL_LPUART_GetTXFIFOThreshold(USART_TypeDef *LPUARTx)
   * @rmtoll CR3          RXFTCFG       LL_LPUART_SetRXFIFOThreshold
   * @param  LPUARTx LPUART Instance
   * @param  Threshold This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetRXFIFOThreshold(USART_TypeDef *LPUARTx, uint32_t Threshold)
@@ -596,12 +596,12 @@ __STATIC_INLINE void LL_LPUART_SetRXFIFOThreshold(USART_TypeDef *LPUARTx, uint32
   * @rmtoll CR3          RXFTCFG       LL_LPUART_GetRXFIFOThreshold
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetRXFIFOThreshold(USART_TypeDef *LPUARTx)
 {
@@ -614,19 +614,19 @@ __STATIC_INLINE uint32_t LL_LPUART_GetRXFIFOThreshold(USART_TypeDef *LPUARTx)
   *         CR3          RXFTCFG       LL_LPUART_ConfigFIFOsThreshold
   * @param  LPUARTx LPUART Instance
   * @param  TXThreshold This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   * @param  RXThreshold This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_1_2
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_3_4
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_7_8
-  *         @arg @ref LL_LPUART_FIFOTHRESHOLD_8_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_1_2
+  * @arg LL_LPUART_FIFOTHRESHOLD_3_4
+  * @arg LL_LPUART_FIFOTHRESHOLD_7_8
+  * @arg LL_LPUART_FIFOTHRESHOLD_8_8
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_ConfigFIFOsThreshold(USART_TypeDef *LPUARTx, uint32_t TXThreshold, uint32_t RXThreshold)
@@ -685,10 +685,10 @@ __STATIC_INLINE void LL_LPUART_DisableDirectionTx(USART_TypeDef *LPUARTx)
   *         CR1          TE            LL_LPUART_SetTransferDirection
   * @param  LPUARTx LPUART Instance
   * @param  TransferDirection This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_DIRECTION_NONE
-  *         @arg @ref LL_LPUART_DIRECTION_RX
-  *         @arg @ref LL_LPUART_DIRECTION_TX
-  *         @arg @ref LL_LPUART_DIRECTION_TX_RX
+  * @arg LL_LPUART_DIRECTION_NONE
+  * @arg LL_LPUART_DIRECTION_RX
+  * @arg LL_LPUART_DIRECTION_TX
+  * @arg LL_LPUART_DIRECTION_TX_RX
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetTransferDirection(USART_TypeDef *LPUARTx, uint32_t TransferDirection)
@@ -702,10 +702,10 @@ __STATIC_INLINE void LL_LPUART_SetTransferDirection(USART_TypeDef *LPUARTx, uint
   *         CR1          TE            LL_LPUART_GetTransferDirection
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_DIRECTION_NONE
-  *         @arg @ref LL_LPUART_DIRECTION_RX
-  *         @arg @ref LL_LPUART_DIRECTION_TX
-  *         @arg @ref LL_LPUART_DIRECTION_TX_RX
+  * @arg LL_LPUART_DIRECTION_NONE
+  * @arg LL_LPUART_DIRECTION_RX
+  * @arg LL_LPUART_DIRECTION_TX
+  * @arg LL_LPUART_DIRECTION_TX_RX
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetTransferDirection(USART_TypeDef *LPUARTx)
 {
@@ -721,9 +721,9 @@ __STATIC_INLINE uint32_t LL_LPUART_GetTransferDirection(USART_TypeDef *LPUARTx)
   *         CR1          PCE           LL_LPUART_SetParity
   * @param  LPUARTx LPUART Instance
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PARITY_NONE
-  *         @arg @ref LL_LPUART_PARITY_EVEN
-  *         @arg @ref LL_LPUART_PARITY_ODD
+  * @arg LL_LPUART_PARITY_NONE
+  * @arg LL_LPUART_PARITY_EVEN
+  * @arg LL_LPUART_PARITY_ODD
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetParity(USART_TypeDef *LPUARTx, uint32_t Parity)
@@ -737,9 +737,9 @@ __STATIC_INLINE void LL_LPUART_SetParity(USART_TypeDef *LPUARTx, uint32_t Parity
   *         CR1          PCE           LL_LPUART_GetParity
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_PARITY_NONE
-  *         @arg @ref LL_LPUART_PARITY_EVEN
-  *         @arg @ref LL_LPUART_PARITY_ODD
+  * @arg LL_LPUART_PARITY_NONE
+  * @arg LL_LPUART_PARITY_EVEN
+  * @arg LL_LPUART_PARITY_ODD
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetParity(USART_TypeDef *LPUARTx)
 {
@@ -751,8 +751,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetParity(USART_TypeDef *LPUARTx)
   * @rmtoll CR1          WAKE          LL_LPUART_SetWakeUpMethod
   * @param  LPUARTx LPUART Instance
   * @param  Method This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_WAKEUP_IDLELINE
-  *         @arg @ref LL_LPUART_WAKEUP_ADDRESSMARK
+  * @arg LL_LPUART_WAKEUP_IDLELINE
+  * @arg LL_LPUART_WAKEUP_ADDRESSMARK
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetWakeUpMethod(USART_TypeDef *LPUARTx, uint32_t Method)
@@ -765,8 +765,8 @@ __STATIC_INLINE void LL_LPUART_SetWakeUpMethod(USART_TypeDef *LPUARTx, uint32_t 
   * @rmtoll CR1          WAKE          LL_LPUART_GetWakeUpMethod
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_WAKEUP_IDLELINE
-  *         @arg @ref LL_LPUART_WAKEUP_ADDRESSMARK
+  * @arg LL_LPUART_WAKEUP_IDLELINE
+  * @arg LL_LPUART_WAKEUP_ADDRESSMARK
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetWakeUpMethod(USART_TypeDef *LPUARTx)
 {
@@ -813,9 +813,9 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledInStopMode(USART_TypeDef *LPUARTx)
   * @rmtoll CR1          M             LL_LPUART_SetDataWidth
   * @param  LPUARTx LPUART Instance
   * @param  DataWidth This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_DATAWIDTH_7B
-  *         @arg @ref LL_LPUART_DATAWIDTH_8B
-  *         @arg @ref LL_LPUART_DATAWIDTH_9B
+  * @arg LL_LPUART_DATAWIDTH_7B
+  * @arg LL_LPUART_DATAWIDTH_8B
+  * @arg LL_LPUART_DATAWIDTH_9B
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetDataWidth(USART_TypeDef *LPUARTx, uint32_t DataWidth)
@@ -828,9 +828,9 @@ __STATIC_INLINE void LL_LPUART_SetDataWidth(USART_TypeDef *LPUARTx, uint32_t Dat
   * @rmtoll CR1          M             LL_LPUART_GetDataWidth
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_DATAWIDTH_7B
-  *         @arg @ref LL_LPUART_DATAWIDTH_8B
-  *         @arg @ref LL_LPUART_DATAWIDTH_9B
+  * @arg LL_LPUART_DATAWIDTH_7B
+  * @arg LL_LPUART_DATAWIDTH_8B
+  * @arg LL_LPUART_DATAWIDTH_9B
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetDataWidth(USART_TypeDef *LPUARTx)
 {
@@ -875,18 +875,18 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledMuteMode(USART_TypeDef *LPUARTx)
   * @rmtoll PRESC        PRESCALER     LL_LPUART_SetPrescaler
   * @param  LPUARTx LPUART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PRESCALER_DIV1
-  *         @arg @ref LL_LPUART_PRESCALER_DIV2
-  *         @arg @ref LL_LPUART_PRESCALER_DIV4
-  *         @arg @ref LL_LPUART_PRESCALER_DIV6
-  *         @arg @ref LL_LPUART_PRESCALER_DIV8
-  *         @arg @ref LL_LPUART_PRESCALER_DIV10
-  *         @arg @ref LL_LPUART_PRESCALER_DIV12
-  *         @arg @ref LL_LPUART_PRESCALER_DIV16
-  *         @arg @ref LL_LPUART_PRESCALER_DIV32
-  *         @arg @ref LL_LPUART_PRESCALER_DIV64
-  *         @arg @ref LL_LPUART_PRESCALER_DIV128
-  *         @arg @ref LL_LPUART_PRESCALER_DIV256
+  * @arg LL_LPUART_PRESCALER_DIV1
+  * @arg LL_LPUART_PRESCALER_DIV2
+  * @arg LL_LPUART_PRESCALER_DIV4
+  * @arg LL_LPUART_PRESCALER_DIV6
+  * @arg LL_LPUART_PRESCALER_DIV8
+  * @arg LL_LPUART_PRESCALER_DIV10
+  * @arg LL_LPUART_PRESCALER_DIV12
+  * @arg LL_LPUART_PRESCALER_DIV16
+  * @arg LL_LPUART_PRESCALER_DIV32
+  * @arg LL_LPUART_PRESCALER_DIV64
+  * @arg LL_LPUART_PRESCALER_DIV128
+  * @arg LL_LPUART_PRESCALER_DIV256
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetPrescaler(USART_TypeDef *LPUARTx, uint32_t PrescalerValue)
@@ -899,18 +899,18 @@ __STATIC_INLINE void LL_LPUART_SetPrescaler(USART_TypeDef *LPUARTx, uint32_t Pre
   * @rmtoll PRESC        PRESCALER     LL_LPUART_GetPrescaler
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_PRESCALER_DIV1
-  *         @arg @ref LL_LPUART_PRESCALER_DIV2
-  *         @arg @ref LL_LPUART_PRESCALER_DIV4
-  *         @arg @ref LL_LPUART_PRESCALER_DIV6
-  *         @arg @ref LL_LPUART_PRESCALER_DIV8
-  *         @arg @ref LL_LPUART_PRESCALER_DIV10
-  *         @arg @ref LL_LPUART_PRESCALER_DIV12
-  *         @arg @ref LL_LPUART_PRESCALER_DIV16
-  *         @arg @ref LL_LPUART_PRESCALER_DIV32
-  *         @arg @ref LL_LPUART_PRESCALER_DIV64
-  *         @arg @ref LL_LPUART_PRESCALER_DIV128
-  *         @arg @ref LL_LPUART_PRESCALER_DIV256
+  * @arg LL_LPUART_PRESCALER_DIV1
+  * @arg LL_LPUART_PRESCALER_DIV2
+  * @arg LL_LPUART_PRESCALER_DIV4
+  * @arg LL_LPUART_PRESCALER_DIV6
+  * @arg LL_LPUART_PRESCALER_DIV8
+  * @arg LL_LPUART_PRESCALER_DIV10
+  * @arg LL_LPUART_PRESCALER_DIV12
+  * @arg LL_LPUART_PRESCALER_DIV16
+  * @arg LL_LPUART_PRESCALER_DIV32
+  * @arg LL_LPUART_PRESCALER_DIV64
+  * @arg LL_LPUART_PRESCALER_DIV128
+  * @arg LL_LPUART_PRESCALER_DIV256
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetPrescaler(USART_TypeDef *LPUARTx)
 {
@@ -922,8 +922,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetPrescaler(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          STOP          LL_LPUART_SetStopBitsLength
   * @param  LPUARTx LPUART Instance
   * @param  StopBits This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_STOPBITS_1
-  *         @arg @ref LL_LPUART_STOPBITS_2
+  * @arg LL_LPUART_STOPBITS_1
+  * @arg LL_LPUART_STOPBITS_2
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetStopBitsLength(USART_TypeDef *LPUARTx, uint32_t StopBits)
@@ -936,8 +936,8 @@ __STATIC_INLINE void LL_LPUART_SetStopBitsLength(USART_TypeDef *LPUARTx, uint32_
   * @rmtoll CR2          STOP          LL_LPUART_GetStopBitsLength
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_STOPBITS_1
-  *         @arg @ref LL_LPUART_STOPBITS_2
+  * @arg LL_LPUART_STOPBITS_1
+  * @arg LL_LPUART_STOPBITS_2
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetStopBitsLength(USART_TypeDef *LPUARTx)
 {
@@ -956,16 +956,16 @@ __STATIC_INLINE uint32_t LL_LPUART_GetStopBitsLength(USART_TypeDef *LPUARTx)
   *         CR2          STOP          LL_LPUART_ConfigCharacter
   * @param  LPUARTx LPUART Instance
   * @param  DataWidth This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_DATAWIDTH_7B
-  *         @arg @ref LL_LPUART_DATAWIDTH_8B
-  *         @arg @ref LL_LPUART_DATAWIDTH_9B
+  * @arg LL_LPUART_DATAWIDTH_7B
+  * @arg LL_LPUART_DATAWIDTH_8B
+  * @arg LL_LPUART_DATAWIDTH_9B
   * @param  Parity This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PARITY_NONE
-  *         @arg @ref LL_LPUART_PARITY_EVEN
-  *         @arg @ref LL_LPUART_PARITY_ODD
+  * @arg LL_LPUART_PARITY_NONE
+  * @arg LL_LPUART_PARITY_EVEN
+  * @arg LL_LPUART_PARITY_ODD
   * @param  StopBits This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_STOPBITS_1
-  *         @arg @ref LL_LPUART_STOPBITS_2
+  * @arg LL_LPUART_STOPBITS_1
+  * @arg LL_LPUART_STOPBITS_2
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_ConfigCharacter(USART_TypeDef *LPUARTx, uint32_t DataWidth, uint32_t Parity,
@@ -980,8 +980,8 @@ __STATIC_INLINE void LL_LPUART_ConfigCharacter(USART_TypeDef *LPUARTx, uint32_t 
   * @rmtoll CR2          SWAP          LL_LPUART_SetTXRXSwap
   * @param  LPUARTx LPUART Instance
   * @param  SwapConfig This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_TXRX_STANDARD
-  *         @arg @ref LL_LPUART_TXRX_SWAPPED
+  * @arg LL_LPUART_TXRX_STANDARD
+  * @arg LL_LPUART_TXRX_SWAPPED
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetTXRXSwap(USART_TypeDef *LPUARTx, uint32_t SwapConfig)
@@ -994,8 +994,8 @@ __STATIC_INLINE void LL_LPUART_SetTXRXSwap(USART_TypeDef *LPUARTx, uint32_t Swap
   * @rmtoll CR2          SWAP          LL_LPUART_GetTXRXSwap
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_TXRX_STANDARD
-  *         @arg @ref LL_LPUART_TXRX_SWAPPED
+  * @arg LL_LPUART_TXRX_STANDARD
+  * @arg LL_LPUART_TXRX_SWAPPED
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetTXRXSwap(USART_TypeDef *LPUARTx)
 {
@@ -1007,8 +1007,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetTXRXSwap(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          RXINV         LL_LPUART_SetRXPinLevel
   * @param  LPUARTx LPUART Instance
   * @param  PinInvMethod This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_RXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_LPUART_RXPIN_LEVEL_INVERTED
+  * @arg LL_LPUART_RXPIN_LEVEL_STANDARD
+  * @arg LL_LPUART_RXPIN_LEVEL_INVERTED
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetRXPinLevel(USART_TypeDef *LPUARTx, uint32_t PinInvMethod)
@@ -1021,8 +1021,8 @@ __STATIC_INLINE void LL_LPUART_SetRXPinLevel(USART_TypeDef *LPUARTx, uint32_t Pi
   * @rmtoll CR2          RXINV         LL_LPUART_GetRXPinLevel
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_RXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_LPUART_RXPIN_LEVEL_INVERTED
+  * @arg LL_LPUART_RXPIN_LEVEL_STANDARD
+  * @arg LL_LPUART_RXPIN_LEVEL_INVERTED
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetRXPinLevel(USART_TypeDef *LPUARTx)
 {
@@ -1034,8 +1034,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetRXPinLevel(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          TXINV         LL_LPUART_SetTXPinLevel
   * @param  LPUARTx LPUART Instance
   * @param  PinInvMethod This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_TXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_LPUART_TXPIN_LEVEL_INVERTED
+  * @arg LL_LPUART_TXPIN_LEVEL_STANDARD
+  * @arg LL_LPUART_TXPIN_LEVEL_INVERTED
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetTXPinLevel(USART_TypeDef *LPUARTx, uint32_t PinInvMethod)
@@ -1048,8 +1048,8 @@ __STATIC_INLINE void LL_LPUART_SetTXPinLevel(USART_TypeDef *LPUARTx, uint32_t Pi
   * @rmtoll CR2          TXINV         LL_LPUART_GetTXPinLevel
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_TXPIN_LEVEL_STANDARD
-  *         @arg @ref LL_LPUART_TXPIN_LEVEL_INVERTED
+  * @arg LL_LPUART_TXPIN_LEVEL_STANDARD
+  * @arg LL_LPUART_TXPIN_LEVEL_INVERTED
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetTXPinLevel(USART_TypeDef *LPUARTx)
 {
@@ -1064,8 +1064,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetTXPinLevel(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          DATAINV       LL_LPUART_SetBinaryDataLogic
   * @param  LPUARTx LPUART Instance
   * @param  DataLogic This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_BINARY_LOGIC_POSITIVE
-  *         @arg @ref LL_LPUART_BINARY_LOGIC_NEGATIVE
+  * @arg LL_LPUART_BINARY_LOGIC_POSITIVE
+  * @arg LL_LPUART_BINARY_LOGIC_NEGATIVE
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetBinaryDataLogic(USART_TypeDef *LPUARTx, uint32_t DataLogic)
@@ -1078,8 +1078,8 @@ __STATIC_INLINE void LL_LPUART_SetBinaryDataLogic(USART_TypeDef *LPUARTx, uint32
   * @rmtoll CR2          DATAINV       LL_LPUART_GetBinaryDataLogic
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_BINARY_LOGIC_POSITIVE
-  *         @arg @ref LL_LPUART_BINARY_LOGIC_NEGATIVE
+  * @arg LL_LPUART_BINARY_LOGIC_POSITIVE
+  * @arg LL_LPUART_BINARY_LOGIC_NEGATIVE
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetBinaryDataLogic(USART_TypeDef *LPUARTx)
 {
@@ -1093,8 +1093,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetBinaryDataLogic(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          MSBFIRST      LL_LPUART_SetTransferBitOrder
   * @param  LPUARTx LPUART Instance
   * @param  BitOrder This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_BITORDER_LSBFIRST
-  *         @arg @ref LL_LPUART_BITORDER_MSBFIRST
+  * @arg LL_LPUART_BITORDER_LSBFIRST
+  * @arg LL_LPUART_BITORDER_MSBFIRST
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetTransferBitOrder(USART_TypeDef *LPUARTx, uint32_t BitOrder)
@@ -1109,8 +1109,8 @@ __STATIC_INLINE void LL_LPUART_SetTransferBitOrder(USART_TypeDef *LPUARTx, uint3
   * @rmtoll CR2          MSBFIRST      LL_LPUART_GetTransferBitOrder
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_BITORDER_LSBFIRST
-  *         @arg @ref LL_LPUART_BITORDER_MSBFIRST
+  * @arg LL_LPUART_BITORDER_LSBFIRST
+  * @arg LL_LPUART_BITORDER_MSBFIRST
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetTransferBitOrder(USART_TypeDef *LPUARTx)
 {
@@ -1135,8 +1135,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetTransferBitOrder(USART_TypeDef *LPUARTx)
   *         CR2          ADDM7         LL_LPUART_ConfigNodeAddress
   * @param  LPUARTx LPUART Instance
   * @param  AddressLen This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_ADDRESS_DETECT_4B
-  *         @arg @ref LL_LPUART_ADDRESS_DETECT_7B
+  * @arg LL_LPUART_ADDRESS_DETECT_4B
+  * @arg LL_LPUART_ADDRESS_DETECT_7B
   * @param  NodeAddress 4 or 7 bit Address of the LPUART node.
   * @retval None
   */
@@ -1166,8 +1166,8 @@ __STATIC_INLINE uint32_t LL_LPUART_GetNodeAddress(USART_TypeDef *LPUARTx)
   * @rmtoll CR2          ADDM7         LL_LPUART_GetNodeAddressLen
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_ADDRESS_DETECT_4B
-  *         @arg @ref LL_LPUART_ADDRESS_DETECT_7B
+  * @arg LL_LPUART_ADDRESS_DETECT_4B
+  * @arg LL_LPUART_ADDRESS_DETECT_7B
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetNodeAddressLen(USART_TypeDef *LPUARTx)
 {
@@ -1224,10 +1224,10 @@ __STATIC_INLINE void LL_LPUART_DisableCTSHWFlowCtrl(USART_TypeDef *LPUARTx)
   *         CR3          CTSE          LL_LPUART_SetHWFlowCtrl
   * @param  LPUARTx LPUART Instance
   * @param  HardwareFlowControl This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_HWCONTROL_NONE
-  *         @arg @ref LL_LPUART_HWCONTROL_RTS
-  *         @arg @ref LL_LPUART_HWCONTROL_CTS
-  *         @arg @ref LL_LPUART_HWCONTROL_RTS_CTS
+  * @arg LL_LPUART_HWCONTROL_NONE
+  * @arg LL_LPUART_HWCONTROL_RTS
+  * @arg LL_LPUART_HWCONTROL_CTS
+  * @arg LL_LPUART_HWCONTROL_RTS_CTS
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetHWFlowCtrl(USART_TypeDef *LPUARTx, uint32_t HardwareFlowControl)
@@ -1241,10 +1241,10 @@ __STATIC_INLINE void LL_LPUART_SetHWFlowCtrl(USART_TypeDef *LPUARTx, uint32_t Ha
   *         CR3          CTSE          LL_LPUART_GetHWFlowCtrl
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_HWCONTROL_NONE
-  *         @arg @ref LL_LPUART_HWCONTROL_RTS
-  *         @arg @ref LL_LPUART_HWCONTROL_CTS
-  *         @arg @ref LL_LPUART_HWCONTROL_RTS_CTS
+  * @arg LL_LPUART_HWCONTROL_NONE
+  * @arg LL_LPUART_HWCONTROL_RTS
+  * @arg LL_LPUART_HWCONTROL_CTS
+  * @arg LL_LPUART_HWCONTROL_RTS_CTS
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetHWFlowCtrl(USART_TypeDef *LPUARTx)
 {
@@ -1297,18 +1297,18 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledOverrunDetect(USART_TypeDef *LPUARTx
   * @rmtoll BRR          BRR           LL_LPUART_SetBaudRate
   * @param  LPUARTx LPUART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PRESCALER_DIV1
-  *         @arg @ref LL_LPUART_PRESCALER_DIV2
-  *         @arg @ref LL_LPUART_PRESCALER_DIV4
-  *         @arg @ref LL_LPUART_PRESCALER_DIV6
-  *         @arg @ref LL_LPUART_PRESCALER_DIV8
-  *         @arg @ref LL_LPUART_PRESCALER_DIV10
-  *         @arg @ref LL_LPUART_PRESCALER_DIV12
-  *         @arg @ref LL_LPUART_PRESCALER_DIV16
-  *         @arg @ref LL_LPUART_PRESCALER_DIV32
-  *         @arg @ref LL_LPUART_PRESCALER_DIV64
-  *         @arg @ref LL_LPUART_PRESCALER_DIV128
-  *         @arg @ref LL_LPUART_PRESCALER_DIV256
+  * @arg LL_LPUART_PRESCALER_DIV1
+  * @arg LL_LPUART_PRESCALER_DIV2
+  * @arg LL_LPUART_PRESCALER_DIV4
+  * @arg LL_LPUART_PRESCALER_DIV6
+  * @arg LL_LPUART_PRESCALER_DIV8
+  * @arg LL_LPUART_PRESCALER_DIV10
+  * @arg LL_LPUART_PRESCALER_DIV12
+  * @arg LL_LPUART_PRESCALER_DIV16
+  * @arg LL_LPUART_PRESCALER_DIV32
+  * @arg LL_LPUART_PRESCALER_DIV64
+  * @arg LL_LPUART_PRESCALER_DIV128
+  * @arg LL_LPUART_PRESCALER_DIV256
   * @param  BaudRate Baud Rate
   * @retval None
   */
@@ -1324,18 +1324,18 @@ __STATIC_INLINE void LL_LPUART_SetBaudRate(USART_TypeDef *LPUARTx, uint32_t Pres
   * @rmtoll BRR          BRR           LL_LPUART_GetBaudRate
   * @param  LPUARTx LPUART Instance
   * @param  PrescalerValue This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_PRESCALER_DIV1
-  *         @arg @ref LL_LPUART_PRESCALER_DIV2
-  *         @arg @ref LL_LPUART_PRESCALER_DIV4
-  *         @arg @ref LL_LPUART_PRESCALER_DIV6
-  *         @arg @ref LL_LPUART_PRESCALER_DIV8
-  *         @arg @ref LL_LPUART_PRESCALER_DIV10
-  *         @arg @ref LL_LPUART_PRESCALER_DIV12
-  *         @arg @ref LL_LPUART_PRESCALER_DIV16
-  *         @arg @ref LL_LPUART_PRESCALER_DIV32
-  *         @arg @ref LL_LPUART_PRESCALER_DIV64
-  *         @arg @ref LL_LPUART_PRESCALER_DIV128
-  *         @arg @ref LL_LPUART_PRESCALER_DIV256
+  * @arg LL_LPUART_PRESCALER_DIV1
+  * @arg LL_LPUART_PRESCALER_DIV2
+  * @arg LL_LPUART_PRESCALER_DIV4
+  * @arg LL_LPUART_PRESCALER_DIV6
+  * @arg LL_LPUART_PRESCALER_DIV8
+  * @arg LL_LPUART_PRESCALER_DIV10
+  * @arg LL_LPUART_PRESCALER_DIV12
+  * @arg LL_LPUART_PRESCALER_DIV16
+  * @arg LL_LPUART_PRESCALER_DIV32
+  * @arg LL_LPUART_PRESCALER_DIV64
+  * @arg LL_LPUART_PRESCALER_DIV128
+  * @arg LL_LPUART_PRESCALER_DIV256
   * @retval Baud Rate
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetBaudRate(USART_TypeDef *LPUARTx, uint32_t PrescalerValue) 
@@ -1491,8 +1491,8 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledDEMode(USART_TypeDef *LPUARTx)
   * @rmtoll CR3          DEP           LL_LPUART_SetDESignalPolarity
   * @param  LPUARTx LPUART Instance
   * @param  Polarity This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_DE_POLARITY_HIGH
-  *         @arg @ref LL_LPUART_DE_POLARITY_LOW
+  * @arg LL_LPUART_DE_POLARITY_HIGH
+  * @arg LL_LPUART_DE_POLARITY_LOW
   * @retval None
   */
 __STATIC_INLINE void LL_LPUART_SetDESignalPolarity(USART_TypeDef *LPUARTx, uint32_t Polarity)
@@ -1505,8 +1505,8 @@ __STATIC_INLINE void LL_LPUART_SetDESignalPolarity(USART_TypeDef *LPUARTx, uint3
   * @rmtoll CR3          DEP           LL_LPUART_GetDESignalPolarity
   * @param  LPUARTx LPUART Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_LPUART_DE_POLARITY_HIGH
-  *         @arg @ref LL_LPUART_DE_POLARITY_LOW
+  * @arg LL_LPUART_DE_POLARITY_HIGH
+  * @arg LL_LPUART_DE_POLARITY_LOW
   */
 __STATIC_INLINE uint32_t LL_LPUART_GetDESignalPolarity(USART_TypeDef *LPUARTx)
 {
@@ -2389,8 +2389,8 @@ __STATIC_INLINE uint32_t LL_LPUART_IsEnabledDMADeactOnRxErr(USART_TypeDef *LPUAR
   * @rmtoll TDR          TDR           LL_LPUART_DMA_GetRegAddr
   * @param  LPUARTx LPUART Instance
   * @param  Direction This parameter can be one of the following values:
-  *         @arg @ref LL_LPUART_DMA_REG_DATA_TRANSMIT
-  *         @arg @ref LL_LPUART_DMA_REG_DATA_RECEIVE
+  * @arg LL_LPUART_DMA_REG_DATA_TRANSMIT
+  * @arg LL_LPUART_DMA_REG_DATA_RECEIVE
   * @retval Address of data register
   */
 __STATIC_INLINE uint32_t LL_LPUART_DMA_GetRegAddr(USART_TypeDef *LPUARTx, uint32_t Direction)

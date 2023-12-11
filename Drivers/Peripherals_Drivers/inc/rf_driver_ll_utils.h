@@ -184,16 +184,16 @@ extern "C" {
     */
   __STATIC_INLINE uint32_t LL_GetFlashSize(void)
   {
-    return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0x0000FFFFUL);
+    return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & FLASH_FLASH_SIZE_FLASH_SIZE);
   }
 
   /**
     * @brief  Get RAM memory size
     * @retval Returned value can be one of the following values:
-    *         @arg @ref LL_UTILS_RAMSIZE_24K
-    *         @arg @ref LL_UTILS_RAMSIZE_32K
-    *         @arg @ref LL_UTILS_RAMSIZE_48K
-    *         @arg @ref LL_UTILS_RAMSIZE_64K
+    * @arg LL_UTILS_RAMSIZE_24K
+    * @arg LL_UTILS_RAMSIZE_32K
+    * @arg LL_UTILS_RAMSIZE_48K
+    * @arg LL_UTILS_RAMSIZE_64K
     */
   __STATIC_INLINE uint32_t LL_GetRAMSize(void)
   {
@@ -215,9 +215,9 @@ extern "C" {
   /**
     * @brief  Get Package type
     * @retval Returned value can be one of the following values:
-    *         @arg @ref LL_UTILS_PACKAGETYPE_QFN48
-    *         @arg @ref LL_UTILS_PACKAGETYPE_QFN32
-    *         @arg @ref LL_UTILS_PACKAGETYPE_CSP49
+    * @arg LL_UTILS_PACKAGETYPE_QFN48
+    * @arg LL_UTILS_PACKAGETYPE_QFN32
+    * @arg LL_UTILS_PACKAGETYPE_CSP49
     */
   __STATIC_INLINE uint32_t LL_GetPackageType(void)
   {

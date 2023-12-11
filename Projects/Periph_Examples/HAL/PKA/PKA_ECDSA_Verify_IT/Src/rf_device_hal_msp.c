@@ -40,7 +40,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
@@ -59,7 +59,7 @@ void HAL_PKA_MspInit(PKA_HandleTypeDef* hpka)
     /* Configure NVIC for PKA interrupts */
     /*   Set priority for PKA_IRQn */
     /*   Enable PKA_IRQn */
-    NVIC_SetPriority(PKA_IRQn, IRQ_HIGH_PRIORITY);
+    NVIC_SetPriority(PKA_IRQn, IRQ_LOW_PRIORITY );
     NVIC_EnableIRQ(PKA_IRQn); 
   }
 }

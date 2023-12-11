@@ -49,10 +49,6 @@ typedef enum {
 
 
 extern SpiProtoType spi_proto_state;
-#define SPI_STATE_TRANSACTION(NEWSTATE)        spi_proto_state = NEWSTATE
-#define SPI_STATE_CHECK(STATE)                (spi_proto_state==STATE)
-#define SPI_STATE_FROM(STATE)                 (spi_proto_state>=STATE)
-
 
 
 #ifdef DEBUG_DTM
@@ -98,29 +94,44 @@ typedef enum {
   DMA_TC,
   IRQ_FALL,
   IRQ_RISE,
+  TXFIFO_NE,
+  SPI_PROT_INIT_STATE_ANN,                      /* Initialization phase         */
+  SPI_PROT_CONFIGURED_STATE_ANN,                /* Configuration phase          */
+  SPI_PROT_SLEEP_STATE_ANN,                     /* Sleep phase                  */
+  SPI_PROT_CONFIGURED_HOST_REQ_STATE_ANN,       /* Host request phase           */
+  SPI_PROT_CONFIGURED_EVENT_PEND_STATE_ANN,     /* Event pending phase          */
+  SPI_PROT_WAITING_HEADER_STATE_ANN,            /* Waiting header phase         */
+  SPI_PROT_HEADER_RECEIVED_STATE_ANN,           /* Header received phase        */
+  SPI_PROT_WAITING_DATA_STATE_ANN,              /* Waiting data phase           */
+  SPI_PROT_TRANS_COMPLETE_STATE_ANN,            /* Transaction complete phase   */
 } DebugLabel;
 
 #define DEBUG_ARRAY_LEN 1000
 extern DebugLabel debug_buf[DEBUG_ARRAY_LEN];
 extern uint32_t debug_cnt;
-#define DEBUG_NOTES(NOTE)       {debug_buf[debug_cnt] = NOTE; debug_cnt = (debug_cnt+1)%DEBUG_ARRAY_LEN; }
+#define DEBUG_NOTES(NOTE)       do{\
+                                  debug_buf[debug_cnt] = NOTE; debug_cnt = (debug_cnt+1)%DEBUG_ARRAY_LEN;\
+                                 }while(0)
 
-#define DEBUG_SET_LED1()        GPIO_SetBits(GPIO_Pin_6)
-#define DEBUG_SET_LED3()        GPIO_SetBits(GPIO_Pin_14)
-#define DEBUG_RESET_LED1()      GPIO_ResetBits(GPIO_Pin_6)
-#define DEBUG_RESET_LED3()      GPIO_ResetBits(GPIO_Pin_14)
+#define SPI_STATE_TRANSACTION(NEWSTATE)        do{                             \
+                                                  spi_proto_state = NEWSTATE;  \
+                                                  DEBUG_NOTES(NEWSTATE ## _ANN); \
+                                                  LL_GPIO_SetOutputPin(DEBUG_GPIO_PORT, DEBUG_TEST_1_PIN); __NOP;\
+                                                  LL_GPIO_ResetOutputPin(DEBUG_GPIO_PORT, DEBUG_TEST_1_PIN);\
+                                               }while(0)
 
 #else
 
 #define DEBUG_NOTES(NOTE)
-#define DEBUG_SET_LED1()
-#define DEBUG_SET_LED2()
-#define DEBUG_SET_LED3()
-#define DEBUG_RESET_LED1()
-#define DEBUG_RESET_LED2()
-#define DEBUG_RESET_LED3()
+                                                 
+#define SPI_STATE_TRANSACTION(NEWSTATE)        (spi_proto_state = NEWSTATE)
 
 #endif
+                                                 
+
+#define SPI_STATE_CHECK(STATE)                (spi_proto_state==STATE)
+#define SPI_STATE_FROM(STATE)                 (spi_proto_state>=STATE)
+
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */

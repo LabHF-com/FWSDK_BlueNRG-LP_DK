@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : I2S_Receiver_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -143,24 +145,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |
-------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |
-|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |
-|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LPS         |
+|   BUTTON name  |           STEVAL-IDB010V1          |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |           STEVAL-IDB013V1          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |   Master starts the communication  |
+|      PUSH2     |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
+|      RESET     |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LP          |          Reset BlueNRG-LPS         |          Reset BlueNRG-LPS         |
 
 @endtable
 
@@ -216,20 +218,21 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Initialize Righ and Left channels to Audio Output buffer*/
 // to avoid the PLL Locked error use 320
 static uint16_t dummy[DUMMY_BUFFER]={0};
+
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 I2S_HandleTypeDef hi2s;
 EXTI_HandleTypeDef HEXTI_InitStructure;
 __IO uint8_t  ubButtonPress = 0;
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_I2S_Init(void);
 static void EXTI10_IRQHandler_Config(void);
 void Example_EXTI_Callback(uint32_t Line);
 void WaitForUserButtonPress(void);
-
-/* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
 
@@ -248,43 +251,61 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Configure LED */
   BSP_LED_Init(BSP_LED2);
   
   /* Configure User push-button */
   EXTI10_IRQHandler_Config();
-
+  
   /* I2S configuration */
   MX_I2S_Init();   
   
   /* the Slave Tx must be ready to transmit before the Master Rx send the clock */
-
+  
   printf("Master Receiver\n\r");
- 
-  /* Wait for User push-button (PUSH1) press to trigger random numbers generation */
-  WaitForUserButtonPress();
-
+  
   /* Disable I2S peripheral */
   __HAL_I2S_ENABLE(&hi2s);
-
+  
   /* Non-Blocking mode: DMA */
   printf("Non-Blocking Master Rx mode with circular DMA started.\n\r");  
-  if(HAL_I2S_Receive_DMA(&hi2s, dummy, 320) != HAL_OK) 
+  if(HAL_I2S_Receive_DMA(&hi2s, dummy, DUMMY_BUFFER) != HAL_OK) 
   {
     printf("Non-Blocking mode: DMA ended with error.\n\r");
     Error_Handler();
-  }    
+  }  
+  
+  
   /* Infinite loop */
   while (1)
   {
+    /* Wait for User push-button (PUSH1) press to trigger random numbers generation */
+    WaitForUserButtonPress();
+    
+    /*Frame error flag (FRE)
+    This flag can be set by hardware only if the I2S is configured in slave mode. It is set if the external master is
+    changing the WS line while the slave is not expecting this change.*/
+    BSP_LED_On(BSP_LED2);
+    
+    GPIO_InitTypeDef  GPIO_InitStruct;  
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = I2S_WS_AF;
+    GPIO_InitStruct.Pin = I2S_WS_PIN;
+    HAL_GPIO_Init(I2S_WS_GPIO_PORT, &GPIO_InitStruct);
+    HAL_Delay(1);
+    BSP_LED_Off(BSP_LED2);
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    HAL_GPIO_Init(I2S_WS_GPIO_PORT, &GPIO_InitStruct);  
   }
 }
 
@@ -300,12 +321,9 @@ static void MX_I2S_Init(void)
   
   /* Configure I2S */
   hi2s.Instance             = I2S_INSTANCE;
-  hi2s.Init.AudioFreq       = I2S_AUDIOFREQ_32K; // sampling frequency
+  hi2s.Init.AudioFreq       = I2S_AUDIOFREQ_8K; // sampling frequency
   hi2s.Init.CPOL            = I2S_CPOL_LOW;
   hi2s.Init.DataFormat	    = I2S_DATAFORMAT_16B;
-  // uncomment to use MCK - MCK enbable
-//  hi2s.Init.MCLKOutput      = I2S_MCLKOUTPUT_ENABLE;
-  // comment to use MCK - MCK enbable
   hi2s.Init.MCLKOutput      = I2S_MCLKOUTPUT_DISABLE;
   hi2s.Init.Mode            = I2S_MODE_MASTER_RX;
   hi2s.Init.Standard        = I2S_STANDARD_PHILIPS;
@@ -325,10 +343,10 @@ static void MX_I2S_Init(void)
 }
 
 /**
-  * @brief  Configures EXTI line 10 (connected to PA.10 pin) in interrupt mode
-  * @param  None
-  * @retval None
-  */
+* @brief  Configures EXTI line 10 (connected to PA.10 pin) in interrupt mode
+* @param  None
+* @retval None
+*/
 static void EXTI10_IRQHandler_Config(void)
 {
   GPIO_InitTypeDef   GPIO_InitStructure;
@@ -338,17 +356,17 @@ static void EXTI10_IRQHandler_Config(void)
   /* Enable GPIOC clock */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_SYSCFG_CLK_ENABLE();
-
+  
   /* Configure PA.10 pin as input floating */
   GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
   GPIO_InitStructure.Pull = GPIO_NOPULL;
   GPIO_InitStructure.Pin = GPIO_PIN_10;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
-
+  
   EXTI_Config_InitStructure.Line =    EXTI_LINE_PA10;
   EXTI_Config_InitStructure.Trigger = EXTI_TRIGGER_RISING_EDGE;
   EXTI_Config_InitStructure.Type =    EXTI_TYPE_EDGE;
-   
+  
   HAL_EXTI_SetConfigLine(&HEXTI_InitStructure, &EXTI_Config_InitStructure);
   HAL_EXTI_RegisterCallback(&HEXTI_InitStructure, HAL_EXTI_COMMON_CB_ID, Example_EXTI_Callback);
   HAL_EXTI_Cmd(&HEXTI_InitStructure , ENABLE);
@@ -356,28 +374,28 @@ static void EXTI10_IRQHandler_Config(void)
   HAL_EXTI_ClearPending(&HEXTI_InitStructure);
   
   /* Enable and set line 10 Interrupt to the lowest priority */
-  HAL_NVIC_SetPriority(GPIOA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(GPIOA_IRQn, IRQ_LOW_PRIORITY );
   HAL_NVIC_EnableIRQ(GPIOA_IRQn);
   
   /* Configure NVIC for SysTick_IRQn */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
-  * @brief EXTI line detection callbacks
-  * @param GPIO_Pin: Specifies the pins connected EXTI line
-  * @retval None
-  */
+* @brief EXTI line detection callbacks
+* @param GPIO_Pin: Specifies the pins connected EXTI line
+* @retval None
+*/
 void Example_EXTI_Callback(uint32_t Line)
 {
-    ubButtonPress = 1;
+  ubButtonPress = 1;
 }
 
 /**
-  * @brief  Wait for User push-button (PUSH1) press to start transfer.
-  * @param  None 
-  * @retval None
-  */
+* @brief  Wait for User push-button (PUSH1) press to start transfer.
+* @param  None 
+* @retval None
+*/
 void WaitForUserButtonPress(void)
 {
   printf("Wait for User push-button (PUSH1) press to start transfer.\n\r");
@@ -389,6 +407,18 @@ void WaitForUserButtonPress(void)
   BSP_LED_Off(BSP_LED2);
   printf("PUSH1 pressed.\n\r");
   ubButtonPress = 0;
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      pressCToContinue = 1;
+    }
+  }
 }
 
 /**

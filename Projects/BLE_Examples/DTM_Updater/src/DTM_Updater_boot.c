@@ -52,22 +52,6 @@
 #define SYSTEM_CONFIG_HSE_READY_ERROR  0x04
 #define SYSTEM_CONFIG_PLL_READY_ERROR  0x05
 
-//typedef void( *intfunc )( void );
-
-//typedef union { intfunc __fun; void * __ptr; } intvec_elem;
-
-//typedef struct RAM_VR_s  
-//{ 
-//  uint32_t OTAActivation;
-//  uint32_t SavedMSP;
-//  uint32_t WakeupFromSleepFlag;
-//  uint32_t ResetReason;
-//  uint32_t AppBase;
-//  uint32_t Reserved[5];
-//  uint32_t BlueFlag;
-//}RAM_VR_TypeDef;
-
-
 NORETURN_FUNCTION(void NMI_IRQHandler(void))
 {
   while (1);
@@ -174,9 +158,9 @@ static void SmpsTrimConfig(void)
     hsi_calib         = 0x1E;
     eng_lsi_bw_flag   = FALSE;
 #endif
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
-    main_regulator    = 0x03;
-    hsi_calib         = 0x1D;
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
+    main_regulator    = 0x0A;
+    hsi_calib         = 0x1F;
     lsi_bw            = 8;
     eng_lsi_bw_flag   = TRUE;
 #endif
@@ -236,6 +220,8 @@ void DTM_SystemInit(void)
   LL_RCC_LSCO_SetSource(LL_RCC_LSCO_CLKSOURCE_LSI);
   LL_RCC_LSI_Enable();
   while (LL_RCC_LSI_IsReady() == 0U);
+  
+  LL_RCC_HSE_SetCurrentControl(LL_RCC_HSE_CURRENTMAX_3);
 
   /* System Clock Configuration */
   LL_RCC_HSE_Enable();

@@ -195,7 +195,7 @@ uint32_t PKAMGR_IsPointCheckOk(void);
 uint32_t PKAMGR_IsRangeCheckOk(void);
 void PKAMGR_P256_StartEccScalarMul( const uint32_t* k, const uint32_t* pX, const uint32_t* pY );
 void PKAMGR_P256_ReadEccScalarMul(uint32_t* pX, uint32_t* pY);
-uint32_t PKAMGR_isStartPoint(uint32_t* p);
+uint32_t PKAMGR_isStartPoint(const uint32_t* p);
 /**
 * @}
 */
@@ -264,7 +264,7 @@ uint8_t PKAMGR_PowerSaveLevelCheck(uint8_t x){
   * @param  
   * 
   */
-PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(uint32_t* secretKey, uint32_t* publicKey, PKAMGR_funcCB funcCB)
+PKAMGR_ResultStatus PKAMGR_StartP256DHkeyGeneration(const uint32_t* secretKey, const uint32_t* publicKey, PKAMGR_funcCB funcCB)
 {  
   /* Set the PKA internal state to busy */
   if(PKAMGR_Lock()!=PKAMGR_SUCCESS)
@@ -756,7 +756,7 @@ void PKAMGR_P256_ReadEccScalarMul( uint32_t* pX, uint32_t* pY )
   * Param   Publick key p
   * Retval  1 if p is equal to the Start Point. 0 in other cases.
   */
-uint32_t PKAMGR_isStartPoint(uint32_t* p)
+uint32_t PKAMGR_isStartPoint(const uint32_t* p)
 {
   for(int i=0; i<16; i++)
   {

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : LPUART_TxRx_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      Not Used      |
 |     A11    |       Not Used      |      Not Used      |
@@ -148,24 +150,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                           STEVAL-IDB011V1                                          |                                           STEVAL-IDB011V2                                          |                                           STEVAL-IDB012V1                                          |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
-|     DL2    |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |                                              Not Used                                              |
-|     DL3    |                                              Not Used                                              |                                              Not Used                                              |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |
-|     DL4    |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
-|     U5     |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
+|  LED name  |                                           STEVAL-IDB010V1                                          |                                           STEVAL-IDB011V1                                          |                                           STEVAL-IDB011V2                                          |                                           STEVAL-IDB012V1                                          |                                           STEVAL-IDB013V1                                          |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
+|     DL2    |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |                                              Not Used                                              |                                              Not Used                                              |
+|     DL3    |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |  ON: specific value is received (s or S) - OFF: specific value is received - Slow blinking: error  |
+|     DL4    |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
+|     U5     |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |                                              Not Used                                              |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -255,7 +257,7 @@ int main(void)
   }
   
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize LED2 */
   LED_Init();
@@ -343,11 +345,12 @@ void Configure_LPUART1(void)
   /* (2) NVIC Configuration for LPUART1 interrupts */
   /*  - Set priority for LPUART1_IRQn */
   /*  - Enable LPUART1_IRQn           */
-  NVIC_SetPriority(LPUART1_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(LPUART1_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(LPUART1_IRQn);
   
   /* (4) Configure LPUART1 functional parameters ********************************/
   
+
 #if defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* Set LPUART Clock source */
   if(LL_RCC_LSE_IsEnabled())

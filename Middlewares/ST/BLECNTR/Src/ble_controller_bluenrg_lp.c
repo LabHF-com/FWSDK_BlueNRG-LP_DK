@@ -59,6 +59,9 @@
 __disable_irq(); \
   /* Must be called in the same or in a lower scope of ATOMIC_SECTION_BEGIN */
 #define ATOMIC_SECTION_END() __set_PRIMASK(uwPRIMASK_Bit)
+  
+#define MAX_PA_LEVEL    31
+#define HP_PA_LEVEL     32 /* Fake PA level that can be reached in high power mode. */
 
 /**
 * @}
@@ -166,8 +169,9 @@ void BLECNTR_InitGlobal(void)
     BLECNTR_GlobWriteConfigEnd(CONFIG_END_DURATION);
     BLECNTR_GlobWriteTxDataReadyCheck(TX_DATA_READY_CHECK);
 
-    BLECNTR_GlobSetChkflagautoclearena();                /* Enable autoclear of the ACTIVE bit in the GlobalStatMach */
+    BLECNTR_GlobSetChkflagautoclearena();               /* Enable autoclear of the ACTIVE bit in the GlobalStatMach */
     BLECNTR_GlobEnableIntnoactivelerrorInt();           /* Enable Interrupt at the timer trig event, when Active bit is not set */
+    BLECNTR_GlobEnableTxRxSkipInt();                    /* Enable Interrupt for the TX/RX Skip command */
 
     BLECNTR_GlobSetDefaultAntennaid(0x00U);
 
@@ -176,9 +180,9 @@ void BLECNTR_InitGlobal(void)
       udra_flag = 1;
     }
 #endif /* CONFIG_DEVICE_BLUENRG_LP */
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
     udra_flag = 1;
-#endif /* CONFIG_DEVICE_BLUENRG_LPS */
+#endif
     
   if (udra_flag) {
       /* The commands in the hot table start at word 4
@@ -220,7 +224,7 @@ void BLECNTR_InitGlobal(void)
       hot_table_radio_config[index++] = 0x01;
       hot_table_radio_config[index++] = RRM_VIT_CONF_DIG_ENG;
       hot_table_radio_config[index++] = RRM->VIT_CONF_DIG_ENG;
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
       hot_table_radio_config[index++] = 0x01;
       hot_table_radio_config[index++] = RRM_ANTSW_DIG0_USR;
       hot_table_radio_config[index++] = RRM->ANTSW_DIG0_USR;
@@ -426,6 +430,11 @@ void BLECNTR_GlobEnableBlue()
 void BLECNTR_GlobEnableIntnoactivelerrorInt()
 {
    LL_RADIO_NoActiveLErrorInterrupt_Enable();
+}
+
+void BLECNTR_GlobEnableTxRxSkipInt()
+{
+    LL_RADIO_TxRxSkipInterrupt_Enable();
 }
 
 void BLECNTR_GlobEnableOverrunAct2Int()
@@ -684,7 +693,7 @@ void BLECNTR_PacketDisableWhitening(BLECNTR_TXRXPACK_TypeDef* packetP)
 
 uint8_t BLECNTR_PacketGetCteSamplingEn(BLECNTR_TXRXPACK_TypeDef* packetP)
 {
-#if defined(CONFIG_DEVICE_BLUENRG_LPS)  
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
   return (uint8_t)LL_RADIO_GetCTEAndSamplingEnable((TXRXPACK_TypeDef *)packetP);
 #else
   return (uint8_t)0;
@@ -910,7 +919,7 @@ uint8_t BLECNTR_SmGetCteAntennaPatternLen(uint8_t smNo)
 
 uint8_t BLECNTR_SmGetCteAodNaoa(uint8_t smNo)
 {
-#if defined(CONFIG_DEVICE_BLUENRG_LPS)  
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
     return (uint8_t)LL_RADIO_GetAodNaoa(smNo);
 #else
   return (uint8_t)0;
@@ -1019,7 +1028,9 @@ uint8_t BLECNTR_SmGetTxPhy(uint8_t smNo)
 
 uint8_t BLECNTR_SmGetTxPwr(uint8_t smNo)
 {
-    return (uint8_t)LL_RADIO_GetPAPower(smNo);
+    uint8_t pa_level = LL_RADIO_GetPAPower(smNo);
+    
+    return pa_level;
 }
 
 uint8_t BLECNTR_SmGetUnmappedChan(uint8_t smNo)
@@ -1207,10 +1218,16 @@ void BLECNTR_SmSetTxPhy(uint8_t smNo, uint8_t txPhy)
 {
     LL_RADIO_SetTransmissionPhy(smNo, (uint32_t) txPhy);
 }
+    
+void BLECNTR_SmEnTxHp(uint8_t smNo, BOOL enable)
+{
+}
 
+/* Consider PA Level 32 the one used to enable high power. */
 void BLECNTR_SmSetTxPwr(uint8_t smNo, uint8_t paLevel)
 {
-    LL_RADIO_SetPAPower(smNo, (uint32_t) paLevel);
+  
+  LL_RADIO_SetPAPower(smNo, (uint32_t) paLevel);    
 }
 
 void BLECNTR_SmSetUnmappedChan(uint8_t smNo, uint8_t chan)

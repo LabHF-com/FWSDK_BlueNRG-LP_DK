@@ -82,20 +82,20 @@
  
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
-#define TIMx                                      TIM2
-#define LL_EnableClock_TIMx()                     LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2);
-#define TIMx_IRQHandler                           TIM2_IRQHandler
-#define TIMx_IRQn                                 TIM2_IRQn
+#if defined(STEVAL_IDB012V1)
+#define TIMx                                            TIM2
+#define LL_EnableClock_TIMx()                           LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2);
+#define TIMx_IRQHandler                                 TIM2_IRQHandler
+#define TIMx_IRQn                                       TIM2_IRQn
   /** TIMx GPIO Configuration  
       PB3/AF3     TIM2_CH4 
-   */
-#define TIMx_CH4_PIN                              LL_GPIO_PIN_3
-#define TIMx_CH4_AF                               LL_GPIO_AF_3
-#define TIMx_CH4_PORT                             GPIOB
-#define LL_EnableClock_TIMx_CH4()                 LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
-#define LL_GPIO_SetAFPin_TIMx_CH4()               LL_GPIO_SetAFPin_0_7(TIMx_CH4_PORT, TIMx_CH4_PIN, TIMx_CH4_AF);
-#endif /* STEVAL_IDB012V1 */
+  */
+#define TIMx_CH4_PIN                                    LL_GPIO_PIN_3
+#define TIMx_CH4_AF                                     LL_GPIO_AF_3
+#define TIMx_CH4_PORT                                   GPIOB
+#define LL_EnableClock_TIMx_CH4()                       LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
+#define LL_GPIO_SetAFPin_TIMx_CH4()                     LL_GPIO_SetAFPin_0_7(TIMx_CH4_PORT, TIMx_CH4_PIN, TIMx_CH4_AF);
+#endif /* STEVAL_IDB012V1   */
 
 
 

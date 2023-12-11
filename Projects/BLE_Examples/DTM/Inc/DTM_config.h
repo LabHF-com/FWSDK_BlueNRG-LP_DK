@@ -22,7 +22,7 @@
 #ifndef _DTM_CONFIG_H_
 #define _DTM_CONFIG_H_
 #include "bluenrg_lpx.h"
-#include "bluenrg_lp_stack.h"
+#include <bluenrg_lp_stack.h>
 #include "stack_user_cfg.h"
 
 /** This file contains all the information needed to init the BlueNRG-LP stack. 
@@ -34,13 +34,6 @@
 /* MAX number of links for DTM */
 #define DTM_NUM_LINK_CONF                           (CONFIG_NUM_MAX_LINKS)
 #define NUM_LINKS                                   (DTM_NUM_LINK_CONF)
-
-/* Number of links needed for the demo: 1
- * Only 1 the default
- */
-#define NUM_LINKS               (DTM_NUM_LINK_CONF)
-
-#define NUM_SYNC_SLOTS_CONF                     (2U)
 
 
 /* Number of GATT attributes needed for the DTM */
@@ -54,46 +47,59 @@
 #if defined(CONFIG_DEVICE_BLUENRG_LP) 
 /* MAX number of GAP and GATT attributes for DTM */
 #define DTM_NUM_GATT_ATTRIBUTES_CONF                (100)
-#define NUM_AUX_SCAN_SLOTS_CONF                     (4U)   
+#define NUM_EATT_CHANNELS                           (5U)
+#define NUM_AUX_SCAN_SLOTS_CONF                     (4U) 
+#define NUM_SYNC_SLOTS_CONF                         (2U)
 #define WHITE_LIST_SIZE_LOG2_CONF                   (4U)
 #define L2CAP_MPS_CONF                              (247U)
-#define NUM_L2CAP_COCS_CONF                         (2U)
-/* Max value for ATT_MTU */
+#define NUM_L2CAP_COCS_CONF                         (2U + NUM_EATT_CHANNELS)
 #define MAX_ATT_MTU_CONF                            (247)
 #define OPT_MBLOCKS_CONF                            (30)
+#if (BLESTACK_CONTROLLER_ONLY == 0)
 #define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (512)
 /* Size of buffer shared between GATT_NWK library (used for GATT database and client 
   write procedures) and ADV_NWK library (used for advertising buffers). */
 #define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (3072 + 1660 + ACI_ATT_QUEUED_WRITE_SIZE_CONF)
+#else
+#define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (0)
+#define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (1660)
+#endif
 #define NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF     (DTM_NUM_LINK_CONF)
 #define MAX_NUM_CTE_ANTENNA_IDS                     (0U)
 #define MAX_NUM_CTE_IQ_SAMPLES                      (0U)
 
-#elif CONFIG_DEVICE_BLUENRG_LPS /* BlueNRG-LPS  */
+#elif defined(CONFIG_DEVICE_BLUENRG_LPS) /* BlueNRG-LPS  */
 
-#define DTM_NUM_GATT_ATTRIBUTES_CONF                (60) 
-#define NUM_AUX_SCAN_SLOTS_CONF                     (1U) // 1 OK for periodic sync adv, scan
+#define DTM_NUM_GATT_ATTRIBUTES_CONF                (60)
+#define NUM_EATT_CHANNELS                           (0U)
+#define NUM_AUX_SCAN_SLOTS_CONF                     (1U)
+#define NUM_SYNC_SLOTS_CONF                         (2U)
 #define WHITE_LIST_SIZE_LOG2_CONF                   (3U) 
 #define L2CAP_MPS_CONF                              (160U) 
 #define NUM_L2CAP_COCS_CONF                         (0U)
-/* Max value for ATT_MTU */
-#define MAX_ATT_MTU_CONF                            (160U) 
-#define OPT_MBLOCKS_CONF                            (0) 
-#define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (300) 
+#define MAX_ATT_MTU_CONF                            (160U)
+#define OPT_MBLOCKS_CONF                            (10)
+#if (BLESTACK_CONTROLLER_ONLY == 0)
+#define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (300)
 #define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (1000 + 256 + ACI_ATT_QUEUED_WRITE_SIZE_CONF)
+#else
+#define ACI_ATT_QUEUED_WRITE_SIZE_CONF              (0)
+#define ACI_GATT_ADV_NWK_BUFFER_SIZE_CONF           (512)
+#endif
 #define NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF     (DTM_NUM_LINK_CONF) 
 
 #define MAX_NUM_CTE_ANTENNA_IDS                     (8U)
 #define MAX_NUM_CTE_IQ_SAMPLES                      (82U)
+
 #endif
 
 /* Set the number of memory block for packet allocation */
-#define MBLOCKS_COUNT           (BLE_STACK_MBLOCKS_CALC(MAX_ATT_MTU_CONF, NUM_LINKS) + OPT_MBLOCKS_CONF)
+#define MBLOCKS_COUNT           (BLE_STACK_MBLOCKS_CALC(MAX_ATT_MTU_CONF, NUM_LINKS, NUM_EATT_CHANNELS) + OPT_MBLOCKS_CONF)
 
 /* RAM reserved to manage all the data stack according the number of links,
  * number of services, number of attributes and attribute value length
  */
-#define DYNAMIC_MEMORY_SIZE (BLE_STACK_TOTAL_BUFFER_SIZE(NUM_LINKS,NUM_GATT_ATTRIBUTES,NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,MBLOCKS_COUNT,\
+#define DYNAMIC_MEMORY_SIZE (BLE_STACK_TOTAL_BUFFER_SIZE(NUM_LINKS,NUM_EATT_CHANNELS,NUM_GATT_ATTRIBUTES,NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,MBLOCKS_COUNT,\
                                                          NUM_ADV_SETS_CONF,NUM_AUX_SCAN_SLOTS_CONF,WHITE_LIST_SIZE_LOG2_CONF,NUM_L2CAP_COCS_CONF,\
                                                          NUM_SYNC_SLOTS_CONF, MAX_NUM_CTE_ANTENNA_IDS, MAX_NUM_CTE_IQ_SAMPLES,\
                                                          ISR0_FIFO_SIZE, ISR1_FIFO_SIZE, USER_FIFO_SIZE))
@@ -117,6 +123,7 @@ extern uint8_t hot_table_radio_config[];
     .NumAttrRecords = NUM_GATT_ATTRIBUTES,                                      \
     .MaxNumOfClientProcs = NUM_OF_CONCURRENT_GATT_CLIENT_PROC_CONF,             \
     .NumOfLinks = NUM_LINKS,                                                    \
+    .NumOfEATTChannels = NUM_EATT_CHANNELS,                                     \
     .NumBlockCount = MBLOCKS_COUNT,                                             \
     .ATT_MTU = MAX_ATT_MTU_CONF,                                                \
     .MaxConnEventLength = MAX_CONN_EVENT_LENGTH_CONF,                           \

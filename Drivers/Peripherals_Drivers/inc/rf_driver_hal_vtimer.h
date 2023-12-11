@@ -251,15 +251,35 @@ uint8_t HAL_VTIMER_ClearRadioTimerValue(void);
 
 /**
  * @brief  Get the last anchorPoint in system time unit.
+ * @param [out] Current System time
  * @return TimerCapture register in system time unit.
 */
-uint64_t HAL_VTIMER_GetAnchorPoint(void);
+uint64_t HAL_VTIMER_GetAnchorPoint(uint64_t *current_system_time);
 
 /**
  * @brief  Returns the admitted sleep mode according to the next timer activity.
  * @return Sleep mode 
 */
 PowerSaveLevels HAL_VTIMER_PowerSaveLevelCheck(PowerSaveLevels level);
+
+/**
+ * @brief   Returns the 64-bit system time, referred to the 32-bit system time parameter.
+ *          The returned system time refers to a time between last calibration and last
+ *          calibration + 10485 seconds.
+ * @param   sys_time: system time
+ * @warning The system time cannot be more then 10485 seconds (174 min) after the last calibration time.
+ * @return  STU value 
+ */
+uint64_t HAL_VTIMER_GetSysTime64(uint32_t sys_time);
+
+/**
+ * @brief   Returns the next 64-bit system time in the future, referred to the 32-bit system time parameter.
+ *          Compared to HAL_VTIMER_GetSysTime64() this function makes sure that the returned
+ *          time is always in the future, but execution time of the function is longer.
+ * @param   sys_time: system time in the future (no more than 10485 s = 174 min in the future)
+ * @return  STU value 
+ */
+uint64_t HAL_VTIMER_GetFutureSysTime64(uint32_t sys_time);
 
 /**
   * @}

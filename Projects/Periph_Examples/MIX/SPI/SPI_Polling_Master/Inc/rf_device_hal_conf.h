@@ -201,9 +201,6 @@
   #include "rf_driver_hal_adc.h"
 #endif /* HAL_ADC_MODULE_ENABLED */
 
-#ifdef HAL_COMP_MODULE_ENABLED
-  #include "rf_driver_hal_comp.h"
-#endif /* HAL_COMP_MODULE_ENABLED */
 
 #ifdef HAL_CORTEX_MODULE_ENABLED
   #include "rf_driver_hal_cortex.h"
@@ -245,9 +242,6 @@
  #include "rf_driver_hal_iwdg.h"
 #endif /* HAL_IWDG_MODULE_ENABLED */
 
-#ifdef HAL_LCD_MODULE_ENABLED
- #include "rf_driver_hal_lcd.h"
-#endif /* HAL_LCD_MODULE_ENABLED */
 
 #ifdef HAL_LPTIM_MODULE_ENABLED
   #include "rf_driver_hal_lptim.h"
@@ -279,9 +273,11 @@
   #include "rf_driver_hal_rcc.h"
 #endif /* HAL_RCC_MODULE_ENABLED */
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
 #ifdef HAL_RNG_MODULE_ENABLED
   #include "rf_driver_hal_rng.h"
 #endif /* HAL_RNG_MODULE_ENABLED */
+#endif
     
 #ifdef HAL_RTC_MODULE_ENABLED
  #include "rf_driver_hal_rtc.h"

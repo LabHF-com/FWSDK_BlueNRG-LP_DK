@@ -234,6 +234,7 @@
         <state>USER_BUTTON=BSP_PUSH1</state>
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -1316,6 +1317,7 @@
         <state>USER_BUTTON=BSP_PUSH1</state>
         <state>CONFIG_HW_LS_XTAL</state>
         <state>BLE_STACK_CUSTOM_CONF</state>
+        <state>CONFIG_NUM_MAX_LINKS=1</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -2198,10 +2200,10 @@
   <group>
       <name>CMSIS</name>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</name>
+        <name>$PROJ_DIR$/../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</name>
       </file>
     </group>
   <group>
@@ -2279,13 +2281,13 @@
         <name>$PROJ_DIR$/../../Src/BLE_Privacy_main.c</name>
       </file>
     <file>
-        <name>$PROJ_DIR$/../../Src/rf_device_it.c</name>
-      </file>
-    <file>
         <name>$PROJ_DIR$/../../Src/master.c</name>
       <excluded>
           <configuration>Slave</configuration>
         </excluded>
+      </file>
+    <file>
+        <name>$PROJ_DIR$/../../Src/rf_device_it.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../Src/slave.c</name>

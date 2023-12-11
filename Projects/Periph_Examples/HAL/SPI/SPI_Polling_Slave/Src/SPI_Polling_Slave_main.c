@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : SPI_Polling_Slave_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      SPI3 MOSI     |
@@ -142,24 +144,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |              STEVAL-IDB012V1             |
---------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     DL2    |     ON: reception process is complete    |     ON: reception process is complete    |     ON: reception process is complete    |
-|     DL3    |    ON: error - Blinking: timeout error   |    ON: error - Blinking: timeout error   |    ON: error - Blinking: timeout error   |
-|     DL4    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     U5     |   ON: transmission process is complete.  |   ON: transmission process is complete.  |   ON: transmission process is complete.  |
+|  LED name  |                  STEVAL-IDB010V1                 |                  STEVAL-IDB011V1                 |                  STEVAL-IDB011V2                 |                  STEVAL-IDB012V1                 |                  STEVAL-IDB013V1                 |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |
+|     DL2    |  ON: transmission/reception process is complete  |  ON: transmission/reception process is complete  |  ON: transmission/reception process is complete  |  ON: transmission/reception process is complete  |  ON: transmission/reception process is complete  |
+|     DL3    |        ON: error - Blinking: timeout error       |        ON: error - Blinking: timeout error       |        ON: error - Blinking: timeout error       |        ON: error - Blinking: timeout error       |        ON: error - Blinking: timeout error       |
+|     DL4    |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |
+|     U5     |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |                     Not Used                     |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |                    STEVAL-IDB011V1                   |                    STEVAL-IDB011V2                   |                    STEVAL-IDB012V1                   |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |  Start the communication through IT on master board  |  Start the communication through IT on master board  |  Start the communication through IT on master board  |
-|      PUSH2     |                       Not Used                       |                       Not Used                       |                       Not Used                       |
-|      RESET     |                   Reset BlueNRG-LP                   |                   Reset BlueNRG-LP                   |                   Reset BlueNRG-LP                   |
+|   BUTTON name  |                    STEVAL-IDB010V1                   |                    STEVAL-IDB011V1                   |                    STEVAL-IDB011V2                   |                    STEVAL-IDB012V1                   |                    STEVAL-IDB013V1                   |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |  Start the communication through IT on master board  |  Start the communication through IT on master board  |  Start the communication through IT on master board  |  Start the communication through IT on master board  |  Start the communication through IT on master board  |
+|      PUSH2     |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |                       Not Used                       |
+|      RESET     |                   Reset BlueNRG-LP                   |                   Reset BlueNRG-LP                   |                   Reset BlueNRG-LP                   |                   Reset BlueNRG-LPS                  |                   Reset BlueNRG-LPS                  |
 
 @endtable
 
@@ -199,7 +201,7 @@ In order to make the program work, you must do the following:
  - Press the RESET button
 
 BlueNRG_LP-EVB Set-up
-- Connect Master board SPI CLK pin to Slave Board SPI CLK pin
+- Connect Master board SPI CLK  pin to Slave Board SPI CLK pin
 - Connect Master board SPI MISO pin to Slave Board SPI MISO pin
 - Connect Master board SPI MOSI pin to Slave Board SPI MOSI pin
 - Connect Master board GND  to Slave Board GND
@@ -274,70 +276,68 @@ int main(void)
   
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+  
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI_SLAVE_Init();
-
-  /* Configure LEDs */
-  BSP_LED_Init(BSP_LED1);
+  
   BSP_LED_Init(BSP_LED2);
   BSP_LED_Init(BSP_LED3);
-    
+  
   printf("Slave board\n\r");
-
+  
 #if defined( CONFIG_DATASIZE_16BIT ) 
   printf("SPI data width 16 bit\n\r");
 #elif defined( CONFIG_DATASIZE_8BIT )
   printf("SPI data width 8 bit\n\r");
 #endif 
-
+  
   /* While the SPI in TransmitReceive process, user can transmit data through 
-     "aTxBuffer" buffer & receive data through "aRxBuffer" */
+  "aTxBuffer" buffer & receive data through "aRxBuffer" */
   /* Timeout is set to 10S */
-
+  
   switch(HAL_SPI_TransmitReceive(&hspiSlave, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, ubNbDataToTransmit, 10000))
   {
-    case HAL_OK:
-      /* Communication is completed ___________________________________________ */
-      /* Compare the sent and received buffers */
+  case HAL_OK:
+    /* Communication is completed ___________________________________________ */
+    /* Compare the sent and received buffers */
     printf("Compare the sent and received buffers:\n\r");
-      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, sizeof(aTxBuffer)))
-      {
-        /* Transfer error in transmission process */
-        printf("Error\n\r");
-        Error_Handler();
-      }
-      /* Transfer in transmission process is correct */
-    printf("Transfer in transmission process is correct.\n\r");
-      BSP_LED_On(BSP_LED1);
-      /* Transfer in reception process is correct */
-    printf("Transfer in reception process is correct.\n\r");
-      BSP_LED_On(BSP_LED2);
-      break;
-
-    case HAL_TIMEOUT:
-      /* A Timeout Occur ______________________________________________________*/
-      /* Call Timeout Handler */
-      Timeout_Error_Handler();
-      break;
-      /* An Error Occur ______________________________________________________ */
-    case HAL_ERROR:
-      /* Call Timeout Handler */
+    if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, sizeof(aTxBuffer)))
+    {
+      /* Transfer error in transmission process */
+      printf("Error\n\r");
       Error_Handler();
-      break;
-    default:
-      break;
+    }
+    /* Transfer in transmission process is correct */
+    printf("Transfer in transmission process is correct.\n\r");
+    /* Transfer in reception process is correct */
+      printf("Transfer in reception process is correct.\n\r");
+    BSP_LED_On(BSP_LED2);
+    printf("** Test successfully. ** \n\r\n\r");
+    break;
+    
+  case HAL_TIMEOUT:
+    /* A Timeout Occur ______________________________________________________*/
+    /* Call Timeout Handler */
+    Timeout_Error_Handler();
+    break;
+    /* An Error Occur ______________________________________________________ */
+  case HAL_ERROR:
+    /* Call Timeout Handler */
+    Error_Handler();
+    break;
+  default:
+    break;
   }
-
+  
   /* Infinite loop */
   while (1)
   {
@@ -363,7 +363,7 @@ static void MX_SPI_SLAVE_Init(void)
   hspiSlave.Init.DataSize = SPI_DATASIZE_8BIT;
 #endif 
   hspiSlave.Init.NSS = SPI_NSS_SOFT;
-//hspiMaster.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  //hspiMaster.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
   hspiSlave.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspiSlave.Init.TIMode = SPI_TIMODE_DISABLE;
   hspiSlave.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -426,9 +426,9 @@ static uint16_t Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferL
 }
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+* @brief  This function is executed in case of error occurrence.
+* @retval None
+*/
 void Error_Handler(void)
 {
   /* User can add his own implementation to report the HAL error return state */
@@ -450,7 +450,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t* file, uint32_t line)
 { 
   /* User can add his own implementation to report the file name and line number,
-    ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 }
 #endif /* USE_FULL_ASSERT */
 

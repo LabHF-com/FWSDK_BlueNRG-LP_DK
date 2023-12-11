@@ -206,9 +206,7 @@ static uint8_t bootloadingCompleted_end = 0;
 static uint8_t ota_allow_jump = 0; 
   
 /* UUIDS */
-static uint32_t imageBase = 0;  
-static volatile uint8_t do_erase_flash=0;  
-static volatile uint8_t erase_flash_done=0;
+static uint32_t imageBase = 0;
 
 static volatile uint8_t ota_service_is_disconnected=0;
 // static uint16_t PageNumber = 0; 
@@ -508,7 +506,7 @@ void OTA_Write_Data(void)
        } 
        else 
        {
-         uint8_t  byteIncrement = 4; /* Flash Write: 1 word (4 bytes) */
+         byteIncrement = 4; /* Flash Write: 1 word (4 bytes) */
          
          LL_FLASH_Program(FLASH, currentWriteAddress, (((uint32_t)imageBuffer[k+3]<< 24) + ((uint32_t)imageBuffer[k+2]<< 16) + ((uint32_t)imageBuffer[k+1]<< 8) + (uint32_t)imageBuffer[k]));
          verifyStatus = FLASH_Verify(currentWriteAddress,(uint32_t *)(&imageBuffer[k]),byteIncrement);
@@ -586,7 +584,6 @@ void OTA_Write_Request_CB(uint16_t connection_handle,
     
     if (attr_handle == (btlNewImageCharHandle + 1)){
       
-      erase_flash_done = 0;
       ota_service_is_disconnected=0;
       
       /* Incoming write characteristic to allow master to specify the base address and size

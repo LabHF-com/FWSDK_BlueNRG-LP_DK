@@ -35,4 +35,7 @@ void aci_l2cap_sdu_data_tx_nwk_event(uint16_t Connection_Handle,
                                      uint16_t SDU_Length,
                                      uint16_t TX_Credit_Balance);
 
+void aci_l2cap_nwk_disconnection_complete(uint16_t Connection_Handle,
+                                          uint16_t CID);
+
 #endif

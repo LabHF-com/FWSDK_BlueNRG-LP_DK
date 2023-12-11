@@ -53,12 +53,12 @@
 #define TIMx_CH2_AF     GPIO_AF4_TIM1
 #define TIMx_CH2_PORT   GPIOA
 
-#define EXTERNAL_TRIGGER_SIGNAL_PIN             GPIO_PIN_8          
+#define EXTERNAL_TRIGGER_SIGNAL_PIN             GPIO_PIN_8
 #define EXTERNAL_TRIGGER_SIGNAL_PORT            GPIOB
 
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 
 #define TIMx                                            TIM2
 #define EnableClock_TIMx()                              __HAL_RCC_TIM2_CLK_ENABLE() 
@@ -78,16 +78,16 @@
 #define TIMx_CH2_AF                                     GPIO_AF4_TIM2
 #define TIMx_CH2_PORT                                   GPIOB
 
-#define EXTERNAL_TRIGGER_SIGNAL_PIN                     GPIO_PIN_3          
+#define EXTERNAL_TRIGGER_SIGNAL_PIN                     GPIO_PIN_3
 #define EXTERNAL_TRIGGER_SIGNAL_PORT                    GPIOB
 
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
  
     /**
   * @brief Key push-button
   */
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE() 

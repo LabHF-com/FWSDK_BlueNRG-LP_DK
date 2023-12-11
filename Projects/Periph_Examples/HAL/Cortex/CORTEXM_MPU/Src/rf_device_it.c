@@ -52,7 +52,9 @@ void HardFault_IRQHandler(void)
   /* Turn on LED3 */
   BSP_LED_On(BSP_LED3);
   printf("Write access isn't permitted.\n\r");
-  printf("Test ended.\n\r");
+#ifdef ACCESS_PERMISSION
+    printf("** Test successfully. ** \n\r\n\r");
+#endif
   AccessPermitted = 0;
   while(1);
 }

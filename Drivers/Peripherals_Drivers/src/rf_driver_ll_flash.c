@@ -41,33 +41,6 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
-/** @addtogroup FLASH_LL_Private_Macros
-  * @{
-  */
-
-#define IS_LL_FLASH_MAIN_MEM_ADDRESS(__VALUE__)          (((__VALUE__) >= LL_FLASH_START_ADDR) && ((__VALUE__) <= LL_FLASH_END_ADDR))
-
-#define IS_LL_FLASH_PROGRAM_MAIN_MEM_ADDRESS(__VALUE__)  (((__VALUE__) >= LL_FLASH_START_ADDR) && ((__VALUE__) <= (LL_FLASH_START_ADDR + LL_FLASH_SIZE - 4UL)) && (((__VALUE__) % 4UL) == 0UL))
-
-#define IS_LL_FLASH_PROGRAM_OTP_ADDRESS(__VALUE__)       (((__VALUE__) >= OTP_AREA_BASE) && ((__VALUE__) <= (OTP_AREA_END_ADDR + 1UL - 4UL)) && (((__VALUE__) % 4UL) == 0UL))
-
-#define IS_LL_FLASH_PROGRAM_ADDRESS(__VALUE__)           ((IS_LL_FLASH_PROGRAM_MAIN_MEM_ADDRESS(__VALUE__)) || (IS_LL_FLASH_PROGRAM_OTP_ADDRESS(__VALUE__)))
-
-#define IS_LL_FLASH_PAGE(__VALUE__)                      ((__VALUE__) <= LL_FLASH_PAGE_NUMBER)
-
-#define IS_LL_ADDR_ALIGNED_32BITS(__VALUE__)             (((__VALUE__) & ~0x3U) == (__VALUE__))
-
-#define IS_LL_FLASH_WAIT_STATES(__VALUE__)               (((__VALUE__) == LL_FLASH_WAIT_STATES_0) || \
-                                                          ((__VALUE__) == LL_FLASH_WAIT_STATES_1))
-
-#define IS_LL_FLASH_TYPE_ERASE(__VALUE__)                (((__VALUE__) == LL_FLASH_TYPE_ERASE_PAGES) || \
-                                                         ((__VALUE__) == LL_FLASH_TYPE_ERASE_MASSERASE))
-
-
-/**
-  * @}
-  */
-
 /* Private function prototypes -----------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
@@ -93,7 +66,7 @@ void LL_FLASH_Program(FLASH_TypeDef *FLASHx, uint32_t Address, uint32_t Data)
   LL_FLASH_ClearFlag(FLASHx, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
 
   /* Load the word address */
-  FLASHx->ADDRESS = ((Address>>2) & 0xFFFF);
+  FLASHx->ADDRESS = (((Address - LL_FLASH_START_ADDR)>>2) & LL_FLASH_SIZE_MASK);
   
   /* Load the data to program */
   FLASHx->DATA0 = Data;
@@ -123,7 +96,7 @@ void LL_FLASH_ProgramBurst(FLASH_TypeDef *FLASHx, uint32_t Address, uint32_t *Da
   LL_FLASH_ClearFlag(FLASHx, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
 
   /* Load the word address */
-  FLASHx->ADDRESS = ((Address>>2) & 0xFFFF);
+  FLASHx->ADDRESS = (((Address - LL_FLASH_START_ADDR)>>2) & LL_FLASH_SIZE_MASK);
   
   /* Load the data to program */
   FLASHx->DATA0 = Data[0];
@@ -177,7 +150,7 @@ void LL_FLASH_Erase(FLASH_TypeDef *FLASHx, uint32_t TypeErase, uint32_t Page, ui
       LL_FLASH_ClearFlag(FLASHx, LL_FLASH_FLAG_CMDDONE|LL_FLASH_FLAG_CMDSTART|LL_FLASH_FLAG_CMDERR|LL_FLASH_FLAG_ILLCMD);
 
       /* Write the page address */
-      FLASHx->ADDRESS = (((index * LL_FLASH_PAGE_SIZE)>>2) & 0xFFFF);
+      FLASHx->ADDRESS = (((index * LL_FLASH_PAGE_SIZE)>>2) & LL_FLASH_SIZE_MASK);
   
       /* Write the ERASE command */
       FLASHx->COMMAND = LL_FLASH_CMD_ERASE_PAGES;

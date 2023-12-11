@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : USART_Tx_IT_Init_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -54,13 +54,15 @@
   -# Alternatively, open the Flasher utility and download the built binary image.
 
 * \subsection Project_configurations Project configurations
-- \c USART_Tx_IT_Init - Release configuration
+- \c Release - Release configuration
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,9 +100,9 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
-|     A1     |        SPI CS       |       SPI CS       |
+|     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
 |     A12    |       Not Used      |        N.A.        |
 |     A13    |       Not Used      |        N.A.        |
@@ -110,8 +112,8 @@
 |     A5     |       Not Used      |        N.A.        |
 |     A6     |       Not Used      |        N.A.        |
 |     A7     |       Not Used      |        N.A.        |
-|     A8     |       SPI MOSI      |      Not Used      |
-|     A9     |       SPI MISO      |      Not Used      |
+|     A8     |       USART TX      |      Not Used      |
+|     A9     |       USART RX      |      Not Used      |
 |     B0     |       Not Used      |      USART RX      |
 |     B14    |       Not Used      |      Not Used      |
 |     B2     |       Not Used      |      Not Used      |
@@ -119,7 +121,7 @@
 |     B4     |       Not Used      |        DL2         |
 |     B5     |       Not Used      |      Not Used      |
 |     B7     |       Not Used      |      Not Used      |
-|     B8     |       SPI CLK       |        N.A.        |
+|     B8     |         DL2         |        N.A.        |
 |     B9     |       Not Used      |        N.A.        |
 |     A0     |         N.A.        |      Not Used      |
 |     A10    |         N.A.        |      Not Used      |
@@ -131,66 +133,78 @@
 |    VBAT    |       Not Used      |      Not Used      |
 @endtable 
 
+* \section Serial_IO Serial I/O
+  The application will listen for keys typed and it will send back in the serial port.
+  In other words everything typed in serial port will be send back.
+@table
+| Parameter name  | Value            | Unit      |
+----------------------------------------------------
+| Baudrate        | 115200 [default] | bit/sec   |
+| Data bits       | 8                | bit       |
+| Parity          | None             | bit       |
+| Start bits      | 1                | bit       |
+| Stop bits       | 1                | bit       |
+| HW flow control | None             | bit       |
+@endtable
 
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                     STEVAL-IDB011V1                    |                     STEVAL-IDB011V2                    |                     STEVAL-IDB012V1                    |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                        Not Used                        |                        Not Used                        |                        Not Used                        |
-|     DL2    |                        Not Used                        |                        Not Used                        |   ON: last byte is transmitted - Slow blinking: error  |
-|     DL3    |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |                        Not Used                        |
-|     DL4    |                        Not Used                        |                        Not Used                        |                        Not Used                        |
-|     U5     |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|  LED name  |                     STEVAL-IDB010V1                    |                     STEVAL-IDB011V1                    |                     STEVAL-IDB011V2                    |                     STEVAL-IDB012V1                    |                     STEVAL-IDB013V1                    |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|     DL2    |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |   ON: last byte is transmitted - Slow blinking: error  |
+|     DL3    |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|     DL4    |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
+|     U5     |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |                        Not Used                        |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |             STEVAL-IDB011V1            |             STEVAL-IDB011V2            |             STEVAL-IDB012V1            |
-------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   new transmission of complete buffer  |   new transmission of complete buffer  |   new transmission of complete buffer  |
-|      PUSH2     |                Not Used                |                Not Used                |                Not Used                |
-|      RESET     |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
 * \section Usage Usage
 
-This example shows how to configure GPIO and USART peripheral to send characters synchronously to the LL SPI SPI_IT_Slave_Init in Interrupt mode.
+This example shows how to configure GPIO and USART peripheral to send characters asynchronously to HyperTerminal (PC) in Interrupt mode.
 This example is based on BLUENRG_LP USART LL API. 
-
-In case of errors, LED3 is blinking (1sec period).
-
-To test this SPI Master application was been used the LL/SPI/SPI_IT_Slave_Init Example with the SPI configured  as SPI1 and the data size set to 8bit.
-On press on push button , USART TX Empty interrupt is enabled.
-It is mandatory add to the slave application the follows define in the main.h file:
-#define CONFIG_DATASIZE_8BIT  1
-#define USE_SPI1_PINS         1
+Peripheral initialization is done using LL unitary services functions for optimization purpose (performance and size).
 
 
-Connect Masrer and Slave :
-- SPI CLK  (USART CK) with SPI Slave SCK
-- SPI MISO (USART RX) with SPI Slave MISO
-- SPI MOSI (USART TX) with SPI Slave MOSI
-- SPI CS (Output pin) with SPI Slave CS
-
-| MASTER STEVAL-IDB011V1 | SLAVE STEVAL-IDB011V1 |
-|   USART Pin/Signal     |     SPI Pin/Signal    | 
-|        PB8 / CK        |       PA13 / SCK      |
-|        PA8 / RX        |       PA14 / MISO     |
-|        PA9 / TX        |       PB14 / MOSI     |
-|        PA1 / CS        |       PA11 / CS       |
-
-  When the SPI slave shows on COM the waiting message for receiving data, press the PUSH1 button of the master board. The master application doesn't show meaning messsage on COM. LED3 is turned on in case of the transmission is completed. The master COM is used to virtualize the SPI. The SPI Slave show a success message in case of well received message.
-  The aRxBuffer contains the received string also for Master and Slave application.
+Example execution:
+when applicaton starts, USART TX Empty interrupt is enabled.
+First character of buffer to be transmitted is written into USART Transmit Data Register (TDR) in order to initialize transfer procedure.
+When character is sent from TDR, a TXE interrupt occurs. 
+USART IRQ Handler routine is sending next character on USART Tx line. 
+IT will be raised until last byte is to be transmitted : Then, Transmit Complete (TC) interrupt is enabled instead of TX Empty (TXE). 
+On last byte transmission complete, LED2 is turned on.
+In case of errors, LED2 is blinking (1sec period).
 
 In order to make the program work, you must do the following:
  - Launch serial communication SW on PC
  - Flash the project in the Board
  - Press the RESET button
 
+BlueNRG_LP-EVB Set-up
+Connect USART1 TX/RX to respectively RX and TX pins of PC UART (could be done through a USB to UART adapter) :
+- Connect BlueNRG_LP board USART1 TX pin to PC COM port RX signal
+- Connect BlueNRG_LP board USART1 RX pin to PC COM port TX signal
+- Connect BlueNRG_LP board GND to PC COM port GND signal
+
+Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper configuration :
+- 115200 bauds
+- 8 bits data
+- 1 start bit
+- 1 stop bit
+- no parity
+- no HW flow control
 
 **/
    
@@ -212,7 +226,6 @@ const uint8_t aStringToSend[] = "USART LL API Example : TX in IT mode\r\nConfigu
 uint8_t ubSizeToSend = sizeof(aStringToSend);
 
 /* Private function prototypes */
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_USART_Init(void);
 void LED_On(void);
@@ -232,11 +245,9 @@ int main(void)
     while(1);
   }
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
 
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -261,12 +272,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
   * @brief USART1 Initialization Function
@@ -298,7 +303,7 @@ static void MX_USART_Init(void)
   LL_GPIO_Init(USART1_RX_PORT, &GPIO_InitStruct);
 
   /* USART1 interrupt Init */
-  NVIC_SetPriority(USART1_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USART1_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USART1_IRQn);
 
   USART_InitStruct.PrescalerValue = LL_USART_PRESCALER_DIV1;
@@ -363,11 +368,8 @@ static void MX_GPIO_Init(void)
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
-
-  /* Configure NVIC for SysTick_IRQn */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY);
 }
 
 /**

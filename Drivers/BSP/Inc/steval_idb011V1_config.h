@@ -141,8 +141,8 @@ typedef enum
 
 
 #define BSP_I2C                                   I2C1
-#define BSP_I2C_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_I2C1);
-#define BSP_I2C_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_I2C1);
+#define BSP_I2C_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_I2C1)
+#define BSP_I2C_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_I2C1)
 
 #define BSP_I2C_DATA_PIN                          LL_GPIO_PIN_1
 #define BSP_I2C_DATA_GPIO_PORT                    GPIOA
@@ -182,11 +182,12 @@ typedef enum
 #define BSP_UART_RX_GPIO_AF()                     LL_GPIO_SetAFPin_8_15(GPIOA, LL_GPIO_PIN_8, LL_GPIO_AF_0)
 #define BSP_UART_RX_GPIO_CLK_ENABLE()             LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA)
 #define BSP_UART_RX_GPIO_CLK_DISABLE()            LL_AHB_DisableClock(LL_AHB_PERIPH_GPIOA)
+#define BSP_USART_RX_WAKEUP                       WAKEUP_PA8
 
 
 #define BSP_SPI                                   SPI1
-#define BSP_SPI_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_SPI1);
-#define BSP_SPI_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_SPI1);
+#define BSP_SPI_CLK_ENABLE()                      LL_APB1_EnableClock(LL_APB1_PERIPH_SPI1)
+#define BSP_SPI_CLK_DISABLE()                     LL_APB1_DisableClock(LL_APB1_PERIPH_SPI1)
 #define BSP_SPI_GPIO_CLOCK_ENABLE()               LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA)
 #define BSP_SPI_CLK_POLARITY                      LL_SPI_POLARITY_HIGH
 #define BSP_SPI_CLK_PHASE                         LL_SPI_PHASE_2EDGE

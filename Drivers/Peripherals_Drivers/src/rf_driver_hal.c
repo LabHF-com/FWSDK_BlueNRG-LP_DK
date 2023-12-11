@@ -53,7 +53,7 @@
   * @{
   */
 /**
- * @brief BLUENRG_LP HAL Driver version number
+ * @brief HAL Driver version number
    */
 #define __RF_DRIVER_HAL_VERSION_MAIN   (0x00U) /*!< [31:24] main version */
 #define __RF_DRIVER_HAL_VERSION_SUB1   (0x00U) /*!< [23:16] sub1 version */

@@ -26,8 +26,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#include "bluenrg_lpx.h"
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
+#include "BlueNRG_LP.h"
 #endif
 
 /** @addtogroup RF_DRIVER_LL_Driver

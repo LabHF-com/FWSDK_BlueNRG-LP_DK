@@ -108,7 +108,7 @@ extern "C" {
 #define LL_DMAMUX_REQ_I2Cx_RX	      LL_DMAMUX_REQ_I2C1_RX
 #define LL_DMAMUX_REQ_I2Cx_TX         LL_DMAMUX_REQ_I2C1_TX
 #define LL_I2Cx_EnableClock()         LL_APB1_EnableClock(LL_APB1_PERIPH_I2C1)
-#endif /* STEVAL_IDB012V1 */ 
+#endif /* STEVAL_IDB012V1   */ 
 
 /* Exported macro ------------------------------------------------------------*/
 
@@ -143,7 +143,8 @@ void Error_Callback(void);
 #define LED2_GPIO_CLK_ENABLE()                  LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         LL_GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOA) 

@@ -118,7 +118,7 @@
 
 /** @addtogroup IWDG_Exported_Functions_Group1
  *  @brief    Initialization and Start functions.
- *
+  * @{
 @verbatim
  ===============================================================================
           ##### Initialization and Start functions #####
@@ -131,7 +131,6 @@
           is reloaded in order to exit function with correct time base.
 
 @endverbatim
-  * @{
   */
 
 /**
@@ -207,7 +206,7 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 
 /** @addtogroup IWDG_Exported_Functions_Group2
  *  @brief   IO operation functions
- *
+ *  @{
 @verbatim
  ===============================================================================
                       ##### IO operation functions #####
@@ -216,7 +215,6 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
       (+) Refresh the IWDG.
 
 @endverbatim
-  * @{
   */
 
 

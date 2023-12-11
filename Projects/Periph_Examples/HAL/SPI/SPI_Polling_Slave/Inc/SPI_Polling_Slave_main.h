@@ -93,10 +93,10 @@ extern "C" {
 #define DMA_REQUEST_SPI_SLAVE_TX               DMA_REQUEST_SPI1_TX
 #define DMA_REQUEST_SPI_SLAVE_RX               DMA_REQUEST_SPI1_RX
 #endif
-#endif  /* defined(STEVAL_IDB011V1)  */
+#endif  /* STEVAL_IDB011V1 */
 
 
-#if defined(STEVAL_IDB012V1)   
+#if defined(STEVAL_IDB012V1)
     /** GPIO Configuration
     PB3/AF4    ------> SPI3_SCK
     PA8/AF3    ------> SPI3_MISO
@@ -118,7 +118,7 @@ extern "C" {
 #define __HAL_RCC_SPI_SLAVE_CLK_DISABLE        __HAL_RCC_SPI3_CLK_DISABLE
 #define DMA_REQUEST_SPI_SLAVE_TX               DMA_REQUEST_SPI3_TX
 #define DMA_REQUEST_SPI_SLAVE_RX               DMA_REQUEST_SPI3_RX
-#endif  /* defined(STEVAL_IDB011V1)  */
+#endif  /* STEVAL_IDB011V1   */
 
 
 

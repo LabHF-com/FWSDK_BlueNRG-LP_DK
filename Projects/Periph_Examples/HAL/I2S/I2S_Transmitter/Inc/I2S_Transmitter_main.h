@@ -58,7 +58,9 @@ void Error_Handler(void);
   
  /* I2S peripheral configuration defines */
 #define I2S_INSTANCE                 SPI2
-#define SPIx_IRQHandler                         SPI2_IRQHandler
+#define SPIx_IRQHandler              SPI2_IRQHandler
+#define I2S_IRQn                     SPI2_IRQn
+
 #define I2S_CLK_ENABLE()             __HAL_RCC_SPI2_CLK_ENABLE()
 #define I2S_CLK_CONFIG()             __HAL_RCC_SPI2I2S_CONFIG(RCC_SPI2I2S_CLKSOURCE_16M)
 #define I2S_CLK_DISABLE()            __HAL_RCC_SPI2_CLK_DISABLE()
@@ -98,11 +100,12 @@ void Error_Handler(void);
 
 #endif  /* defined(STEVAL_IDB011V1) */
   
-#if defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB012V1)
 
  /* I2S peripheral configuration defines */
 #define I2S_INSTANCE                 SPI3
 #define SPIx_IRQHandler                         SPI3_IRQHandler
+#define I2S_IRQn                     SPI3_IRQn
 #define I2S_CLK_ENABLE()             __HAL_RCC_SPI3_CLK_ENABLE()
 #define I2S_CLK_CONFIG()             __HAL_RCC_SPI3I2S_CONFIG(RCC_SPI3I2S_CLKSOURCE_16M)
 #define I2S_CLK_DISABLE()            __HAL_RCC_SPI3_CLK_DISABLE()

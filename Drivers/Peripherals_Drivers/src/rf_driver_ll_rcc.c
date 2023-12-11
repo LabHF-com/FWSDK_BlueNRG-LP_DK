@@ -67,7 +67,7 @@ uint32_t RCC_GetSystemClockFreq(void);
   */
 
 /**
-  * @brief  Reset the RCC clock  to the default reset state. To Be Reviewed ???[FC]
+  * @brief  Reset the RCC clock  to the default reset state.
   * @note   The default reset state of the clock configuration is given below:
   *         - HSI ON and used as system clock source
   *         - HSE and PLL Source OFF

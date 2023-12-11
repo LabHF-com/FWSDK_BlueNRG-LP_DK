@@ -590,13 +590,13 @@ typedef struct
   * @brief  Helper macro to retrieve weekday.
   * @param  __RTC_DATE__ Date returned by @ref  LL_RTC_DATE_Get function.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   */
 #define __LL_RTC_GET_WEEKDAY(__RTC_DATE__) (((__RTC_DATE__) >> RTC_OFFSET_WEEKDAY) & 0x000000FFU)
 
@@ -611,18 +611,18 @@ typedef struct
   * @brief  Helper macro to retrieve Month in BCD format
   * @param  __RTC_DATE__ Value returned by @ref  LL_RTC_DATE_Get
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_MONTH_JANUARY
-  *         @arg @ref LL_RTC_MONTH_FEBRUARY
-  *         @arg @ref LL_RTC_MONTH_MARCH
-  *         @arg @ref LL_RTC_MONTH_APRIL
-  *         @arg @ref LL_RTC_MONTH_MAY
-  *         @arg @ref LL_RTC_MONTH_JUNE
-  *         @arg @ref LL_RTC_MONTH_JULY
-  *         @arg @ref LL_RTC_MONTH_AUGUST
-  *         @arg @ref LL_RTC_MONTH_SEPTEMBER
-  *         @arg @ref LL_RTC_MONTH_OCTOBER
-  *         @arg @ref LL_RTC_MONTH_NOVEMBER
-  *         @arg @ref LL_RTC_MONTH_DECEMBER
+  * @arg LL_RTC_MONTH_JANUARY
+  * @arg LL_RTC_MONTH_FEBRUARY
+  * @arg LL_RTC_MONTH_MARCH
+  * @arg LL_RTC_MONTH_APRIL
+  * @arg LL_RTC_MONTH_MAY
+  * @arg LL_RTC_MONTH_JUNE
+  * @arg LL_RTC_MONTH_JULY
+  * @arg LL_RTC_MONTH_AUGUST
+  * @arg LL_RTC_MONTH_SEPTEMBER
+  * @arg LL_RTC_MONTH_OCTOBER
+  * @arg LL_RTC_MONTH_NOVEMBER
+  * @arg LL_RTC_MONTH_DECEMBER
   */
 #define __LL_RTC_GET_MONTH(__RTC_DATE__) (((__RTC_DATE__) >>RTC_OFFSET_MONTH) & 0x000000FFU)
 
@@ -686,8 +686,8 @@ typedef struct
   * @rmtoll CR           FMT           LL_RTC_SetHourFormat
   * @param  RTCx RTC Instance
   * @param  HourFormat This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_HOURFORMAT_24HOUR
-  *         @arg @ref LL_RTC_HOURFORMAT_AMPM
+  * @arg LL_RTC_HOURFORMAT_24HOUR
+  * @arg LL_RTC_HOURFORMAT_AMPM
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx, uint32_t HourFormat)
@@ -700,8 +700,8 @@ __STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx, uint32_t HourFormat
   * @rmtoll CR           FMT           LL_RTC_GetHourFormat
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_HOURFORMAT_24HOUR
-  *         @arg @ref LL_RTC_HOURFORMAT_AMPM
+  * @arg LL_RTC_HOURFORMAT_24HOUR
+  * @arg LL_RTC_HOURFORMAT_AMPM
   */
 __STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx)
 {
@@ -714,9 +714,9 @@ __STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx)
   * @rmtoll CR           OSEL          LL_RTC_SetAlarmOutEvent
   * @param  RTCx RTC Instance
   * @param  AlarmOutput This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_ALARMOUT_DISABLE
-  *         @arg @ref LL_RTC_ALARMOUT_ALMA
-  *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
+  * @arg LL_RTC_ALARMOUT_DISABLE
+  * @arg LL_RTC_ALARMOUT_ALMA
+  * @arg LL_RTC_ALARMOUT_WAKEUP
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx, uint32_t AlarmOutput)
@@ -729,9 +729,9 @@ __STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx, uint32_t AlarmOu
   * @rmtoll CR           OSEL          LL_RTC_GetAlarmOutEvent
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_ALARMOUT_DISABLE
-  *         @arg @ref LL_RTC_ALARMOUT_ALMA
-   *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
+  * @arg LL_RTC_ALARMOUT_DISABLE
+  * @arg LL_RTC_ALARMOUT_ALMA
+   * @arg LL_RTC_ALARMOUT_WAKEUP
   */
 __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx)
 {
@@ -745,8 +745,8 @@ __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx)
   * @rmtoll OR        ALARMOUTTYPE  LL_RTC_SetAlarmOutputType
   * @param  RTCx RTC Instance
   * @param  Output This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
-  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
+  * @arg LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
+  * @arg LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx, uint32_t Output)
@@ -760,8 +760,8 @@ __STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx, uint32_t Outpu
   * @rmtoll OR        ALARMOUTTYPE  LL_RTC_GetAlarmOutputType
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
-  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
+  * @arg LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
+  * @arg LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
   */
 __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutputType(RTC_TypeDef *RTCx)
 {
@@ -802,8 +802,8 @@ __STATIC_INLINE void LL_RTC_DisableInitMode(RTC_TypeDef *RTCx)
   * @rmtoll CR           POL           LL_RTC_SetOutputPolarity
   * @param  RTCx RTC Instance
   * @param  Polarity This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_HIGH
-  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
+  * @arg LL_RTC_OUTPUTPOLARITY_PIN_HIGH
+  * @arg LL_RTC_OUTPUTPOLARITY_PIN_LOW
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx, uint32_t Polarity)
@@ -816,8 +816,8 @@ __STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx, uint32_t Polari
   * @rmtoll CR           POL           LL_RTC_GetOutputPolarity
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_HIGH
-  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
+  * @arg LL_RTC_OUTPUTPOLARITY_PIN_HIGH
+  * @arg LL_RTC_OUTPUTPOLARITY_PIN_LOW
   */
 __STATIC_INLINE uint32_t LL_RTC_GetOutputPolarity(RTC_TypeDef *RTCx)
 {
@@ -942,8 +942,8 @@ __STATIC_INLINE void LL_RTC_DisableWriteProtection(RTC_TypeDef *RTCx)
   * @rmtoll TR           PM            LL_RTC_TIME_SetFormat
   * @param  RTCx RTC Instance
   * @param  TimeFormat This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
-  *         @arg @ref LL_RTC_TIME_FORMAT_PM
+  * @arg LL_RTC_TIME_FORMAT_AM_OR_24
+  * @arg LL_RTC_TIME_FORMAT_PM
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat)
@@ -960,8 +960,8 @@ __STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx, uint32_t TimeForma
   * @rmtoll TR           PM            LL_RTC_TIME_GetFormat
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
-  *         @arg @ref LL_RTC_TIME_FORMAT_PM
+  * @arg LL_RTC_TIME_FORMAT_AM_OR_24
+  * @arg LL_RTC_TIME_FORMAT_PM
   */
 __STATIC_INLINE uint32_t LL_RTC_TIME_GetFormat(RTC_TypeDef *RTCx)
 {
@@ -1096,8 +1096,8 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetSecond(RTC_TypeDef *RTCx)
   *         TR           SU            LL_RTC_TIME_Config
   * @param  RTCx RTC Instance
   * @param  Format12_24 This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
-  *         @arg @ref LL_RTC_TIME_FORMAT_PM
+  * @arg LL_RTC_TIME_FORMAT_AM_OR_24
+  * @arg LL_RTC_TIME_FORMAT_PM
   * @param  Hours Value between Min_Data=0x01 and Max_Data=0x12 or between Min_Data=0x00 and Max_Data=0x23
   * @param  Minutes Value between Min_Data=0x00 and Max_Data=0x59
   * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
@@ -1227,8 +1227,8 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetSubSecond(RTC_TypeDef *RTCx)
   *         SHIFTR       SUBFS         LL_RTC_TIME_Synchronize
   * @param  RTCx RTC Instance
   * @param  ShiftSecond This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_SHIFT_SECOND_DELAY
-  *         @arg @ref LL_RTC_SHIFT_SECOND_ADVANCE
+  * @arg LL_RTC_SHIFT_SECOND_DELAY
+  * @arg LL_RTC_SHIFT_SECOND_ADVANCE
   * @param  Fraction Number of Seconds Fractions (any value from 0 to 0x7FFF)
   * @retval None
   */
@@ -1283,13 +1283,13 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetYear(RTC_TypeDef *RTCx)
   * @rmtoll DR           WDU           LL_RTC_DATE_SetWeekDay
   * @param  RTCx RTC Instance
   * @param  WeekDay This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
@@ -1304,13 +1304,13 @@ __STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
   * @rmtoll DR           WDU           LL_RTC_DATE_GetWeekDay
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   */
 __STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx)
 {
@@ -1324,18 +1324,18 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx)
   *         DR           MU            LL_RTC_DATE_SetMonth
   * @param  RTCx RTC Instance
   * @param  Month This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_MONTH_JANUARY
-  *         @arg @ref LL_RTC_MONTH_FEBRUARY
-  *         @arg @ref LL_RTC_MONTH_MARCH
-  *         @arg @ref LL_RTC_MONTH_APRIL
-  *         @arg @ref LL_RTC_MONTH_MAY
-  *         @arg @ref LL_RTC_MONTH_JUNE
-  *         @arg @ref LL_RTC_MONTH_JULY
-  *         @arg @ref LL_RTC_MONTH_AUGUST
-  *         @arg @ref LL_RTC_MONTH_SEPTEMBER
-  *         @arg @ref LL_RTC_MONTH_OCTOBER
-  *         @arg @ref LL_RTC_MONTH_NOVEMBER
-  *         @arg @ref LL_RTC_MONTH_DECEMBER
+  * @arg LL_RTC_MONTH_JANUARY
+  * @arg LL_RTC_MONTH_FEBRUARY
+  * @arg LL_RTC_MONTH_MARCH
+  * @arg LL_RTC_MONTH_APRIL
+  * @arg LL_RTC_MONTH_MAY
+  * @arg LL_RTC_MONTH_JUNE
+  * @arg LL_RTC_MONTH_JULY
+  * @arg LL_RTC_MONTH_AUGUST
+  * @arg LL_RTC_MONTH_SEPTEMBER
+  * @arg LL_RTC_MONTH_OCTOBER
+  * @arg LL_RTC_MONTH_NOVEMBER
+  * @arg LL_RTC_MONTH_DECEMBER
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_DATE_SetMonth(RTC_TypeDef *RTCx, uint32_t Month)
@@ -1353,18 +1353,18 @@ __STATIC_INLINE void LL_RTC_DATE_SetMonth(RTC_TypeDef *RTCx, uint32_t Month)
   *         DR           MU            LL_RTC_DATE_GetMonth
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_MONTH_JANUARY
-  *         @arg @ref LL_RTC_MONTH_FEBRUARY
-  *         @arg @ref LL_RTC_MONTH_MARCH
-  *         @arg @ref LL_RTC_MONTH_APRIL
-  *         @arg @ref LL_RTC_MONTH_MAY
-  *         @arg @ref LL_RTC_MONTH_JUNE
-  *         @arg @ref LL_RTC_MONTH_JULY
-  *         @arg @ref LL_RTC_MONTH_AUGUST
-  *         @arg @ref LL_RTC_MONTH_SEPTEMBER
-  *         @arg @ref LL_RTC_MONTH_OCTOBER
-  *         @arg @ref LL_RTC_MONTH_NOVEMBER
-  *         @arg @ref LL_RTC_MONTH_DECEMBER
+  * @arg LL_RTC_MONTH_JANUARY
+  * @arg LL_RTC_MONTH_FEBRUARY
+  * @arg LL_RTC_MONTH_MARCH
+  * @arg LL_RTC_MONTH_APRIL
+  * @arg LL_RTC_MONTH_MAY
+  * @arg LL_RTC_MONTH_JUNE
+  * @arg LL_RTC_MONTH_JULY
+  * @arg LL_RTC_MONTH_AUGUST
+  * @arg LL_RTC_MONTH_SEPTEMBER
+  * @arg LL_RTC_MONTH_OCTOBER
+  * @arg LL_RTC_MONTH_NOVEMBER
+  * @arg LL_RTC_MONTH_DECEMBER
   */
 __STATIC_INLINE uint32_t LL_RTC_DATE_GetMonth(RTC_TypeDef *RTCx)
 {
@@ -1418,27 +1418,27 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetDay(RTC_TypeDef *RTCx)
   *         DR           YU            LL_RTC_DATE_Config
   * @param  RTCx RTC Instance
   * @param  WeekDay This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   * @param  Day Value between Min_Data=0x01 and Max_Data=0x31
   * @param  Month This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_MONTH_JANUARY
-  *         @arg @ref LL_RTC_MONTH_FEBRUARY
-  *         @arg @ref LL_RTC_MONTH_MARCH
-  *         @arg @ref LL_RTC_MONTH_APRIL
-  *         @arg @ref LL_RTC_MONTH_MAY
-  *         @arg @ref LL_RTC_MONTH_JUNE
-  *         @arg @ref LL_RTC_MONTH_JULY
-  *         @arg @ref LL_RTC_MONTH_AUGUST
-  *         @arg @ref LL_RTC_MONTH_SEPTEMBER
-  *         @arg @ref LL_RTC_MONTH_OCTOBER
-  *         @arg @ref LL_RTC_MONTH_NOVEMBER
-  *         @arg @ref LL_RTC_MONTH_DECEMBER
+  * @arg LL_RTC_MONTH_JANUARY
+  * @arg LL_RTC_MONTH_FEBRUARY
+  * @arg LL_RTC_MONTH_MARCH
+  * @arg LL_RTC_MONTH_APRIL
+  * @arg LL_RTC_MONTH_MAY
+  * @arg LL_RTC_MONTH_JUNE
+  * @arg LL_RTC_MONTH_JULY
+  * @arg LL_RTC_MONTH_AUGUST
+  * @arg LL_RTC_MONTH_SEPTEMBER
+  * @arg LL_RTC_MONTH_OCTOBER
+  * @arg LL_RTC_MONTH_NOVEMBER
+  * @arg LL_RTC_MONTH_DECEMBER
   * @param  Year Value between Min_Data=0x00 and Max_Data=0x99
   * @retval None
   */
@@ -1521,12 +1521,12 @@ __STATIC_INLINE void LL_RTC_ALMA_Disable(RTC_TypeDef *RTCx)
   *         ALRMAR       MSK1          LL_RTC_ALMA_SetMask
   * @param  RTCx RTC Instance
   * @param  Mask This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_ALMA_MASK_NONE
-  *         @arg @ref LL_RTC_ALMA_MASK_DATEWEEKDAY
-  *         @arg @ref LL_RTC_ALMA_MASK_HOURS
-  *         @arg @ref LL_RTC_ALMA_MASK_MINUTES
-  *         @arg @ref LL_RTC_ALMA_MASK_SECONDS
-  *         @arg @ref LL_RTC_ALMA_MASK_ALL
+  * @arg LL_RTC_ALMA_MASK_NONE
+  * @arg LL_RTC_ALMA_MASK_DATEWEEKDAY
+  * @arg LL_RTC_ALMA_MASK_HOURS
+  * @arg LL_RTC_ALMA_MASK_MINUTES
+  * @arg LL_RTC_ALMA_MASK_SECONDS
+  * @arg LL_RTC_ALMA_MASK_ALL
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_ALMA_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
@@ -1542,12 +1542,12 @@ __STATIC_INLINE void LL_RTC_ALMA_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
   *         ALRMAR       MSK1          LL_RTC_ALMA_GetMask
   * @param  RTCx RTC Instance
   * @retval Returned value can be can be a combination of the following values:
-  *         @arg @ref LL_RTC_ALMA_MASK_NONE
-  *         @arg @ref LL_RTC_ALMA_MASK_DATEWEEKDAY
-  *         @arg @ref LL_RTC_ALMA_MASK_HOURS
-  *         @arg @ref LL_RTC_ALMA_MASK_MINUTES
-  *         @arg @ref LL_RTC_ALMA_MASK_SECONDS
-  *         @arg @ref LL_RTC_ALMA_MASK_ALL
+  * @arg LL_RTC_ALMA_MASK_NONE
+  * @arg LL_RTC_ALMA_MASK_DATEWEEKDAY
+  * @arg LL_RTC_ALMA_MASK_HOURS
+  * @arg LL_RTC_ALMA_MASK_MINUTES
+  * @arg LL_RTC_ALMA_MASK_SECONDS
+  * @arg LL_RTC_ALMA_MASK_ALL
   */
 __STATIC_INLINE uint32_t LL_RTC_ALMA_GetMask(RTC_TypeDef *RTCx)
 {
@@ -1612,13 +1612,13 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetDay(RTC_TypeDef *RTCx)
   * @rmtoll ALRMAR       DU            LL_RTC_ALMA_SetWeekDay
   * @param  RTCx RTC Instance
   * @param  WeekDay This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_ALMA_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
@@ -1631,13 +1631,13 @@ __STATIC_INLINE void LL_RTC_ALMA_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
   * @rmtoll ALRMAR       DU            LL_RTC_ALMA_GetWeekDay
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   */
 __STATIC_INLINE uint32_t LL_RTC_ALMA_GetWeekDay(RTC_TypeDef *RTCx)
 {
@@ -1649,8 +1649,8 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetWeekDay(RTC_TypeDef *RTCx)
   * @rmtoll ALRMAR       PM            LL_RTC_ALMA_SetTimeFormat
   * @param  RTCx RTC Instance
   * @param  TimeFormat This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_AM
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_PM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_AM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_PM
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_ALMA_SetTimeFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat)
@@ -1663,8 +1663,8 @@ __STATIC_INLINE void LL_RTC_ALMA_SetTimeFormat(RTC_TypeDef *RTCx, uint32_t TimeF
   * @rmtoll ALRMAR       PM            LL_RTC_ALMA_GetTimeFormat
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_AM
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_PM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_AM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_PM
   */
 __STATIC_INLINE uint32_t LL_RTC_ALMA_GetTimeFormat(RTC_TypeDef *RTCx)
 {
@@ -1775,8 +1775,8 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetSecond(RTC_TypeDef *RTCx)
   *         ALRMAR       SU            LL_RTC_ALMA_ConfigTime
   * @param  RTCx RTC Instance
   * @param  Format12_24 This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_AM
-  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_PM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_AM
+  * @arg LL_RTC_ALMA_TIME_FORMAT_PM
   * @param  Hours Value between Min_Data=0x01 and Max_Data=0x12 or between Min_Data=0x00 and Max_Data=0x23
   * @param  Minutes Value between Min_Data=0x00 and Max_Data=0x59
   * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
@@ -1926,8 +1926,8 @@ __STATIC_INLINE void LL_RTC_TS_Disable(RTC_TypeDef *RTCx)
   * @rmtoll CR           TSEDGE        LL_RTC_TS_SetActiveEdge
   * @param  RTCx RTC Instance
   * @param  Edge This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_RISING
-  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_FALLING
+  * @arg LL_RTC_TIMESTAMP_EDGE_RISING
+  * @arg LL_RTC_TIMESTAMP_EDGE_FALLING
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_TS_SetActiveEdge(RTC_TypeDef *RTCx, uint32_t Edge)
@@ -1941,8 +1941,8 @@ __STATIC_INLINE void LL_RTC_TS_SetActiveEdge(RTC_TypeDef *RTCx, uint32_t Edge)
   * @rmtoll CR           TSEDGE        LL_RTC_TS_GetActiveEdge
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_RISING
-  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_FALLING
+  * @arg LL_RTC_TIMESTAMP_EDGE_RISING
+  * @arg LL_RTC_TIMESTAMP_EDGE_FALLING
   */
 __STATIC_INLINE uint32_t LL_RTC_TS_GetActiveEdge(RTC_TypeDef *RTCx)
 {
@@ -1957,8 +1957,8 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetActiveEdge(RTC_TypeDef *RTCx)
   * @rmtoll TSTR         PM            LL_RTC_TS_GetTimeFormat
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TS_TIME_FORMAT_AM
-  *         @arg @ref LL_RTC_TS_TIME_FORMAT_PM
+  * @arg LL_RTC_TS_TIME_FORMAT_AM
+  * @arg LL_RTC_TS_TIME_FORMAT_PM
   */
 __STATIC_INLINE uint32_t LL_RTC_TS_GetTimeFormat(RTC_TypeDef *RTCx)
 {
@@ -2038,13 +2038,13 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetTime(RTC_TypeDef *RTCx)
   * @rmtoll TSDR         WDU           LL_RTC_TS_GetWeekDay
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_WEEKDAY_MONDAY
-  *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
-  *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
-  *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
-  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+  * @arg LL_RTC_WEEKDAY_MONDAY
+  * @arg LL_RTC_WEEKDAY_TUESDAY
+  * @arg LL_RTC_WEEKDAY_WEDNESDAY
+  * @arg LL_RTC_WEEKDAY_THURSDAY
+  * @arg LL_RTC_WEEKDAY_FRIDAY
+  * @arg LL_RTC_WEEKDAY_SATURDAY
+  * @arg LL_RTC_WEEKDAY_SUNDAY
   */
 __STATIC_INLINE uint32_t LL_RTC_TS_GetWeekDay(RTC_TypeDef *RTCx)
 {
@@ -2060,18 +2060,18 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetWeekDay(RTC_TypeDef *RTCx)
   *         TSDR         MU            LL_RTC_TS_GetMonth
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_MONTH_JANUARY
-  *         @arg @ref LL_RTC_MONTH_FEBRUARY
-  *         @arg @ref LL_RTC_MONTH_MARCH
-  *         @arg @ref LL_RTC_MONTH_APRIL
-  *         @arg @ref LL_RTC_MONTH_MAY
-  *         @arg @ref LL_RTC_MONTH_JUNE
-  *         @arg @ref LL_RTC_MONTH_JULY
-  *         @arg @ref LL_RTC_MONTH_AUGUST
-  *         @arg @ref LL_RTC_MONTH_SEPTEMBER
-  *         @arg @ref LL_RTC_MONTH_OCTOBER
-  *         @arg @ref LL_RTC_MONTH_NOVEMBER
-  *         @arg @ref LL_RTC_MONTH_DECEMBER
+  * @arg LL_RTC_MONTH_JANUARY
+  * @arg LL_RTC_MONTH_FEBRUARY
+  * @arg LL_RTC_MONTH_MARCH
+  * @arg LL_RTC_MONTH_APRIL
+  * @arg LL_RTC_MONTH_MAY
+  * @arg LL_RTC_MONTH_JUNE
+  * @arg LL_RTC_MONTH_JULY
+  * @arg LL_RTC_MONTH_AUGUST
+  * @arg LL_RTC_MONTH_SEPTEMBER
+  * @arg LL_RTC_MONTH_OCTOBER
+  * @arg LL_RTC_MONTH_NOVEMBER
+  * @arg LL_RTC_MONTH_DECEMBER
   */
 __STATIC_INLINE uint32_t LL_RTC_TS_GetMonth(RTC_TypeDef *RTCx)
 {
@@ -2164,7 +2164,7 @@ __STATIC_INLINE void LL_RTC_TS_DisableOnTamper(RTC_TypeDef *RTCx)
   * @rmtoll TAMPCR       TAMP1E        LL_RTC_TAMPER_Enable
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_1 (*)
+  * @arg LL_RTC_TAMPER_1 (*)
   *
   *         (*)  Value not defined in all devices. \n
   *
@@ -2181,7 +2181,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_Enable(RTC_TypeDef *RTCx, uint32_t Tamper)
   * @rmtoll TAMPCR       TAMP1E        LL_RTC_TAMPER_Disable
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_1
+  * @arg LL_RTC_TAMPER_1
   *
   * @retval None
   */
@@ -2198,7 +2198,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_Disable(RTC_TypeDef *RTCx, uint32_t Tamper)
   * @rmtoll TAMPCR       TAMP1MF       LL_RTC_TAMPER_EnableMask
   * @param  RTCx RTC Instance
   * @param  Mask This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_MASK_TAMPER1
+  * @arg LL_RTC_TAMPER_MASK_TAMPER1
   *
   * @retval None
   */
@@ -2212,7 +2212,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnableMask(RTC_TypeDef *RTCx, uint32_t Mask)
   * @rmtoll TAMPCR       TAMP1MF       LL_RTC_TAMPER_DisableMask
   * @param  RTCx RTC Instance
   * @param  Mask This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_MASK_TAMPER1 
+  * @arg LL_RTC_TAMPER_MASK_TAMPER1 
   *
   * @retval None
   */
@@ -2228,7 +2228,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_DisableMask(RTC_TypeDef *RTCx, uint32_t Mask)
   * @rmtoll TAMPCR       TAMP1NOERASE  LL_RTC_TAMPER_EnableEraseBKP
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_NOERASE_TAMPER1
+  * @arg LL_RTC_TAMPER_NOERASE_TAMPER1
   *
   * @retval None
   */
@@ -2242,7 +2242,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnableEraseBKP(RTC_TypeDef *RTCx, uint32_t Ta
   * @rmtoll TAMPCR       TAMP1NOERASE  LL_RTC_TAMPER_DisableEraseBKP
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_NOERASE_TAMPER1
+  * @arg LL_RTC_TAMPER_NOERASE_TAMPER1
   *
   * @retval None
   */
@@ -2282,10 +2282,10 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnablePullUp(RTC_TypeDef *RTCx)
   * @rmtoll TAMPCR       TAMPPRCH      LL_RTC_TAMPER_SetPrecharge
   * @param  RTCx RTC Instance
   * @param  Duration This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_DURATION_1RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_2RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_4RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_8RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_1RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_2RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_4RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_8RTCCLK
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_TAMPER_SetPrecharge(RTC_TypeDef *RTCx, uint32_t Duration)
@@ -2298,10 +2298,10 @@ __STATIC_INLINE void LL_RTC_TAMPER_SetPrecharge(RTC_TypeDef *RTCx, uint32_t Dura
   * @rmtoll TAMPCR       TAMPPRCH      LL_RTC_TAMPER_GetPrecharge
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_DURATION_1RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_2RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_4RTCCLK
-  *         @arg @ref LL_RTC_TAMPER_DURATION_8RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_1RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_2RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_4RTCCLK
+  * @arg LL_RTC_TAMPER_DURATION_8RTCCLK
   */
 __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetPrecharge(RTC_TypeDef *RTCx)
 {
@@ -2315,10 +2315,10 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetPrecharge(RTC_TypeDef *RTCx)
   * @rmtoll TAMPCR       TAMPFLT       LL_RTC_TAMPER_SetFilterCount
   * @param  RTCx RTC Instance
   * @param  FilterCount This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_FILTER_DISABLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_2SAMPLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_4SAMPLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_8SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_DISABLE
+  * @arg LL_RTC_TAMPER_FILTER_2SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_4SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_8SAMPLE
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_TAMPER_SetFilterCount(RTC_TypeDef *RTCx, uint32_t FilterCount)
@@ -2331,10 +2331,10 @@ __STATIC_INLINE void LL_RTC_TAMPER_SetFilterCount(RTC_TypeDef *RTCx, uint32_t Fi
   * @rmtoll TAMPCR       TAMPFLT       LL_RTC_TAMPER_GetFilterCount
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_FILTER_DISABLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_2SAMPLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_4SAMPLE
-  *         @arg @ref LL_RTC_TAMPER_FILTER_8SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_DISABLE
+  * @arg LL_RTC_TAMPER_FILTER_2SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_4SAMPLE
+  * @arg LL_RTC_TAMPER_FILTER_8SAMPLE
   */
 __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetFilterCount(RTC_TypeDef *RTCx)
 {
@@ -2348,14 +2348,14 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetFilterCount(RTC_TypeDef *RTCx)
   * @rmtoll TAMPCR       TAMPFREQ      LL_RTC_TAMPER_SetSamplingFreq
   * @param  RTCx RTC Instance
   * @param  SamplingFreq This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_32768
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_16384
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_8192
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_4096
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_2048
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_1024
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_512
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_256
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_32768
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_16384
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_8192
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_4096
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_2048
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_1024
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_512
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_256
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_TAMPER_SetSamplingFreq(RTC_TypeDef *RTCx, uint32_t SamplingFreq)
@@ -2368,14 +2368,14 @@ __STATIC_INLINE void LL_RTC_TAMPER_SetSamplingFreq(RTC_TypeDef *RTCx, uint32_t S
   * @rmtoll TAMPCR       TAMPFREQ      LL_RTC_TAMPER_GetSamplingFreq
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_32768
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_16384
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_8192
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_4096
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_2048
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_1024
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_512
-  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_256
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_32768
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_16384
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_8192
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_4096
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_2048
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_1024
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_512
+  * @arg LL_RTC_TAMPER_SAMPLFREQDIV_256
   */
 __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetSamplingFreq(RTC_TypeDef *RTCx)
 {
@@ -2389,7 +2389,7 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetSamplingFreq(RTC_TypeDef *RTCx)
   * @rmtoll TAMPCR       TAMP1TRG      LL_RTC_TAMPER_EnableActiveLevel
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_ACTIVELEVEL_TAMP1  
+  * @arg LL_RTC_TAMPER_ACTIVELEVEL_TAMP1  
   *         
   * @retval None
   */
@@ -2403,7 +2403,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnableActiveLevel(RTC_TypeDef *RTCx, uint32_t
   * @rmtoll TAMPCR       TAMP1TRG      LL_RTC_TAMPER_DisableActiveLevel
   * @param  RTCx RTC Instance
   * @param  Tamper This parameter can be a combination of the following values:
-  *         @arg @ref LL_RTC_TAMPER_ACTIVELEVEL_TAMP1 
+  * @arg LL_RTC_TAMPER_ACTIVELEVEL_TAMP1 
   *         
   * @retval None
   */
@@ -2464,12 +2464,12 @@ __STATIC_INLINE uint32_t LL_RTC_WAKEUP_IsEnabled(RTC_TypeDef *RTCx)
   * @rmtoll CR           WUCKSEL       LL_RTC_WAKEUP_SetClock
   * @param  RTCx RTC Instance
   * @param  WakeupClock This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_16
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_8
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_4
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_2
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_16
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_8
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_4
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_2
+  * @arg LL_RTC_WAKEUPCLOCK_CKSPRE
+  * @arg LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_WAKEUP_SetClock(RTC_TypeDef *RTCx, uint32_t WakeupClock)
@@ -2482,12 +2482,12 @@ __STATIC_INLINE void LL_RTC_WAKEUP_SetClock(RTC_TypeDef *RTCx, uint32_t WakeupCl
   * @rmtoll CR           WUCKSEL       LL_RTC_WAKEUP_GetClock
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_16
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_8
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_4
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_DIV_2
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE
-  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_16
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_8
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_4
+  * @arg LL_RTC_WAKEUPCLOCK_DIV_2
+  * @arg LL_RTC_WAKEUPCLOCK_CKSPRE
+  * @arg LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
   */
 __STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetClock(RTC_TypeDef *RTCx)
 {
@@ -2533,8 +2533,8 @@ __STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetAutoReload(RTC_TypeDef *RTCx)
   * @rmtoll BKPxR        BKP           LL_RTC_BAK_SetRegister
   * @param  RTCx RTC Instance
   * @param  BackupRegister This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_BKP_DR0
-  *         @arg @ref LL_RTC_BKP_DR1
+  * @arg LL_RTC_BKP_DR0
+  * @arg LL_RTC_BKP_DR1
   * @param  Data Value between Min_Data=0x00 and Max_Data=0xFFFFFFFF
   * @retval None
   */
@@ -2552,8 +2552,8 @@ __STATIC_INLINE void LL_RTC_BAK_SetRegister(RTC_TypeDef *RTCx, uint32_t BackupRe
   * @rmtoll BKPxR        BKP           LL_RTC_BAK_GetRegister
   * @param  RTCx RTC Instance
   * @param  BackupRegister This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_BKP_DR0
-  *         @arg @ref LL_RTC_BKP_DR1
+  * @arg LL_RTC_BKP_DR0
+  * @arg LL_RTC_BKP_DR1
   * @retval Value between Min_Data=0x00 and Max_Data=0xFFFFFFFF
   */
 __STATIC_INLINE uint32_t LL_RTC_BAK_GetRegister(RTC_TypeDef *RTCx, uint32_t BackupRegister)
@@ -2582,9 +2582,9 @@ __STATIC_INLINE uint32_t LL_RTC_BAK_GetRegister(RTC_TypeDef *RTCx, uint32_t Back
   *         CR           COSEL         LL_RTC_CAL_SetOutputFreq
   * @param  RTCx RTC Instance
   * @param  Frequency This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_NONE
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_1HZ
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_512HZ
+  * @arg LL_RTC_CALIB_OUTPUT_NONE
+  * @arg LL_RTC_CALIB_OUTPUT_1HZ
+  * @arg LL_RTC_CALIB_OUTPUT_512HZ
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_CAL_SetOutputFreq(RTC_TypeDef *RTCx, uint32_t Frequency)
@@ -2598,9 +2598,9 @@ __STATIC_INLINE void LL_RTC_CAL_SetOutputFreq(RTC_TypeDef *RTCx, uint32_t Freque
   *         CR           COSEL         LL_RTC_CAL_GetOutputFreq
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_NONE
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_1HZ
-  *         @arg @ref LL_RTC_CALIB_OUTPUT_512HZ
+  * @arg LL_RTC_CALIB_OUTPUT_NONE
+  * @arg LL_RTC_CALIB_OUTPUT_1HZ
+  * @arg LL_RTC_CALIB_OUTPUT_512HZ
   */
 __STATIC_INLINE uint32_t LL_RTC_CAL_GetOutputFreq(RTC_TypeDef *RTCx)
 {
@@ -2614,8 +2614,8 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_GetOutputFreq(RTC_TypeDef *RTCx)
   * @rmtoll CALR         CALP          LL_RTC_CAL_SetPulse
   * @param  RTCx RTC Instance
   * @param  Pulse This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_CALIB_INSERTPULSE_NONE
-  *         @arg @ref LL_RTC_CALIB_INSERTPULSE_SET
+  * @arg LL_RTC_CALIB_INSERTPULSE_NONE
+  * @arg LL_RTC_CALIB_INSERTPULSE_SET
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_CAL_SetPulse(RTC_TypeDef *RTCx, uint32_t Pulse)
@@ -2642,9 +2642,9 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_IsPulseInserted(RTC_TypeDef *RTCx)
   *         CALR         CALW16        LL_RTC_CAL_SetPeriod
   * @param  RTCx RTC Instance
   * @param  Period This parameter can be one of the following values:
-  *         @arg @ref LL_RTC_CALIB_PERIOD_32SEC
-  *         @arg @ref LL_RTC_CALIB_PERIOD_16SEC
-  *         @arg @ref LL_RTC_CALIB_PERIOD_8SEC
+  * @arg LL_RTC_CALIB_PERIOD_32SEC
+  * @arg LL_RTC_CALIB_PERIOD_16SEC
+  * @arg LL_RTC_CALIB_PERIOD_8SEC
   * @retval None
   */
 __STATIC_INLINE void LL_RTC_CAL_SetPeriod(RTC_TypeDef *RTCx, uint32_t Period)
@@ -2658,9 +2658,9 @@ __STATIC_INLINE void LL_RTC_CAL_SetPeriod(RTC_TypeDef *RTCx, uint32_t Period)
   *         CALR         CALW16        LL_RTC_CAL_GetPeriod
   * @param  RTCx RTC Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_RTC_CALIB_PERIOD_32SEC
-  *         @arg @ref LL_RTC_CALIB_PERIOD_16SEC
-  *         @arg @ref LL_RTC_CALIB_PERIOD_8SEC
+  * @arg LL_RTC_CALIB_PERIOD_32SEC
+  * @arg LL_RTC_CALIB_PERIOD_16SEC
+  * @arg LL_RTC_CALIB_PERIOD_8SEC
   */
 __STATIC_INLINE uint32_t LL_RTC_CAL_GetPeriod(RTC_TypeDef *RTCx)
 {

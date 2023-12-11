@@ -177,38 +177,38 @@ extern "C" {
   * @rmtoll CxCR         DMAREQ_ID     LL_DMAMUX_SetRequestID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMAMUX_CHANNEL_0
-  *         @arg @ref LL_DMAMUX_CHANNEL_1
-  *         @arg @ref LL_DMAMUX_CHANNEL_2
-  *         @arg @ref LL_DMAMUX_CHANNEL_3
-  *         @arg @ref LL_DMAMUX_CHANNEL_4
-  *         @arg @ref LL_DMAMUX_CHANNEL_5
-  *         @arg @ref LL_DMAMUX_CHANNEL_6
-  *         @arg @ref LL_DMAMUX_CHANNEL_7
+  * @arg LL_DMAMUX_CHANNEL_0
+  * @arg LL_DMAMUX_CHANNEL_1
+  * @arg LL_DMAMUX_CHANNEL_2
+  * @arg LL_DMAMUX_CHANNEL_3
+  * @arg LL_DMAMUX_CHANNEL_4
+  * @arg LL_DMAMUX_CHANNEL_5
+  * @arg LL_DMAMUX_CHANNEL_6
+  * @arg LL_DMAMUX_CHANNEL_7
   * @param  Request This parameter can be one of the following values:
-  *         @arg @ref LL_DMAMUX_REQ_MEM2MEM
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_TX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH0
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH1
+  * @arg LL_DMAMUX_REQ_MEM2MEM
+  * @arg LL_DMAMUX_REQ_SPI3_RX
+  * @arg LL_DMAMUX_REQ_SPI3_TX
+  * @arg LL_DMAMUX_REQ_SPI1_RX
+  * @arg LL_DMAMUX_REQ_SPI1_TX
+  * @arg LL_DMAMUX_REQ_SPI2_RX
+  * @arg LL_DMAMUX_REQ_SPI2_TX
+  * @arg LL_DMAMUX_REQ_I2C1_RX
+  * @arg LL_DMAMUX_REQ_I2C1_TX
+  * @arg LL_DMAMUX_REQ_I2C2_RX
+  * @arg LL_DMAMUX_REQ_I2C2_TX
+  * @arg LL_DMAMUX_REQ_USART1_RX
+  * @arg LL_DMAMUX_REQ_USART1_TX
+  * @arg LL_DMAMUX_REQ_LPUART1_RX
+  * @arg LL_DMAMUX_REQ_LPUART1_TX
+  * @arg LL_DMAMUX_REQ_ADC_CH0
+  * @arg LL_DMAMUX_REQ_ADC_CH1
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef* DMAMUXx, uint32_t Channel, uint32_t Request)
 {
   (void)(DMAMUXx);
-  MODIFY_REG((DMAMUX1_Channel0 + (Channel * DMAMUX_CCR_SIZE))->CCR, DMAMUX_CxCR_DMAREQ_ID, Request);
+  MODIFY_REG((DMAMUX1_Channel0 + (Channel * DMAMUX_CCR_SIZE))->CxCR, DMAMUX_CxCR_DMAREQ_ID, Request);
 }
 
 /**
@@ -217,37 +217,37 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef* DMAMUXx, uin
   * @rmtoll CxCR         DMAREQ_ID     LL_DMAMUX_GetRequestID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
-  *         @arg @ref LL_DMAMUX_CHANNEL_0
-  *         @arg @ref LL_DMAMUX_CHANNEL_1
-  *         @arg @ref LL_DMAMUX_CHANNEL_2
-  *         @arg @ref LL_DMAMUX_CHANNEL_3
-  *         @arg @ref LL_DMAMUX_CHANNEL_4
-  *         @arg @ref LL_DMAMUX_CHANNEL_5
-  *         @arg @ref LL_DMAMUX_CHANNEL_6
-  *         @arg @ref LL_DMAMUX_CHANNEL_7
+  * @arg LL_DMAMUX_CHANNEL_0
+  * @arg LL_DMAMUX_CHANNEL_1
+  * @arg LL_DMAMUX_CHANNEL_2
+  * @arg LL_DMAMUX_CHANNEL_3
+  * @arg LL_DMAMUX_CHANNEL_4
+  * @arg LL_DMAMUX_CHANNEL_5
+  * @arg LL_DMAMUX_CHANNEL_6
+  * @arg LL_DMAMUX_CHANNEL_7
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_DMAMUX_REQ_MEM2MEM
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI3_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI1_TX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_RX
-  *         @arg @ref LL_DMAMUX_REQ_SPI2_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C1_TX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_RX
-  *         @arg @ref LL_DMAMUX_REQ_I2C2_TX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_USART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_RX
-  *         @arg @ref LL_DMAMUX_REQ_LPUART1_TX
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH0
-  *         @arg @ref LL_DMAMUX_REQ_ADC_CH1
+  * @arg LL_DMAMUX_REQ_MEM2MEM
+  * @arg LL_DMAMUX_REQ_SPI3_RX
+  * @arg LL_DMAMUX_REQ_SPI3_TX
+  * @arg LL_DMAMUX_REQ_SPI1_RX
+  * @arg LL_DMAMUX_REQ_SPI1_TX
+  * @arg LL_DMAMUX_REQ_SPI2_RX
+  * @arg LL_DMAMUX_REQ_SPI2_TX
+  * @arg LL_DMAMUX_REQ_I2C1_RX
+  * @arg LL_DMAMUX_REQ_I2C1_TX
+  * @arg LL_DMAMUX_REQ_I2C2_RX
+  * @arg LL_DMAMUX_REQ_I2C2_TX
+  * @arg LL_DMAMUX_REQ_USART1_RX
+  * @arg LL_DMAMUX_REQ_USART1_TX
+  * @arg LL_DMAMUX_REQ_LPUART1_RX
+  * @arg LL_DMAMUX_REQ_LPUART1_TX
+  * @arg LL_DMAMUX_REQ_ADC_CH0
+  * @arg LL_DMAMUX_REQ_ADC_CH1
   */
 __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
 {
   (void)(DMAMUXx);
-  return (uint32_t)(READ_BIT((DMAMUX1_Channel0 + (Channel * DMAMUX_CCR_SIZE))->CCR, DMAMUX_CxCR_DMAREQ_ID));
+  return (uint32_t)(READ_BIT((DMAMUX1_Channel0 + (Channel * DMAMUX_CCR_SIZE))->CxCR, DMAMUX_CxCR_DMAREQ_ID));
 }
 
 /**

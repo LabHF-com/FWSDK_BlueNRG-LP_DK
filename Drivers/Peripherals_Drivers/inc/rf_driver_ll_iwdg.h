@@ -184,13 +184,13 @@ __STATIC_INLINE void LL_IWDG_DisableWriteAccess(IWDG_TypeDef *IWDGx)
   * @rmtoll PR           PR            LL_IWDG_SetPrescaler
   * @param  IWDGx IWDG Instance
   * @param  Prescaler This parameter can be one of the following values:
-  *         @arg @ref LL_IWDG_PRESCALER_4
-  *         @arg @ref LL_IWDG_PRESCALER_8
-  *         @arg @ref LL_IWDG_PRESCALER_16
-  *         @arg @ref LL_IWDG_PRESCALER_32
-  *         @arg @ref LL_IWDG_PRESCALER_64
-  *         @arg @ref LL_IWDG_PRESCALER_128
-  *         @arg @ref LL_IWDG_PRESCALER_256
+  * @arg LL_IWDG_PRESCALER_4
+  * @arg LL_IWDG_PRESCALER_8
+  * @arg LL_IWDG_PRESCALER_16
+  * @arg LL_IWDG_PRESCALER_32
+  * @arg LL_IWDG_PRESCALER_64
+  * @arg LL_IWDG_PRESCALER_128
+  * @arg LL_IWDG_PRESCALER_256
   * @retval None
   */
 __STATIC_INLINE void LL_IWDG_SetPrescaler(IWDG_TypeDef *IWDGx, uint32_t Prescaler)
@@ -203,13 +203,13 @@ __STATIC_INLINE void LL_IWDG_SetPrescaler(IWDG_TypeDef *IWDGx, uint32_t Prescale
   * @rmtoll PR           PR            LL_IWDG_GetPrescaler
   * @param  IWDGx IWDG Instance
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_IWDG_PRESCALER_4
-  *         @arg @ref LL_IWDG_PRESCALER_8
-  *         @arg @ref LL_IWDG_PRESCALER_16
-  *         @arg @ref LL_IWDG_PRESCALER_32
-  *         @arg @ref LL_IWDG_PRESCALER_64
-  *         @arg @ref LL_IWDG_PRESCALER_128
-  *         @arg @ref LL_IWDG_PRESCALER_256
+  * @arg LL_IWDG_PRESCALER_4
+  * @arg LL_IWDG_PRESCALER_8
+  * @arg LL_IWDG_PRESCALER_16
+  * @arg LL_IWDG_PRESCALER_32
+  * @arg LL_IWDG_PRESCALER_64
+  * @arg LL_IWDG_PRESCALER_128
+  * @arg LL_IWDG_PRESCALER_256
   */
 __STATIC_INLINE uint32_t LL_IWDG_GetPrescaler(IWDG_TypeDef *IWDGx)
 {

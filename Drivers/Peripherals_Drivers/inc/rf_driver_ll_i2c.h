@@ -74,9 +74,7 @@ typedef struct
                                      This feature can be modified afterwards using unitary function @ref LL_I2C_SetMode(). */
 
   uint32_t Timing;              /*!< Specifies the SDA setup, hold time and the SCL high, low period values.
-                                     This parameter must be set by referring to the BLUENRG_LP Tool and
-                                     the helper macro @ref __LL_I2C_CONVERT_TIMINGS()
-
+  
                                      This feature can be modified afterwards using unitary function @ref LL_I2C_SetTiming(). */
 
   uint32_t AnalogFilter;        /*!< Enables or disables analog noise filter.
@@ -211,12 +209,12 @@ typedef struct
   * @{
   */
 #define LL_I2C_OWNADDRESS2_NOMASK           0x00000000U                                    /*!< Own Address2 No mask.                                */
-#define LL_I2C_OWNADDRESS2_MASK01           I2C_OAR2_OA2MASK_0                             /*!< Only Address2 bits[7:2] are compared.                */
-#define LL_I2C_OWNADDRESS2_MASK02           I2C_OAR2_OA2MASK_1                              /*!< Only Address2 bits[7:3] are compared.                */
-#define LL_I2C_OWNADDRESS2_MASK03           (I2C_OAR2_OA2MASK_1 | I2C_OAR2_OA2MASK_0)      /*!< Only Address2 bits[7:4] are compared.                */
-#define LL_I2C_OWNADDRESS2_MASK04           I2C_OAR2_OA2MASK_2                             /*!< Only Address2 bits[7:5] are compared.                */
-#define LL_I2C_OWNADDRESS2_MASK05           (I2C_OAR2_OA2MASK_2 | I2C_OAR2_OA2MASK_0)      /*!< Only Address2 bits[7:6] are compared.                */
-#define LL_I2C_OWNADDRESS2_MASK06           (I2C_OAR2_OA2MASK_2 | I2C_OAR2_OA2MASK_1)      /*!< Only Address2 bits[7] are compared.                  */
+#define LL_I2C_OWNADDRESS2_MASK01           I2C_OAR2_OA2MSK_0                             /*!< Only Address2 bits[7:2] are compared.                */
+#define LL_I2C_OWNADDRESS2_MASK02           I2C_OAR2_OA2MSK_1                              /*!< Only Address2 bits[7:3] are compared.                */
+#define LL_I2C_OWNADDRESS2_MASK03           (I2C_OAR2_OA2MSK_1 | I2C_OAR2_OA2MSK_0)      /*!< Only Address2 bits[7:4] are compared.                */
+#define LL_I2C_OWNADDRESS2_MASK04           I2C_OAR2_OA2MSK_2                             /*!< Only Address2 bits[7:5] are compared.                */
+#define LL_I2C_OWNADDRESS2_MASK05           (I2C_OAR2_OA2MSK_2 | I2C_OAR2_OA2MSK_0)      /*!< Only Address2 bits[7:6] are compared.                */
+#define LL_I2C_OWNADDRESS2_MASK06           (I2C_OAR2_OA2MSK_2 | I2C_OAR2_OA2MSK_1)      /*!< Only Address2 bits[7] are compared.                  */
 #define LL_I2C_OWNADDRESS2_MASK07           I2C_OAR2_OA2MSK                                /*!< No comparison is done. All Address2 are acknowledged.*/
 /**
   * @}
@@ -428,8 +426,8 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabled(I2C_TypeDef *I2Cx)
   *         CR1          DNF           LL_I2C_ConfigFilters
   * @param  I2Cx I2C Instance.
   * @param  AnalogFilter This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_ANALOGFILTER_ENABLE
-  *         @arg @ref LL_I2C_ANALOGFILTER_DISABLE
+  * @arg LL_I2C_ANALOGFILTER_ENABLE
+  * @arg LL_I2C_ANALOGFILTER_DISABLE
   * @param  DigitalFilter This parameter must be a value between Min_Data=0x00 (Digital filter disabled) and Max_Data=0x0F (Digital filter enabled and filtering capability up to 15*ti2cclk).
   *         This parameter is used to configure the digital noise filter on SDA and SCL input.
   *         The digital filter will filter spikes with a length of up to DNF[3:0]*ti2cclk.
@@ -574,8 +572,8 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledDMAReq_RX(I2C_TypeDef *I2Cx)
   *         RXDR         RXDATA        LL_I2C_DMA_GetRegAddr
   * @param  I2Cx I2C Instance
   * @param  Direction This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_DMA_REG_DATA_TRANSMIT
-  *         @arg @ref LL_I2C_DMA_REG_DATA_RECEIVE
+  * @arg LL_I2C_DMA_REG_DATA_TRANSMIT
+  * @arg LL_I2C_DMA_REG_DATA_RECEIVE
   * @retval Address of data register
   */
 __STATIC_INLINE uint32_t LL_I2C_DMA_GetRegAddr(I2C_TypeDef *I2Cx, uint32_t Direction)
@@ -705,8 +703,8 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledGeneralCall(I2C_TypeDef *I2Cx)
   * @rmtoll CR2          ADD10         LL_I2C_SetMasterAddressingMode
   * @param  I2Cx I2C Instance.
   * @param  AddressingMode This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_ADDRESSING_MODE_7BIT
-  *         @arg @ref LL_I2C_ADDRESSING_MODE_10BIT
+  * @arg LL_I2C_ADDRESSING_MODE_7BIT
+  * @arg LL_I2C_ADDRESSING_MODE_10BIT
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetMasterAddressingMode(I2C_TypeDef *I2Cx, uint32_t AddressingMode)
@@ -719,8 +717,8 @@ __STATIC_INLINE void LL_I2C_SetMasterAddressingMode(I2C_TypeDef *I2Cx, uint32_t 
   * @rmtoll CR2          ADD10         LL_I2C_GetMasterAddressingMode
   * @param  I2Cx I2C Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2C_ADDRESSING_MODE_7BIT
-  *         @arg @ref LL_I2C_ADDRESSING_MODE_10BIT
+  * @arg LL_I2C_ADDRESSING_MODE_7BIT
+  * @arg LL_I2C_ADDRESSING_MODE_10BIT
   */
 __STATIC_INLINE uint32_t LL_I2C_GetMasterAddressingMode(I2C_TypeDef *I2Cx)
 {
@@ -734,8 +732,8 @@ __STATIC_INLINE uint32_t LL_I2C_GetMasterAddressingMode(I2C_TypeDef *I2Cx)
   * @param  I2Cx I2C Instance.
   * @param  OwnAddress1 This parameter must be a value between Min_Data=0 and Max_Data=0x3FF.
   * @param  OwnAddrSize This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_OWNADDRESS1_7BIT
-  *         @arg @ref LL_I2C_OWNADDRESS1_10BIT
+  * @arg LL_I2C_OWNADDRESS1_7BIT
+  * @arg LL_I2C_OWNADDRESS1_10BIT
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetOwnAddress1(I2C_TypeDef *I2Cx, uint32_t OwnAddress1, uint32_t OwnAddrSize)
@@ -784,14 +782,14 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress1(I2C_TypeDef *I2Cx)
   * @param  I2Cx I2C Instance.
   * @param  OwnAddress2 Value between Min_Data=0 and Max_Data=0x7F.
   * @param  OwnAddrMask This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_OWNADDRESS2_NOMASK
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK01
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK02
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK03
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK04
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK05
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK06
-  *         @arg @ref LL_I2C_OWNADDRESS2_MASK07
+  * @arg LL_I2C_OWNADDRESS2_NOMASK
+  * @arg LL_I2C_OWNADDRESS2_MASK01
+  * @arg LL_I2C_OWNADDRESS2_MASK02
+  * @arg LL_I2C_OWNADDRESS2_MASK03
+  * @arg LL_I2C_OWNADDRESS2_MASK04
+  * @arg LL_I2C_OWNADDRESS2_MASK05
+  * @arg LL_I2C_OWNADDRESS2_MASK06
+  * @arg LL_I2C_OWNADDRESS2_MASK07
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetOwnAddress2(I2C_TypeDef *I2Cx, uint32_t OwnAddress2, uint32_t OwnAddrMask)
@@ -838,7 +836,6 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledOwnAddress2(I2C_TypeDef *I2Cx)
   * @rmtoll TIMINGR      TIMINGR       LL_I2C_SetTiming
   * @param  I2Cx I2C Instance.
   * @param  Timing This parameter must be a value between Min_Data=0 and Max_Data=0xFFFFFFFF.
-  * @note   This parameter is computed with the BLUENRG_LP Tool.
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetTiming(I2C_TypeDef *I2Cx, uint32_t Timing)
@@ -909,10 +906,10 @@ __STATIC_INLINE uint32_t LL_I2C_GetDataSetupTime(I2C_TypeDef *I2Cx)
   *         CR1          SMBDEN        LL_I2C_SetMode
   * @param  I2Cx I2C Instance.
   * @param  PeripheralMode This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_MODE_I2C
-  *         @arg @ref LL_I2C_MODE_SMBUS_HOST
-  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE
-  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE_ARP
+  * @arg LL_I2C_MODE_I2C
+  * @arg LL_I2C_MODE_SMBUS_HOST
+  * @arg LL_I2C_MODE_SMBUS_DEVICE
+  * @arg LL_I2C_MODE_SMBUS_DEVICE_ARP
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetMode(I2C_TypeDef *I2Cx, uint32_t PeripheralMode)
@@ -928,10 +925,10 @@ __STATIC_INLINE void LL_I2C_SetMode(I2C_TypeDef *I2Cx, uint32_t PeripheralMode)
   *         CR1          SMBDEN        LL_I2C_GetMode
   * @param  I2Cx I2C Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2C_MODE_I2C
-  *         @arg @ref LL_I2C_MODE_SMBUS_HOST
-  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE
-  *         @arg @ref LL_I2C_MODE_SMBUS_DEVICE_ARP
+  * @arg LL_I2C_MODE_I2C
+  * @arg LL_I2C_MODE_SMBUS_HOST
+  * @arg LL_I2C_MODE_SMBUS_DEVICE
+  * @arg LL_I2C_MODE_SMBUS_DEVICE_ARP
   */
 __STATIC_INLINE uint32_t LL_I2C_GetMode(I2C_TypeDef *I2Cx)
 {
@@ -1037,8 +1034,8 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusPEC(I2C_TypeDef *I2Cx)
   * @param  I2Cx I2C Instance.
   * @param  TimeoutA This parameter must be a value between  Min_Data=0 and Max_Data=0xFFF.
   * @param  TimeoutAMode This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
   * @param  TimeoutB
   * @retval None
   */
@@ -1085,8 +1082,8 @@ __STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutA(I2C_TypeDef *I2Cx)
   * @rmtoll TIMEOUTR     TIDLE         LL_I2C_SetSMBusTimeoutAMode
   * @param  I2Cx I2C Instance.
   * @param  TimeoutAMode This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetSMBusTimeoutAMode(I2C_TypeDef *I2Cx, uint32_t TimeoutAMode)
@@ -1101,8 +1098,8 @@ __STATIC_INLINE void LL_I2C_SetSMBusTimeoutAMode(I2C_TypeDef *I2Cx, uint32_t Tim
   * @rmtoll TIMEOUTR     TIDLE         LL_I2C_GetSMBusTimeoutAMode
   * @param  I2Cx I2C Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SCL_LOW
+  * @arg LL_I2C_SMBUS_TIMEOUTA_MODE_SDA_SCL_HIGH
   */
 __STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutAMode(I2C_TypeDef *I2Cx)
 {
@@ -1145,9 +1142,9 @@ __STATIC_INLINE uint32_t LL_I2C_GetSMBusTimeoutB(I2C_TypeDef *I2Cx)
   *         TIMEOUTR     TEXTEN        LL_I2C_EnableSMBusTimeout
   * @param  I2Cx I2C Instance.
   * @param  ClockTimeout This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTB
-  *         @arg @ref LL_I2C_SMBUS_ALL_TIMEOUT
+  * @arg LL_I2C_SMBUS_TIMEOUTA
+  * @arg LL_I2C_SMBUS_TIMEOUTB
+  * @arg LL_I2C_SMBUS_ALL_TIMEOUT
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_EnableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout)
@@ -1163,9 +1160,9 @@ __STATIC_INLINE void LL_I2C_EnableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t Clock
   *         TIMEOUTR     TEXTEN        LL_I2C_DisableSMBusTimeout
   * @param  I2Cx I2C Instance.
   * @param  ClockTimeout This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTB
-  *         @arg @ref LL_I2C_SMBUS_ALL_TIMEOUT
+  * @arg LL_I2C_SMBUS_TIMEOUTA
+  * @arg LL_I2C_SMBUS_TIMEOUTB
+  * @arg LL_I2C_SMBUS_ALL_TIMEOUT
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_DisableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout)
@@ -1181,9 +1178,9 @@ __STATIC_INLINE void LL_I2C_DisableSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t Cloc
   *         TIMEOUTR     TEXTEN        LL_I2C_IsEnabledSMBusTimeout
   * @param  I2Cx I2C Instance.
   * @param  ClockTimeout This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTA
-  *         @arg @ref LL_I2C_SMBUS_TIMEOUTB
-  *         @arg @ref LL_I2C_SMBUS_ALL_TIMEOUT
+  * @arg LL_I2C_SMBUS_TIMEOUTA
+  * @arg LL_I2C_SMBUS_TIMEOUTB
+  * @arg LL_I2C_SMBUS_ALL_TIMEOUT
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_I2C_IsEnabledSMBusTimeout(I2C_TypeDef *I2Cx, uint32_t ClockTimeout)
@@ -1890,8 +1887,8 @@ __STATIC_INLINE uint32_t LL_I2C_GetTransferSize(I2C_TypeDef *I2Cx)
   * @rmtoll CR2          NACK          LL_I2C_AcknowledgeNextData
   * @param  I2Cx I2C Instance.
   * @param  TypeAcknowledge This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_ACK
-  *         @arg @ref LL_I2C_NACK
+  * @arg LL_I2C_ACK
+  * @arg LL_I2C_NACK
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_AcknowledgeNextData(I2C_TypeDef *I2Cx, uint32_t TypeAcknowledge)
@@ -1965,8 +1962,8 @@ __STATIC_INLINE uint32_t LL_I2C_IsEnabledAuto10BitRead(I2C_TypeDef *I2Cx)
   * @rmtoll CR2          RD_WRN           LL_I2C_SetTransferRequest
   * @param  I2Cx I2C Instance.
   * @param  TransferRequest This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_REQUEST_WRITE
-  *         @arg @ref LL_I2C_REQUEST_READ
+  * @arg LL_I2C_REQUEST_WRITE
+  * @arg LL_I2C_REQUEST_READ
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_SetTransferRequest(I2C_TypeDef *I2Cx, uint32_t TransferRequest)
@@ -1979,8 +1976,8 @@ __STATIC_INLINE void LL_I2C_SetTransferRequest(I2C_TypeDef *I2Cx, uint32_t Trans
   * @rmtoll CR2          RD_WRN           LL_I2C_GetTransferRequest
   * @param  I2Cx I2C Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2C_REQUEST_WRITE
-  *         @arg @ref LL_I2C_REQUEST_READ
+  * @arg LL_I2C_REQUEST_WRITE
+  * @arg LL_I2C_REQUEST_READ
   */
 __STATIC_INLINE uint32_t LL_I2C_GetTransferRequest(I2C_TypeDef *I2Cx)
 {
@@ -2025,28 +2022,28 @@ __STATIC_INLINE uint32_t LL_I2C_GetSlaveAddr(I2C_TypeDef *I2Cx)
   * @param  I2Cx I2C Instance.
   * @param  SlaveAddr Specifies the slave address to be programmed.
   * @param  SlaveAddrSize This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_ADDRSLAVE_7BIT
-  *         @arg @ref LL_I2C_ADDRSLAVE_10BIT
+  * @arg LL_I2C_ADDRSLAVE_7BIT
+  * @arg LL_I2C_ADDRSLAVE_10BIT
   * @param  TransferSize Specifies the number of bytes to be programmed.
   *                       This parameter must be a value between Min_Data=0 and Max_Data=255.
   * @param  EndMode This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_MODE_RELOAD
-  *         @arg @ref LL_I2C_MODE_AUTOEND
-  *         @arg @ref LL_I2C_MODE_SOFTEND
-  *         @arg @ref LL_I2C_MODE_SMBUS_RELOAD
-  *         @arg @ref LL_I2C_MODE_SMBUS_AUTOEND_NO_PEC
-  *         @arg @ref LL_I2C_MODE_SMBUS_SOFTEND_NO_PEC
-  *         @arg @ref LL_I2C_MODE_SMBUS_AUTOEND_WITH_PEC
-  *         @arg @ref LL_I2C_MODE_SMBUS_SOFTEND_WITH_PEC
+  * @arg LL_I2C_MODE_RELOAD
+  * @arg LL_I2C_MODE_AUTOEND
+  * @arg LL_I2C_MODE_SOFTEND
+  * @arg LL_I2C_MODE_SMBUS_RELOAD
+  * @arg LL_I2C_MODE_SMBUS_AUTOEND_NO_PEC
+  * @arg LL_I2C_MODE_SMBUS_SOFTEND_NO_PEC
+  * @arg LL_I2C_MODE_SMBUS_AUTOEND_WITH_PEC
+  * @arg LL_I2C_MODE_SMBUS_SOFTEND_WITH_PEC
   * @param  Request This parameter can be one of the following values:
-  *         @arg @ref LL_I2C_GENERATE_NOSTARTSTOP
-  *         @arg @ref LL_I2C_GENERATE_STOP
-  *         @arg @ref LL_I2C_GENERATE_START_READ
-  *         @arg @ref LL_I2C_GENERATE_START_WRITE
-  *         @arg @ref LL_I2C_GENERATE_RESTART_7BIT_READ
-  *         @arg @ref LL_I2C_GENERATE_RESTART_7BIT_WRITE
-  *         @arg @ref LL_I2C_GENERATE_RESTART_10BIT_READ
-  *         @arg @ref LL_I2C_GENERATE_RESTART_10BIT_WRITE
+  * @arg LL_I2C_GENERATE_NOSTARTSTOP
+  * @arg LL_I2C_GENERATE_STOP
+  * @arg LL_I2C_GENERATE_START_READ
+  * @arg LL_I2C_GENERATE_START_WRITE
+  * @arg LL_I2C_GENERATE_RESTART_7BIT_READ
+  * @arg LL_I2C_GENERATE_RESTART_7BIT_WRITE
+  * @arg LL_I2C_GENERATE_RESTART_10BIT_READ
+  * @arg LL_I2C_GENERATE_RESTART_10BIT_WRITE
   * @retval None
   */
 __STATIC_INLINE void LL_I2C_HandleTransfer(I2C_TypeDef *I2Cx, uint32_t SlaveAddr, uint32_t SlaveAddrSize,
@@ -2064,8 +2061,8 @@ __STATIC_INLINE void LL_I2C_HandleTransfer(I2C_TypeDef *I2Cx, uint32_t SlaveAddr
   * @rmtoll ISR          DIR           LL_I2C_GetTransferDirection
   * @param  I2Cx I2C Instance.
   * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_I2C_DIRECTION_WRITE
-  *         @arg @ref LL_I2C_DIRECTION_READ
+  * @arg LL_I2C_DIRECTION_WRITE
+  * @arg LL_I2C_DIRECTION_READ
   */
 __STATIC_INLINE uint32_t LL_I2C_GetTransferDirection(I2C_TypeDef *I2Cx)
 {

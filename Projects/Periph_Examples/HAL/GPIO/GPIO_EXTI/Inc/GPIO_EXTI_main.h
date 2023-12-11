@@ -52,7 +52,7 @@ void Example_EXTI_Callback(uint32_t Line);
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private defines -----------------------------------------------------------*/
-#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB011V1) || defined(STEVAL_IDB012V1)
 #define USER_BUTTON_PIN                         GPIO_PIN_10
 #define USER_BUTTON_GPIO_PORT                   GPIOA
 #define USER_BUTTON_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE() 

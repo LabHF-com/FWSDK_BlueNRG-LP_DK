@@ -12,14 +12,13 @@
 
 #include "compiler.h"
 #include "hal_types.h"
-#include "link_layer.h"
+#include "ble_const.h"
 #include "hci.h"
 
 #define DEFAULT_TIMEOUT (CLOCK_SECOND/10)
 
 /**
  * Maximum payload of HCI commands that can be sent. Change this value if needed.
- * This value can be up to 256.
  */
 #define HCI_MAX_PAYLOAD_SIZE 532
 

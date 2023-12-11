@@ -105,7 +105,7 @@ extern "C" {
 #endif  /* defined(STEVAL_IDB011V1)  */
 
 
-#if defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB012V1)
   
 /**SPI_MASTER GPIO Configuration    
   PB3/AF4    ------> SPI3_SCK
@@ -131,7 +131,7 @@ extern "C" {
 #define DMA_REQUEST_SPI_MASTER_TX               DMA_REQUEST_SPI3_TX
 #define DMA_REQUEST_SPI_MASTER_RX               DMA_REQUEST_SPI3_RX
 
-#endif  /* defined(STEVAL_IDB012V1)  */
+#endif  /* STEVAL_IDB012V1   */
 
 
 

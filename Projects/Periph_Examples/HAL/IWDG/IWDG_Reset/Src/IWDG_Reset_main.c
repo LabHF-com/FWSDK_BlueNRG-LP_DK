@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : IWDG_Reset_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -142,24 +144,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |
---------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |              Not Used              |              Not Used              |              Not Used              |
-|     DL2    |  Blinking: application is running  |  Blinking: application is running  |  Blinking: application is running  |
-|     DL3    |           Blinking: error          |           Blinking: error          |           Blinking: error          |
-|     DL4    |              Not Used              |              Not Used              |              Not Used              |
-|     U5     |              Not Used              |              Not Used              |              Not Used              |
+|  LED name  |           STEVAL-IDB010V1          |           STEVAL-IDB011V1          |           STEVAL-IDB011V2          |           STEVAL-IDB012V1          |           STEVAL-IDB013V1          |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
+|     DL2    |  Blinking: application is running  |  Blinking: application is running  |  Blinking: application is running  |  Blinking: application is running  |  Blinking: application is running  |
+|     DL3    |           Blinking: error          |           Blinking: error          |           Blinking: error          |           Blinking: error          |           Blinking: error          |
+|     DL4    |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
+|     U5     |              Not Used              |              Not Used              |              Not Used              |              Not Used              |              Not Used              |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |    STEVAL-IDB011V1   |    STEVAL-IDB011V2   |    STEVAL-IDB012V1   |
-------------------------------------------------------------------------------------------
-|      PUSH1     |   Activate the IWDG  |   Activate the IWDG  |   Activate the IWDG  |
-|      PUSH2     |       Not Used       |       Not Used       |       Not Used       |
-|      RESET     |   Reset BlueNRG-LP   |   Reset BlueNRG-LP   |   Reset BlueNRG-LP   |
+|   BUTTON name  |    STEVAL-IDB010V1   |    STEVAL-IDB011V1   |    STEVAL-IDB011V2   |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   Activate the IWDG  |   Activate the IWDG  |   Activate the IWDG  |   Activate the IWDG  |   Activate the IWDG  |
+|      PUSH2     |       Not Used       |       Not Used       |       Not Used       |       Not Used       |       Not Used       |
+|      RESET     |   Reset BlueNRG-LP   |   Reset BlueNRG-LP   |   Reset BlueNRG-LP   |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -229,9 +231,11 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t pressCToContinue = 0;
 IWDG_HandleTypeDef hiwdg;
 
 /* Private function prototypes -----------------------------------------------*/
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 static void MX_IWDG_Init(void);
 void resetReasonByIWDGRST(void);
 
@@ -253,13 +257,13 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
-  BSP_COM_Init(NULL);
+  BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   printf("Application started\n\r");
 	
@@ -280,8 +284,9 @@ int main(void)
   
   /* Initialize all configured peripherals */
   MX_IWDG_Init();
-	
-  printf("Wait for User push-button PUSH1 or for the push-button Reset\n\r");
+  
+  printf("Wait for User push-button (PUSH1) press or enter 'c'/'C' character.\n\r");
+  printf("Wait for User push-button Reset\n\r");
 	
   /* Infinite loop */
   while (1)
@@ -349,6 +354,23 @@ void resetReasonByIWDGRST()
     printf("NO.\n\r");
   }
   printf("\n\r");
+}
+
+
+void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes)
+{
+  if(Nb_bytes>0)
+  {
+    if(data_buffer[0] == 'c' || data_buffer[0] == 'C' )
+    {
+      /* Failure is generated by user */
+
+      /* As the following address is invalid (not mapped), a Hardfault exception
+      will be generated with an infinite loop and when the IWDG counter falls to 0
+      the IWDG reset occurs */
+      *(__IO uint32_t *) 0x00040001 = 0xFF;
+    }
+  }
 }
 
 /**

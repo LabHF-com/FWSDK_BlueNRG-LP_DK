@@ -47,10 +47,13 @@
 /**
  * @brief Initialize GATT Profile
  *
- * @return void
+ * @param supported_feature Provide the Server Supported Feature value.
+ *
+ * @return:
+ * - BLE_STATUS_SUCCESS: the service is correctly loaded
  *
  */
-tBleStatus Gatt_profile_init(void);
+tBleStatus Gatt_profile_init(uint8_t supported_feature);
 
 /**
  * @brief Change access permission for the provided attribute handle.
@@ -96,6 +99,14 @@ uint16_t Gatt_profile_get_service_handle(void);
  *
  */
 ble_gatt_srv_def_t *Gatt_profile_get_service_definition_p(void);
+
+/**
+ * @brief Retrieve GATT Server Supported Feature value.
+ *
+ * @return: supported feature value.
+ *
+ */
+uint8_t Gatt_profile_get_supported_feature(void);
 
 #endif
 

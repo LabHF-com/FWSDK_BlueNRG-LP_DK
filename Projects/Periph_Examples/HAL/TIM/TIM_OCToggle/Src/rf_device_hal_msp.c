@@ -40,7 +40,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /**
@@ -57,7 +57,7 @@ void HAL_TIM_OC_MspInit(TIM_HandleTypeDef* htim_oc)
     EnableClock_TIMx();
     
     /* TIMx interrupt Init */
-    HAL_NVIC_SetPriority(TIMx_IRQn, IRQ_HIGH_PRIORITY);
+    HAL_NVIC_SetPriority(TIMx_IRQn, IRQ_LOW_PRIORITY );
     HAL_NVIC_EnableIRQ(TIMx_IRQn);
   }
 }

@@ -78,7 +78,7 @@ void Error_Handler(void);
 #define I2Cx_IRQHandler                                 I2C2_IRQHandler
 #endif /* STEVAL_IDB011V1 */
 
-#if defined(STEVAL_IDB012V1) 
+#if defined(STEVAL_IDB012V1)
 #define I2Cx                                            I2C1
 #define I2Cx_SCL_PORT                                   GPIOB   
 #define I2Cx_SCL_PIN                                    GPIO_PIN_6
@@ -92,7 +92,7 @@ void Error_Handler(void);
 #define __HAL_RCC_I2Cx_SDA_GPIO_CLK_ENABLE              __HAL_RCC_GPIOB_CLK_ENABLE
 #define I2Cx_IRQn                                       I2C1_IRQn
 #define I2Cx_IRQHandler                                 I2C1_IRQHandler
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1  STEVAL_IDB012V1 */
 
 
 #ifdef __cplusplus

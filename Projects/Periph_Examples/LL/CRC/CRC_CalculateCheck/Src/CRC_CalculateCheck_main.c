@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : CRC_CalculateCheck_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -34,7 +34,7 @@
   To use the project with IAR Embedded Workbench for ARM, please follow the instructions below:
   -# Open the Embedded Workbench for ARM and select File->Open->Workspace menu. 
   -# Open the IAR project
-     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\\Projects\\Periph_Examples\\LL\\CRC\\CRC_CalculateCheck\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\CRC_CalculateCheck.eww</tt>
+     <tt>C:\\Users\\{username}\\ST\\BlueNRG-LP_LPS DK x.x.x\\Projects\\Periph_Examples\\LL\\CRC\\CRC_CalculateCheck\\EWARM\\{STEVAL-IDB011V1|STEVAL-IDB012V1}\\CRC_CalculateCheck.eww</tt>
   -# Select desired configuration to build
   -# Select Project->Rebuild All. This will recompile and link the entire application
   -# To download the binary image, please connect an USB cable in your board (CMSIS-DAP upgrade).
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -142,23 +144,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                STEVAL-IDB011V1               |                STEVAL-IDB011V2               |                STEVAL-IDB012V1               |
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                   Not Used                   |                   Not Used                   |                   Not Used                   |
-|     DL2    |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |
-|     DL3    |                   Not Used                   |                   Not Used                   |                   Not Used                   |
-|     DL4    |                   Not Used                   |                   Not Used                   |                   Not Used                   |
-|     U5     |                   Not Used                   |                   Not Used                   |                   Not Used                   |
+|  LED name  |                STEVAL-IDB010V1               |                STEVAL-IDB011V1               |                STEVAL-IDB011V2               |                STEVAL-IDB012V1               |                STEVAL-IDB013V1               |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |
+|     DL2    |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |  ON: right CRC value - Slow blinking: error  |
+|     DL3    |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |
+|     DL4    |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |
+|     U5     |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |                   Not Used                   |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -230,7 +232,6 @@ static const uint8_t aDataBuffer[BUFFER_SIZE] =
 uint32_t uwExpectedCRCValue = 0xA9866043;
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_CRC_Init(void);
 uint32_t Calculate_CRC(uint32_t);
@@ -253,19 +254,16 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -290,12 +288,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
   * @brief CRC Initialization Function

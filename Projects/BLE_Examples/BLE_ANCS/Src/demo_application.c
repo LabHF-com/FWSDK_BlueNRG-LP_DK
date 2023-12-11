@@ -744,6 +744,14 @@ void aci_gatt_clt_notification_event(uint16_t Connection_Handle,
                      Attribute_Value);
 }
 
+void aci_gatt_clt_indication_event(uint16_t Connection_Handle,
+                                   uint16_t Attribute_Handle,
+                                   uint16_t Attribute_Value_Length,
+                                   uint8_t Attribute_Value[])
+{
+  aci_gatt_clt_confirm_indication(Connection_Handle);
+}
+
 void aci_gap_pairing_complete_event(uint16_t Connection_Handle,
                                     uint8_t Status,
                                     uint8_t Reason)

@@ -1076,12 +1076,6 @@
     </group>
   </group>
 <group>
-    <name>Doc</name>
-  <file>
-      <name>$PROJ_DIR$/../../readme.txt</name>
-    </file>
-  </group>
-<group>
     <name>Drivers</name>
   <group>
       <name>BSP</name>
@@ -1124,6 +1118,9 @@
     </file>
   <file>
       <name>$PROJ_DIR$/../../../../../../../Middlewares/ST/hal/Src/osal_memcpy.s</name>
+    </file>
+  <file>
+      <name>$PROJ_DIR$/../../../../../../../Middlewares/ST/hal/Src/osal.c</name>
     </file>
   </group>
 </project>

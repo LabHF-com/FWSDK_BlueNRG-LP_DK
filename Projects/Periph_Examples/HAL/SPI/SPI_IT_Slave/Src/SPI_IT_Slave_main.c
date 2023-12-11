@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : SPI_IT_Slave_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      SPI3 MOSI     |
@@ -142,23 +144,23 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |
---------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |               Not Used               |               Not Used               |               Not Used               |
-|     DL2    |   ON: reception process is complete  |   ON: reception process is complete  |   ON: reception process is complete  |
-|     DL3    |               ON: error              |               ON: error              |               ON: error              |
-|     DL4    |               Not Used               |               Not Used               |               Not Used               |
-|     U5     |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |
+|  LED name  |            STEVAL-IDB010V1           |            STEVAL-IDB011V1           |            STEVAL-IDB011V2           |            STEVAL-IDB012V1           |            STEVAL-IDB013V1           |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |               Not Used               |               Not Used               |               Not Used               |               Not Used               |               Not Used               |
+|     DL2    |   ON: reception process is complete  |   ON: reception process is complete  |   ON: reception process is complete  |   ON: reception process is complete  |   ON: reception process is complete  |
+|     DL3    |               ON: error              |               ON: error              |               ON: error              |               ON: error              |               ON: error              |
+|     DL4    |               Not Used               |               Not Used               |               Not Used               |               Not Used               |               Not Used               |
+|     U5     |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |   blinking: due to SPI2 MOSI signal  |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -265,8 +267,6 @@ __IO uint32_t wTransferState = TRANSFER_WAIT;
 
 static void MX_GPIO_Init(void);
 static void MX_SPI_SLAVE_Init(void);
-
-/* Private function prototypes -----------------------------------------------*/
 static uint16_t Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t BufferLength);
 
 /* Private user code ---------------------------------------------------------*/
@@ -285,15 +285,15 @@ int main(void)
   }
   
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  //HAL_Init();
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -344,6 +344,7 @@ int main(void)
     else
     {
       printf("OK\n\r");
+      printf("** Test successfully. ** \n\r\n\r");
     }
     break;
   default : 

@@ -29,7 +29,7 @@
 #include "rf_driver_hal_power_manager.h"
 #include "rf_driver_hal_vtimer.h"
 
-/** @addtogroup BlueNRGLP_StdPeriph_Examples BlueNRG-LP Peripheral Examples
+/** @addtogroup StdPeriph_Examples BlueNRG-LP Peripheral Examples
   * @{
   */
 
@@ -71,11 +71,11 @@
 #define WAKEUP_TIMEOUT 5000
 
 
-#if defined CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 #define WAKEUP_UART_RX_PIN WAKEUP_PB0
 #endif
 
-#if defined CONFIG_DEVICE_BLUENRG_LP
+#if defined(CONFIG_DEVICE_BLUENRG_LP)
 #define WAKEUP_UART_RX_PIN WAKEUP_PA8
 #endif
 
@@ -101,13 +101,13 @@ void PrintWakeupSource(uint32_t wakeupSources);
 void help(void)
 {
   printf("POWER MANAGER help commands:\r\n");
-  printf("s:   SHUTDOWN LEVEL : the only wakeup source is a low pulse on the RSTN pad\r\n");
+  printf("s:   SHUTDOWN LEVEL : the only wakeup source is a low pulse on the RSTN pad or an low pulse on PB0\r\n");
   printf("t:   POWER_SAVE_LEVEL_STOP_WITH_TIMER : wake on UART RX pin/timeout 5 sec (VTIMER)/button PUSH1 (PA10)\r\n");
   printf("z:   POWER_SAVE_LEVEL_STOP_WITH_TIMER : wake on UART RX pin/timeout 5 sec (RTC)/button PUSH1 (PA10)\r\n");
   printf("u:   POWER_SAVE_LEVEL_STOP_WITH_TIMER : wake on LPUART/button PUSH1 (PA10)\r\n");
   printf("n:   POWER_SAVE_LEVEL_NOTIMER : wake on UART RX pin/button PUSH1 (PA10)\r\n");
   printf("c:   POWER_SAVE_LEVEL_CPU_HALT : wake on button PUSH1 (PA10)\r\n");
-  printf("l:   Toggle led LED1\r\n");
+  printf("l:   Toggle led LED2\r\n");
   printf("p:   Print Hello World message\r\n");
   printf("r:   Reset the BlueNRG-LP\r\n");
   printf("?:   Display this help menu\r\n");
@@ -357,8 +357,8 @@ int main(void)
   /* Init the UART peripheral */
   BSP_COM_Init(BSP_COM_RxDataUserCb);
   
-  /* Init LED1 */
-  BSP_LED_Init(BSP_LED1);
+  /* Init LED2 */
+  BSP_LED_Init(BSP_LED2);
   
   /* Init BUTTON 1 */
   BSP_PB_Init(BSP_PUSH1, BUTTON_MODE_EXTI);
@@ -372,8 +372,9 @@ int main(void)
 
   /* RTC Wakeup Peripheral Init */
   RTC_WakeupInit();
-    
+  
   printf("Power Manager FW demo!\r\nDigit ? for help command\r\n");
+
   
   while(1) {
     /* To run the VTIMER state machine */
@@ -384,11 +385,14 @@ int main(void)
       {
       case 's':   
         { 
-          /* SHUTDOWN LEVEL : the only wakeup source is a low pulse on the RSTN pad */
           printf("Enable Power Save Request : SHUTDOWN\r\n");
           while(BSP_COM_UARTBusy());
+
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
+          /* SHUTDOWN LEVEL : the only wakeup source is a low pulse on the RSTN pad */
           if (HAL_PWR_MNGR_ShutdownRequest(TRUE) != SUCCESS)
             printf("ERORR during the SHUTDOWN Request!\r\n");
+#endif
         }
         break;
       case 't':
@@ -497,8 +501,8 @@ int main(void)
         break;
       case 'l':
         {
-          /* Toggle led LED1 */
-          BSP_LED_Toggle(BSP_LED1);
+          /* Toggle led LED2 */
+          BSP_LED_Toggle(BSP_LED2);
         }
         break;
       case 'p':

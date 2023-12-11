@@ -96,7 +96,7 @@ uint8_t dataRoutine(ActionPacket* p,  ActionPacket* next);
   */
 uint8_t sendmeCB(ActionPacket* p)
 {
-  BSP_LED_Toggle(BSP_LED1);
+  BSP_LED_Toggle(BSP_LED2);
   request_counter_test[comm_token-1]++;
   printer++;
   return TRUE;
@@ -190,7 +190,7 @@ int main(void)
 
     
   BSP_COM_Init(NULL);
-  BSP_LED_Init(BSP_LED1);
+  BSP_LED_Init(BSP_LED2);
   
   RADIO_Init();
   HAL_VTIMER_Init(&VTIMER_InitStruct);

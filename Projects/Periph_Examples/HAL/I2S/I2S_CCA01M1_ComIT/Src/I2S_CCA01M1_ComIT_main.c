@@ -60,6 +60,8 @@ int main(void)
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
   
+  printf("** Application started **\n\r");
+  
   /* Configure External line 10 (connected to PA.10 pin) in interrupt mode */
   EXTI10_IRQHandler_Config();
 
@@ -112,11 +114,11 @@ static void EXTI10_IRQHandler_Config(void)
   HAL_EXTI_ClearPending(&HEXTI_InitStructure);
   
   /* Enable and set line 10 Interrupt to the lowest priority */
-  HAL_NVIC_SetPriority(GPIOA_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(GPIOA_IRQn, IRQ_LOW_PRIORITY );
   HAL_NVIC_EnableIRQ(GPIOA_IRQn);
   
   /* Configure NVIC for SysTick_IRQn */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }   
                                                  
 /**

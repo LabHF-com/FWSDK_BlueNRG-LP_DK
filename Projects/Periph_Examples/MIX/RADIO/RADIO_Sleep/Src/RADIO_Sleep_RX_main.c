@@ -92,11 +92,9 @@ int main(void)
     while(1);
   }
 
-  BSP_LED_Init(BSP_LED1);
   BSP_LED_Init(BSP_LED2);
   BSP_LED_Init(BSP_LED3);
   
-  BSP_LED_On(BSP_LED1);
   
   /* Enable UART: 115200-8bit-No Parity-1 Stop bit */
   BSP_COM_Init(NULL);

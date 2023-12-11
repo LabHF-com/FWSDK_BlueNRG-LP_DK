@@ -54,7 +54,7 @@
 #define INITDELAY_TIMER2_NOCAL    0x9U
 
 /*Init_radio_delay*/
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined (CONFIG_DEVICE_BLUENRG_LPS)
 #define DELAYCHK_TRANSMIT_CAL     0x5CU
 #else
 #define DELAYCHK_TRANSMIT_CAL     0x76U
@@ -227,6 +227,8 @@ void RADIO_IRQHandler(void)
     
     /* Accept the packet even with CRC Error */
     if( ( (int_value & BLUE_INTERRUPT1REG_RCVOK) != 0) || ( (int_value & BLUE_INTERRUPT1REG_RCVCRCERR) != 0) ) {
+      
+      uint64_t current_system_time;
       /* read RSSI */
       globalParameters.current_action_packet->rssi =  RADIO_ReadRSSI();
       
@@ -234,7 +236,7 @@ void RADIO_IRQHandler(void)
       bluedata->config = bluedata->config & 0x7F ;  //reset NESN bit */
       
       /* read time stamp */
-      globalParameters.current_action_packet->timestamp_receive = TIMER_GetAnchorPoint();
+      globalParameters.current_action_packet->timestamp_receive = TIMER_GetAnchorPoint(&current_system_time);
     }
     else if( (int_value & BLUE_INTERRUPT1REG_RCVTIMEOUT) != 0) {
       /* read RSSI even if a timeout happens */
@@ -630,7 +632,7 @@ uint8_t RADIO_MakeActionPacketPending(ActionPacket *p)
     (bluedata + statemachineNo)->TXPOINT = BLUE_STRUCT_PTR_CAST(p1);
     (bluedata + statemachineNo)->MAXRECEIVEDLENGTH = p->MaxReceiveLength;
     
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined (CONFIG_DEVICE_BLUENRG_LPS)
     (bluedata + statemachineNo)->BYTE3 |= 1<<3; 
 #endif
     

@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : I2S_Transmitter_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -143,24 +145,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |
---------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |       Not Used       |
-|      PUSH2     |      Not Used      |      Not Used      |       Not Used       |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -212,7 +214,7 @@ Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper 
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
-#define DUMMY_BUFFER 320
+#define DUMMY_BUFFER 300
 
 /* Private macro -------------------------------------------------------------*/
 
@@ -222,9 +224,17 @@ I2S_HandleTypeDef hi2s;
 /* Private function prototypes -----------------------------------------------*/
 static void MX_I2S_Init(void);
 
+/* Initialize Righ and Left channels to Audio Output buffer*/
+// to avoid the PLL Locked error use 320
+uint16_t dummy[DUMMY_BUFFER]={0};
+
+static volatile uint32_t i2s_sr = 0;
+static volatile uint32_t fre_detected  = 0;
+
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
+
 
 /**
 * @brief  The application entry point.
@@ -239,47 +249,44 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-  
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
   
+  printf("** Application started **\n\r");
+  
   /* Initialize LED2 */
   BSP_LED_Init(BSP_LED2);
+  BSP_LED_Init(BSP_LED3);
   
   /* I2S configuration */
   MX_I2S_Init();  
   
-  /* Initialize Righ and Left channels to Audio Output buffer*/
-  // to avoid the PLL Locked error use 320
-  uint16_t dummy[DUMMY_BUFFER]={0};
   uint32_t i=0;
   
   while(i<DUMMY_BUFFER)
   {
-    dummy[i++]= 0x0000; /*Left Channel*/
-    dummy[i++]= 0xFFFF; /*Right Channel*/
+    dummy[i++]= i; /*Left Channel*/
+    dummy[i++]= i; /*Right Channel*/
   }
   
   /* Helpful to see on analyzer the start of the frame */
   dummy[0]= 0xAAAA; /*Left Channel*/
   dummy[1]= 0xBBBB; /*Right Channel*/
-
+  dummy[(DUMMY_BUFFER/2)]= 0xCCCC; /*Left Channel*/
+  dummy[(DUMMY_BUFFER/2)+1]= 0xDDDD; /*Right Channel*/
+  
   printf("Slave Transmitter\n\r");
   
   /* Non-Blocking mode: DMA */
-  if(HAL_I2S_Transmit_DMA(&hi2s, dummy, 320) != HAL_OK) 
+  if(HAL_I2S_Transmit_DMA(&hi2s, dummy, DUMMY_BUFFER) != HAL_OK) 
   {
     printf("Non-Blocking mode: DMA ended with error.\n\r");
     Error_Handler();
   }
-
+  
   /* Infinite loop */
   while (1)
   {
@@ -302,7 +309,7 @@ static void MX_I2S_Init(void)
   hi2s.Init.CPOL            = I2S_CPOL_LOW;
   hi2s.Init.DataFormat	    = I2S_DATAFORMAT_16B;
   // uncomment to use MCK - MCK enbable
-//  hi2s.Init.MCLKOutput      = I2S_MCLKOUTPUT_ENABLE;
+  //  hi2s.Init.MCLKOutput      = I2S_MCLKOUTPUT_ENABLE;
   // comment to use MCK - MCK enbable
   hi2s.Init.MCLKOutput      = I2S_MCLKOUTPUT_DISABLE;
   hi2s.Init.Mode            = I2S_MODE_SLAVE_TX;
@@ -320,6 +327,13 @@ static void MX_I2S_Init(void)
     Error_Handler();
   }
   
+  __HAL_I2S_ENABLE_IT(&hi2s, I2S_IT_ERR);
+  
+  /* SPI_MASTER interrupt Init */
+  HAL_NVIC_SetPriority(I2S_IRQn, IRQ_LOW_PRIORITY );
+  HAL_NVIC_EnableIRQ(I2S_IRQn);
+  
+  
   /* Disable I2S peripheral */
   __HAL_I2S_ENABLE(&hi2s);
 }
@@ -334,6 +348,15 @@ void HAL_I2S_TxCpltCallback(I2S_HandleTypeDef *hi2s)
   BSP_LED_Off(BSP_LED2);
 }
 
+void HAL_I2S_ErrorCallback(I2S_HandleTypeDef *hi2s)
+{
+  if( (hi2s->ErrorCode & HAL_I2S_ERROR_FRE) == HAL_I2S_ERROR_FRE )
+  {
+    fre_detected++;
+    hi2s->ErrorCode &= ~HAL_I2S_ERROR_FRE;
+  }
+  __HAL_I2S_ENABLE_IT(hi2s, (I2S_IT_TXE | I2S_IT_ERR));
+}
 /**
 * @brief  This function is executed in case of error occurrence.
 * @retval None

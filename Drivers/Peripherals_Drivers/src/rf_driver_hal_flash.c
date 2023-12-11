@@ -26,7 +26,7 @@
  ==============================================================================
     [..]
       This driver provides functions and macros to configure and program the FLASH
-      memory of BLUENRG_LP devices.
+      memory.
 
       (#) Flash Memory IO Programming functions:
            (++) Program functions: word and burst program
@@ -497,7 +497,8 @@ static void FLASH_Program_Word(uint32_t Address, uint32_t Data)
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_CMDDONE|FLASH_FLAG_CMDSTART|FLASH_FLAG_CMDERR|FLASH_FLAG_ILLCMD);
 
   /* Load the word address */
-  FLASH->ADDRESS = ((Address>>2) & 0xFFFF);
+  
+  FLASH->ADDRESS = (((Address - FLASH_START_ADDR)>>2) & FLASH_SIZE_MASK);
   
   /* Load the data to program */
   FLASH->DATA0 = Data;
@@ -518,7 +519,7 @@ static void FLASH_Program_Burst(uint32_t Address, uint32_t *Data)
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_CMDDONE|FLASH_FLAG_CMDSTART|FLASH_FLAG_CMDERR|FLASH_FLAG_ILLCMD);
 
   /* Load the word address */
-  FLASH->ADDRESS = ((Address>>2) & 0xFFFF);
+  FLASH->ADDRESS = (((Address - FLASH_START_ADDR)>>2) & FLASH_SIZE_MASK);
   
   /* Load the data to program */
   FLASH->DATA0 = Data[0];

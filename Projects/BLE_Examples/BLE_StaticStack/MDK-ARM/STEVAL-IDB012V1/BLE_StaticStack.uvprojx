@@ -10,13 +10,13 @@
       <TargetName>Release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-LP_DFP.3.0.0</PackID>
+          <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -82,14 +82,14 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack.a</UserProg1Name>
+            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack.a</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -330,16 +331,16 @@
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
+            <vShortEn>0</vShortEn>
+            <vShortWch>0</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x27800 BLE_STACK_CUSTOM_CONF</Define>
+              <MiscControls>-fshort-enums</MiscControls>
+              <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x28000 BLE_STACK_CUSTOM_CONF</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</IncludePath>
+              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -373,7 +374,7 @@
             <ScatterFile>BlueNRG_LPS.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--predefine="-DMEMORY_FLASH_APP_SIZE=0x27800 "</Misc>
+            <Misc>--predefine="-DMEMORY_FLASH_APP_SIZE=0x28000 "</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings>6312,6314,6329,1215</DisabledWarnings>
           </LDads>
@@ -662,13 +663,13 @@
       <TargetName>Basic</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-LP_DFP.3.0.0</PackID>
+          <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -734,14 +735,14 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack_basic.a</UserProg1Name>
+            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack_basic.a</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -838,6 +839,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -982,16 +984,16 @@
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
+            <vShortEn>0</vShortEn>
+            <vShortWch>0</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
               <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x18000 BLE_STACK_BASIC_CONF CONFIG_NUM_MAX_LINKS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</IncludePath>
+              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1314,13 +1316,13 @@
       <TargetName>OTA_BTL_ResetManager</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-LP_DFP.3.0.0</PackID>
+          <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1386,14 +1388,14 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack_rstmngr.a</UserProg1Name>
+            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack_rstmngr.a</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -1490,6 +1492,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1634,16 +1637,16 @@
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
+            <vShortEn>0</vShortEn>
+            <vShortWch>0</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x27800 BLE_STACK_CUSTOM_CONF</Define>
+              <MiscControls>-fshort-enums</MiscControls>
+              <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x28000 BLE_STACK_CUSTOM_CONF</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</IncludePath>
+              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1677,7 +1680,7 @@
             <ScatterFile>BlueNRG_LPS.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--predefine="-DMEMORY_FLASH_APP_SIZE=0x27800 "</Misc>
+            <Misc>--predefine="-DMEMORY_FLASH_APP_SIZE=0x28000 "</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings>6312,6314,6329,1215</DisabledWarnings>
           </LDads>
@@ -1966,13 +1969,13 @@
       <TargetName>OTA_BTL_ResetManager_Basic</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STBlueNRG-LP_DFP.3.0.0</PackID>
+          <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2038,14 +2041,14 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack\libbluenrg_lps_static_stack_rstmngr_basic.a</UserProg1Name>
+            <UserProg1Name>..\..\..\..\..\Utility\create_sym_lib.exe --symbols ..\..\sym_export.txt --rename BLE_STACK_Init=BLE_STACK_Init_nocallbacks !L ..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static\liblps_stack_rstmngr_basic.a</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -2142,6 +2145,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -2286,16 +2290,16 @@
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
+            <vShortEn>0</vShortEn>
+            <vShortWch>0</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-fshort-enums</MiscControls>
               <Define>USE_FULL_LL_DRIVER CONFIG_DEVICE_BLUENRG_LPS SUPPRESS_CONFIG_HW_WARNINGS STEVAL_IDB012V1 RESET_MANAGER_SIZE=0x18000 BLE_STACK_BASIC_CONF CONFIG_NUM_MAX_LINKS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static_stack</IncludePath>
+              <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;../../../../../Drivers/BSP/STEVAL-IDB012V1/Inc;..\..\..\..\..\Drivers\BSP\Common\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Library\static</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

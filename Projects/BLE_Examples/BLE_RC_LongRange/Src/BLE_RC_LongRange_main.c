@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : BLE_RC_LongRange_main.c
 * Author             : RF Application Team
 * Version            : 2.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -97,42 +99,42 @@
                         
 * \section Pin_settings Pin settings
 @table
-|            |                            Client                             |||                            Server                             |||
---------------------------------------------------------------------------------------------------------------------------------------------------
-|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------------------------------------------------------------------------
-|     A0     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     A10    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     A11    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     A12    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A13    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A14    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A15    |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A3     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     A4     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A5     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A6     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A7     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     A8     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     A9     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B1     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     B12    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     B13    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B15    |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B6     |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |      Not Used      |
-|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     B8     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     B9     |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |        N.A.        |
-|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|            |                                                 Client                                                  |||||                                                 Server                                                  |||||
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  PIN name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     A0     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A12    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A13    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A14    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A15    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A3     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |        N.A.        |        N.A.        |        N.A.        |        N.A.        |      Not Used      |        N.A.        |
+|     A4     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A5     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A6     |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A7     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B12    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B13    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     B9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -150,38 +152,38 @@
 
 * \section LEDs_description LEDs description
 @table
-|            |                                        Client                                         |||                                        Server                                         |||
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  LED name  |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
-|     DL2    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
-|     DL3    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
-|     DL4    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
-|     U5     |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|            |                                                                     Client                                                                      |||||                                                                     Server                                                                      |||||
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LED name  |       STEVAL-IDB010V1      |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |       STEVAL-IDB013V1      |       STEVAL-IDB010V1      |       STEVAL-IDB011V1      |       STEVAL-IDB011V2      |       STEVAL-IDB012V1      |       STEVAL-IDB013V1      |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     DL2    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL3    |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
+|     DL4    |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |          Not Used          |
+|     U5     |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |  Led under remote control  |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|                |                             Client                              |||                             Server                              |||
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |       Not Used       |      Not Used      |      Not Used      |       Not Used       |
-|      PUSH2     |      Not Used      |      Not Used      |       Not Used       |      Not Used      |      Not Used      |       Not Used       |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |
+|                |                                                   Client                                                    |||||                                                   Server                                                    |||||
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
 * \section Usage Usage
 
-This demo shows how to control a remote device (like an attuator) using BlueNRG-LP, BlueNRG-LPS on Coded PHY (Bluetooth LE specifications v5.0), to reach longer distances.
+This demo shows how to control a remote device (e.g. to drive an actuator) using BlueNRG-LP, BlueNRG-LPS on Coded PHY (Bluetooth LE specifications v5.0), to reach longer distances.
 
-THe demo requires 2 BlueNRG-LP/BlueNRG-LPS STEVAL boards configured, respectively, with the Client and Server project configurations.
+THe demo requires 2 BlueNRG-LP/LPS STEVAL boards configured, respectively, with the Client and Server project configurations.
 
-Boards can be powered from USB cable or from batteries (insert AAA batteries on the boards and move jumper JP2 to "BAT" position on BlueNRG-LP kit. No action is required on BlueNRG-LPS kit).
+Boards can be powered from USB cable or from batteries (insert AAA batteries on the boards and move jumper JP2 to "BAT" position on BlueNRG-LP kit. No action is required on BlueNRG-LPS kits).
 
 The demo application works as follow:
 - The server device starts by entering discoverable mode with a fixed address (0x0280E10000E1). LED2 is blinking, showing that the board is in advertising, using 1 Mbps PHY.

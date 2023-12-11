@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : I2C_IT_Pressure_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -98,7 +100,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       I2C1 SDA      |      USART TX      |
 |     A11    |       Not Used      |      Not Used      |
@@ -138,24 +140,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |                                        STEVAL-IDB011V1                                       |                                        STEVAL-IDB011V2                                       |                                        STEVAL-IDB012V1                                       |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     DL2    |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |
-|     DL3    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     DL4    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
-|     U5     |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|  LED name  |                                        STEVAL-IDB010V1                                       |                                        STEVAL-IDB011V1                                       |                                        STEVAL-IDB011V2                                       |                                        STEVAL-IDB012V1                                       |                                        STEVAL-IDB013V1                                       |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     DL2    |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |  ON: communication is OK - Fast blinking: wait for user-button press - Slow blinking: error  |
+|     DL3    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     DL4    |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
+|     U5     |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |                                           Not Used                                           |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |             STEVAL-IDB011V1            |             STEVAL-IDB011V2            |             STEVAL-IDB012V1            |
-------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |  Start of the communication by Master  |  Start of the communication by Master  |  Start of the communication by Master  |
-|      PUSH2     |                Not Used                |                Not Used                |                Not Used                |
-|      RESET     |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |
+|   BUTTON name  |             STEVAL-IDB010V1            |             STEVAL-IDB011V1            |             STEVAL-IDB011V2            |             STEVAL-IDB012V1            |             STEVAL-IDB013V1            |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |  Start of the communication by Master  |  Start of the communication by Master  |  Start of the communication by Master  |  Start of the communication by Master  |  Start of the communication by Master  |
+|      PUSH2     |                Not Used                |                Not Used                |                Not Used                |                Not Used                |                Not Used                |
+|      RESET     |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LP            |            Reset BlueNRG-LPS           |            Reset BlueNRG-LPS           |
 
 @endtable
 
@@ -235,7 +237,6 @@ __IO uint32_t timing = __LL_I2C_CONVERT_TIMINGS(0x01, 0x03, 0x02, 0x03, 0x09);
 /* Private function prototypes -----------------------------------------------*/
 static void MX_GPIO_Init(void);
 static void MX_I2Cx_Init(void);
-static void LL_Init(void);
 void Process_InputData(uint8_t* data_buffer, uint16_t Nb_bytes);
 void LED_On(void);
 void LED_Off(void);
@@ -258,19 +259,16 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-  
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(Process_InputData);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -291,12 +289,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
 * @brief I2Cx Initialization Function
@@ -335,7 +327,7 @@ static void MX_I2Cx_Init(void)
   *  - Set priority for I2Cx_IRQn
   *  - Enable I2Cx_IRQn
   */
-  NVIC_SetPriority(I2Cx_IRQn, IRQ_HIGH_PRIORITY);  
+  NVIC_SetPriority(I2Cx_IRQn, IRQ_LOW_PRIORITY );  
   NVIC_EnableIRQ(I2Cx_IRQn);
   
   /* I2C Initialization */
@@ -397,7 +389,7 @@ static void MX_GPIO_Init(void)
   LL_EXTI_Init(&EXTI_InitStruct);
   
   /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
   
   /* Configure NVIC for SysTick_IRQn */

@@ -16,7 +16,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928" name="Release" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_Beacon" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928" name="Release" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -39,6 +39,7 @@
                 <listOptionValue builtIn="false" value="CONFIG_HW_LS_XTAL"></listOptionValue>
                 <listOptionValue builtIn="false" value="BLE_STACK_CUSTOM_CONF"></listOptionValue>
                 <listOptionValue builtIn="false" value="LEGACY_ADV"></listOptionValue>
+                <listOptionValue builtIn="false" value="CONFIG_NUM_MAX_LINKS=1"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths.498805467" name="Include paths (-I)" superClass="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
                   <listOptionValue builtIn="false" value="../../../Inc"></listOptionValue>
@@ -120,7 +121,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2" name="Use_OTA_ServiceManager" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_Beacon_Use_OTA_ServiceManager" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2" name="Use_OTA_ServiceManager" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -145,6 +146,7 @@
                 <listOptionValue builtIn="false" value="CONFIG_OTA_USE_SERVICE_MANAGER"></listOptionValue>
                 <listOptionValue builtIn="false" value="CONFIG_SW_OTA_DATA_LENGTH_EXT"></listOptionValue>
                 <listOptionValue builtIn="false" value="LEGACY_ADV"></listOptionValue>
+                <listOptionValue builtIn="false" value="CONFIG_NUM_MAX_LINKS=1"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths.498805467" name="Include paths (-I)" superClass="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
                   <listOptionValue builtIn="false" value="../../../Inc"></listOptionValue>
@@ -226,7 +228,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3" name="ExtendedAdv" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_Beacon_ExtendedAdv" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3" name="ExtendedAdv" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -250,6 +252,7 @@
                 <listOptionValue builtIn="false" value="BLE_STACK_CUSTOM_CONF"></listOptionValue>
                 <listOptionValue builtIn="false" value="LEGACY_ADV"></listOptionValue>
                 <listOptionValue builtIn="false" value="EXTENDED_ADV"></listOptionValue>
+                <listOptionValue builtIn="false" value="CONFIG_NUM_MAX_LINKS=3"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths.498805467" name="Include paths (-I)" superClass="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
                   <listOptionValue builtIn="false" value="../../../Inc"></listOptionValue>
@@ -331,7 +334,7 @@
         </extensions>
       </storageModule>
     <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}_${ConfigName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3.4" name="PeriodicAdv" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
+        <configuration artifactExtension="elf" artifactName="BLE_Beacon_PeriodicAdv" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3.4" name="PeriodicAdv" parent="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release" postbuildStep="arm-none-eabi-objcopy -O binary ${BuildArtifactFileBaseName}.elf ${BuildArtifactFileBaseName}.bin" prebuildStep="">
           <folderInfo id="fr.ac6.ide.wise.managedbuild.projecttype.exe.config.release.1251491928.2.3.4." name="/" resourcePath="">
             <toolChain id="fr.ac6.ide.wise.managedbuild.toolchain.exe.release.856382953" name="WiSE GCC Toolchain" superClass="fr.ac6.ide.wise.managedbuild.toolchain.exe.release">
               <option id="fr.ac6.ide.wise.managedbuild.option.optimization.level.553123971" name="Optimization level" superClass="fr.ac6.ide.wise.managedbuild.option.optimization.level" useByScannerDiscovery="true" value="fr.ac6.ide.wise.managedbuild.option.optimization.level.size" valueType="enumerated"></option>
@@ -354,6 +357,7 @@
                 <listOptionValue builtIn="false" value="CONFIG_HW_LS_XTAL"></listOptionValue>
                 <listOptionValue builtIn="false" value="BLE_STACK_CUSTOM_CONF"></listOptionValue>
                 <listOptionValue builtIn="false" value="PERIODIC_ADV"></listOptionValue>
+                <listOptionValue builtIn="false" value="CONFIG_NUM_MAX_LINKS=3"></listOptionValue>
                 </option>
               <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths.498805467" name="Include paths (-I)" superClass="fr.ac6.ide.wise.managedbuild.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
                   <listOptionValue builtIn="false" value="../../../Inc"></listOptionValue>

@@ -39,6 +39,7 @@
 #include "ble_controller.h"
 #include "rf_driver_ll_rng.h"
 #include "rf_driver_ll_bus.h"
+#include "bleplat.h"
 
 
 /** @defgroup BLE_Controller  BLE CONTROLLER

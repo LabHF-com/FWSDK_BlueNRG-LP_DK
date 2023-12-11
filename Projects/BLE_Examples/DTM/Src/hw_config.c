@@ -55,7 +55,7 @@ void WDG_Configuration(void)
 #ifdef WATCHDOG 
   uint32_t dev_cut_version;
   
-  /* BLueNRG-LP device cut version used */
+  /* BlueNRG-LP device cut version used */
   dev_cut_version = (LL_SYSCFG_GetDeviceVersion()<<4)|LL_SYSCFG_GetDeviceRevision(); 
 
   /* Enable watchdog clocks  */
@@ -338,7 +338,29 @@ void SPI_Slave_Configuration(void)
 #else
   LL_SPI_SetRxFIFOThreshold(BSP_SPI, LL_SPI_RX_FIFO_TH_QUARTER);
 #endif
+  
+  LL_SPI_Enable(BSP_SPI);
+  
 }
+
+extern uint16_t command_fifo_dma_len;
+void SPI_FIFO_Flush(void)
+{
+  LL_SPI_DeInit(BSP_SPI);
+ 
+#ifndef NO_DMA  
+  LL_AHB_ForceReset(LL_AHB_PERIPH_DMA);
+  LL_AHB_ReleaseReset(LL_AHB_PERIPH_DMA);
+#endif
+  
+  SPI_Slave_Configuration();
+#ifndef NO_DMA 
+  DMA_Configuration();
+#endif
+  
+  command_fifo_dma_len = 0;
+}
+
 #endif
 
 #ifndef NO_DMA

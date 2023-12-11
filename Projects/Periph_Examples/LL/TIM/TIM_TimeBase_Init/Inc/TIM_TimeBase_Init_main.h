@@ -108,6 +108,7 @@ void TimerUpdate_Callback(void);
 #define LEDx_GPIO_CLK_ENABLE()                           LL_AHB_EnableClock(LL_AHB_PERIPH_GPIOB)
 #endif /* STEVAL_IDB012V1 */
 
+
 #ifdef STEVAL_IDB011V1
 #define TIMx                                             TIM1
 #define LL_EnableClock(LL_PERIPH_TIMx)                   LL_APB0_EnableClock(LL_APB0_PERIPH_TIM1);
@@ -121,6 +122,7 @@ void TimerUpdate_Callback(void);
 #define TIMx_IRQn                                        TIM17_IRQn
 #define TIMx_IRQHandler                                  TIM17_IRQHandler
 #endif /* STEVAL_IDB012V1 */
+
 
 
 #ifdef __cplusplus

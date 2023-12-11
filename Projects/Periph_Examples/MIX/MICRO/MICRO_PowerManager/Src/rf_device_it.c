@@ -30,7 +30,7 @@
 #include "rf_driver_ll_rtc.h"
 #include "rf_driver_ll_lpuart.h"
 
-/** @addtogroup BlueNRGLP_StdPeriph_Examples
+/** @addtogroup StdPeriph_Examples
 * @{
 */
 

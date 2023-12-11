@@ -83,6 +83,10 @@ void BSP_COM_RxDataUserCb(uint8_t * pRxDataBuff, uint16_t nDataSize);
 uint8_t BSP_COM_TxFifoNotEmpty(void);
 uint8_t BSP_COM_UARTBusy(void);
 
+#ifdef __ICCARM__
+uint8_t __io_getcharNonBlocking(uint8_t *data);
+#endif
+
 /**
   * @}
   */

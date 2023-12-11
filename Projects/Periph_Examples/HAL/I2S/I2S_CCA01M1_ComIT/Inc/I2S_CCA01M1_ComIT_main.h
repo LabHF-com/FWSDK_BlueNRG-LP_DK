@@ -56,7 +56,7 @@ void Example_EXTI_Callback(uint32_t Line);
 /* Private defines -----------------------------------------------------------*/
 /* Size of buffer */
 #define BUFFERSIZE                       (COUNTOF(aTxBuffer) + 1)
-#define LED_APPLICATION                  BSP_LED1
+#define LED_APPLICATION                  BSP_LED2
 
 #ifdef __cplusplus
 }

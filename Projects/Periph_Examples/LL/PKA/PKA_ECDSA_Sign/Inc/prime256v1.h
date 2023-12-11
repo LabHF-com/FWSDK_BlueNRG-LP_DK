@@ -25,6 +25,8 @@
 extern "C" {
 #endif
 
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+  
 extern const uint8_t  prime256v1_Prime[];
 extern const uint32_t prime256v1_Prime_len;
 extern const uint8_t  prime256v1_A[];
@@ -44,6 +46,10 @@ extern const uint32_t prime256v1_Order_len;
 extern const uint32_t prime256v1_Cofactor;
 extern const uint8_t  prime256v1_Seed[];
 extern const uint32_t prime256v1_Seed_len;
+
+#endif
+
+
 
 #ifdef __cplusplus
 }

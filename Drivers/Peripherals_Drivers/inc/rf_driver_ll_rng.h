@@ -254,7 +254,7 @@ __STATIC_INLINE void LL_RNG_ClearFlag_FAULT(RNG_TypeDef *RNGx)
 
 /**
   * @brief  Return16-bit Random Number value
-  * @rmtoll DR           RNDATA        LL_RNG_ReadRandData32
+  * @rmtoll DR           RNDATA        LL_RNG_ReadRandData16
   * @param  RNGx RNG Instance
   * @retval Generated 16-bit random value
   */

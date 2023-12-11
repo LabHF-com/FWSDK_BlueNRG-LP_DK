@@ -73,19 +73,19 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 #define GPIO_OUT_PORT_CH1_2_3_4         GPIOA
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
+#if defined(STEVAL_IDB012V1)
 #define TIMx                            TIM2
 #define TIMx_IRQHandler                 TIM2_IRQHandler
 #define TIMx_IRQn                       TIM2_IRQn
 #define EnableClock_TIMx()              __HAL_RCC_TIM2_CLK_ENABLE() 
 #define DisableClock_TIMx()             __HAL_RCC_TIM2_CLK_DISABLE()
 #define EnableClock_GPIOx()             __HAL_RCC_GPIOB_CLK_ENABLE()  
-#define GPIO_OUT_CH1                    GPIO_PIN_2
+#define GPIO_OUT_CH1                    GPIO_PIN_4
 #define GPIO_OUT_CH2                    GPIO_PIN_3
 #define GPIO_OUT_CH3                    GPIO_PIN_6
 #define GPIO_OUT_CH4                    GPIO_PIN_5
 #define GPIO_OUT_PORT_CH1_2_3_4         GPIOB
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1  */
 
 
 

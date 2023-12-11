@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : GPIO_LedTog_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -57,9 +57,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -97,7 +99,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      Not Used      |
 |     A11    |       Not Used      |      Not Used      |
@@ -137,24 +139,24 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |              STEVAL-IDB012V1             |
---------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     DL2    |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |
-|     DL3    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     DL4    |                 Not Used                 |                 Not Used                 |                 Not Used                 |
-|     U5     |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|  LED name  |              STEVAL-IDB010V1             |              STEVAL-IDB011V1             |              STEVAL-IDB011V2             |              STEVAL-IDB012V1             |              STEVAL-IDB013V1             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     DL2    |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |  blinking: GPIO is configured correctly  |
+|     DL3    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     DL4    |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
+|     U5     |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |                 Not Used                 |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -192,7 +194,6 @@ On BlueNRG_LP-EVB board this IO is connected to LED2.
 /* Private variables ---------------------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 void Configure_GPIO(void);
 static void MX_GPIO_Init(void);
 
@@ -212,11 +213,8 @@ int main(void)
     while(1);
   }
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize configured peripherals */
 #if defined(USE_LL_UNITARY)
@@ -237,12 +235,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
   * @brief  This function configures GPIO

@@ -162,7 +162,7 @@ uint8_t ProfileInit(void)
 
   ret = aci_gap_set_authentication_requirement(BONDING,
                                                MITM_PROTECTION_REQUIRED,
-                                               SC_IS_SUPPORTED,
+											   SC_IS_NOT_SUPPORTED,
                                                KEYPRESS_IS_NOT_SUPPORTED,
                                                7,
                                                16,
@@ -269,6 +269,7 @@ void Connect(void)
 #endif
 }
 
+#if CENTRAL
 void Configure_Scanning(void)
 {
   tBleStatus ret;
@@ -285,6 +286,7 @@ void Configure_Scanning(void)
   ret = aci_gap_set_connection_configuration(LE_CODED_PHY_BIT, CONN_INTERVAL_MIN, CONN_INTERVAL_MAX, 0, SUPERVISION_TIMEOUT, CE_LENGTH, CE_LENGTH);
   printf("Connection configuration for LE_CODED_PHY: 0x%02X\n", ret);
 }
+#endif
 
 /* Remote Control State machine */
 void APP_Tick(void)
@@ -304,7 +306,7 @@ void AdvScanLEDTimeoutCB(void *param)
 
 void PathLossLEDTimeoutCB(void *param)
 {
-#if ENABLE_LOW_POWER_MODE
+#if ENABLE_LOW_POWER_MODE && defined(PWR_IOxCFG_IOCFG6)
   uint32_t tmp = LL_PWR_GetPA6OutputinDEEPSTOP();
   if(tmp==LL_PWR_IOCFG_HIGH)
     LL_PWR_SetPA6OutputinDEEPSTOP(LL_PWR_IOCFG_LOW);

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    GPIO/RTC_Calendar/Src/rf_device_hal_msp.c
+  * @file    RTC/RTC_Calendar/Src/rf_device_hal_msp.c
   * @author  RF Application Team
   * @brief   This file provides code for the MSP Initialization 
   *          and de-Initialization codes.
@@ -40,7 +40,7 @@ void HAL_MspInit(void)
 {
   /* System interrupt init*/
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
+  HAL_NVIC_SetPriority(SysTick_IRQn, IRQ_LOW_PRIORITY );
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

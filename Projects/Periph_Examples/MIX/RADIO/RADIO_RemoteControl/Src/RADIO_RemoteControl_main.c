@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : RADIO_RemoteControl_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,9 +58,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 * \section Power_settings Power configuration settings
@@ -97,62 +99,62 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     A0     |        N.A.        |        N.A.        |      Not Used      |
-|     A1     |      Not Used      |      Not Used      |      Not Used      |
-|     A10    |        N.A.        |        N.A.        |      Not Used      |
-|     A11    |      Not Used      |      Not Used      |      Not Used      |
-|     A12    |      Not Used      |      Not Used      |        N.A.        |
-|     A13    |      Not Used      |      Not Used      |        N.A.        |
-|     A14    |      Not Used      |      Not Used      |        N.A.        |
-|     A15    |      Not Used      |      Not Used      |        N.A.        |
-|     A3     |        N.A.        |        N.A.        |      Not Used      |
-|     A4     |      Not Used      |      Not Used      |        N.A.        |
-|     A5     |      Not Used      |      Not Used      |        N.A.        |
-|     A6     |      Not Used      |      Not Used      |        N.A.        |
-|     A7     |      Not Used      |      Not Used      |        N.A.        |
-|     A8     |      Not Used      |      Not Used      |      Not Used      |
-|     A9     |      Not Used      |      Not Used      |        N.A.        |
-|     B0     |      Not Used      |      Not Used      |      Not Used      |
-|     B1     |        N.A.        |        N.A.        |      Not Used      |
-|     B12    |        N.A.        |        N.A.        |      Not Used      |
-|     B13    |        N.A.        |        N.A.        |      Not Used      |
-|     B14    |      Not Used      |      Not Used      |      Not Used      |
-|     B15    |        N.A.        |        N.A.        |      Not Used      |
-|     B2     |      Not Used      |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |      Not Used      |
-|     B6     |        N.A.        |        N.A.        |      Not Used      |
-|     B7     |      Not Used      |      Not Used      |      Not Used      |
-|     B8     |      Not Used      |      Not Used      |        N.A.        |
-|     B9     |      Not Used      |      Not Used      |        N.A.        |
-|     GND    |      Not Used      |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |      Not Used      |
+|  PIN name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     A0     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A12    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A13    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A14    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A15    |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A3     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |        N.A.        |
+|     A4     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A5     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A6     |        N.A.        |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A7     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |        N.A.        |
+|     A9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |      Not Used      |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |      Not Used      |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B12    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B13    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |        N.A.        |      Not Used      |      Not Used      |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     B9     |      Not Used      |      Not Used      |      Not Used      |        N.A.        |        N.A.        |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
---------------------------------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |      Not Used      |
-|     U5     |      Not Used      |      Not Used      |      Not Used      |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB013V1  |
+----------------------------------------------------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|   BUTTON name  |                      STEVAL-IDB011V1                     |                      STEVAL-IDB011V2                     |                      STEVAL-IDB012V1                     |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |
-|      PUSH2     |                         Not Used                         |                         Not Used                         |                         Not Used                         |
-|      RESET     |                     Reset BlueNRG-LP                     |                     Reset BlueNRG-LP                     |                     Reset BlueNRG-LPS                    |
+|   BUTTON name  |                      STEVAL-IDB010V1                     |                      STEVAL-IDB011V1                     |                      STEVAL-IDB011V2                     |                      STEVAL-IDB012V1                     |                      STEVAL-IDB013V1                     |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |   Send command for blinking LED1 on the other RX device  |
+|      PUSH2     |                         Not Used                         |                         Not Used                         |                         Not Used                         |                         Not Used                         |                         Not Used                         |
+|      RESET     |                     Reset BlueNRG-LP                     |                     Reset BlueNRG-LP                     |                     Reset BlueNRG-LP                     |                     Reset BlueNRG-LPS                    |                     Reset BlueNRG-LPS                    |
 
 @endtable
 
@@ -243,7 +245,7 @@ uint8_t RxCallback(ActionPacket* p, ActionPacket* next)
   if((p->status & BLUE_STATUSREG_PREVTRANSMIT) == 0){
 
   if((p->status & BLUE_INTERRUPT1REG_RCVOK) != 0) {
-    BSP_LED_Toggle(BSP_LED1);
+    BSP_LED_Toggle(BSP_LED2);
     if(flag_SendingPacket == FALSE) {
       HAL_RADIO_ReceivePacket(FREQUENCY_CHANNEL, RX_RELATIVETIME, receivedData, RX_RECEIVE_TIMEOUT, MAX_LL_PACKET_LENGTH, RxCallback);
     }
@@ -304,8 +306,8 @@ int main(void)
   /* Configure the USER_BUTTON */
   BSP_PB_Init(USER_BUTTON,BUTTON_MODE_GPIO);
   
-  /* Configure the LED1 */
-  BSP_LED_Init(BSP_LED1);
+  /* Configure the LED2 */
+  BSP_LED_Init(BSP_LED2);
   
   RADIO_Init();
   HAL_VTIMER_Init(&VTIMER_InitStruct);

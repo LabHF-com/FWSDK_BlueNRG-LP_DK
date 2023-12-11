@@ -25,6 +25,9 @@
 extern "C" {
 #endif
 
+
+#ifdef CONFIG_DEVICE_BLUENRG_LPS
+
 extern const uint8_t  SigGen_Msg[];
 extern const uint32_t SigGen_Msg_len;
 extern const uint8_t  SigGen_Hash_Msg[];
@@ -41,6 +44,9 @@ extern const uint8_t  SigGen_R[];
 extern const uint32_t SigGen_R_len;
 extern const uint8_t  SigGen_S[];
 extern const uint32_t SigGen_S_len;
+
+#endif
+
 
 #ifdef __cplusplus
 }

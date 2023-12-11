@@ -12,8 +12,7 @@
                ##### I2C peripheral Extended features  #####
   ==============================================================================
 
-  [..] The I2C interface for BLUENRG_LP
-       devices contains the following additional features
+  [..] The I2C interface contains the following additional features
 
        (+) Possibility to disable or enable Analog Noise Filter
        (+) Use of a configured Digital Noise Filter

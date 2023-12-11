@@ -47,11 +47,11 @@ extern "C" {
   typedef struct
   {
     uint32_t TypeErase;   /*!< Mass erase or page erase.
-    This parameter can be a value of @ref FLASH_TYPE_ERASE */
+                            This parameter can be a value of @ref FLASH_TYPE_ERASE */
     uint32_t Page;        /*!< Initial Flash page to erase when page erase is enabled
-    This parameter must be a value between 0 and (max number of pages - 1) */
+                            This parameter must be a value between 0 and (max number of pages - 1) */
     uint32_t NbPages;     /*!< Number of pages to be erased.
-    This parameter must be a value between 1 and (max number of pages - value of initial page)*/
+                            This parameter must be a value between 1 and (max number of pages - value of initial page)*/
   } FLASH_EraseInitTypeDef;
   
   /**
@@ -399,7 +399,8 @@ typedef struct
   /** @defgroup FLASH_Private_Constants FLASH Private Constants
   * @{
   */
-#define FLASH_SIZE                      (((*(uint32_t *)FLASHSIZE_BASE & 0xFFFF) + 1) << 2U)
+#define FLASH_SIZE_MASK                 FLASH_FLASH_SIZE_FLASH_SIZE
+#define FLASH_SIZE                      (((*(uint32_t *)FLASHSIZE_BASE & FLASH_SIZE_MASK) + 1) << 2U)
 #define FLASH_START_ADDR                NVM_BASE
 #define FLASH_END_ADDR                  (FLASH_START_ADDR + FLASH_SIZE - 1U)
   

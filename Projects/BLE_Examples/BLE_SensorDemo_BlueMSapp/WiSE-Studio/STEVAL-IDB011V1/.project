@@ -162,14 +162,14 @@
     <locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/Components/lsm6dsox_STdC/driver/lsm6dsox_reg.c</locationURI>
     </link>
   <link>
-      <name>Drivers/CMSIS/system_BlueNRG_LP.c</name>
-    <type>1</type>
-    <locationURI>PARENT-5-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</locationURI>
-    </link>
-  <link>
       <name>Drivers/CMSIS/startup_BlueNRG_LP.c</name>
     <type>1</type>
     <locationURI>PARENT-5-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</locationURI>
+    </link>
+  <link>
+      <name>Drivers/CMSIS/system_BlueNRG_LP.c</name>
+    <type>1</type>
+    <locationURI>PARENT-5-PROJECT_LOC/Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</locationURI>
     </link>
   <link>
       <name>Drivers/Peripherals_Drivers/rf_driver_hal_power_manager.c</name>
@@ -277,11 +277,6 @@
     <locationURI>PARENT-5-PROJECT_LOC/Drivers/Peripherals_Drivers/Src/rf_driver_ll_utils.c</locationURI>
     </link>
   <link>
-      <name>Example/User/rf_device_it.c</name>
-    <type>1</type>
-    <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_it.c</locationURI>
-    </link>
-  <link>
       <name>Example/User/gatt_db.c</name>
     <type>1</type>
     <locationURI>PARENT-2-PROJECT_LOC/Src/gatt_db.c</locationURI>
@@ -290,6 +285,11 @@
       <name>Example/User/PDM_DigitalMicrophone.c</name>
     <type>1</type>
     <locationURI>PARENT-2-PROJECT_LOC/Src/PDM_DigitalMicrophone.c</locationURI>
+    </link>
+  <link>
+      <name>Example/User/rf_device_it.c</name>
+    <type>1</type>
+    <locationURI>PARENT-2-PROJECT_LOC/Src/rf_device_it.c</locationURI>
     </link>
   <link>
       <name>Example/User/sensor.c</name>

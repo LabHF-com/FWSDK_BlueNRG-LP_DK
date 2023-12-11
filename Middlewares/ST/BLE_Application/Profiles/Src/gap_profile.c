@@ -17,7 +17,7 @@
 #include "gap_profile.h"
 #include <string.h>
 #include "osal.h"
-#include "bluenrg_lp_gap.h"
+#include "ble_const.h"
 #include "bluenrg_lp_api.h"
 /******************************************************************************
  * LOCAL VARIABLES

@@ -24,9 +24,6 @@
 #include "rf_device_it.h"
 
 /* Private includes ----------------------------------------------------------*/
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
-#include "bluenrg_lp_evb_config.h"
-#endif
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -62,6 +59,16 @@ void SysTick_IRQHandler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file.                                          */
 /******************************************************************************/
+/**
+* @brief  This function handles UART interrupt request.
+* @param  None
+* @retval None
+*/
+
+void USART1_IRQHandler(void)
+{  
+  BSP_COM_IRQHandler();
+}
 
 /**
   * @brief  This function handles external line interrupt request.

@@ -235,6 +235,7 @@
         <state>BLE_STACK_CUSTOM_CONF</state>
         <state>LEGACY_ADV</state>
         <state>SAVE_CONTEXT_ON_CSTACK=0</state>
+        <state>CONFIG_NUM_MAX_LINKS=3</state>
         </option>
       <option>
           <name>CCPreprocFile</name>
@@ -1217,9 +1218,6 @@
       <name>BLE_Stack</name>
     <file>
         <name>$PROJ_DIR$/../../../../../Middlewares/ST/Bluetooth_LE/Library/libbluenrg_lp_stack.a</name>
-      </file>
-    <file>
-        <name>$PROJ_DIR$/../../../../../Middlewares/ST/Bluetooth_LE/Src/stack_cns_api_stubs.c</name>
       </file>
     <file>
         <name>$PROJ_DIR$/../../../../../Middlewares/ST/Bluetooth_LE/Src/stack_user_cfg.c</name>

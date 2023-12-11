@@ -60,7 +60,7 @@ void Error_Handler(void);
 
 
 #ifdef STEVAL_IDB011V1
-#define USARTx_INSTANCE                    USART1
+#define USARTx                             USART1
 #define USARTx_IRQn                        USART1_IRQn
 #define USARTx_IRQHandler                  USART1_IRQHandler
   /**USART1 GPIO Configuration
@@ -89,8 +89,8 @@ void Error_Handler(void);
     
 #endif /* STEVAL_IDB011V1 */
 
-#ifdef STEVAL_IDB012V1
-#define USARTx_INSTANCE                    USART1
+#if defined(STEVAL_IDB012V1)
+#define USARTx                             USART1
 #define USARTx_IRQn                        USART1_IRQn
 #define USARTx_IRQHandler                  USART1_IRQHandler
   /**USART1 GPIO Configuration  
@@ -116,7 +116,7 @@ void Error_Handler(void);
 #define USARTx_RTS_AF                      GPIO_AF0_USART1
 #define EnableClock_USART_CTS_PORT()       __HAL_RCC_GPIOB_CLK_ENABLE()
 #define EnableClock_USART_RTS_PORT()       __HAL_RCC_GPIOB_CLK_ENABLE()
-#endif /* STEVAL_IDB012V1 */
+#endif /* STEVAL_IDB012V1   */
 
 #ifdef __cplusplus
 }

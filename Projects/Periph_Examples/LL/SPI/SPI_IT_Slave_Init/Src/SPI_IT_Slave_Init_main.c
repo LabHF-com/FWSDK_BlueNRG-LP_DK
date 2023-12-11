@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : SPI_IT_Slave_Init_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -60,9 +60,11 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 - \c STEVAL-IDB012V1
+- \c STEVAL-IDB013V1
 
 
 
@@ -100,7 +102,7 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |   STEVAL-IDB012V1  |
+|  PIN name  | STEVAL-IDB011V{1-2} | STEVAL-IDB012V1|
 --------------------------------------------------------
 |     A1     |       Not Used      |      USART TX      |
 |     A11    |       Not Used      |      SPI3 MOSI     |
@@ -145,27 +147,27 @@
 
 * \section LEDs_description LEDs description
 @table
-|            |                                                 Release                                                 |||                                                  8bit                                                   |||
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  LED name  |          STEVAL-IDB011V1         |          STEVAL-IDB011V2         |          STEVAL-IDB012V1         |          STEVAL-IDB011V1         |          STEVAL-IDB011V2         |          STEVAL-IDB012V1         |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|     DL1    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
-|     DL2    |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |
-|     DL3    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
-|     DL4    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
-|     U5     |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
+|            |                                                                                    Release                                                                                    |||||                                                                                     8bit                                                                                      |||||
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LED name  |          STEVAL-IDB010V1         |          STEVAL-IDB011V1         |          STEVAL-IDB011V2         |          STEVAL-IDB012V1         |          STEVAL-IDB013V1         |          STEVAL-IDB010V1         |          STEVAL-IDB011V1         |          STEVAL-IDB011V2         |          STEVAL-IDB012V1         |          STEVAL-IDB013V1         |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|     DL1    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
+|     DL2    |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |   ON: OK - Slow blinking: error  |
+|     DL3    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
+|     DL4    |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
+|     U5     |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |             Not Used             |
 
 @endtable
 
 * \section Buttons_description Buttons description
 @table
-|                |                            Release                            |||                             8bit                              |||
-------------------------------------------------------------------------------------------------------------------------------------------------------
-|   BUTTON name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |   STEVAL-IDB012V1  |
-------------------------------------------------------------------------------------------------------------------------------------------------------
-|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |      Not Used      |
-|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |
+|                |                                                   Release                                                   |||||                                                    8bit                                                     |||||
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|   BUTTON name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |    STEVAL-IDB012V1   |    STEVAL-IDB013V1   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|      PUSH1     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      PUSH2     |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |      Not Used      |      Not Used      |      Not Used      |       Not Used       |       Not Used       |
+|      RESET     |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |  Reset BlueNRG-LP  |   Reset BlueNRG-LPS  |   Reset BlueNRG-LPS  |
 
 @endtable
 
@@ -263,7 +265,6 @@ uint8_t ubNbDataToReceive  = sizeof(aTxBuffer);
 __IO uint8_t ubReceiveIndex = 0;
 
 /* Private function prototypes -----------------------------------------------*/
-static void LL_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI_Slave_Init(void);
 /* Private user code ---------------------------------------------------------*/
@@ -286,19 +287,16 @@ int main(void)
     while(1);
   }
   
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_Init();
-
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
   
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -327,12 +325,6 @@ int main(void)
   }
 }
 
-static void LL_Init(void)
-{
-  /* System interrupt init*/
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, IRQ_HIGH_PRIORITY);
-}
 
 /**
   * @brief SPI_SLAVE Initialization Function
@@ -384,7 +376,7 @@ static void MX_SPI_Slave_Init(void)
   LL_GPIO_Init(GPIO_PORT_SLAVE_CS, &GPIO_InitStruct);
   
   /* SPI_SLAVE interrupt Init */
-  NVIC_SetPriority(SPI_SLAVE_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(SPI_SLAVE_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(SPI_SLAVE_IRQn);
 
 

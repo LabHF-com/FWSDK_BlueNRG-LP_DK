@@ -1,5 +1,5 @@
 
-/******************** (C) COPYRIGHT 2021 STMicroelectronics ********************
+/******************** (C) COPYRIGHT 2022 STMicroelectronics ********************
 * File Name          : ADC_AnalogMicrophone_main.c
 * Author             : RF Application Team
 * Version            : 1.0.0
@@ -58,6 +58,7 @@
 
 
 * \section Board_supported Boards supported
+- \c STEVAL-IDB010V1
 - \c STEVAL-IDB011V1
 - \c STEVAL-IDB011V2
 
@@ -97,40 +98,40 @@
 
 * \section Pin_settings Pin settings
 @table
-|  PIN name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
----------------------------------------------------------
-|     A0     |        N.A.        |        N.A.        |
-|     A1     |      Not Used      |      Not Used      |
-|     A10    |        N.A.        |        N.A.        |
-|     A11    |      Not Used      |      Not Used      |
-|     A12    |      Not Used      |      Not Used      |
-|     A13    |      Not Used      |      Not Used      |
-|     A14    |      Not Used      |      Not Used      |
-|     A15    |      Not Used      |      Not Used      |
-|     A3     |        N.A.        |        N.A.        |
-|     A4     |      Not Used      |      Not Used      |
-|     A5     |      Not Used      |      Not Used      |
-|     A6     |      Not Used      |      Not Used      |
-|     A7     |      Not Used      |      Not Used      |
-|     A8     |      Not Used      |      Not Used      |
-|     A9     |      Not Used      |      Not Used      |
-|     B0     |      Not Used      |      Not Used      |
-|     B1     |        N.A.        |        N.A.        |
-|     B12    |        N.A.        |        N.A.        |
-|     B13    |        N.A.        |        N.A.        |
-|     B14    |      Not Used      |      Not Used      |
-|     B15    |        N.A.        |        N.A.        |
-|     B2     |      Not Used      |      Not Used      |
-|     B3     |      Not Used      |      Not Used      |
-|     B4     |      Not Used      |      Not Used      |
-|     B5     |      Not Used      |      Not Used      |
-|     B6     |        N.A.        |        N.A.        |
-|     B7     |      Not Used      |      Not Used      |
-|     B8     |      Not Used      |      Not Used      |
-|     B9     |      Not Used      |      Not Used      |
-|     GND    |      Not Used      |      Not Used      |
-|     RST    |      Not Used      |      Not Used      |
-|    VBAT    |      Not Used      |      Not Used      |
+|  PIN name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+--------------------------------------------------------------------------------
+|     A0     |      Not Used      |        N.A.        |        N.A.        |
+|     A1     |      Not Used      |      Not Used      |      Not Used      |
+|     A10    |        N.A.        |        N.A.        |        N.A.        |
+|     A11    |      Not Used      |      Not Used      |      Not Used      |
+|     A12    |      Not Used      |      Not Used      |      Not Used      |
+|     A13    |      Not Used      |      Not Used      |      Not Used      |
+|     A14    |      Not Used      |      Not Used      |      Not Used      |
+|     A15    |      Not Used      |      Not Used      |      Not Used      |
+|     A3     |        N.A.        |        N.A.        |        N.A.        |
+|     A4     |      Not Used      |      Not Used      |      Not Used      |
+|     A5     |      Not Used      |      Not Used      |      Not Used      |
+|     A6     |        N.A.        |      Not Used      |      Not Used      |
+|     A7     |      Not Used      |      Not Used      |      Not Used      |
+|     A8     |      Not Used      |      Not Used      |      Not Used      |
+|     A9     |      Not Used      |      Not Used      |      Not Used      |
+|     B0     |      Not Used      |      Not Used      |      Not Used      |
+|     B1     |      Not Used      |        N.A.        |        N.A.        |
+|     B12    |        N.A.        |        N.A.        |        N.A.        |
+|     B13    |        N.A.        |        N.A.        |        N.A.        |
+|     B14    |      Not Used      |      Not Used      |      Not Used      |
+|     B15    |        N.A.        |        N.A.        |        N.A.        |
+|     B2     |      Not Used      |      Not Used      |      Not Used      |
+|     B3     |      Not Used      |      Not Used      |      Not Used      |
+|     B4     |      Not Used      |      Not Used      |      Not Used      |
+|     B5     |      Not Used      |      Not Used      |      Not Used      |
+|     B6     |        N.A.        |        N.A.        |        N.A.        |
+|     B7     |      Not Used      |      Not Used      |      Not Used      |
+|     B8     |      Not Used      |      Not Used      |      Not Used      |
+|     B9     |      Not Used      |      Not Used      |      Not Used      |
+|     GND    |      Not Used      |      Not Used      |      Not Used      |
+|     RST    |      Not Used      |      Not Used      |      Not Used      |
+|    VBAT    |      Not Used      |      Not Used      |      Not Used      |
 
 @endtable 
 
@@ -147,33 +148,33 @@
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
----------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |
-|     U5     |    Activity LED    |    Activity LED    |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+--------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |    Activity LED    |    Activity LED    |    Activity LED    |
 
 @endtable
 
 
 * \section LEDs_description LEDs description
 @table
-|  LED name  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
----------------------------------------------------------
-|     DL1    |      Not Used      |      Not Used      |
-|     DL2    |      Not Used      |      Not Used      |
-|     DL3    |      Not Used      |      Not Used      |
-|     DL4    |      Not Used      |      Not Used      |
-|     U5     |    Activity LED    |    Activity LED    |
+|  LED name  |   STEVAL-IDB010V1  |   STEVAL-IDB011V1  |   STEVAL-IDB011V2  |
+--------------------------------------------------------------------------------
+|     DL1    |      Not Used      |      Not Used      |      Not Used      |
+|     DL2    |      Not Used      |      Not Used      |      Not Used      |
+|     DL3    |      Not Used      |      Not Used      |      Not Used      |
+|     DL4    |      Not Used      |      Not Used      |      Not Used      |
+|     U5     |    Activity LED    |    Activity LED    |    Activity LED    |
 
 @endtable
 
 
 * \section Buttons_description Buttons description
 @table
-|  PIN name  | STEVAL-IDB011V{1|2} |
+|  PIN name  | STEVAL-IDB011V{1-2} |
 -----------------------------------
 |     A1     |       Not Used      |
 |     A11    |       Not Used      |
@@ -320,7 +321,7 @@ int main(void)
   BSP_Init();
   
   /* Set systick to 1ms using system clock frequency */
-  LL_Init1msTick(SystemCoreClock);
+  LL_Init1msTick(SystemCoreClock); 
   
   /* Initialize the digital microphone pins */
   BSP_ANAMIC_Init();
@@ -342,7 +343,7 @@ int main(void)
   while (1) {
     /* Led toggle - activity led */
     LL_mDelay(250);
-    BSP_LED_Toggle(BSP_LED1);
+    BSP_LED_Toggle(BSP_LED2);
   }
   
 }
@@ -351,15 +352,15 @@ int main(void)
 static void BSP_Init(void)
 {
   /* Initialization of LEDs */
-  BSP_LED_Init(BSP_LED1);
+  BSP_LED_Init(BSP_LED2);
 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   /* IO pull configuration with minimum power consumption */
   BSP_IO_Init();
-#endif
   
   /* Initialization of COM port */
   BSP_COM_Init(NULL);
+  
+  printf("** Application started **\n\r");
     
   /* USART TX DMA configuration */
   LL_DMA_InitTypeDef DMA_InitStruct;
@@ -422,7 +423,6 @@ static void APP_ADC_Init(void)
 }
 
 
-
 /**
   * @brief DMA Initialization Function
   * @param None
@@ -477,7 +477,7 @@ static void APP_DMA_Init(void)
   LL_DMA_EnableIT_HT(DMA1, LL_DMA_CHANNEL_ADC);
   
   /* Configure NVIC for DMA half transfer/transfer complete interrupts */
-  NVIC_SetPriority(DMA_IRQn, IRQ_HIGH_PRIORITY);
+  NVIC_SetPriority(DMA_IRQn, IRQ_LOW_PRIORITY );
   NVIC_EnableIRQ(DMA_IRQn);
 }
 

@@ -328,11 +328,8 @@ typedef struct
 #if defined(RCC_CIFR_LPURSTF)
 #define RCC_IT_LPURSTRELRDY            LL_RCC_CIFR_LPURSTRELF   /*!< LPU Reset Release Interrupt Flag */
 #endif
-#if defined(RCC_CIFR_LCDRSTF)
-#define RCC_IT_LCDRSTRELRDY            LL_RCC_CIFR_LCDRSTRELF   /*!< LCD Reset Release Interrupt Flag */
-#endif
-#if defined(RCC_CIFR_SCIRSTF)
-#define RCC_IT_SCIRSTRELRDY            LL_RCC_CIFR_SCIRSTRELF   /*!< SCI Reset Release Interrupt Flag */
+#if defined(RCC_CIFR_LCSCRSTF)
+#define RCC_IT_LCSCRSTRELRDY            LL_RCC_CIFR_LCSCRSTRELF   /*!< LCSC Reset Release Interrupt Flag */
 #endif
 
 /**
@@ -432,19 +429,7 @@ typedef struct
 #define __HAL_RCC_TIM2_CLK_ENABLE()            LL_APB0_EnableClock(LL_APB0_PERIPH_TIM2)
 #endif
 #define __HAL_RCC_SYSCFG_CLK_ENABLE()          LL_APB0_EnableClock(LL_APB0_PERIPH_SYSCFG)
-#if defined(LCD)
-#define __HAL_RCC_LCDC_CLK_ENABLE()            LL_APB0_EnableClock(LL_APB0_PERIPH_LCDC)
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_CLK_ENABLE()            LL_APB0_EnableClock(LL_APB0_PERIPH_COMP)
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_CLK_ENABLE()            LL_APB0_EnableClock(LL_APB0_PERIPH_DAC)
-#endif
 #define __HAL_RCC_RTC_CLK_ENABLE()             LL_APB0_EnableClock(LL_APB0_PERIPH_RTC)
-#if defined(SCI)
-#define __HAL_RCC_SCI_CLK_ENABLE()            LL_APB0_EnableClock(LL_APB0_PERIPH_SCI)
-#endif
 #define __HAL_RCC_WDG_CLK_ENABLE()             LL_APB0_EnableClock(LL_APB0_PERIPH_WDG)
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_CLK_ENABLE()           LL_APB0_EnableClock(LL_APB0_PERIPH_TIM16)
@@ -460,19 +445,7 @@ typedef struct
 #define __HAL_RCC_TIM2_CLK_DISABLE()           LL_APB0_DisableClock(LL_APB0_PERIPH_TIM2)
 #endif
 #define __HAL_RCC_SYSCFG_CLK_DISABLE()         LL_APB0_DisableClock(LL_APB0_PERIPH_SYSCFG)
-#if defined(LCD)
-#define __HAL_RCC_LCDC_CLK_DISABLE()           LL_APB0_DisableClock(LL_APB0_PERIPH_LCDC)
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_CLK_DISABLE()           LL_APB0_DisableClock(LL_APB0_PERIPH_COMP)
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_CLK_DISABLE()            LL_APB0_DisableClock(LL_APB0_PERIPH_DAC)
-#endif
 #define __HAL_RCC_RTC_CLK_DISABLE()            LL_APB0_DisableClock(LL_APB0_PERIPH_RTC)
-#if defined(SCI)
-#define __HAL_RCC_SCI_CLK_DISABLE()            LL_APB0_DisableClock(LL_APB0_PERIPH_SCI)
-#endif
 #define __HAL_RCC_WDG_CLK_DISABLE()            LL_APB0_DisableClock(LL_APB0_PERIPH_WDG)
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_CLK_DISABLE()          LL_APB0_DisableClock(LL_APB0_PERIPH_TIM16)
@@ -601,19 +574,7 @@ typedef struct
 #define __HAL_RCC_TIM2_IS_CLK_ENABLED()            LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM2)
 #endif
 #define __HAL_RCC_SYSCFG_IS_CLK_ENABLED()          LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SYSCFG)
-#if defined(LCD)
-#define __HAL_RCC_LCDC_IS_CLK_ENABLED()            LL_APB0_IsEnabledClock(LL_APB0_PERIPH_LCDC)
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_IS_CLK_ENABLED()            LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP)
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_IS_CLK_ENABLED()             LL_APB0_IsEnabledClock(LL_APB0_PERIPH_DAC)
-#endif
 #define __HAL_RCC_RTC_IS_CLK_ENABLED()             LL_APB0_IsEnabledClock(LL_APB0_PERIPH_RTC)
-#if defined(SCI)
-#define __HAL_RCC_SCI_IS_CLK_ENABLED()             LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SCI)
-#endif
 #define __HAL_RCC_WDG_IS_CLK_ENABLED()             LL_APB0_IsEnabledClock(LL_APB0_PERIPH_WDG)
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_IS_CLK_ENABLED()           LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM16)
@@ -629,19 +590,7 @@ typedef struct
 #define __HAL_RCC_TIM2_IS_CLK_DISABLED()           !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM2))
 #endif
 #define __HAL_RCC_SYSCFG_IS_CLK_DISABLED()         !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SYSCFG))
-#if defined(LCD)
-#define __HAL_RCC_LCDC_IS_CLK_DISABLED()           !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_LCDC))
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_IS_CLK_DISABLED()           !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_COMP))
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_IS_CLK_DISABLED()            !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_DAC))
-#endif
 #define __HAL_RCC_RTC_IS_CLK_DISABLED()            !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_RTC))
-#if defined(SCI)
-#define __HAL_RCC_SCI_IS_CLK_DISABLED()            !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_SCI))
-#endif
 #define __HAL_RCC_WDG_IS_CLK_DISABLED()            !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_WDG))
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_IS_CLK_DISABLED()          !(LL_APB0_IsEnabledClock(LL_APB0_PERIPH_TIM16))
@@ -772,19 +721,7 @@ typedef struct
 #define __HAL_RCC_TIM2_FORCE_RESET()            LL_APB0_ForceReset(LL_APB0_PERIPH_TIM2)
 #endif
 #define __HAL_RCC_SYSCFG_FORCE_RESET()          LL_APB0_ForceReset(LL_APB0_PERIPH_SYSCFG)
-#if defined(LCD)
-#define __HAL_RCC_LCDC_FORCE_RESET()            LL_APB0_ForceReset(LL_APB0_PERIPH_LCDC)
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_FORCE_RESET()            LL_APB0_ForceReset(LL_APB0_PERIPH_COMP)
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_FORCE_RESET()             LL_APB0_ForceReset(LL_APB0_PERIPH_DAC)
-#endif
 #define __HAL_RCC_RTC_FORCE_RESET()             LL_APB0_ForceReset(LL_APB0_PERIPH_RTC)
-#if defined(SCI)
-#define __HAL_RCC_SCI_FORCE_RESET()             LL_APB0_ForceReset(LL_APB0_PERIPH_SCI)
-#endif
 #define __HAL_RCC_WDG_FORCE_RESET()             LL_APB0_ForceReset(LL_APB0_PERIPH_WDG)
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_FORCE_RESET()           LL_APB0_ForceReset(LL_APB0_PERIPH_TIM16)
@@ -801,19 +738,7 @@ typedef struct
 #define __HAL_RCC_TIM2_RELEASE_RESET()          LL_APB0_ReleaseReset(LL_APB0_PERIPH_TIM2)
 #endif
 #define __HAL_RCC_SYSCFG_RELEASE_RESET()        LL_APB0_ReleaseReset(LL_APB0_PERIPH_SYSCFG)
-#if defined(LCD)
-#define __HAL_RCC_LCDC_RELEASE_RESET()          LL_APB0_ReleaseReset(LL_APB0_PERIPH_LCDC)
-#endif
-#if defined(COMP1)
-#define __HAL_RCC_COMP_RELEASE_RESET()          LL_APB0_ReleaseReset(LL_APB0_PERIPH_COMP)
-#endif
-#if defined(DAC)
-#define __HAL_RCC_DAC_RELEASE_RESET()           LL_APB0_ReleaseReset(LL_APB0_PERIPH_DAC)
-#endif
 #define __HAL_RCC_RTC_RELEASE_RESET()           LL_APB0_ReleaseReset(LL_APB0_PERIPH_RTC)
-#if defined(SCI)
-#define __HAL_RCC_SCI_RELEASE_RESET()           LL_APB0_ReleaseReset(LL_APB0_PERIPH_SCI)
-#endif
 #define __HAL_RCC_WDG_RELEASE_RESET()           LL_APB0_ReleaseReset(LL_APB0_PERIPH_WDG)
 #if defined(TIM16) 
 #define __HAL_RCC_TIM16_RELEASE_RESET()         LL_APB0_ReleaseReset(LL_APB0_PERIPH_TIM16)
@@ -1136,16 +1061,16 @@ typedef struct
 /** @brief  Enable RCC interrupt.
   * @param  __INTERRUPT__  specifies the RCC interrupt sources to be enabled.
   *         This parameter can be any combination of the following values:
-  *            @arg @ref RCC_IT_LSIRDY      LSI ready interrupt enable
-  *            @arg @ref RCC_IT_LSERDY      LSE ready interrupt enable
-  *            @arg @ref RCC_IT_HSIRDY      HSI ready interrupt enable
-  *            @arg @ref RCC_IT_HSERDY      HSE ready interrupt enable
-  *            @arg @ref RCC_IT_PLLRDY      Main PLL ready interrupt enable
-  *            @arg @ref RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt enable
-  *            @arg @ref RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt enable
-  *            @arg @ref RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt enable
-  *            @arg @ref RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt enable
-  *            @arg @ref RCC_IT_SCIRSTRELRDY SCI Reset Release ready interrupt enable
+  *            @arg RCC_IT_LSIRDY      LSI ready interrupt enable
+  *            @arg RCC_IT_LSERDY      LSE ready interrupt enable
+  *            @arg RCC_IT_HSIRDY      HSI ready interrupt enable
+  *            @arg RCC_IT_HSERDY      HSE ready interrupt enable
+  *            @arg RCC_IT_PLLRDY      Main PLL ready interrupt enable
+  *            @arg RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt enable
+  *            @arg RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt enable
+  *            @arg RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt enable
+  *            @arg RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt enable
+  *            @arg RCC_IT_LCSCRSTRELRDY LCSC Reset Release ready interrupt enable
   * @retval None
   */
 #define __HAL_RCC_ENABLE_IT(__INTERRUPT__) SET_BIT(RCC->CIER, (__INTERRUPT__))
@@ -1153,16 +1078,16 @@ typedef struct
 /** @brief Disable RCC interrupt.
   * @param  __INTERRUPT__  specifies the RCC interrupt sources to be disabled.
   *         This parameter can be any combination of the following values:
-  *            @arg @ref RCC_IT_LSIRDY      LSI ready interrupt disable
-  *            @arg @ref RCC_IT_LSERDY      LSE ready interrupt disable
-  *            @arg @ref RCC_IT_HSIRDY      HSI ready interrupt disable
-  *            @arg @ref RCC_IT_HSERDY      HSE ready interrupt disable
-  *            @arg @ref RCC_IT_PLLRDY      Main PLL ready interrupt disable
-  *            @arg @ref RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt disable
-  *            @arg @ref RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt disable
-  *            @arg @ref RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt disable
-  *            @arg @ref RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt disable
-  *            @arg @ref RCC_IT_SCIRSTRELRDY SCI Reset Release ready interrupt disable
+  *            @arg RCC_IT_LSIRDY      LSI ready interrupt disable
+  *            @arg RCC_IT_LSERDY      LSE ready interrupt disable
+  *            @arg RCC_IT_HSIRDY      HSI ready interrupt disable
+  *            @arg RCC_IT_HSERDY      HSE ready interrupt disable
+  *            @arg RCC_IT_PLLRDY      Main PLL ready interrupt disable
+  *            @arg RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt disable
+  *            @arg RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt disable
+  *            @arg RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt disable
+  *            @arg RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt disable
+  *            @arg RCC_IT_LCSCRSTRELRDY LCSC Reset Release ready interrupt disable
   * @retval None
   */
 #define __HAL_RCC_DISABLE_IT(__INTERRUPT__) CLEAR_BIT(RCC->CIER, (__INTERRUPT__))
@@ -1171,32 +1096,32 @@ typedef struct
   *         bits to clear the selected interrupt pending bits.
   * @param  __INTERRUPT__  specifies the interrupt pending bit to clear.
   *         This parameter can be any combination of the following values:
-  *            @arg @ref RCC_IT_LSIRDY   LSI ready interrupt clear
-  *            @arg @ref RCC_IT_LSERDY   LSE ready interrupt clear
-  *            @arg @ref RCC_IT_HSIRDY   HSI ready interrupt clear
-  *            @arg @ref RCC_IT_HSERDY   HSE ready interrupt clear
-  *            @arg @ref RCC_IT_PLLRDY   Main PLL ready interrupt clear
-  *            @arg @ref RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt clear
-  *            @arg @ref RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt clear
-  *            @arg @ref RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt clear
-  *            @arg @ref RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt clear
-  *            @arg @ref RCC_IT_SCIRSTRELRDY SCI Reset Release ready interrupt clear
+  *            @arg RCC_IT_LSIRDY   LSI ready interrupt clear
+  *            @arg RCC_IT_LSERDY   LSE ready interrupt clear
+  *            @arg RCC_IT_HSIRDY   HSI ready interrupt clear
+  *            @arg RCC_IT_HSERDY   HSE ready interrupt clear
+  *            @arg RCC_IT_PLLRDY   Main PLL ready interrupt clear
+  *            @arg RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt clear
+  *            @arg RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt clear
+  *            @arg RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt clear
+  *            @arg RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt clear
+  *            @arg RCC_IT_LCSCRSTRELRDY LCSC Reset Release ready interrupt clear
   */
 #define __HAL_RCC_CLEAR_IT(__INTERRUPT__) (RCC->CIFR = (__INTERRUPT__))
 
 /** @brief  Check whether the RCC interrupt has occurred or not.
   * @param  __INTERRUPT__  specifies the RCC interrupt source to check.
   *         This parameter can be one of the following values:
-  *            @arg @ref RCC_IT_LSIRDY   LSI ready interrupt flag
-  *            @arg @ref RCC_IT_LSERDY   LSE ready interrupt flag
-  *            @arg @ref RCC_IT_HSIRDY   HSI ready interrupt flag
-  *            @arg @ref RCC_IT_HSERDY   HSE ready interrupt flag
-  *            @arg @ref RCC_IT_PLLRDY   Main PLL ready interrupt flag
-  *            @arg @ref RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt flag
-  *            @arg @ref RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt flag
-  *            @arg @ref RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt flag
-  *            @arg @ref RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt flag
-  *            @arg @ref RCC_IT_SCIRSTRELRDY SCI Reset Release ready interrupt flag
+  *            @arg RCC_IT_LSIRDY   LSI ready interrupt flag
+  *            @arg RCC_IT_LSERDY   LSE ready interrupt flag
+  *            @arg RCC_IT_HSIRDY   HSI ready interrupt flag
+  *            @arg RCC_IT_HSERDY   HSE ready interrupt flag
+  *            @arg RCC_IT_PLLRDY   Main PLL ready interrupt flag
+  *            @arg RCC_IT_RTCRSTRELRDY RTC Reset Release ready interrupt flag
+  *            @arg RCC_IT_WDGRSTRELRDY WDG Reset Release ready interrupt flag
+  *            @arg RCC_IT_LPURSTRELRDY LPU Reset Release ready interrupt flag
+  *            @arg RCC_IT_LCDRSTRELRDY LCD Reset Release ready interrupt flag
+  *            @arg RCC_IT_LCSCRSTRELRDY LCSC Reset Release ready interrupt flag
   * @retval The new state of __INTERRUPT__ (TRUE or FALSE).
   */
 #define __HAL_RCC_GET_IT(__INTERRUPT__) ((RCC->CIFR & (__INTERRUPT__)) == (__INTERRUPT__))

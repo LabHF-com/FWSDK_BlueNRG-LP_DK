@@ -34,7 +34,10 @@
 #include "rf_driver_hal_vtimer.h"
 #include "nvm_db.h"
 #include "DTM_burst.h"
+#include "aci_l2cap_nwk.h"
+#include "aci_gatt_nwk.h"
 
+#define RESET_REASON_NRST       ((uint8_t)0x01)
 #define RESET_REASON_WDG        ((uint8_t)0x05)
 #define RESET_REASON_LOCKUP     ((uint8_t)0x06)
 #define RESET_REASON_POR_BOR    ((uint8_t)0x07)
@@ -42,6 +45,8 @@
 
 /* Add aci_blue_initialized_event() prototype */
 void aci_blue_initialized_event(uint8_t Reason_Code);
+/* aci_blue_initialized_event with with legacy format (not extended) */
+void aci_blue_initialized_legacy_event(uint8_t Reason_Code);
 
 /* Add aci_blue_crash_info_event() prototype */
 void aci_blue_crash_info_event(uint8_t Crash_Type,
@@ -124,12 +129,7 @@ int main(void)
     send_event(buffer_out,7,-1);
   }
   
-#ifdef LL_ONLY
-  uint8_t Value = 1;
-  aci_hal_write_config_data(0x2C, 1, &Value);
-#else
-  
-  uint8_t reset_reason = 0x01;
+  uint8_t reset_reason = RESET_REASON_NRST;
   
   /* EVT_BLUE_INITIALIZED */  
   /* Check the reset reason */
@@ -142,14 +142,25 @@ int main(void)
   else if(RAM_VR.ResetReason & RCC_CSR_PORRSTF) {
     reset_reason = RESET_REASON_POR_BOR;
   }
-  
-  if((crash_info.signature&0xFFFF0000) == CRASH_SIGNATURE_BASE) {  
+  else if(RAM_VR.ResetReason & RCC_CSR_SFTRSTF && (crash_info.signature&0xFFFF0000) == CRASH_SIGNATURE_BASE) {
+    /* Crash event can be reported only after a software reset. */
     reset_reason = RESET_REASON_CRASH;
   }
-
+#if (BLESTACK_CONTROLLER_ONLY == 1)
+  /* In controller-only mode, let's send the aci_blue_initialized_event only
+     for HW reset or if there is a relevant reset reason. */    
+  else if(RAM_VR.ResetReason & RCC_CSR_SFTRSTF){
+    reset_reason = 0;
+  }
+  
+  if(reset_reason) {  
+    aci_blue_initialized_legacy_event(reset_reason);
+  }
+#else
+  
   aci_blue_initialized_event(reset_reason);
-
-#endif
+  
+#endif /* (BLESTACK_CONTROLLER_ONLY == 1) */
 
   if((crash_info.signature&0xFFFF0000) == CRASH_SIGNATURE_BASE) { 
     aci_blue_crash_info_event(crash_info.signature&0xFF,
@@ -176,11 +187,18 @@ int main(void)
   wakeupIO.LPU_enable = 0;
 
   while(1) {
-    BURST_Tick();
+    
     HAL_VTIMER_Tick();
     BLE_STACK_Tick();
+    
+#if (BLESTACK_CONTROLLER_ONLY == 0) && (CONNECTION_ENABLED == 1)
+    /* NVM and burst commands not needed without Host or connection support. */
     NVMDB_Tick();
+    BURST_Tick();
+#endif
+    
     transport_layer_tick();
+    
     if(num_packets != 0 &&  irq_count == num_packets)
     {
       uint32_t Number_Of_TX_Packets = 0;
@@ -196,6 +214,16 @@ int main(void)
     
     HAL_PWR_MNGR_Request(POWER_SAVE_LEVEL_STOP_NOTIMER, wakeupIO, &stopLevel); 
   }
+}
+
+/* Implementation of L2CAP disconnection event hook. */
+int aci_l2cap_disconnection_complete_event_preprocess(uint16_t Connection_Handle,
+                                                      uint16_t CID)
+{
+  aci_l2cap_nwk_disconnection_complete(Connection_Handle,CID);
+  ACI_gatt_nwk_disconnection(Connection_Handle, CID);
+  
+  return 0;  
 }
 
 

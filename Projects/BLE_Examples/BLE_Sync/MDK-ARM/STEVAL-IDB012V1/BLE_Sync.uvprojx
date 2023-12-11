@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -328,14 +328,14 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
-            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_CUSTOM_CONF BSP_UART_BAUDRATE=921600 PROFILE_ROLE=ROLE_CENTRAL</Define>
+              <MiscControls>-fshort-enums</MiscControls>
+            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_CUSTOM_CONF BSP_UART_BAUDRATE=921600 PROFILE_ROLE=ROLE_CENTRAL CONFIG_NUM_MAX_LINKS=1</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
@@ -427,14 +427,14 @@
           <GroupName>Drivers/CMSIS</GroupName>
         <Files>
             <File>
-              <FileName>system_BlueNRG_LP.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
-            </File>
-          <File>
               <FileName>startup_BlueNRG_LP.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
+          <File>
+              <FileName>system_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -557,11 +557,6 @@
             <FilePath>../../Src/BLE_Sync_main.c</FilePath>
             </File>
           <File>
-              <FileName>rf_device_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/rf_device_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
@@ -605,6 +600,11 @@
                   <IncludeInBuild>0</IncludeInBuild>
                 </CommonProperty>
               </FileOption>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -805,7 +805,7 @@
         <TargetCommonOption>
           <Device>BlueNRG-332</Device>
         <Vendor>STMicroelectronics</Vendor>
-        <PackID>Keil.STBlueNRG-LP_DFP.1.0.0</PackID>
+        <PackID>Keil.STBlueNRG-LP_DFP.3.1.1</PackID>
         <PackURL>http://www.keil.com/pack/</PackURL>
         <Cpu>IRAM(0x20000000,0x10000) IROM(0x10040000,0x40000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
         <FlashUtilSpec></FlashUtilSpec>
@@ -1119,14 +1119,14 @@
           <useXO>0</useXO>
           <v6Lang>3</v6Lang>
           <v6LangP>3</v6LangP>
-          <vShortEn>1</vShortEn>
-          <vShortWch>1</vShortWch>
+          <vShortEn>0</vShortEn>
+          <vShortWch>0</vShortWch>
           <v6Lto>0</v6Lto>
           <v6WtE>0</v6WtE>
           <v6Rtti>0</v6Rtti>
           <VariousControls>
-              <MiscControls></MiscControls>
-            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF BSP_UART_BAUDRATE=921600 PROFILE_ROLE=ROLE_PERIPHERAL</Define>
+              <MiscControls>-fshort-enums</MiscControls>
+            <Define>USE_FULL_LL_DRIVER STEVAL_IDB012V1 CONFIG_DEVICE_BLUENRG_LPS CONFIG_HW_SMPS_10uH CONFIG_HW_HSE_TUNE=32 USER_BUTTON=BSP_PUSH1 CONFIG_HW_LS_XTAL BLE_STACK_BASIC_CONF BSP_UART_BAUDRATE=921600 PROFILE_ROLE=ROLE_PERIPHERAL CONFIG_NUM_MAX_LINKS=1</Define>
             <Undefine></Undefine>
             <IncludePath>..\..\Inc;..\..\..\..\..\Drivers\Peripherals_Drivers\Inc;..\..\..\..\..\Drivers\CMSIS\Device\ST\BlueNRG_LP\Include;..\..\..\..\..\Middlewares\ST\hal\Inc;..\..\..\..\..\Middlewares\ST\PKAMGR\Inc;..\..\..\..\..\Middlewares\ST\RNGMGR\Inc;..\..\..\..\..\Middlewares\ST\AESMGR\Inc;..\..\..\..\..\Middlewares\ST\BLECNTR\Inc;..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\Drivers\BSP\Inc;..\..\..\..\..\Drivers\BSP\Components\lps22hh_STdC\driver;..\..\..\..\..\Drivers\BSP\Components\lsm6dsox_STdC\driver;..\..\..\..\..\Middlewares\ST\BLE_Application\layers_inc;..\..\..\..\..\Middlewares\ST\BLE_Application\OTA\Inc;..\..\..\..\..\Middlewares\ST\Bluetooth_LE\Inc;..\..\..\..\..\Middlewares\ST\NVMDB\Inc;..\..\..\..\..\Middlewares\ST\BLE_Application\Profiles\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\Common;..\..\..\..\..\Middlewares\ST\cryptolib\Inc\AES</IncludePath>
             </VariousControls>
@@ -1218,14 +1218,14 @@
           <GroupName>Drivers/CMSIS</GroupName>
         <Files>
             <File>
-              <FileName>system_BlueNRG_LP.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
-            </File>
-          <File>
               <FileName>startup_BlueNRG_LP.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/startup_BlueNRG_LP.c</FilePath>
+            </File>
+          <File>
+              <FileName>system_BlueNRG_LP.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../../../../Drivers/CMSIS/Device/ST/BlueNRG_LP/Source/system_BlueNRG_LP.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1348,11 +1348,6 @@
             <FilePath>../../Src/BLE_Sync_main.c</FilePath>
             </File>
           <File>
-              <FileName>rf_device_it.c</FileName>
-            <FileType>1</FileType>
-            <FilePath>../../Src/rf_device_it.c</FilePath>
-            </File>
-          <File>
               <FileName>gatt_db.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/gatt_db.c</FilePath>
@@ -1396,6 +1391,11 @@
               <FileName>profile_peripheral.c</FileName>
             <FileType>1</FileType>
             <FilePath>../../Src/profile_peripheral.c</FilePath>
+            </File>
+          <File>
+              <FileName>rf_device_it.c</FileName>
+            <FileType>1</FileType>
+            <FilePath>../../Src/rf_device_it.c</FilePath>
             </File>
           </Files>
         </Group>

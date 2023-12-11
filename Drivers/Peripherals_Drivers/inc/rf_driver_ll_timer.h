@@ -76,7 +76,7 @@ typedef struct timer_calibration_s {
   * @{
   */
 
-#ifdef CONFIG_DEVICE_BLUENRG_LPS
+#if defined(CONFIG_DEVICE_BLUENRG_LPS)
 /**
  * @brief  Allows a virtual timer to wake up the device in BlueNRG-LP cuts 1.0 and 2.0.
  */
@@ -114,7 +114,6 @@ typedef struct timer_calibration_s {
 /** @defgroup TIMER_Exported_Macros TIMER Exported Macros
   * @{
   */ 
-#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   #define TIMER_GET_SLOW_FREQEUNCY            (RADIO_CTRL->CLK32FREQUENCY_REG & RADIO_CTRL_CLK32FREQUENCY_REG_SLOW_FREQUENCY)
   #define TIMER_GET_SLOW_PERIOD               (RADIO_CTRL->CLK32PERIOD_REG & RADIO_CTRL_CLK32PERIOD_REG_SLOW_PERIOD)
   #define TIMER_GET_SLOW_CLK_IRQ              (RADIO_CTRL->RADIO_CONTROL_IRQ_STATUS & RADIO_CTRL_RADIO_CONTROL_IRQ_STATUS_SLOW_CLK_IRQ)
@@ -139,8 +138,11 @@ typedef struct timer_calibration_s {
   #define TIMER_ENABLE_BLUE_SLEEP_REQ         WAKEUP->BLUE_SLEEP_REQUEST_MODE |= (WAKEUP_BLUE_SLEEP_REQUEST_MODE_BLE_WAKEUP_EN | WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_EN)
   #define TIMER_ENABLE_CM0_SLEEP_REQ          WAKEUP->CM0_SLEEP_REQUEST_MODE |= WAKEUP_CM0_SLEEP_REQUEST_MODE_CPU_WAKEUP_EN
 
+#if defined(CONFIG_DEVICE_BLUENRG_LP) || defined(CONFIG_DEVICE_BLUENRG_LPS)
   #define TIMER_BLUE_SET_REQ_MODE(req_mode)   (MODIFY_REG(WAKEUP->BLUE_SLEEP_REQUEST_MODE,WAKEUP_BLUE_SLEEP_REQUEST_MODE_SLEEP_REQ_MODE,req_mode))
 #endif
+
+
 
 /**
   * @}
@@ -316,6 +318,22 @@ uint64_t TIMER_GetCurrentSysTime(void);
 */
 uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req);
 
+
+/**
+ * @brief   Programs Timer1 with a relative timeout - expressed in us - wrt the previous radio event.
+ * @param   rel_timeout_us: relative delay, in us, wrt the previous radio event. 
+ * @param   event_type: 1 Tx event.
+                        0 Rx event
+ * @param   cal_req: 1 PLL calibartion is requested.
+                     0 PLL calibartion is not requested.
+* @warning This function should be called with interrupts disabled to avoid programming the timer with a value in the past
+ * @retval  0 if a correct timeout has been programmed in the timeout register
+ * @retval  1 if a correct timeout cannot be programmed
+*/
+uint8_t TIMER_SetRadioTimerRelativeUsValue(uint32_t rel_timeout_us, BOOL event_type, BOOL cal_req);
+
+
+
 /**
 * @brief  Program the radio timer (a.k.a Timer1) as close as possible.
 * The current time is sampled and increased by two.
@@ -325,10 +343,11 @@ uint8_t TIMER_SetRadioTimerValue(uint32_t timeout, BOOL event_type, BOOL cal_req
 void TIMER_SetRadioCloseTimeout(void);
 
 /**
-* @brief  Return timer capture register value in STU.
- * @return STU value 
+ * @brief  Return timer capture register value in STU.
+ * @param [out] Current System time 
+ * @return Timer Capture register STU value 
 */
-uint64_t TIMER_GetAnchorPoint(void);
+uint64_t TIMER_GetAnchorPoint(uint64_t *current_system_time);
 
 /**
   * @brief  Disable Wakeup Timer and Timer1.
@@ -354,12 +373,13 @@ uint8_t TIMER_GetRadioTimerValue(uint32_t *time);
 void TIMER_ClearRadioTimer2(void);
 
 /**
- * @brief   Return the system time referred to the absolute machine time passed as parameter.
+ * @brief   Return the system time referred to the absolute machine time passed as parameter and the current system time.
  * @param   time: Absolute machine time in the past
+ * @param [out] Current System time
  * @warning User should guarantee that call to this function are performed in a non-interruptible context.
  * @return  STU value 
 */
-uint64_t TIMER_GetPastSysTime(uint32_t time);
+uint64_t TIMER_GetPastSysTime(uint32_t time, uint64_t *current_system_time);
 
 /**
 * @brief  Translate time in microseconds into sys time units.

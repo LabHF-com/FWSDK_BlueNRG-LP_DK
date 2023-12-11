@@ -563,15 +563,18 @@ static void DeviceStateMachine(void)
     switch(device.substate){
       
     case SUBSTATE_INIT:
-      if(StartGeneralConnectionEstablishment() == BLE_STATUS_SUCCESS)
+      if(!APP_FLAG(SCANNING))
       {
-        STATE_TRANSITION(STATE_PAIRING_SLAVE, SUBSTATE_WAITING_PAIRING);
-        APP_FLAG_SET(SCANNING);
+        if(StartGeneralConnectionEstablishment() == BLE_STATUS_SUCCESS)
+        {
+          STATE_TRANSITION(STATE_PAIRING_SLAVE, SUBSTATE_WAITING_PAIRING);
+          APP_FLAG_SET(SCANNING);
+        }
+        else
+        {
+          STATE_TRANSITION(STATE_NORMAL, SUBSTATE_INIT);
+        }
       }
-      else
-      {
-        STATE_TRANSITION(STATE_NORMAL, SUBSTATE_INIT);
-      }      
       break;
       
     default:
